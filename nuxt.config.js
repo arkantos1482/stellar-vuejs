@@ -45,15 +45,36 @@ export default {
     ],
 
     auth: {
-
+        strategies: {
+            local: {
+                endpoints: {
+                    login: {url: '/login', method: 'post', propertyName: false},
+                    logout: {url: '/logout', method: 'post'},
+                    user: {url: '/profiles', method: 'get', propertyName: false}
+                }
+            }
+        },
+        redirect: {
+            login: '/login',
+            logout: '/login',
+            // callback: '/login',
+            home: '/'
+        }
     },
-    
+
+    router: {
+        middleware: ['auth']
+    },
+
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-    axios: {},
+    axios: {
+        baseURL: 'http://site1.test/api'
+    },
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
+        rtl: true,
         theme: {
             dark: true,
             themes: {
