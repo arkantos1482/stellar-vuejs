@@ -99,6 +99,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'fee calculator',
           to: '/FeeBtc'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'کیف های پول',
+          to: '/CryptoAddresses'
         }
       ],
       miniVariant: false,
@@ -107,8 +112,8 @@ export default {
       title: 'My Exchange'
     }
   },
-  methods:{
-    logout(){
+  methods: {
+    logout() {
       this.$auth.logout()
     }
   }

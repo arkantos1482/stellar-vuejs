@@ -23,11 +23,19 @@ export default {
   },
   methods: {
     async login() {
-      await this.$auth.loginWith('local', {data: {email: this.email, password: this.password}});
-      await this.$router.replace('/')
+      try {
+        await this.$auth.login({data: {email: this.email, password: this.password}});
+        await this.$router.replace('/')
+      } catch (e) {
+      }
     },
-    register() {
-      this.$axios.$post('/register', {name: 'fake', email: this.email, password: this.password})
+    async register() {
+      try {
+        let token = await this.$axios.$post('/register', {email: this.email, password: this.password});
+        await this.$auth.setUserToken(token)
+        await this.$router.replace('/')
+      } catch (e) {
+      }
     }
   }
 }
