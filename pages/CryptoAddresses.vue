@@ -1,13 +1,12 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="text-center">
     <v-col cols="6">
       <h1> کیف پول ها </h1>
       <v-card outlined>
-        {{ addresses }}
+        <address-show-create type="ETH" :address="addresses.ETH"/>
+        <address-show-create type="BTC" :address="addresses.BTC"/>
+        <address-show-create type="LTC" :address="addresses.LTC"/>
       </v-card>
-      <address-show-create type="ETH" :address="addresses.ETH"/>
-      <address-show-create type="BTC" :address="addresses.BTC"/>
-      <address-show-create type="LTC" :address="addresses.LTC"/>
     </v-col>
   </v-row>
 </template>
@@ -30,8 +29,8 @@ export default {
     this.addresses = collect(list)
         .map(item => {
           return {[item.type]: item.address}
-        }).reduce(((_carry, item) => {
-          return {..._carry, ...item}
+        }).reduce(((_acc, item) => {
+          return {..._acc, ...item}
         }))
   }
 }
