@@ -104,7 +104,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'کیف های پول',
           to: '/CryptoAddresses'
-        }
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'api test',
+          to: '/ApiTest'
+        },
       ],
       miniVariant: false,
       right: true,
@@ -112,8 +116,8 @@ export default {
       // title: 'My Exchange'
     }
   },
-  computed:{
-    title(){
+  computed: {
+    title() {
       return this.$auth.user.name
     }
   },
