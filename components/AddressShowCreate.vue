@@ -13,11 +13,11 @@ export default {
   methods: {
     async createCrypto() {
       if (this.type === 'ETH') {
-        this.address = await this.$axios.$post('/crypto/eth/create')
+        this.address = await this.$axios.$post('/crypto/eth/address/create')
       } else if (this.type === 'BTC') {
-        this.address = await this.$axios.$post('/crypto/btc/create')
+        this.address = await this.$axios.$post('/crypto/btc/address/create')
       } else if (this.type === 'LTC') {
-        this.address = await this.$axios.$post('/crypto/ltc/create')
+        this.address = await this.$axios.$post('/crypto/ltc/address/create')
       }
     }
   }
