@@ -109,7 +109,12 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'My Exchange'
+      // title: 'My Exchange'
+    }
+  },
+  computed:{
+    title(){
+      return this.$auth.user.name
     }
   },
   methods: {

@@ -27,11 +27,8 @@ export default {
   async mounted() {
     let list = await this.$axios.$get('/profiles/addresses');
     this.addresses = collect(list)
-        .map(item => {
-          return {[item.type]: item.address}
-        }).reduce(((_acc, item) => {
-          return {..._acc, ...item}
-        }))
+        .map(item => ({[item.type]: item.address}))
+        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
   }
 }
 </script>
