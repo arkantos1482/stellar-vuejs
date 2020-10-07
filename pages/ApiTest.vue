@@ -2,8 +2,8 @@
   <v-row justify="center" class="text-center">
     <v-col cols="6">
       <p>{{ res }}</p>
-      <p>{{ res2 }}</p>
       <v-btn @click="call">call</v-btn>
+      <p class="mt-8">{{ res2 }}</p>
       <v-btn @click="call2">call2</v-btn>
     </v-col>
   </v-row>
