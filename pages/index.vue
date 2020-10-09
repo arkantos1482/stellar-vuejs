@@ -10,9 +10,24 @@
         <v-card-text>
           شمای مختصری از آخرین اتفاقات مربوط به حساب کاربری
         </v-card-text>
+        <v-card-subtitle>
+          <pre dir="auto">{{ cryptoProfile | prettyJson }}</pre>
+        </v-card-subtitle>
         <v-card-actions>
         </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      cryptoProfile: ''
+    }
+  }, async mounted() {
+    this.cryptoProfile = await this.$axios.$get('/crypto/ltc/address')
+  }
+}
+</script>

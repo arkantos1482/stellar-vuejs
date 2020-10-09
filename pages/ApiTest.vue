@@ -19,10 +19,10 @@ export default {
     }
   }, methods: {
     async call() {
-      this.res = await this.$axios.$get('/crypto/btc');
+      this.res = await this.$axios.$get('/crypto/ltc/refresh');
     },
     async call2() {
-      this.res2 = await this.$axios.$get('/crypto/eth');
+      this.res2 = await this.$axios.$get('/crypto/ltc/txs/basic');
     }
   }
 }
