@@ -27,7 +27,12 @@ export default {
       cryptoProfile: ''
     }
   }, async mounted() {
-    this.cryptoProfile = await this.$axios.$get('/crypto/ltc/address')
+    try {
+      this.cryptoProfile = await this.$axios.$get('/crypto/ltc/address')
+    }catch (e) {
+      this.cryptoProfile = 'حساب ltc ایجاد نشده است.'
+    }
+
   }
 }
 </script>
