@@ -11,7 +11,7 @@
           شمای مختصری از آخرین اتفاقات مربوط به حساب کاربری
         </v-card-text>
         <v-card-subtitle>
-          <pre dir="auto">{{ cryptoProfile | prettyJson }}</pre>
+          <json-viewer dir="auto" :value="cryptoProfile"/>
         </v-card-subtitle>
         <v-card-actions>
         </v-card-actions>
@@ -29,7 +29,7 @@ export default {
   }, async mounted() {
     try {
       this.cryptoProfile = await this.$axios.$get('/crypto/ltc/address')
-    }catch (e) {
+    } catch (e) {
       this.cryptoProfile = 'حساب ltc ایجاد نشده است.'
     }
 

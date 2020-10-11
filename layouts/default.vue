@@ -106,6 +106,10 @@ export default {
           to: '/CryptoAddresses'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'حساب',
+          to: '/Wallet'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'api test',
           to: '/ApiTest'
         },
