@@ -96,14 +96,14 @@ export default {
           to: '/ApiTest'
         },
         {
-          icon: 'mdi-apps',
-          title: 'داشبورد',
-          to: '/'
-        },
-        {
           icon: 'mdi-chart-bubble',
           title: 'fee calculator',
           to: '/FeeBtc'
+        },
+        {
+          icon: 'mdi-apps',
+          title: 'داشبورد',
+          to: '/'
         },
         {
           icon: 'mdi-chart-bubble',
@@ -115,11 +115,11 @@ export default {
           to: '/Wallet'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'پیشخان سفارشات (و ثبت سفارش)',
+          title: 'ثبت سفارش (پیشخان)',
           to: '/OffersBook'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'سفارشات من',
+          title: 'سفارشات',
           to: '/Offers'
         }, {
           icon: 'mdi-chart-bubble',
