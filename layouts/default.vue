@@ -91,6 +91,11 @@ export default {
       fixed: false,
       items: [
         {
+          icon: 'mdi-chart-bubble',
+          title: 'api test',
+          to: '/ApiTest'
+        },
+        {
           icon: 'mdi-apps',
           title: 'داشبورد',
           to: '/'
@@ -102,17 +107,33 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'کیف های پول',
+          title: 'پروفایل (کیف های پول)',
           to: '/CryptoAddresses'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'حساب',
+          title: 'کیف پول (بالانس ها)',
           to: '/Wallet'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'api test',
-          to: '/ApiTest'
-        },
+          title: 'پیشخان سفارشات (و ثبت سفارش)',
+          to: '/OffersBook'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'سفارشات من',
+          to: '/Offers'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'معاملات',
+          to: '/Trades'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'واریزها',
+          to: '/Deposits'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'برداشت ها',
+          to: '/Withdraws'
+        }
       ],
       miniVariant: false,
       right: true,

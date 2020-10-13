@@ -1,13 +1,13 @@
 <template>
   <div>
-    <json-viewer dir="auto" :value="refreshResult"/>
-    <v-btn @click="refreshDeposits" class="mt-2">refresh ltc</v-btn>
+    <h3 class="text-center"> stellar account</h3>
+    <!--    <p>{{ stellarAccount.time }}</p>-->
+    <json-viewer dir="auto" :value="stellarAccount.balances"/>
 
-    <v-row>
+    <v-row class="mt-4">
       <v-col cols="6">
-        <h3> stellar account</h3>
-        <p>{{ stellarAccount.time }}</p>
-        <json-viewer dir="auto" :value="stellarAccount.balances"/>
+        <json-viewer dir="auto" :value="refreshResult"/>
+        <v-btn @click="refreshDeposits" :loading="loading" class="mt-2">refresh ltc</v-btn>
       </v-col>
       <v-col cols="6">
         <h3> crypto LTC account</h3>
@@ -26,17 +26,23 @@ export default {
     return {
       stellarAccount: '',
       ltcAccount: '',
-      refreshResult: ''
+      refreshResult: '',
+      loading: false
     }
   },
   async mounted() {
     let res = await this.$axios.$get('/profiles/stellar');
     this.stellarAccount = {time: res.last_modified_time, balances: res.balances}
-    this.ltcAccount = await this.$axios.$get('/crypto/ltc/txs/basic')
-
+    try {
+      this.ltcAccount = await this.$axios.$get('/crypto/ltc/address')
+    } catch (e) {
+      this.ltcAccount = 'حساب ltc ایجاد نشده است.'
+    }
   }, methods: {
     async refreshDeposits() {
+      this.loading = true
       this.refreshResult = await this.$axios.$get('/crypto/ltc/refresh')
+      this.loading = false
     }
   }
 }
