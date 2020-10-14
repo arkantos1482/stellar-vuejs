@@ -18,8 +18,15 @@ export default {
         ]
     },
 
+    server: {
+        port: 8000, // default: 3000
+        host: '0.0.0.0' // default: localhost
+    },
+
     // Global CSS (https://go.nuxtjs.dev/config-css)
-    css: [],
+    css: [
+        '~/assets/main.css'
+    ],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: ['~/plugins/filters.js', '~/plugins/components.js'],
@@ -73,6 +80,12 @@ export default {
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
     vuetify: {
+        treeShake: true,
+        defaultAssets: {
+            font: {
+                family: 'IranSans'
+            }
+        },
         customVariables: ['~/assets/variables.scss'],
         rtl: true,
         theme: {
