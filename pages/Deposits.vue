@@ -1,11 +1,24 @@
 <template>
   <v-row>
-    <v-col cols="6">
-      <json-viewer :value="deposits" dir="ltr"/>
-    </v-col>
-
-    <v-col cols="6">
-      <h3> crypto LTC transactions</h3>
+    <v-col cols="12">
+      <!--      <json-viewer :value="deposits" dir="ltr"/>-->
+      <v-simple-table>
+        <thead>
+        <tr>
+          <th>رمزارز</th>
+          <th>مقدار</th>
+          <th>زمان</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="item in deposits" :key="item.id">
+          <td>{{ item.asset_code }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.created_at }}</td>
+        </tr>
+        </tbody>
+      </v-simple-table>
+      <h3 class="mt-8"> crypto LTC transactions</h3>
       <json-viewer dir="auto" :value="ltcTxs"/>
     </v-col>
   </v-row>

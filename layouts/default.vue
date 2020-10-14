@@ -115,6 +115,14 @@ export default {
           to: '/Wallet'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'واریزها',
+          to: '/Deposits'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'برداشت ها',
+          to: '/Withdraws'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'ثبت سفارش (پیشخان)',
           to: '/OffersBook'
         }, {
@@ -125,15 +133,7 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'معاملات',
           to: '/Trades'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'واریزها',
-          to: '/Deposits'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'برداشت ها',
-          to: '/Withdraws'
-        }
+        },
       ],
       miniVariant: false,
       right: true,
