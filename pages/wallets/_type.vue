@@ -11,11 +11,11 @@
     <v-row class="mt-4">
       <v-col cols="6">
         <h3 class="mt-8"> crypto LTC transactions</h3>
-        <json-viewer dir="auto" :value="ltcTxs"/>
+        <json-viewer dir="auto" :value="txs"/>
       </v-col>
       <v-col cols="6">
         <h3> crypto LTC account</h3>
-        <json-viewer dir="auto" :value="ltcAccount"/>
+        <json-viewer dir="auto" :value="account"/>
       </v-col>
     </v-row>
 
@@ -28,29 +28,28 @@
 export default {
   data() {
     return {
+      type: this.$route.params.type,
       wLoading: false,
+      account: '',
+      txs: '',
       rLoading: false,
-      stellarAccount: '',
-      ltcAccount: '',
-      ltcTxs: '',
       refreshResult: ''
     }
   },
   async fetch() {
-    let res = await this.$axios.$get('/profiles/stellar');
-    this.stellarAccount = {time: res.last_modified_time, balances: res.balances}
     try {
-      this.ltcAccount = await this.$axios.$get('/crypto/ltc/address')
-      this.ltcTxs = await this.$axios.$get('/crypto/ltc/txs/basic')
+      this.account = await this.$axios.$get(`/crypto/${this.type}/address`)
+      this.txs = await this.$axios.$get(`/crypto/${this.type}/txs/basic`)
     } catch (e) {
-      this.ltcAccount = 'حساب ltc ایجاد نشده است.'
-      this.ltcTxs = 'حساب ltc ایجاد نشده است.'
+      this.account = 'خطایی رخ داده است.'
+      this.txs = 'خطایی رخ داده است.'
     }
-  }, methods: {
+  },
+  methods: {
     async refreshDeposits() {
-      this.loading = true
-      this.refreshResult = await this.$axios.$get('/crypto/ltc/refresh')
-      this.loading = false
+      this.rLoading = true
+      this.refreshResult = await this.$axios.$get(`/crypto/${this.type}/refresh`)
+      this.rLoading = false
     }
   }
 }
