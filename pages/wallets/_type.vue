@@ -3,8 +3,9 @@
 
     <v-row class="justify-center text-center">
       <v-col cols="6">
-        <v-text-field label="حساب مقصد"/>
-        <v-btn :loading="wLoading">برداشت</v-btn>
+        <v-text-field v-model="destAddress" label="حساب مقصد"/>
+        <v-text-field v-model="amount" label="مقدار"/>
+        <v-btn @click="withdraw" :loading="wLoading">برداشت</v-btn>
       </v-col>
     </v-row>
 
@@ -28,6 +29,8 @@ export default {
     return {
       type: this.$route.params.type,
       wLoading: false,
+      destAddress: '',
+      amount: '',
       account: '',
       txs: '',
       rLoading: false,
@@ -48,6 +51,12 @@ export default {
       this.rLoading = true
       this.refreshResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
       this.rLoading = false
+    },
+    async withdraw() {
+      this.wLoading = true
+      this.refreshResult = await this.$axios.$post(`/crypto/${this.type}/withdraw`,
+          {to: this.destAddress, amount: this.amount})
+      this.wLoading = false
     }
   }
 }
