@@ -10,17 +10,15 @@
 
     <v-row class="mt-4">
       <v-col cols="6">
-        <h3 class="mt-8"> crypto LTC transactions</h3>
         <json-viewer dir="auto" :value="txs"/>
       </v-col>
       <v-col cols="6">
-        <h3> crypto LTC account</h3>
         <json-viewer dir="auto" :value="account"/>
       </v-col>
     </v-row>
 
     <json-viewer dir="auto" :value="refreshResult"/>
-    <v-btn @click="refreshDeposits" :loading="rLoading" class="mt-2">refresh ltc</v-btn>
+    <v-btn @click="syncDeposits" :loading="rLoading" class="mt-2">sync deposits</v-btn>
   </div>
 </template>
 
@@ -46,9 +44,9 @@ export default {
     }
   },
   methods: {
-    async refreshDeposits() {
+    async syncDeposits() {
       this.rLoading = true
-      this.refreshResult = await this.$axios.$get(`/crypto/${this.type}/refresh`)
+      this.refreshResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
       this.rLoading = false
     }
   }
