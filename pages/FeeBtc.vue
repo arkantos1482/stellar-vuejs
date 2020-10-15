@@ -34,7 +34,7 @@ export default {
       return Number(this.bytes) * Number(this.costList.slow_fee_per_byte);
     }
   },
-  async mounted() {
+  async fetch() {
     let fee = (await this.$axios.$get('http://site1.test/api/crypto/fee/btc')).payload;
     this.costList = {
       average_fee_per_byte: fee.average_fee_per_byte,

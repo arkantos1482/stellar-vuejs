@@ -43,7 +43,7 @@ export default {
   data() {
     return {offers: []}
   },
-  async mounted() {
+  async fetch() {
     let list = (await this.$axios.$get('/operations'))._embedded.records;
     this.offers = collect(list).filter(item => item.type === 'manage_buy_offer' || item.type === 'manage_sell_offer').all();
   }

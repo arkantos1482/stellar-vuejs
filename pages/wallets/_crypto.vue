@@ -1,13 +1,17 @@
 <template>
   <div>
-    <h3 class="text-center"> stellar account</h3>
-    <!--    <p>{{ stellarAccount.time }}</p>-->
-    <json-viewer dir="auto" :value="stellarAccount.balances"/>
+
+    <v-row class="justify-center text-center">
+      <v-col cols="6">
+        <v-text-field label="حساب مقصد"/>
+        <v-btn :loading="wLoading">برداشت</v-btn>
+      </v-col>
+    </v-row>
 
     <v-row class="mt-4">
       <v-col cols="6">
-        <json-viewer dir="auto" :value="refreshResult"/>
-        <v-btn @click="refreshDeposits" :loading="loading" class="mt-2">refresh ltc</v-btn>
+        <h3 class="mt-8"> crypto LTC transactions</h3>
+        <json-viewer dir="auto" :value="ltcTxs"/>
       </v-col>
       <v-col cols="6">
         <h3> crypto LTC account</h3>
@@ -15,28 +19,32 @@
       </v-col>
     </v-row>
 
+    <json-viewer dir="auto" :value="refreshResult"/>
+    <v-btn @click="refreshDeposits" :loading="rLoading" class="mt-2">refresh ltc</v-btn>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: "Wallet",
   data() {
     return {
+      wLoading: false,
+      rLoading: false,
       stellarAccount: '',
       ltcAccount: '',
-      refreshResult: '',
-      loading: false
+      ltcTxs: '',
+      refreshResult: ''
     }
   },
-  async mounted() {
+  async fetch() {
     let res = await this.$axios.$get('/profiles/stellar');
     this.stellarAccount = {time: res.last_modified_time, balances: res.balances}
     try {
       this.ltcAccount = await this.$axios.$get('/crypto/ltc/address')
+      this.ltcTxs = await this.$axios.$get('/crypto/ltc/txs/basic')
     } catch (e) {
       this.ltcAccount = 'حساب ltc ایجاد نشده است.'
+      this.ltcTxs = 'حساب ltc ایجاد نشده است.'
     }
   }, methods: {
     async refreshDeposits() {

@@ -17,6 +17,8 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
+      logLoading: false,
+      regLoading: false,
       email: '',
       password: ''
     }
@@ -24,17 +26,23 @@ export default {
   methods: {
     async login() {
       try {
+        this.logLoading = true
         await this.$auth.login({data: {email: this.email, password: this.password}});
+        this.logLoading = false
         await this.$router.replace('/')
       } catch (e) {
+        this.logLoading = false
       }
     },
     async register() {
       try {
+        this.logLoading = true
         let token = await this.$axios.$post('/register', {email: this.email, password: this.password});
         await this.$auth.setUserToken(token)
+        this.logLoading = false
         await this.$router.replace('/')
       } catch (e) {
+        this.logLoading = false
       }
     }
   }

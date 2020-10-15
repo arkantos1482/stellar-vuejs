@@ -18,8 +18,6 @@
         </tr>
         </tbody>
       </v-simple-table>
-      <h3 class="mt-8"> crypto LTC transactions</h3>
-      <json-viewer dir="auto" :value="ltcTxs"/>
     </v-col>
   </v-row>
 </template>
@@ -32,17 +30,11 @@ export default {
   data() {
     return {
       deposits: [],
-      ltcTxs: '',
     }
   },
-  async mounted() {
+  async fetch() {
     let list = (await this.$axios.$get('/effects'))._embedded.records;
     this.deposits = collect(list).filter(item => item.type === 'account_credited').all();
-    try {
-      this.ltcTxs = await this.$axios.$get('/crypto/ltc/txs/basic')
-    } catch (e) {
-      this.ltcTxs = 'حساب ltc ایجاد نشده است.'
-    }
   }
 }
 </script>

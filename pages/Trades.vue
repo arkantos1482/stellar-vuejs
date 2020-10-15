@@ -34,7 +34,7 @@ export default {
       trades: []
     }
   },
-  async mounted() {
+  async fetch() {
     // this.trades = (await this.$axios.$get('/trades'))._embedded.records
     let list = (await this.$axios.$get('/effects'))._embedded.records;
     this.trades = collect(list)

@@ -83,7 +83,7 @@ export default {
       }))
     }
   },
-  async mounted() {
+  async fetch() {
     await this.onSellChanged()
     await this.onBuyChanged()
 

@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="12">
-<!--      <json-viewer :value="withdraws" dir="ltr"/>-->
+      <!--      <json-viewer :value="withdraws" dir="ltr"/>-->
       <v-simple-table>
         <thead>
         <tr>
@@ -32,7 +32,7 @@ export default {
       withdraws: []
     }
   },
-  async mounted() {
+  async fetch() {
     let list = (await this.$axios.$get('/effects'))._embedded.records;
     this.withdraws = collect(list).filter(item => item.type === 'account_debited').all();
   }

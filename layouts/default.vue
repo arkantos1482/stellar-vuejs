@@ -107,12 +107,8 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'پروفایل (کیف های پول)',
-          to: '/CryptoAddresses'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'کیف پول (بالانس ها)',
-          to: '/Wallet'
+          title: 'کیف های من',
+          to: '/Wallets'
         }, {
           icon: 'mdi-chart-bubble',
           title: 'واریزها',
@@ -125,6 +121,10 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'ثبت سفارش (پیشخان)',
           to: '/OffersBook'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'سفارشات باز',
+          to: '/ActiveOffers'
         }, {
           icon: 'mdi-chart-bubble',
           title: 'سفارشات',
