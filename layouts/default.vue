@@ -97,11 +97,11 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'fee calculator',
-          to: '/FeeBtc'
+          title: 'فی رمزارزها (ادمین)',
+          to: '/TxFee'
         },
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-chart-bubble',
           title: 'داشبورد',
           to: '/'
         },

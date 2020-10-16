@@ -6,8 +6,6 @@
         <v-text-field v-model="destAddress" label="حساب مقصد"/>
         <v-text-field v-model="amount" label="مقدار"/>
         <v-btn @click="withdraw" :loading="wLoading">برداشت</v-btn>
-        <v-btn @click="getSize" :loading="sLoading">Tx Size</v-btn>
-        <p>{{ sizeResult }}</p>
         <p>{{ withDrawResult }}</p>
       </v-col>
     </v-row>
@@ -39,8 +37,6 @@ export default {
       rLoading: false,
       syncResult: '',
       withDrawResult: '',
-      sLoading: false,
-      sizeResult: ''
     }
   },
   async fetch() {
@@ -66,14 +62,6 @@ export default {
       })
       this.wLoading = false
     },
-    async getSize() {
-      this.sLoading = true
-      this.sizeResult = await this.$axios.$post(`/crypto/${this.asset}/fee/size`, {
-        to: this.destAddress,
-        amount: this.amount
-      })
-      this.sLoading = false
-    }
   }
 }
 </script>
