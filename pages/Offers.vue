@@ -45,7 +45,9 @@ export default {
   },
   async fetch() {
     let list = (await this.$axios.$get('/operations'))._embedded.records;
-    this.offers = collect(list).filter(item => item.type === 'manage_buy_offer' || item.type === 'manage_sell_offer').all();
+    this.offers = collect(list)
+        .filter(item => parseFloat(item.amount) !== 0.0)
+        .filter(item => item.type === 'manage_buy_offer' || item.type === 'manage_sell_offer').all();
   }
 }
 </script>
