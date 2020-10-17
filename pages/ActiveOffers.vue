@@ -9,6 +9,7 @@
             <th>فروش</th>
             <th>مقدار</th>
             <th>قیمت</th>
+            <th>لغو</th>
           </tr>
           </thead>
           <tbody>
@@ -17,6 +18,9 @@
             <td>{{ item.buying.asset_code }}</td>
             <td>{{ item.amount }}</td>
             <td>{{ item.price }}</td>
+            <td>
+              <v-btn @click="cancel(item.id,item.seller)">لغو</v-btn>
+            </td>
           </tr>
           </tbody>
         </template>
@@ -35,6 +39,12 @@ export default {
   },
   async fetch() {
     this.offers = (await this.$axios.$get('/offers'))._embedded.records
+  },
+  methods: {
+    async cancel(id, seller) {
+      await this.$axios.$post('/offers/delete', {id, seller})
+      console.log(id)
+    }
   }
 }
 </script>
