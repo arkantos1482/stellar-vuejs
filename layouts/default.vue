@@ -92,18 +92,12 @@ export default {
       items: [
         {
           icon: 'mdi-chart-bubble',
-          title: 'api test',
-          to: '/ApiTest'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'فی رمزارزها (ادمین)',
-          to: '/TxFee'
-        },
-        {
-          icon: 'mdi-chart-bubble',
           title: 'داشبورد',
           to: '/'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'پروفایل',
+          to: '/Users/me'
         },
         {
           icon: 'mdi-chart-bubble',
@@ -133,6 +127,19 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'معاملات',
           to: '/Trades'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'مدیریت کاربران',
+          to: '/Users'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'فی رمزارزها (ادمین)',
+          to: '/admin/TxFee'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'api test',
+          to: '/admin/ApiTest'
         },
       ],
       miniVariant: false,
