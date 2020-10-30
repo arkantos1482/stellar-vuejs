@@ -16,7 +16,7 @@ export default {
     }
   }, methods: {
     async call() {
-      this.res = await this.$axios.$get('/action');
+      this.res = await this.$axios.$get('/test');
     }
   }
 }

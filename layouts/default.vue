@@ -129,7 +129,7 @@ export default {
           to: '/Trades'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'مدیریت کاربران',
+          title: 'مدیریت کاربران(ادمین)',
           to: '/Users'
         },
         {
