@@ -10,7 +10,7 @@
       <v-text-field v-model="user.address" label="آدرس"/>
       <v-btn :loading="lSend" @click="send" color="primary">ارسال</v-btn>
       <v-btn to="/Verification">ارسال مدارک</v-btn>
-      <v-btn :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
+      <v-btn v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       userId: this.$route.params.user,
+      isAdmin: this.$auth.user.role === 'admin',
       lSend: false,
       user: {
         name: '',

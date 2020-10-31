@@ -7,7 +7,7 @@
         <v-text-field type="password" label="رمز عبور" v-model="user.password"/>
         <v-text-field label="نام" v-model="user.name"/>
         <v-text-field label="نام خانوادگی" v-model="user.last_name"/>
-        <v-text-field label="موبایل" v-model="user.mobile"/>
+        <v-text-field label="موبایل" v-model="user.cell_phone"/>
         <v-btn @click="register" color="primary" :loading="l.reg">ثبت نام</v-btn>
         <v-btn to="/Login">ورود</v-btn>
       </v-card>
@@ -26,7 +26,7 @@ export default {
         last_name: '',
         email: '',
         password: '',
-        mobile: ''
+        cell_phone: ''
       },
       l: {reg: false}
     }

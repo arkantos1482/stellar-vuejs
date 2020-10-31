@@ -89,7 +89,7 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      userItems: [
         {
           icon: 'mdi-chart-bubble',
           title: 'داشبورد',
@@ -129,6 +129,17 @@ export default {
           to: '/Trades'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'api test',
+          to: '/admin/ApiTest'
+        },
+      ],
+      adminItems: [
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'داشبورد',
+          to: '/'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'مدیریت کاربران(ادمین)',
           to: '/Users'
         },
@@ -149,6 +160,11 @@ export default {
     }
   },
   computed: {
+    items() {
+      return this.$auth.user.role === 'admin'
+          ? this.adminItems
+          : this.userItems
+    },
     title() {
       return this.$auth.user.name
     }
