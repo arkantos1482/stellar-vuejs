@@ -1,14 +1,11 @@
 <template>
-  <v-row>
-    <v-col>
+  <v-row justify="center">
+    <v-col cols="9">
       <h1>hello {{ userId }}</h1>
-<!--      <v-carousel>-->
-
-<!--      </v-carousel>-->
-      <img :src="docs.ssn" width="200" height="200"/>
-      <v-img :src="docs.ssn" width="200" height="200"/>
-      <json-viewer dir="ltr" :value="docs"/>
-
+      <v-carousel cycle height="400">
+        <v-carousel-item :src="docs.ssn"/>
+        <v-carousel-item :src="docs.bill"/>
+      </v-carousel>
       <h1>تایید</h1>
       <p>check boxes</p>
     </v-col>
