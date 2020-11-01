@@ -1,24 +1,12 @@
 <template>
   <v-row>
     <v-col>
-      <v-simple-table>
-        <thead>
-        <tr>
-          <th>نام</th>
-          <th>نام خانوادگی</th>
-          <th>ایمیل</th>
-          <th>موبایل</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item,key) in profileList" :key="key" @click="goto(item.user_id)">
-          <td>{{ item.name }}</td>
-          <td>{{ item.last_name }}</td>
-          <td>{{ item.email }}</td>
-          <td>{{ item.cell_phone }}</td>
-        </tr>
-        </tbody>
-      </v-simple-table>
+      <v-data-table
+          @click:row="goto"
+          :headers="headers"
+          :items="profileList"
+          items-per-page="5"
+          hide-default-footer/>
     </v-col>
   </v-row>
 </template>
@@ -27,6 +15,10 @@
 export default {
   data() {
     return {
+      headers: [
+        {text: 'نام', value: 'name'},
+        {text: 'نام خانوادگی', value: 'last_name'},
+        {text: 'موبایل', value: 'cell_phone'}],
       profileList: []
     }
   },
@@ -34,8 +26,8 @@ export default {
     this.profileList = await this.$axios.$get('/profiles');
   },
   methods: {
-    goto($id) {
-      this.$router.push('/Users/' + $id)
+    goto($item) {
+      this.$router.push('/Users/' + $item.user_id)
     }
   }
 }
