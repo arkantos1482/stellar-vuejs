@@ -149,6 +149,11 @@ export default {
           to: '/admin/TxFee'
         }, {
           icon: 'mdi-chart-bubble',
+          title: ' سطوح بهره برداری',
+          to: '/admin/access'
+        },
+        {
+          icon: 'mdi-chart-bubble',
           title: 'api test',
           to: '/admin/ApiTest'
         },
