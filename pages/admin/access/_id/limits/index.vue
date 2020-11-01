@@ -9,7 +9,8 @@
           <v-btn @click="remove(item.id)" color="red">حذف</v-btn>
         </template>
       </v-data-table>
-      <v-btn :to="this.$route.path+`/create`" color="primary" class="mt-8">ایجاد</v-btn>
+      <v-btn :to="this.$route.path+`/create`" color="primary" class="mt-4">ایجاد</v-btn>
+      <v-btn @click="$router.back()" class="mt-4">بازگشت</v-btn>
     </v-col>
   </v-row>
 </template>
