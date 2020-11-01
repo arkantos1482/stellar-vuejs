@@ -73,9 +73,15 @@ export default {
         middleware: ['auth']
     },
 
+    publicRuntimeConfig: {
+        baseURL: process.env.BASE_URL
+    },
+    privateRuntimeConfig: {
+        apiSecret: process.env.API_SECRET
+    },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        baseURL: 'http://site1.test/api'
+        baseURL: process.env.BASE_URL
     },
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
