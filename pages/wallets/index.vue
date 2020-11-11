@@ -41,12 +41,12 @@ export default {
     }
   },
   async fetch() {
-    let addresses = await this.$axios.$get('/profiles/addresses')
+    let addresses = await this.$axios.$get('/profiles/me/addresses')
     this.addresses = collect(addresses)
         .map(item => ({[item.type]: item.address}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
 
-    let balances = (await this.$axios.$get('/profiles/stellar')).balances
+    let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
     this.balances = collect(balances)
         .map(item => ({[item.asset_code]: item.balance}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
