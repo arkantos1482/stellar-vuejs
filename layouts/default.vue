@@ -101,7 +101,7 @@ export default {
           to: '/Withdraws'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'ثبت سفارش (پیشخان)',
+          title: 'ثبت سفارش (پیشخوان)',
           to: '/OffersBook'
         }, {
           icon: 'mdi-chart-bubble',
