@@ -97,7 +97,7 @@ export default {
   },
   data() {
     return {
-      assets: ['BTC', 'LTC', 'ETH'],
+      assets: ['BTC', 'LTC', 'ETH', 'BCH', 'AMIN', 'BARG',],
       offers: [],
       baseAsset: 'BTC',
       counterAsset: 'ETH',

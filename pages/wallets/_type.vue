@@ -1,10 +1,12 @@
 <template>
   <div>
 
-    <v-row class="justify-center text-center">
+    <v-row class="justify-center">
       <v-col cols="6">
         <v-text-field v-model="destAddress" label="حساب مقصد"/>
         <v-text-field v-model="amount" label="مقدار"/>
+        <p></p>
+        <p>{{ "کارمزد انتقال:  " + withdrawFee }}</p>
         <v-btn @click="withdraw" :loading="wLoading">برداشت</v-btn>
         <p>{{ withDrawResult }}</p>
       </v-col>
@@ -37,10 +39,12 @@ export default {
       rLoading: false,
       syncResult: '',
       withDrawResult: '',
+      withdrawFee: ''
     }
   },
   async fetch() {
     try {
+      this.withdrawFee = await this.$axios.$get('/crypto/fees/' + this.asset)
       this.account = await this.$axios.$get(`/crypto/${this.asset}/address`)
       this.txs = await this.$axios.$get(`/crypto/${this.asset}/txs/basic`)
     } catch (e) {

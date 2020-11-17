@@ -24,26 +24,11 @@ export default {
   methods: {
     async createCrypto() {
       this.loading = true
-      if (this.type === 'ETH') {
-        this.address = await this.$axios.$post('/crypto/eth/address/create')
-      } else if (this.type === 'BTC') {
-        this.address = await this.$axios.$post('/crypto/btc/address/create')
-      } else if (this.type === 'LTC') {
-        this.address = await this.$axios.$post('/crypto/ltc/address/create')
-      }
+      this.address = await this.$axios.$post('/crypto/' + this.type + '/address/create')
       this.loading = true
     },
     async more() {
-      if (this.type === 'ETH') {
-        await this.$router.push({path: '/wallets/eth'})
-        // this.address = await this.$axios.$post('/crypto/eth/address/create')
-      } else if (this.type === 'BTC') {
-        await this.$router.push({path: '/wallets/btc'})
-        // this.address = await this.$axios.$post('/crypto/btc/address/create')
-      } else if (this.type === 'LTC') {
-        await this.$router.push({path: '/wallets/ltc'})
-        // this.address = await this.$axios.$post('/crypto/ltc/address/create')
-      }
+      await this.$router.push({path: '/wallets/' + this.type})
     }
   }
 }

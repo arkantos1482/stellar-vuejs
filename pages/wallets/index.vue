@@ -11,16 +11,16 @@
         </tr>
         </thead>
         <tbody>
-        <crypto-address-tr type="BTC" :address="addresses.BTC" :balance="balances.BTC"/>
-        <crypto-address-tr type="ETH" :address="addresses.ETH" :balance="balances.ETH"/>
-        <crypto-address-tr type="LTC" :address="addresses.LTC" :balance="balances.LTC"/>
+        <crypto-address-tr type="irr" :address="addresses.IRR" :balance="balances.IRR"/>
+        <crypto-address-tr type="btc" :address="addresses.BTC" :balance="balances.BTC"/>
+        <crypto-address-tr type="eth" :address="addresses.ETH" :balance="balances.ETH"/>
+        <crypto-address-tr type="ltc" :address="addresses.LTC" :balance="balances.LTC"/>
+        <crypto-address-tr type="usdt" :address="addresses.USDT" :balance="balances.USDT"/>
+        <crypto-address-tr type="amin" :address="addresses.AMIN" :balance="balances.AMIN"/>
+        <crypto-address-tr type="barg" :address="addresses.BARG" :balance="balances.BARG"/>
+        <crypto-address-tr type="bch" :address="addresses.BCH" :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
-      <!--      <v-card outlined>-->
-      <!--        <address-show-create type="ETH" :address="addresses.ETH"/>-->
-      <!--        <address-show-create type="BTC" :address="addresses.BTC"/>-->
-      <!--        <address-show-create type="LTC" :address="addresses.LTC"/>-->
-      <!--      </v-card>-->
     </v-col>
   </v-row>
 </template>
@@ -34,8 +34,6 @@ export default {
   components: {CryptoAddressTr},
   data() {
     return {
-      snackBar: false,
-      snackMsg: 'fake',
       addresses: [],
       balances: []
     }
@@ -50,13 +48,6 @@ export default {
     this.balances = collect(balances)
         .map(item => ({[item.asset_code]: item.balance}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    console.log(this.balances)
-  },
-  methods: {
-    onSnack(value) {
-      this.snackMsg = value
-      this.snackBar = true
-    }
   }
 }
 </script>

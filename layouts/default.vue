@@ -128,13 +128,13 @@ export default {
           to: '/'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'مدیریت کاربران(ادمین)',
+          title: 'مدیریت کاربران',
           to: '/Users'
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'فی رمزارزها (ادمین)',
-          to: '/admin/TxFee'
+          title: 'کارمزد برداشت ها',
+          to: '/admin/withdraw-fee'
         }, {
           icon: 'mdi-chart-bubble',
           title: ' سطوح بهره برداری',
