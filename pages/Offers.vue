@@ -43,7 +43,7 @@ export default {
   data() {
     return {offers: []}
   },
-  async fetch() {
+  async mounted() {
     let list = (await this.$axios.$get('/operations'))._embedded.records;
     this.offers = collect(list)
         .filter(item => parseFloat(item.amount) !== 0.0)

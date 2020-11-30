@@ -20,7 +20,7 @@ export default {
       l: {setFee: false}
     }
   },
-  async fetch() {
+  async mounted() {
     try {
       this.externalNetworkFee = await this.$axios.$get('/crypto/fees/' + this.coin.toLowerCase() + '/network');
     } catch (e) {

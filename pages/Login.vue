@@ -12,7 +12,6 @@
 
 <script>
 export default {
-  auth: false,
   layout: 'noToolbar',
   data() {
     return {
@@ -25,10 +24,19 @@ export default {
     async login() {
       this.loading = true
       try {
-        await this.$auth.login({data: {email: this.email, password: this.password}});
-        await this.$router.replace('/')
+        await this.$axios.$get('/csrf-cookie')
+        await this.$axios.$post('/otp-send', {email: this.email})
+        this.$store.commit('otp/set', {
+          url: '/login',
+          data: {email: this.email, password: this.password},
+          route: '/'
+        })
+        await this.$router.push('/Otp')
+        // await this.$auth.login({data: {email: this.email, password: this.password}});
+        // await this.$router.replace('/')
+        this.loading = false
       } catch (e) {
-        this.logLoading = false
+        this.loading = false
       }
     },
   }

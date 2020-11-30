@@ -38,7 +38,7 @@ export default {
       balances: []
     }
   },
-  async fetch() {
+  async mounted() {
     let addresses = await this.$axios.$get('/profiles/me/addresses')
     this.addresses = collect(addresses)
         .map(item => ({[item.type]: item.address}))

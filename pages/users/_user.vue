@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       userId: this.$route.params.user,
-      isAdmin: this.$auth.user.role === 'admin',
+      isAdmin: this.$store.state.auth.profile.role === 'admin',
       lSend: false,
       user: {
         name: '',
@@ -32,7 +32,7 @@ export default {
       }
     }
   },
-  async fetch() {
+  async mounted() {
     this.user = await this.$axios.$get('/profiles/' + this.userId);
   },
   methods: {

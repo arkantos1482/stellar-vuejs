@@ -63,16 +63,13 @@
 <script>
 export default {
   errorCaptured(err, vm, info) {
-    //todo remove log from produciton
-    console.log('logging error from default view')
-    console.log(err)
-
     this.snackBar.show = true
     this.snackBar.msg = err.message
     return false
   },
   data() {
     return {
+      user: '',
       snackBar: {show: false, msg: ''},
       clipped: false,
       drawer: false,
@@ -152,19 +149,28 @@ export default {
       // title: 'My Exchange'
     }
   },
+  async mounted() {
+    try {
+      this.user = await this.$axios.$get('/profiles/me')
+      this.$store.commit("auth/profile", this.user)
+    } catch (e) {
+    }
+  },
   computed: {
     items() {
-      return this.$auth.user.role === 'admin'
+      return this.user.role === 'admin'
           ? this.adminItems
           : this.userItems
     },
     title() {
-      return this.$auth.user.name
+      return this.user.name
     }
   },
   methods: {
-    logout() {
-      this.$auth.logout()
+    async logout() {
+      await this.$axios.$post('/logout')
+      this.$store.commit('auth/logout')
+      await this.$router.push('/login')
     }
   }
 }

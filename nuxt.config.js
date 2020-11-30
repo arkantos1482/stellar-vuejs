@@ -29,7 +29,7 @@ export default {
     ],
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: ['~/plugins/filters.js', '~/plugins/components.js'],
+    plugins: ['~/plugins/filters.js', '~/plugins/components.js','~/plugins/axiosAuth.js'],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
@@ -48,26 +48,7 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
-        '@nuxtjs/auth'
     ],
-
-    auth: {
-        strategies: {
-            local: {
-                endpoints: {
-                    login: {url: '/login', method: 'post', propertyName: false},
-                    logout: {url: '/logout', method: 'post'},
-                    user: {url: '/profiles/me', method: 'get', propertyName: false}
-                }
-            }
-        },
-        redirect: {
-            login: '/login',
-            logout: '/login',
-            // callback: '/login',
-            home: '/'
-        }
-    },
 
     router: {
         middleware: ['auth']
@@ -81,7 +62,8 @@ export default {
     },
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
-        baseURL: process.env.BASE_URL
+        baseURL: process.env.BASE_URL,
+        credentials: true
     },
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)

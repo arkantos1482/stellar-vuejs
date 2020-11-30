@@ -32,7 +32,7 @@ export default {
       deposits: [],
     }
   },
-  async fetch() {
+  async mounted() {
     let list = (await this.$axios.$get('/effects'))._embedded.records;
     this.deposits = collect(list).filter(item => item.type === 'account_credited').all();
   }

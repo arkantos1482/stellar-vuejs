@@ -17,7 +17,6 @@
 
 <script>
 export default {
-  auth: false,
   layout: 'noToolbar',
   data() {
     return {
@@ -35,8 +34,9 @@ export default {
     async register() {
       this.l.reg = true
       try {
-        let token = await this.$axios.$post('/register', this.user);
-        await this.$auth.setUserToken(token)
+        await this.$axios.$get('/csrf-cookie')
+        await this.$axios.$post('/register', this.user);
+        // await this.$auth.setUserToken(token)
         await this.$router.replace('/')
       } catch (e) {
         this.l.reg = false

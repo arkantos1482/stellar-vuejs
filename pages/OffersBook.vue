@@ -154,7 +154,7 @@ export default {
     //   }))
     // }
   },
-  async fetch() {
+  async mounted() {
     await this.myOffers()
     // await this.buyOffers()
 

@@ -47,7 +47,7 @@ export default {
       amount: '',
     }
   },
-  async fetch() {
+  async mounted() {
     let btc = await this.$axios.$get('crypto/btc/fee');
     this.btcActual = btc.actual
     this.btcRemote = btc.remote

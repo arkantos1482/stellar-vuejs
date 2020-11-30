@@ -41,7 +41,7 @@ export default {
       levels: []
     }
   },
-  async fetch() {
+  async mounted() {
     this.levels = await this.$axios.$get('/access/levels')
   },
   methods: {

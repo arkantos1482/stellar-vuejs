@@ -22,7 +22,7 @@ export default {
       profileList: []
     }
   },
-  async fetch() {
+  async mounted() {
     this.profileList = await this.$axios.$get('/profiles');
   },
   methods: {

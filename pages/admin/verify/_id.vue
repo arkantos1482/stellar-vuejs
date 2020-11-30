@@ -29,7 +29,7 @@ export default {
       verifyList: []
     }
   },
-  async fetch() {
+  async mounted() {
     this.state = await this.$axios.$get('/profiles/' + this.userId + '/verifies')
     this.docs.ssn = await this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
     this.docs.bill = await this.$axios.$get('/profiles/' + this.userId + '/docs/bill')

@@ -32,7 +32,7 @@ export default {
       list: [],
     }
   },
-  async fetch() {
+  async mounted() {
     this.list = await this.$axios.$get('/access/' + this.levelId + '/limits')
   },
   methods: {

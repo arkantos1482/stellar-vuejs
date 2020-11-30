@@ -42,7 +42,7 @@ export default {
       withdrawFee: ''
     }
   },
-  async fetch() {
+  async mounted() {
     try {
       this.withdrawFee = await this.$axios.$get('/crypto/fees/' + this.asset)
       this.account = await this.$axios.$get(`/crypto/${this.asset}/address`)

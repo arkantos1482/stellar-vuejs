@@ -37,7 +37,7 @@ export default {
       offers: []
     }
   },
-  async fetch() {
+  async mounted() {
     this.offers = (await this.$axios.$get('/offers'))._embedded.records
   },
   methods: {

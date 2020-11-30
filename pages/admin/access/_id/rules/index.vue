@@ -20,7 +20,7 @@ export default {
       l: {update: false}
     }
   },
-  async fetch() {
+  async mounted() {
     let rule = await this.$axios.$get('/access/' + this.levelId + '/rule')
     if (rule) this.rule = rule
   },
