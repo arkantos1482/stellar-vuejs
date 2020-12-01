@@ -3,7 +3,7 @@
     <td>{{ type }}</td>
     <td v-if="address">{{ address }}</td>
     <td v-else>
-      <v-btn @click="createCrypto" :loading="loading">ایجاد</v-btn>
+      <v-btn @click="createCrypto" :loading="loading">{{ btnName }}</v-btn>
     </td>
     <td>{{ balance }}</td>
     <td>
@@ -16,6 +16,11 @@
 export default {
   name: 'CryptoAddressTr',
   props: ['type', 'address', 'balance'],
+  computed: {
+    btnName() {
+      return this.type !== 'irr' ? 'ایجاد' : 'واریز'
+    }
+  },
   data() {
     return {
       loading: false
@@ -23,9 +28,13 @@ export default {
   },
   methods: {
     async createCrypto() {
-      this.loading = true
-      this.address = await this.$axios.$post('/crypto/' + this.type + '/address/create')
-      this.loading = true
+      if (this.type === 'irr') {
+        await this.$router.push('/RialDeposit')
+      } else {
+        this.loading = true
+        this.address = await this.$axios.$post('/crypto/' + this.type + '/address/create')
+        this.loading = false
+      }
     },
     async more() {
       await this.$router.push({path: '/wallets/' + this.type})
