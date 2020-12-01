@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="4">
       <v-text-field v-model="otp" outlined label="رمز یکبار مصرف"></v-text-field>
-      <v-btn color="primary" @click="onSend" :loading="l.send">ارسال</v-btn>
+      <v-btn color="primary" @click="onSend" :loading="l.send">تایید</v-btn>
       <v-btn @click="reSend" :loading="l.resend">توکن مجدد</v-btn>
     </v-col>
   </v-row>

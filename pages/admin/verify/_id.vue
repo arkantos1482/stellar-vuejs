@@ -6,6 +6,7 @@
         <v-carousel-item :src="docs.bill"/>
       </v-carousel>
 
+      {{12 }}
 
       <h1 class="mt-16">تایید مدارک</h1>
       <v-row>

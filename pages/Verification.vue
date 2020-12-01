@@ -11,6 +11,31 @@
         <v-btn :loading="l.bill" @click="uploadBill">ارسال</v-btn>
       </v-row>
 
+      <v-card>
+        <v-card-title>احراز اصالت موبایل</v-card-title>
+        <v-card-text>
+          <v-text-field v-model="mobile.otp" outlined label="رمز یکبار مصرف"/>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text color="primary" @click="submitMobileOtp" :loading="l.mobileSubmit">تایید توکن</v-btn>
+          <v-btn text @click="requestMobileOtp" :loading="l.mobileRequest">ارسال توکن</v-btn>
+        </v-card-actions>
+      </v-card>
+
+      <v-card class="mt-8 mb-8">
+        <v-card-title>احراز اصالت تلفن ثابت</v-card-title>
+        <v-card-text>
+          <v-text-field v-model="phone.otp" outlined label="رمز یکبار مصرف"/>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text color="primary" @click="submitPhoneOtp" :loading="l.phoneSubmit">تایید توکن</v-btn>
+          <v-btn text @click="requestPhoneOtp" :loading="l.phoneRequest">ارسال توکن</v-btn>
+        </v-card-actions>
+      </v-card>
+
+      <div class="text-center">
+        <v-btn @click="$router.back()">بازگشت</v-btn>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -21,8 +46,14 @@ export default {
     return {
       ssn: '',
       bill: '',
+      mobile: {otp: ''},
+      phone: {otp: ''},
       config: {headers: {"Content-Type": "multipart/form-data"}},
-      l: {ssn: false, bill: false},
+      l: {
+        ssn: false, bill: false,
+        mobileSubmit: false, mobileRequest: false,
+        phoneSubmit: false, phoneRequest: false,
+      },
     }
   },
   methods: {
@@ -39,7 +70,19 @@ export default {
       formData.append('bill', this.bill)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
       this.l.bill = false
-    }
+    },
+    async submitMobileOtp() {
+
+    },
+    async requestMobileOtp() {
+
+    },
+    async submitPhoneOtp() {
+
+    },
+    async requestPhoneOtp() {
+
+    },
   }
 }
 </script>
