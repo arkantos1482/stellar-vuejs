@@ -6,6 +6,9 @@
       <v-text-field v-model="password" label="رمز عبور" type="password"/>
       <v-btn @click="login" :loading="loading" color="primary">ورود</v-btn>
       <v-btn to="/Register">ثبت نام</v-btn>
+      <div class="mt-4">
+        <nuxt-link to="/ForgetPass">فراموشی رمز عبور</nuxt-link>
+      </div>
     </v-col>
   </v-row>
 </template>
@@ -34,8 +37,7 @@ export default {
         await this.$router.push('/Otp')
         // await this.$auth.login({data: {email: this.email, password: this.password}});
         // await this.$router.replace('/')
-        this.loading = false
-      } catch (e) {
+      } finally {
         this.loading = false
       }
     },

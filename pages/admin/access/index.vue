@@ -7,7 +7,7 @@
           hide-default-footer>
         <template v-slot:item.action="{item}">
           <v-btn @click="remove(item.id)" color="red">حذف</v-btn>
-          <v-btn :to="`/admin/access/`+item.id+`/rules`">قوانین</v-btn>
+          <v-btn :to="`/admin/access/`+item.id+`/rules`">مصادیق</v-btn>
           <v-btn :to="`/admin/access/`+item.id+`/limits`">محدودیت ها</v-btn>
         </template>
       </v-data-table>

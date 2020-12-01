@@ -5,5 +5,8 @@ export const mutations = {
         state.url = payload.url
         state.data = payload.data
         state.route = payload.route
+    },
+    setEmail(state, payload) {
+        state.data.email = payload
     }
 }
