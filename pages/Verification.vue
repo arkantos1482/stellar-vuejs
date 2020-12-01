@@ -18,7 +18,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn text color="primary" @click="submitMobileOtp" :loading="l.mobileSubmit">تایید توکن</v-btn>
-          <v-btn text @click="requestMobileOtp" :loading="l.mobileRequest">ارسال توکن</v-btn>
+          <v-btn text @click="requestMobileOtp" :loading="l.mobileRequest">تقاضای توکن</v-btn>
         </v-card-actions>
       </v-card>
 
@@ -29,7 +29,7 @@
         </v-card-text>
         <v-card-actions>
           <v-btn text color="primary" @click="submitPhoneOtp" :loading="l.phoneSubmit">تایید توکن</v-btn>
-          <v-btn text @click="requestPhoneOtp" :loading="l.phoneRequest">ارسال توکن</v-btn>
+          <v-btn text @click="requestPhoneOtp" :loading="l.phoneRequest">تقاضای توکن</v-btn>
         </v-card-actions>
       </v-card>
 
