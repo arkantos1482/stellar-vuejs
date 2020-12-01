@@ -6,7 +6,72 @@
         <v-carousel-item :src="docs.bill"/>
       </v-carousel>
 
-      {{12 }}
+      <h2 class="mt-8">مشخصات استعلامی</h2>
+      <v-simple-table>
+        <thead>
+        <tr>
+          <th>موضوع</th>
+          <th>پاسخ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><h2>کدپستی</h2></td>
+        </tr>
+        <tr>
+          <td>آدرس</td>
+          <td>{{ kyc.postal_code.address }}</td>
+        </tr>
+
+        <tr>
+          <td><h2>کارت بانکی</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_card.firstName + ' ' + kyc.bank_card.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_card.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_card.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_card.accountNumber }}</td>
+        </tr>
+
+        <tr>
+          <td><h2>شبا</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_shaba.firstName + ' ' + kyc.bank_shaba.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_shaba.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_shaba.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_shaba.accountNumber }}</td>
+        </tr>
+
+        <tr>
+          <td><h2>سایر</h2></td>
+        </tr>
+        <tr>
+          <td>تطابق موبایل و کدملی</td>
+          <td>{{ kyc.match_ssn_mobile.matched }}</td>
+        </tr>
+        </tbody>
+      </v-simple-table>
 
       <h1 class="mt-16">تایید مدارک</h1>
       <v-row>
@@ -44,6 +109,12 @@ export default {
   data() {
     return {
       l: {apply: false},
+      kyc: {
+        bank_card: '',
+        bank_shaba: '',
+        postal_code: '',
+        match_ssn_mobile: '',
+      },
       state: {
         email: true,
         cell_phone: false,
@@ -61,6 +132,10 @@ export default {
   },
   async mounted() {
     this.state = await this.$axios.$get('/profiles/' + this.userId + '/verifies')
+    this.kyc.postal_code = await this.$axios.$get('/kyc/' + this.userId + '/postal-code')
+    this.kyc.bank_card = await this.$axios.$get('/kyc/' + this.userId + '/bank-card')
+    this.kyc.bank_shaba = await this.$axios.$get('/kyc/' + this.userId + '/bank-shaba')
+    this.kyc.match_ssn_mobile = await this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
     this.docs.ssn = await this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
     this.docs.bill = await this.$axios.$get('/profiles/' + this.userId + '/docs/bill')
   },
