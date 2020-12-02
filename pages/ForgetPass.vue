@@ -9,6 +9,7 @@
 
 <script>
 export default {
+  layout: 'noToolbar',
   data() {
     return {
       email: ''

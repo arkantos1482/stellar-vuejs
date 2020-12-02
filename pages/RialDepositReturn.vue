@@ -1,6 +1,9 @@
 <template>
-  hello return
-  {{ amount }}
+  <v-row justify="center">
+    <v-col cols="6">
+      {{ amount }}
+    </v-col>
+  </v-row>
 </template>
 
 <script>

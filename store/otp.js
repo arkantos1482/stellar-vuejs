@@ -7,6 +7,6 @@ export const mutations = {
         state.route = payload.route
     },
     setEmail(state, payload) {
-        state.data.email = payload
+        state.data = {...state.data, email: payload}
     }
 }

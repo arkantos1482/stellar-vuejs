@@ -1,16 +1,11 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="text-center">
     <v-col cols="6">
-      <v-card class="pa-8">
-        <h1>ثبت نام</h1>
-        <v-text-field label="ایمیل" v-model="user.email"/>
-        <v-text-field type="password" label="رمز عبور" v-model="user.password"/>
-        <v-text-field label="نام" v-model="user.name"/>
-        <v-text-field label="نام خانوادگی" v-model="user.last_name"/>
-        <v-text-field label="موبایل" v-model="user.cell_phone"/>
-        <v-btn @click="register" color="primary" :loading="l.reg">ثبت نام</v-btn>
-        <v-btn to="/Login">ورود</v-btn>
-      </v-card>
+      <h1 class="mb-8">ثبت نام</h1>
+      <v-text-field filled label="ایمیل" v-model="email"/>
+      <v-text-field filled type="password" label="رمز عبور" v-model="password"/>
+      <v-btn @click="register" color="primary" :loading="l.reg">ثبت نام</v-btn>
+      <v-btn to="/Login">ورود</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -20,13 +15,8 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
-      user: {
-        name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        cell_phone: ''
-      },
+      email: '',
+      password: '',
       l: {reg: false}
     }
   },
@@ -35,10 +25,14 @@ export default {
       this.l.reg = true
       try {
         await this.$axios.$get('/csrf-cookie')
-        await this.$axios.$post('/register', this.user);
-        // await this.$auth.setUserToken(token)
-        await this.$router.replace('/')
-      } catch (e) {
+        await this.$axios.$post('/otp-send', {email: this.email})
+        this.$store.commit('otp/set', {
+          url: '/register',
+          data: {email: this.email, password: this.password},
+          route: '/'
+        })
+        await this.$router.push('/Otp')
+      } finally {
         this.l.reg = false
       }
     }

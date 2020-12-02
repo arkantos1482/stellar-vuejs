@@ -1,9 +1,9 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="text-center">
     <v-col cols="6">
-      <h1> ورود </h1>
-      <v-text-field v-model="email" label="ایمیل"/>
-      <v-text-field v-model="password" label="رمز عبور" type="password"/>
+      <h1 class="mb-8"> ورود </h1>
+      <v-text-field filled v-model="email" label="ایمیل"/>
+      <v-text-field filled v-model="password" label="رمز عبور" type="password"/>
       <v-btn @click="login" :loading="loading" color="primary">ورود</v-btn>
       <v-btn to="/Register">ثبت نام</v-btn>
       <div class="mt-4">

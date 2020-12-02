@@ -1,14 +1,15 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="text-center">
     <v-col cols="4">
-      <v-text-field v-model="password" label="رمز عبور جدید"/>
-      <v-btn :loading="l.send" @click="onSend">ثبت</v-btn>
+      <v-text-field filled v-model="password" label="رمز عبور جدید"/>
+      <v-btn color="primary" :loading="l.send" @click="onSend">ثبت</v-btn>
     </v-col>
   </v-row>
 </template>
 
 <script>
 export default {
+  layout: 'noToolbar',
   data() {
     return {
       l: {send: false},
@@ -20,11 +21,11 @@ export default {
       this.loading = true
       try {
         await this.$axios.$get('/csrf-cookie')
-        await this.$axios.$post('/otp-send', {email: this.email})
+        await this.$axios.$post('/otp-send', {email: this.$store.state.otp.data.email})
         this.$store.commit('otp/set', {
           url: '/reset-pass',
           data: {...this.$store.state.otp.data, password: this.password},
-          route: '/ResetPass'
+          route: '/login'
         })
         await this.$router.push('/Otp')
       } finally {

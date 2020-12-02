@@ -72,16 +72,26 @@ export default {
       this.l.bill = false
     },
     async submitMobileOtp() {
-
+      this.l.mobileSubmit = true
+      await this.$axios.$post('/otp-m/verify', {otp: this.mobile.otp})
+      this.mobile.otp = ''
+      this.l.mobileSubmit = false
     },
     async requestMobileOtp() {
-
+      this.l.mobileRequest = true
+      await this.$axios.$get('/otp-m')
+      this.l.mobileRequest = false
     },
     async submitPhoneOtp() {
-
+      this.l.phoneSubmit = true
+      await this.$axios.$post('/otp-c/verify', {otp: this.phone.otp})
+      this.phone.otp = ''
+      this.l.phoneSubmit = false
     },
     async requestPhoneOtp() {
-
+      this.l.phoneRequest = true
+      await this.$axios.$get('/otp-c')
+      this.l.phoneRequest = false
     },
   }
 }
