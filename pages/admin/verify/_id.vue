@@ -131,13 +131,20 @@ export default {
     }
   },
   async mounted() {
-    this.state = await this.$axios.$get('/profiles/' + this.userId + '/verifies')
-    this.kyc.postal_code = await this.$axios.$get('/kyc/' + this.userId + '/postal-code')
-    this.kyc.bank_card = await this.$axios.$get('/kyc/' + this.userId + '/bank-card')
-    this.kyc.bank_shaba = await this.$axios.$get('/kyc/' + this.userId + '/bank-shaba')
-    this.kyc.match_ssn_mobile = await this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
-    this.docs.ssn = await this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
-    this.docs.bill = await this.$axios.$get('/profiles/' + this.userId + '/docs/bill')
+    this.$axios.$get('/profiles/' + this.userId + '/verifies')
+        .then(res => this.state = res)
+    this.$axios.$get('/kyc/' + this.userId + '/postal-code')
+        .then(res => this.kyc.postal_code = res)
+    this.$axios.$get('/kyc/' + this.userId + '/bank-card')
+        .then(res => this.kyc.bank_card = res)
+    this.$axios.$get('/kyc/' + this.userId + '/bank-shaba')
+        .then(res => this.kyc.bank_shaba = res)
+    this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
+        .then(res => this.kyc.match_ssn_mobile = res)
+    this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
+        .then(res => this.docs.ssn = res)
+    this.$axios.$get('/profiles/' + this.userId + '/docs/bill')
+        .then(res => this.docs.bill = res)
   },
   methods: {
     async apply() {
