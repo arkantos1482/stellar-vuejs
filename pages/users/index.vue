@@ -5,7 +5,6 @@
           @click:row="goto"
           :headers="headers"
           :items="profileList"
-          items-per-page="5"
           hide-default-footer/>
     </v-col>
   </v-row>
