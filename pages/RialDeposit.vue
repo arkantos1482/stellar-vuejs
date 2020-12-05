@@ -23,7 +23,7 @@ export default {
   methods: {
     async onDeposit() {
       this.l.deposit = true
-      this.link = await this.$axios.$post('/deposit/irr', {amount: this.amount})
+      this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount})
       window.open(this.link,'_blank')
       this.l.deposit = false
     }
