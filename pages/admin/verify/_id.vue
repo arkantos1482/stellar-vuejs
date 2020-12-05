@@ -4,6 +4,7 @@
       <v-carousel cycle height="400">
         <v-carousel-item :src="docs.ssn"/>
         <v-carousel-item :src="docs.bill"/>
+        <v-carousel-item :src="docs.bank_card"/>
       </v-carousel>
 
       <h2 class="mt-8">مشخصات استعلامی</h2>
@@ -105,7 +106,10 @@
 </template>
 
 <script>
+import ps from '~/mixins/progress.stopper'
+
 export default {
+  mixins: [ps],
   data() {
     return {
       l: {apply: false},
@@ -126,13 +130,14 @@ export default {
         bank_account: false
       },
       userId: this.$route.params.id,
-      docs: {ssn: '', bill: ''},
+      docs: {ssn: '', bill: '', bank_card: ''},
       verifyList: []
     }
   },
   async mounted() {
     this.$axios.$get('/profiles/' + this.userId + '/verifies')
         .then(res => this.state = res)
+
     this.$axios.$get('/kyc/' + this.userId + '/postal-code')
         .then(res => this.kyc.postal_code = res)
     this.$axios.$get('/kyc/' + this.userId + '/bank-card')
@@ -141,10 +146,13 @@ export default {
         .then(res => this.kyc.bank_shaba = res)
     this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
         .then(res => this.kyc.match_ssn_mobile = res)
+
     this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
         .then(res => this.docs.ssn = res)
     this.$axios.$get('/profiles/' + this.userId + '/docs/bill')
         .then(res => this.docs.bill = res)
+    this.$axios.$get('/profiles/' + this.userId + '/docs/bank-card')
+        .then(res => this.docs.bank_card = res)
   },
   methods: {
     async apply() {

@@ -2,13 +2,18 @@
   <v-row justify="center">
     <v-col cols="6">
       <v-row>
-        <v-file-input label="کارت ملی" show-size @change="ssn=$event"/>
+        <v-file-input label="تصویر کارت ملی" show-size @change="ssn=$event"/>
         <v-btn :loading="l.ssn" @click="uploadSsn">ارسال</v-btn>
       </v-row>
 
       <v-row>
-        <v-file-input label="قبض تلفن" show-size @change="bill=$event"/>
+        <v-file-input label="تصویر قبض تلفن" show-size @change="bill=$event"/>
         <v-btn :loading="l.bill" @click="uploadBill">ارسال</v-btn>
+      </v-row>
+
+      <v-row>
+        <v-file-input label="تصویر کارت بانکی" show-size @change="bankCard=$event"/>
+        <v-btn :loading="l.bankCard" @click="uploadBankCard">ارسال</v-btn>
       </v-row>
 
       <v-card>
@@ -46,11 +51,12 @@ export default {
     return {
       ssn: '',
       bill: '',
+      bankCard: '',
       mobile: {otp: ''},
       phone: {otp: ''},
       config: {headers: {"Content-Type": "multipart/form-data"}},
       l: {
-        ssn: false, bill: false,
+        ssn: false, bill: false, bankCard: false,
         mobileSubmit: false, mobileRequest: false,
         phoneSubmit: false, phoneRequest: false,
       },
@@ -70,6 +76,13 @@ export default {
       formData.append('bill', this.bill)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
       this.l.bill = false
+    },
+    async uploadBankCard() {
+      this.l.bankCard = true
+      const formData = new FormData();
+      formData.append('bank-card', this.bankCard)
+      await this.$axios.$post('/profiles/me/docs', formData, this.config)
+      this.l.bankCard = false
     },
     async submitMobileOtp() {
       this.l.mobileSubmit = true

@@ -9,7 +9,10 @@
 </template>
 
 <script>
+import ps from '~/mixins/progress.stopper'
+
 export default {
+  mixins: [ps],
   data() {
     return {
       amount: '',
@@ -19,7 +22,10 @@ export default {
   },
   methods: {
     async onDeposit() {
-      this.link
+      this.l.deposit = true
+      this.link = await this.$axios.$post('/deposit/irr', {amount: this.amount})
+      window.open(this.link,'_blank')
+      this.l.deposit = false
     }
   }
 }
