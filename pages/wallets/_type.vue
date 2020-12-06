@@ -7,7 +7,7 @@
         <v-text-field v-model="amount" label="مقدار"/>
         <p></p>
         <p>{{ "کارمزد انتقال:  " + withdrawFee }}</p>
-        <v-btn @click="withdraw" :loading="wLoading">برداشت</v-btn>
+        <v-btn @click="withdraw" :loading="l.withdraw">برداشت</v-btn>
         <p>{{ withDrawResult }}</p>
       </v-col>
     </v-row>
@@ -22,7 +22,7 @@
     </v-row>
 
     <json-viewer dir="auto" :value="syncResult"/>
-    <v-btn @click="syncDeposits" :loading="rLoading" class="mt-2">sync deposits</v-btn>
+    <v-btn @click="syncDeposits" :loading="l.sync" class="mt-2">sync deposits</v-btn>
   </div>
 </template>
 
@@ -31,40 +31,37 @@ export default {
   data() {
     return {
       asset: this.$route.params.type,
-      wLoading: false,
+      l: {sync: false, withdraw: false},
       destAddress: '',
       amount: '',
       account: '',
       txs: '',
-      rLoading: false,
       syncResult: '',
       withDrawResult: '',
       withdrawFee: ''
     }
   },
   async mounted() {
-    try {
-      this.withdrawFee = await this.$axios.$get('/crypto/fees/' + this.asset)
-      this.account = await this.$axios.$get(`/crypto/${this.asset}/address`)
-      this.txs = await this.$axios.$get(`/crypto/${this.asset}/txs/basic`)
-    } catch (e) {
-      this.account = 'خطایی رخ داده است.'
-      this.txs = 'خطایی رخ داده است.'
-    }
+    this.$axios.$get('/crypto/fees/' + this.asset)
+        .then(res => this.withdrawFee = res)
+    this.$axios.$get(`/crypto/${this.asset}/address`)
+        .then(res => this.account = res)
+    this.$axios.$get(`/crypto/${this.asset}/txs/basic`)
+        .then(res => this.txs = res)
   },
   methods: {
     async syncDeposits() {
-      this.rLoading = true
+      this.l.sync = true
       this.syncResult = await this.$axios.$get(`/crypto/${this.asset}/sync`)
-      this.rLoading = false
+      this.l.sync = false
     },
     async withdraw() {
-      this.wLoading = true
+      this.l.withdraw = true
       this.withDrawResult = await this.$axios.$post(`/crypto/${this.asset}/withdraw`, {
         to: this.destAddress,
         amount: this.amount
       })
-      this.wLoading = false
+      this.l.withdraw = false
     },
   }
 }
