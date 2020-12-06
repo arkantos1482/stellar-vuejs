@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import ps from '@/mixins/progress.stopper'
+import ps from '@/mixins/pstopper'
 
 export default {
   mixins: [ps],

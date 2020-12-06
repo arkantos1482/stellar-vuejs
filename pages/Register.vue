@@ -11,7 +11,10 @@
 </template>
 
 <script>
+import captcha from "@/mixins/captcha";
+
 export default {
+  mixins: [captcha],
   layout: 'noToolbar',
   data() {
     return {
@@ -28,7 +31,7 @@ export default {
         await this.$axios.$post('/otp-send', {email: this.email})
         this.$store.commit('otp/set', {
           url: '/register',
-          data: {email: this.email, password: this.password},
+          data: {email: this.email, password: this.password, captcha_token: this.captcha_token},
           route: '/'
         })
         await this.$router.push('/Otp')

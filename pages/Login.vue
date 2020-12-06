@@ -4,7 +4,7 @@
       <h1 class="mb-8"> ورود </h1>
       <v-text-field filled v-model="email" label="ایمیل"/>
       <v-text-field filled v-model="password" label="رمز عبور" type="password"/>
-      <v-btn @click="login" :loading="loading" color="primary">ورود</v-btn>
+      <v-btn @click="login" :loading="l.login" color="primary">ورود</v-btn>
       <v-btn to="/Register">ثبت نام</v-btn>
       <div class="mt-4">
         <nuxt-link to="/ForgetPass">فراموشی رمز عبور</nuxt-link>
@@ -14,31 +14,34 @@
 </template>
 
 <script>
+import captcha from "@/mixins/captcha";
+
 export default {
+  mixins: [captcha],
   layout: 'noToolbar',
   data() {
     return {
-      loading: false,
+      l: {login: false},
       email: '',
-      password: ''
+      password: '',
     }
   },
   methods: {
     async login() {
-      this.loading = true
+      this.l.login = true
       try {
         await this.$axios.$get('/csrf-cookie')
         await this.$axios.$post('/otp-send', {email: this.email})
         this.$store.commit('otp/set', {
           url: '/login',
-          data: {email: this.email, password: this.password},
+          data: {email: this.email, password: this.password, captcha_token: this.captcha_token},
           route: '/'
         })
         await this.$router.push('/Otp')
         // await this.$auth.login({data: {email: this.email, password: this.password}});
         // await this.$router.replace('/')
       } finally {
-        this.loading = false
+        this.l.login = false
       }
     },
   }
