@@ -16,19 +16,22 @@
   </tr>
 </template>
 <script>
+import ps from '@/mixins/progress.stopper'
+
 export default {
+  mixins: [ps],
   name: 'CryptoAddressTr',
   props: ['type', 'address', 'balance'],
   data() {
     return {
-      loading: false
+      l: {create: false}
     }
   },
   methods: {
     async createCrypto() {
-      this.loading = true
+      this.l.create = true
       this.address = await this.$axios.$post('/crypto/' + this.type + '/address/create')
-      this.loading = false
+      this.l.create = false
     },
     async more() {
       await this.$router.push({path: '/wallets/' + this.type})
