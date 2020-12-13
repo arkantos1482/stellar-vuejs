@@ -31,15 +31,21 @@ export default {
       this.l.login = true
       try {
         await this.$axios.$get('/csrf-cookie')
-        await this.$axios.$post('/otp-send', {email: this.email})
-        this.$store.commit('otp/set', {
-          url: '/login',
-          data: {email: this.email, password: this.password, captcha_token: this.captcha_token},
-          route: '/'
-        })
-        await this.$router.push('/Otp')
-        // await this.$auth.login({data: {email: this.email, password: this.password}});
-        // await this.$router.replace('/')
+        const loginState = await this.$axios.$post('/login',
+            {email: this.email, password: this.password, captcha_token: this.captcha_token});
+        if (loginState.meta === 'success') {
+          await this.$router.replace('/')
+        } else if (loginState.meta === 'token_needed') {
+          this.$store.commit('login/set', {email: this.email, password: this.password})
+          await this.$router.push('/LoginOtp')
+        }
+
+        // await this.$axios.$post('/otp-send', {email: this.email})
+        // this.$store.commit('otp/set', {
+        //   url: '/login',
+        //   data: {email: this.email, password: this.password, captcha_token: this.captcha_token},
+        //   route: '/'
+        // })
       } finally {
         this.l.login = false
       }
