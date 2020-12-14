@@ -9,9 +9,10 @@
 
 <script>
 import captcha from "@/mixins/captcha";
+import pstopper from "@/mixins/pstopper";
 
 export default {
-  mixins: [captcha],
+  mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {
     return {
@@ -22,18 +23,16 @@ export default {
   methods: {
     async onSend() {
       this.loading = true
-      try {
-        await this.$axios.$get('/csrf-cookie')
-        await this.$axios.$post('/otp-send', {email: this.$store.state.otp.data.email})
-        this.$store.commit('otp/set', {
-          url: '/reset-pass',
-          data: {...this.$store.state.otp.data, password: this.password, captcha_token: this.captcha_token},
-          route: '/login'
-        })
-        await this.$router.push('/Otp')
-      } finally {
-        this.loading = false
-      }
+      await this.getCaptcha()
+      await this.$axios.$post('/reset-pass', {
+        email: this.$store.state.credentials.email,
+        password: this.password,
+        otp: this.$store.state.credentials.otp,
+        captcha_token: this.captcha_token
+      })
+      this.$store.commit('credentials/reset')
+      await this.$router.push('/Login')
+      this.loading = false
     }
   }
 }

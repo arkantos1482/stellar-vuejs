@@ -8,7 +8,11 @@ export default {
         // (optional) Wait until recaptcha has been loaded.
         await this.$recaptchaLoaded()
         this.$recaptchaInstance.showBadge()
-        this.captcha_token = await this.$recaptcha('login')
+    },
+    methods: {
+        async getCaptcha() {
+            this.captcha_token = await this.$recaptcha('login')
+        }
     },
     beforeDestroy() {
         this.$recaptchaInstance.hideBadge()

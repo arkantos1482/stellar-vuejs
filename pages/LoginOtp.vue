@@ -24,12 +24,14 @@ export default {
   methods: {
     async onSubmit() {
       this.l.submit = true
+      await this.getCaptcha()
       await this.$axios.$post('/login', {
-        ...this.$store.state.login,
+        email: this.$store.state.credentials.email,
+        password: this.$store.state.credentials.password,
         otp: this.token,
         captcha_token: this.captcha_token
       })
-      this.$store.commit('login/reset')
+      this.$store.commit('credentials/reset')
       await this.$router.push('/')
       this.l.submit = false
     }

@@ -1,37 +1,42 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="4">
-      <v-text-field v-model="email" filled label="ایمیل"/>
-      <v-btn @click="onSubmit" :loading="l.submit">ثبت</v-btn>
+  <v-row>
+    <v-col>
+      <otp @send="onSubmit" v-model="token"/>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import captcha from "@/mixins/captcha";
+import Otp from "@/components/Otp";
 import pstopper from "@/mixins/pstopper";
 
 export default {
+  components: {Otp},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {
     return {
       l: {submit: false},
-      email: ''
+      token: ''
     }
   },
   methods: {
     async onSubmit() {
       this.l.submit = true
       await this.getCaptcha()
-      await this.$axios.$get('/csrf-cookie')
-      await this.$axios.$post('/forget-pass', {
-        email: this.email,
+      await this.$axios.$post('/forget-pass-verify', {
+        email: this.$store.state.credentials.email,
+        otp: this.token,
         captcha_token: this.captcha_token
       })
-      this.$store.commit("credentials/set", {email: this.email})
+
+      this.$store.commit('credentials/set', {
+        email: this.$store.state.credentials.email,
+        otp: this.token
+      })
+      await this.$router.push('/ResetPass')
       this.l.submit = false
-      await this.$router.push('/ForgetPassVerify')
     }
   }
 }
