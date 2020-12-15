@@ -4,7 +4,7 @@
       <v-select filled label="منبع" v-model="limit.resource" :items="choices.resource"/>
       <v-select filled label="عمل" v-model="limit.action" :items="choices.action"/>
       <v-select filled label="مدت زمان اعمال" v-model="limit.period" :items="choices.period"/>
-      <v-text-field filled label="سقف" v-model="limit.max"/>
+      <a-text-field filled label="سقف" v-model="limit.max"/>
       <v-btn @click="create" :loading="l.create" color="primary">اعمال</v-btn>
       <v-btn @click="$router.back()">بازگشت</v-btn>
     </v-col>

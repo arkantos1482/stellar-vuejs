@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" class="text-center">
     <v-col cols="4">
-      <v-text-field filled type="password" v-model="password" label="رمز عبور جدید"/>
+      <a-text-field filled type="password" v-model="password" label="رمز عبور جدید"/>
       <v-btn color="primary" :loading="l.send" @click="onSend">ثبت</v-btn>
     </v-col>
   </v-row>

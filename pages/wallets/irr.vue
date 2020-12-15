@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="6">
       <v-select v-model="type" filled :items="items"/>
-      <v-text-field v-model="amount" filled label="مقدار ریال"></v-text-field>
+      <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn color="primary" @click="onWithdraw" :loading="l.withdraw">برداشت</v-btn>
       <v-btn @click="$router.back()">بازگشت</v-btn>
     </v-col>

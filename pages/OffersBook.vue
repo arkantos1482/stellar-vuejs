@@ -13,8 +13,8 @@
       <v-col cols="6">
         <v-card outlined class="mb-4 p-16">
           <v-row>
-            <v-text-field v-model="buy.amount" :label="amountLabel" class="mx-4"/>
-            <v-text-field v-model="buy.price" :label="priceLabel" class="mx-4"/>
+            <a-text-field v-model="buy.amount" :label="amountLabel" class="mx-4"/>
+            <a-text-field v-model="buy.price" :label="priceLabel" class="mx-4"/>
           </v-row>
           <div class="text-center mb-4">
             <v-btn @click="doBuy" :loading="l.buy" color="green">ثبت خرید</v-btn>
@@ -42,8 +42,8 @@
       <v-col cols="6">
         <v-card outlined class="mb-4">
           <v-row>
-            <v-text-field v-model="sell.amount" :label="amountLabel" class="mx-4"/>
-            <v-text-field v-model="sell.price" :label="priceLabel" class="mx-4"/>
+            <a-text-field v-model="sell.amount" :label="amountLabel" class="mx-4"/>
+            <a-text-field v-model="sell.price" :label="priceLabel" class="mx-4"/>
           </v-row>
           <div class="text-center mb-4">
             <v-btn @click="doSell" :loading="l.sell" color="red">ثبت فروش</v-btn>

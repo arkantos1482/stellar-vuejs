@@ -1,12 +1,32 @@
 <template>
-  <v-row justify="center" class="text-center">
-    <v-col cols="6">
-      <h1 class="mb-8">ثبت نام</h1>
-      <v-text-field filled label="ایمیل" v-model="email"/>
-      <v-text-field filled type="password" label="رمز عبور" v-model="password"/>
-      <v-text-field filled label="کد معرف" v-model="referral_code"/>
-      <v-btn @click="register" color="primary" :loading="l.reg">ثبت نام</v-btn>
-      <v-btn to="/Login">ورود</v-btn>
+  <v-row justify="center" class="text-center" >
+    <v-col cols="4">
+      <v-card elevation="6">
+        <div class="text-center">ایجاد حساب کاربری</div>
+        <v-card-subtitle>خوش آمدید</v-card-subtitle>
+        <v-card-text>
+          <v-tabs>
+            <v-tab>حقیقی</v-tab>
+            <v-tab>حقوقی</v-tab>
+          </v-tabs>
+          <v-divider/>
+          <a-text-field class="mt-4" label="ایمیل" v-model="email"/>
+          <a-text-field type="password" label="رمز عبور" v-model="password"/>
+          <a-text-field type="password" label="تکرار رمز عبور" v-model="password"/>
+          <a-text-field label="کد معرف(اختیاری)" v-model="referral_code"/>
+          <v-checkbox v-model="terms">
+            <template v-slot:label>
+              <a href="#">قوانین و شرایط</a>
+              <span>بیترا را می پذریم.</span>
+            </template>
+          </v-checkbox>
+          <v-btn @click="register" :loading="l.reg"
+                 color="primary" block> تایید
+          </v-btn>
+          <p>قبلا ثبت نام کرده اید؟</p>
+          <nuxt-link to="/Login">ورود</nuxt-link>
+        </v-card-text>
+      </v-card>
     </v-col>
   </v-row>
 </template>
@@ -14,8 +34,10 @@
 <script>
 import captcha from "@/mixins/captcha";
 import pstopper from "@/mixins/pstopper";
+import ATextField from "@/components/ATextField";
 
 export default {
+  components: {ATextField},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {
@@ -23,6 +45,7 @@ export default {
       email: '',
       password: '',
       referral_code: null,
+      terms: false,
       l: {reg: false}
     }
   },

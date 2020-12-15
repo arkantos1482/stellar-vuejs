@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-col cols="6">
       {{ coin }}
-      <v-text-field filled v-model="withdrawFee" placeholder="کارمزد برداشت"/>
+      <a-text-field filled v-model="withdrawFee" placeholder="کارمزد برداشت"/>
       <v-btn color="red" @click="setFee" :loading="l.setFee">اعمال</v-btn>
       <p class="mt-12">پیشنهاد شبکه : </p>
       {{ externalNetworkFee }}

@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="4">
-      <v-text-field v-model="email" filled label="ایمیل"/>
+      <a-text-field v-model="email" filled label="ایمیل"/>
       <v-btn @click="onSubmit" :loading="l.submit">ثبت</v-btn>
     </v-col>
   </v-row>

@@ -19,7 +19,7 @@
       <v-card>
         <v-card-title>احراز اصالت موبایل</v-card-title>
         <v-card-text>
-          <v-text-field v-model="mobile.otp" outlined label="رمز یکبار مصرف"/>
+          <a-text-field v-model="mobile.otp" outlined label="رمز یکبار مصرف"/>
         </v-card-text>
         <v-card-actions>
           <v-btn text color="primary" @click="submitMobileOtp" :loading="l.mobileSubmit">تایید توکن</v-btn>
@@ -30,7 +30,7 @@
       <v-card class="mt-8 mb-8">
         <v-card-title>احراز اصالت تلفن ثابت</v-card-title>
         <v-card-text>
-          <v-text-field v-model="phone.otp" outlined label="رمز یکبار مصرف"/>
+          <a-text-field v-model="phone.otp" outlined label="رمز یکبار مصرف"/>
         </v-card-text>
         <v-card-actions>
           <v-btn text color="primary" @click="submitPhoneOtp" :loading="l.phoneSubmit">تایید توکن</v-btn>

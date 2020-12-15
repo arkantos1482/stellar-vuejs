@@ -15,7 +15,7 @@
       <v-dialog v-model="dialog.show" width="400">
         <v-card>
           <v-card-text>
-            <v-text-field v-model="dialog.name" label="نام"/>
+            <a-text-field v-model="dialog.name" label="نام"/>
           </v-card-text>
           <v-card-actions>
             <v-btn @click="insert">انجام</v-btn>

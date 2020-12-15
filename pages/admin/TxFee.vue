@@ -2,25 +2,25 @@
   <v-row>
     <!--    BTC-->
     <v-col cols="4">
-      <v-text-field v-model="btcActual" label="btc fee"/>
+      <a-text-field v-model="btcActual" label="btc fee"/>
       <json-viewer dir="ltr" :value="btcRemote"/>
       <v-btn @click="btcUpdate" :loading="bLoading">update</v-btn>
-      <v-text-field v-model="destAddress" label="حساب مقصد"/>
-      <v-text-field v-model="amount" label="مقدار"/>
+      <a-text-field v-model="destAddress" label="حساب مقصد"/>
+      <a-text-field v-model="amount" label="مقدار"/>
       <v-btn @click="getBtcSize" :loading="sLoading">Tx Size</v-btn>
       <p>{{ btcSize }}</p>
     </v-col>
 
     <!--    ETH-->
     <v-col cols="4">
-      <v-text-field v-model="ethActual" label="eth fee"/>
+      <a-text-field v-model="ethActual" label="eth fee"/>
       <json-viewer dir="ltr" :value="ethRemote"/>
       <v-btn @click="ethUpdate" :loading="eLoading">update</v-btn>
     </v-col>
 
     <!--    LTC-->
     <v-col cols="4">
-      <v-text-field v-model="ltcActual" label="ltc fee"/>
+      <a-text-field v-model="ltcActual" label="ltc fee"/>
       <json-viewer dir="ltr" :value="ltcRemote"/>
       <v-btn @click="ltcUpdate" :loading="lLoading">update</v-btn>
     </v-col>

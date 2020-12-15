@@ -3,8 +3,8 @@
 
     <v-row class="justify-center">
       <v-col cols="6">
-        <v-text-field v-model="destAddress" label="حساب مقصد"/>
-        <v-text-field v-model="amount" label="مقدار"/>
+        <a-text-field v-model="destAddress" label="حساب مقصد"/>
+        <a-text-field v-model="amount" label="مقدار"/>
         <p></p>
         <p>{{ "کارمزد انتقال:  " + withdrawFee }}</p>
         <v-btn @click="withdraw" :loading="l.withdraw">برداشت</v-btn>

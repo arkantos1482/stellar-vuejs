@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="6">
-      <v-text-field v-model="amount" filled label="مقدار ریال"></v-text-field>
+      <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn color="primary" @click="onDeposit" :loading="l.deposit">واریز</v-btn>
       <v-btn @click="$router.back()">بازگشت</v-btn>
     </v-col>
