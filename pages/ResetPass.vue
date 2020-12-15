@@ -1,17 +1,22 @@
 <template>
-  <v-row justify="center" class="text-center">
-    <v-col cols="4">
-      <a-text-field filled type="password" v-model="password" label="رمز عبور جدید"/>
-      <v-btn color="primary" :loading="l.send" @click="onSend">ثبت</v-btn>
-    </v-col>
-  </v-row>
+  <login-reg-card title="ایجاد رمز عبور جدید">
+    <a-text-field type="password" v-model="password" label="رمز عبور"
+                  class="mt-16"/>
+    <a-text-field type="password" v-model="password" label="تکرار رمز عبور"/>
+    <v-btn :loading="l.send" @click="onSend"
+           block color="primary" class="mt-8">تایید
+    </v-btn>
+  </login-reg-card>
 </template>
 
 <script>
 import captcha from "@/mixins/captcha";
 import pstopper from "@/mixins/pstopper";
+import ATextField from "@/components/ATextField";
+import LoginRegCard from "@/components/LoginRegCard";
 
 export default {
+  components: {LoginRegCard, ATextField},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {
