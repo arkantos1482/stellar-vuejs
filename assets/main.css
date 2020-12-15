@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'IranSans';
     font-display: swap;
-    font-weight: 200;
+    font-weight: normal;
     font-style: normal;
     src: url('~assets/fonts/iransans.woff') format("woff");
 }
@@ -9,15 +9,15 @@
 @font-face {
     font-family: 'IranSans';
     font-display: swap;
-    font-weight: 400;
+    font-weight: bold;
     font-style: normal;
     src: url('~assets/fonts/iransans_medium.woff') format("woff");
 }
 
-@font-face {
-    font-family: 'IranSans';
-    font-display: swap;
-    font-weight: 700;
-    font-style: normal;
-    src: url('~assets/fonts/iransans_bold.woff') format("woff");
-}
+/*@font-face {*/
+/*    font-family: 'IranSans';*/
+/*    font-display: swap;*/
+/*    font-weight: auto;*/
+/*    font-style: auto;*/
+/*    src: url('~assets/fonts/iransans_bold.woff') format("woff");*/
+/*}*/

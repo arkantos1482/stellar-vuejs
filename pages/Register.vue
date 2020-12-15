@@ -1,9 +1,9 @@
 <template>
-  <v-row justify="center" class="text-center" >
+  <v-row justify="center" class="text-center">
     <v-col cols="4">
-      <v-card elevation="6">
-        <div class="text-center">ایجاد حساب کاربری</div>
-        <v-card-subtitle>خوش آمدید</v-card-subtitle>
+      <v-card class="pt-12 pb-8 px-4" elevation="6">
+        <div class="text-h5">ایجاد حساب کاربری</div>
+        <div class="mt-4 text-body-1 grey--text text--darken-1">خوش آمدید</div>
         <v-card-text>
           <v-tabs>
             <v-tab>حقیقی</v-tab>
@@ -13,17 +13,17 @@
           <a-text-field class="mt-4" label="ایمیل" v-model="email"/>
           <a-text-field type="password" label="رمز عبور" v-model="password"/>
           <a-text-field type="password" label="تکرار رمز عبور" v-model="password"/>
-          <a-text-field label="کد معرف(اختیاری)" v-model="referral_code"/>
-          <v-checkbox v-model="terms">
+          <a-text-field filled="true" label="کد معرف(اختیاری)" v-model="referral_code"/>
+          <v-checkbox v-model="terms" class="mt-0">
             <template v-slot:label>
               <a href="#">قوانین و شرایط</a>
-              <span>بیترا را می پذریم.</span>
+              <span>&nbsp;بیترا را می پذیرم.</span>
             </template>
           </v-checkbox>
           <v-btn @click="register" :loading="l.reg"
-                 color="primary" block> تایید
+                 class="mb-8" color="primary" block> تایید
           </v-btn>
-          <p>قبلا ثبت نام کرده اید؟</p>
+          <span>قبلا ثبت نام کرده اید؟</span>
           <nuxt-link to="/Login">ورود</nuxt-link>
         </v-card-text>
       </v-card>
