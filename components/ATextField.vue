@@ -1,5 +1,5 @@
 <template>
-  <v-text-field outlined dense hint="some"
+  <v-text-field outlined dense
                 @change="$emit('input',$event)"
                 :type="type"
                 :value="value"

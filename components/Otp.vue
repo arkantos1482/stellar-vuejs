@@ -1,8 +1,7 @@
 <template>
   <div>
     <a-text-field
-        @change="$emit('input',$event)"
-        :value="value"
+        @input="$emit('otp',$event)"
         :label="label"/>
     <div v-show="startCount">
       00:{{ counter }}
@@ -24,7 +23,7 @@ import ATextField from "@/components/ATextField";
 export default {
   name: 'otp',
   components: {ATextField},
-  props: ['value', 'label', 'loading'],
+  props: ['label', 'loading'],
   data() {
     return {
       counter: 59,

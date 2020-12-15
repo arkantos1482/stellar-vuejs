@@ -9,7 +9,7 @@
       <v-divider/>
       <a-text-field class="mt-4" label="ایمیل" v-model="email"/>
       <a-text-field type="password" label="رمز عبور" v-model="password"/>
-      <a-text-field type="password" label="تکرار رمز عبور" v-model="password"/>
+      <a-text-field type="password" label="تکرار رمز عبور" v-model="passwordConfirm"/>
       <a-text-field filled="true" label="کد معرف(اختیاری)" v-model="referral_code"/>
       <v-checkbox v-model="terms" class="mt-0">
         <template v-slot:label>
@@ -40,6 +40,7 @@ export default {
     return {
       email: '',
       password: '',
+      passwordConfirm: '',
       referral_code: null,
       terms: false,
       l: {reg: false}
@@ -47,19 +48,20 @@ export default {
   },
   methods: {
     async register() {
-      this.l.reg = true
-
-      await this.getCaptcha()
-      await this.$axios.$get('/csrf-cookie')
-      await this.$axios.$post('/register', {
-        email: this.email,
-        password: this.password,
-        referral_code: this.referral_code,
-        captcha_token: this.captcha_token
-      })
-      this.$store.commit('credentials/set', {email: this.email})
-      await this.$router.push('/RegisterVerify')
-      this.l.reg = false
+      if (this.password === this.passwordConfirm) {
+        this.l.reg = true
+        await this.getCaptcha()
+        await this.$axios.$get('/csrf-cookie')
+        await this.$axios.$post('/register', {
+          email: this.email,
+          password: this.password,
+          referral_code: this.referral_code,
+          captcha_token: this.captcha_token
+        })
+        this.$store.commit('credentials/set', {email: this.email})
+        await this.$router.push('/RegisterVerify')
+        this.l.reg = false
+      }
     }
   }
 }

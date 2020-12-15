@@ -1,7 +1,7 @@
 <template>
   <login-reg-card title="کد تایید ایمیل"
                   subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی که به ایمیل شما ارسال شده را در کادر زیر وارد نمایید.">
-    <otp class="mt-8" @send="onSubmit" v-model="token" label="کد تایید"/>
+    <otp class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
   </login-reg-card>
 </template>
 
