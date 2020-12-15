@@ -1,30 +1,26 @@
 <template>
-  <v-row justify="center" class="text-center">
-    <v-col cols="4">
-      <v-card class="pt-12 pb-8 px-4" elevation="6">
-        <div class="text-h5">ورود به حساب کاربری</div>
-        <v-card-text class="mt-16">
-          <a-text-field v-model="email" label="ایمیل"/>
-          <a-text-field v-model="password" label="رمز عبور" type="password"/>
-          <v-btn @click="login" :loading="l.login"
-                 block color="primary" class="mt-8">تایید
-          </v-btn>
-          <v-row justify="space-between" dense class="mt-2">
-            <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
-            <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
-          </v-row>
-        </v-card-text>
-      </v-card>
-    </v-col>
-  </v-row>
+  <login-reg-card title="ورود به حساب کاربری">
+    <v-card-text class="mt-16">
+      <a-text-field v-model="email" label="ایمیل"/>
+      <a-text-field v-model="password" label="رمز عبور" type="password"/>
+      <v-btn @click="login" :loading="l.login"
+             block color="primary" class="mt-8">تایید
+      </v-btn>
+      <v-row justify="space-between" dense class="mt-2">
+        <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
+        <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
+      </v-row>
+    </v-card-text>
+  </login-reg-card>
 </template>
 
 <script>
 import captcha from "@/mixins/captcha";
 import ATextField from "@/components/ATextField";
+import LoginRegCard from "@/components/LoginRegCard";
 
 export default {
-  components: {ATextField},
+  components: {LoginRegCard, ATextField},
   mixins: [captcha],
   layout: 'noToolbar',
   data() {

@@ -1,18 +1,18 @@
 <template>
-  <v-row>
-    <v-col>
-      <otp @send="onSubmit" v-model="token"/>
-    </v-col>
-  </v-row>
+  <login-reg-card title="تایید کد دو عاملی"
+                  subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل شما ارسال شده را در کادر زیر وارد نمایید.">
+    <otp class="mt-8" @send="onSubmit" v-model="token" label="کد تایید"/>
+  </login-reg-card>
 </template>
 
 <script>
 import captcha from "@/mixins/captcha";
 import Otp from "@/components/Otp";
 import pstopper from "@/mixins/pstopper";
+import LoginRegCard from "@/components/LoginRegCard";
 
 export default {
-  components: {Otp},
+  components: {LoginRegCard, Otp},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {

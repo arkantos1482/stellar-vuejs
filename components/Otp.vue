@@ -1,46 +1,55 @@
 <template>
-  <v-row justify="center">
-    <v-col cols="4">
-      {{ title }}
-      {{ desc }}
-      <v-text-field outlined
-                    @change="$emit('input',$event)"
-                    :value="value"
-                    :label="label"/>
-      <v-btn color="primary" @click="$emit('send')" :loading="loading">تایید</v-btn>
-      <v-btn @click="$emit('resend')">توکن مجدد</v-btn>
-    </v-col>
-  </v-row>
+  <div>
+    <a-text-field
+        @change="$emit('input',$event)"
+        :value="value"
+        :label="label"/>
+    <div v-show="startCount">
+      00:{{ counter }}
+    </div>
+    <div v-show="codeFailure" class="mt-8 grey--text">
+      <span>کد تایید دریافت نشد؟</span>
+      <a @click="onResend">ارسال مجدد</a>
+    </div>
+    <v-btn @click="onSend" :loading="loading"
+           block color="primary" class="mt-8">تایید
+    </v-btn>
+  </div>
 </template>
 
 <script>
 
+import ATextField from "@/components/ATextField";
+
 export default {
   name: 'otp',
-  props: ['value', 'title', 'desc', 'label', 'loading'],
+  components: {ATextField},
+  props: ['value', 'label', 'loading'],
   data() {
-    return {}
+    return {
+      counter: 59,
+      startCount: false,
+      codeFailure: false
+    }
   },
   methods: {
-    async onSend() {
+    onSend() {
+      this.counter = 59
+      this.startCount = true
+      this.codeFailure = false
+      const interval = setInterval(() => {
+        if (this.counter > 0) {
+          this.counter--
+        } else {
+          this.codeFailure = true
+          this.startCount = false
+          clearInterval(interval)
+        }
+      }, 1000);
 
-      // this.loading = true
-      // try {
-      //   await this.$axios.$post(this.url, {...this.data, otp: this.otp})
-      //   await this.$router.push(this.route)
-      // } catch (e) {
-      // } finally {
-      //   this.loading = false
-      // }
+      this.$emit('send')
     },
-    async reSend() {
-      // this.l.resend = true
-      // try {
-      //   await this.$axios.$post('/otp-send', {email: this.data.email})
-      // } catch (e) {
-      // } finally {
-      //   this.l.resend = false
-      // }
+    onResend() {
     }
   }
 }
