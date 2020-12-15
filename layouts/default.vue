@@ -22,15 +22,22 @@
     <v-app-bar :clipped-left="clipped"
                fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-      <v-toolbar-title v-text="title"/>
       <v-spacer/>
-      <v-btn icon>
-        <v-icon>mdi-application</v-icon>
+      <v-menu>
+        <template v-slot:activator="{on,attrs}">
+          <v-btn text v-bind="attrs" v-on="on">{{ title }}
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item to="/Users/me">پروفایل</v-list-item>
+          <v-list-item>امنیت</v-list-item>
+          <v-list-item @click="logout">خروج</v-list-item>
+        </v-list>
+      </v-menu>
+      <v-btn text small>
+        <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-btn @click="logout"> Logout</v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
