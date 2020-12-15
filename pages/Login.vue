@@ -1,14 +1,20 @@
 <template>
   <v-row justify="center" class="text-center">
-    <v-col cols="6">
-      <h1 class="mb-8"> ورود </h1>
-      <a-text-field filled v-model="email" label="ایمیل"/>
-      <a-text-field filled v-model="password" label="رمز عبور" type="password"/>
-      <v-btn @click="login" :loading="l.login" color="primary">ورود</v-btn>
-      <v-btn to="/Register">ثبت نام</v-btn>
-      <div class="mt-4">
-        <nuxt-link to="/ForgetPass">فراموشی رمز عبور</nuxt-link>
-      </div>
+    <v-col cols="4">
+      <v-card class="pt-12 pb-8 px-4" elevation="6">
+        <div class="text-h5">ورود به حساب کاربری</div>
+        <v-card-text class="mt-16">
+          <a-text-field v-model="email" label="ایمیل"/>
+          <a-text-field v-model="password" label="رمز عبور" type="password"/>
+          <v-btn @click="login" :loading="l.login"
+                 block color="primary" class="mt-8">تایید
+          </v-btn>
+          <v-row justify="space-between" dense class="mt-2">
+            <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
+            <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
+          </v-row>
+        </v-card-text>
+      </v-card>
     </v-col>
   </v-row>
 </template>
