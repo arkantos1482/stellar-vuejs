@@ -10,7 +10,7 @@
       <a-text-field class="mt-4" label="ایمیل" v-model="email"/>
       <a-text-field type="password" label="رمز عبور" v-model="password"/>
       <a-text-field type="password" label="تکرار رمز عبور" v-model="passwordConfirm"/>
-      <a-text-field filled="true" label="کد معرف(اختیاری)" v-model="referral_code"/>
+      <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
       <v-checkbox v-model="terms" class="mt-0">
         <template v-slot:label>
           <a href="#">قوانین و شرایط</a>
@@ -41,7 +41,7 @@ export default {
       email: '',
       password: '',
       passwordConfirm: '',
-      referral_code: null,
+      referral_code: this.$route.query.referral_code,
       terms: false,
       l: {reg: false}
     }

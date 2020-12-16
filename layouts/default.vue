@@ -31,6 +31,7 @@
         </template>
         <v-list>
           <v-list-item to="/Users/me">پروفایل</v-list-item>
+          <v-list-item to="/Referral">دعوت از دوستان</v-list-item>
           <v-list-item to="/Security">امنیت</v-list-item>
           <v-list-item @click="logout">خروج</v-list-item>
         </v-list>
