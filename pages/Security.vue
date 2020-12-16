@@ -1,8 +1,7 @@
 <template>
   <div>
     <p class="primary--text">با فعال سازی شناسایی دوعاملی، امنیت تراکنش ها و دارایی های خود را افزایش دهید.</p>
-    <a-card title="شناسایی دو عاملی">
-      <v-divider class="my-2"/>
+    <a-card divider title="شناسایی دو عاملی">
       <p>شناسایی دوعاملی برای حساب کاربری شما
         <span :class="statusClass">{{ statusText }}</span>
         است.</p>

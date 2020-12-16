@@ -1,16 +1,18 @@
 <template>
-  <v-row justify="center">
-    <v-card width="100%" class="py-4 px-8" elevation="6">
-      <div class="text-h6">{{ title }}</div>
-      <slot></slot>
-    </v-card>
-  </v-row>
+  <v-card class="py-4 px-8" elevation="6">
+    <div class="text-h6 mb-2">{{ title }}</div>
+    <v-divider v-show="divider" class="mb-2"/>
+    <slot></slot>
+  </v-card>
 </template>
 
 <script>
 export default {
   name: "LoginRegCard",
-  props: ['title']
+  props: {
+    title: String,
+    divider: {type: Boolean, default: false}
+  }
 }
 </script>
 
