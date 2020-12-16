@@ -30,7 +30,7 @@ export default {
 
     // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
     plugins: ['~/plugins/filters.js', '~/plugins/components.js'
-        , '~/plugins/axiosAuth.js','~/plugins/recaptcha.js'],
+        , '~/plugins/axiosAuth.js', '~/plugins/recaptcha.js'],
 
     // Auto import components (https://go.nuxtjs.dev/config-components)
     components: true,
@@ -64,7 +64,8 @@ export default {
     // Axios module configuration (https://go.nuxtjs.dev/config-axios)
     axios: {
         baseURL: process.env.BASE_URL,
-        credentials: true
+        credentials: true,
+        progress: false
     },
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
