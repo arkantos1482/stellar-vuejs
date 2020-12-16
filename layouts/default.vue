@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer v-model="drawer"
-                         fixed right app>
+    <v-navigation-drawer v-show="isAdmin" v-model="drawer" fixed right app>
       <v-list>
         <v-list-item
             v-for="(item, i) in items"
@@ -19,10 +18,33 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped"
-               fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-      <v-spacer/>
+    <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon v-show="isAdmin" @click.stop="drawer = !drawer"/>
+      <v-tabs>
+        <v-tab to="/OffersBook">ثبت سفارش</v-tab>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-tab v-bind="attrs" v-on="on"> کیف پول</v-tab>
+          </template>
+          <v-list>
+            <v-list-item to="/Wallets">کیف پول</v-list-item>
+            <v-list-item to="/Deposits"> واریزها</v-list-item>
+            <v-list-item to="/Withdraws"> برداشت ها</v-list-item>
+          </v-list>
+        </v-menu>
+        <v-menu offset-y>
+          <template v-slot:activator="{ on, attrs }">
+            <v-tab v-bind="attrs" v-on="on"> سفارشات</v-tab>
+          </template>
+          <v-list>
+            <v-list-item to="/Offers"> سفارشات</v-list-item>
+            <v-list-item to="/ActiveOffers"> سفارشات در جریان</v-list-item>
+          </v-list>
+        </v-menu>
+        <v-tab to="/Trades">معاملات</v-tab>
+        <v-tab to="/Referral">دعوت از دوستان</v-tab>
+      </v-tabs>
+      <!--      <v-spacer/>-->
       <v-menu>
         <template v-slot:activator="{on,attrs}">
           <v-btn text v-bind="attrs" v-on="on">{{ title }}
@@ -31,7 +53,6 @@
         </template>
         <v-list>
           <v-list-item to="/Users/me">پروفایل</v-list-item>
-          <v-list-item to="/Referral">دعوت از دوستان</v-list-item>
           <v-list-item to="/Security">امنیت</v-list-item>
           <v-list-item @click="logout">خروج</v-list-item>
         </v-list>
@@ -58,56 +79,13 @@ export default {
   },
   data() {
     return {
+      btn_toggle: '',
       user: '',
       snackBar: {show: false, msg: ''},
       clipped: false,
       drawer: false,
       fixed: false,
-      userItems: [
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'داشبورد',
-          to: '/'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'پروفایل',
-          to: '/Users/me'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'کیف های من',
-          to: '/Wallets'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'واریزها',
-          to: '/Deposits'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'برداشت ها',
-          to: '/Withdraws'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'ثبت سفارش (پیشخوان)',
-          to: '/OffersBook'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'سفارشات باز',
-          to: '/ActiveOffers'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'سفارشات',
-          to: '/Offers'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'معاملات',
-          to: '/Trades'
-        }, {
-          icon: 'mdi-chart-bubble',
-          title: 'api test',
-          to: '/admin/ApiTest'
-        },
-      ],
-      adminItems: [
+      items: [
         {
           icon: 'mdi-chart-bubble',
           title: 'داشبورد',
@@ -146,10 +124,8 @@ export default {
     }
   },
   computed: {
-    items() {
+    isAdmin() {
       return this.user.role === 'admin'
-          ? this.adminItems
-          : this.userItems
     },
     title() {
       return this.user.name
