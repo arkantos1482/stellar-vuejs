@@ -73,8 +73,9 @@
 <script>
 export default {
   errorCaptured(err, vm, info) {
+    //todo resolve by status code (err.response.status)
     this.snackBar.show = true
-    this.snackBar.msg = err.message
+    this.snackBar.msg = err.response.data.error.msg
     return false
   },
   data() {

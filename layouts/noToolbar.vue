@@ -8,13 +8,25 @@
       <v-container>
         <nuxt/>
       </v-container>
+      <v-snackbar v-model="snackBar.show">{{ snackBar.msg }}</v-snackbar>
     </v-main>
   </v-app>
 </template>
 
 <script>
 export default {
-  name: "noToolbar"
+  name: "noToolbar",
+  errorCaptured(err, vm, info) {
+    //todo resolve by status code (err.response.status)
+    this.snackBar.show = true
+    this.snackBar.msg = err.response.data.error.msg
+    return false
+  },
+  data() {
+    return {
+      snackBar: {show: false, msg: ''},
+    }
+  }
 }
 </script>
 
