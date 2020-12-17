@@ -20,7 +20,7 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon v-show="isAdmin" @click.stop="drawer = !drawer"/>
-      <v-tabs>
+      <v-tabs v-show="!isAdmin">
         <v-tab to="/OffersBook">ثبت سفارش</v-tab>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
