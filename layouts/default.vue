@@ -27,9 +27,9 @@
             <v-tab v-bind="attrs" v-on="on"> کیف پول</v-tab>
           </template>
           <v-list>
-            <v-list-item to="/Wallets">کیف پول</v-list-item>
-            <v-list-item to="/Deposits"> واریزها</v-list-item>
-            <v-list-item to="/Withdraws"> برداشت ها</v-list-item>
+            <v-list-item to="/wallets">کیف پول</v-list-item>
+            <v-list-item to="/wallets/deposits"> واریزها</v-list-item>
+            <v-list-item to="/wallets/withdraws"> برداشت ها</v-list-item>
           </v-list>
         </v-menu>
         <v-menu offset-y>

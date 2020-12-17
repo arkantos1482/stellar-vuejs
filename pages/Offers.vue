@@ -1,15 +1,15 @@
 <template>
-  <v-row>
+  <v-row class="text-center">
     <v-col cols="12">
       <v-simple-table>
-        <thead>
+        <thead class="grey lighten-3">
         <tr>
-          <th>نوع سفارش</th>
-          <th>مقدار</th>
-          <th>مبلغ واحد</th>
-          <th>رمزارز خرید</th>
-          <th>رمزارز فروش</th>
-          <th>زمان</th>
+          <th class="text-center">نوع سفارش</th>
+          <th class="text-center">مقدار</th>
+          <th class="text-center">مبلغ واحد</th>
+          <th class="text-center">رمزارز خرید</th>
+          <th class="text-center">رمزارز فروش</th>
+          <th class="text-center">زمان</th>
         </tr>
         </thead>
         <tbody>

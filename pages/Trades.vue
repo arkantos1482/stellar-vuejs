@@ -1,14 +1,13 @@
 <template>
-  <v-row justify="center">
+  <v-row class="text-center">
     <v-col cols="12">
-<!--      <json-viewer :value="trades" dir="ltr"/>-->
       <v-simple-table>
-        <thead>
+        <thead class="grey lighten-3">
         <tr>
-          <th>مقدار فروش</th>
-          <th>رمزارز فروش</th>
-          <th>مقدار خرید</th>
-          <th>رمزارز خرید</th>
+          <th class="text-center">مقدار فروش</th>
+          <th class="text-center">رمزارز فروش</th>
+          <th class="text-center">مقدار خرید</th>
+          <th class="text-center">رمزارز خرید</th>
         </tr>
         </thead>
         <tbody>

@@ -1,15 +1,15 @@
 <template>
-  <v-row>
+  <v-row class="text-center">
     <v-col cols="12">
       <v-simple-table>
         <template>
-          <thead>
+          <thead class="grey lighten-3">
           <tr>
-            <th>خرید</th>
-            <th>فروش</th>
-            <th>مقدار</th>
-            <th>قیمت</th>
-            <th>لغو</th>
+            <th class="text-center">خرید</th>
+            <th class="text-center">فروش</th>
+            <th class="text-center">مقدار</th>
+            <th class="text-center">قیمت</th>
+            <th class="text-center">لغو</th>
           </tr>
           </thead>
           <tbody>
@@ -19,7 +19,7 @@
             <td>{{ item.amount }}</td>
             <td>{{ item.price }}</td>
             <td>
-              <v-btn @click="cancel(item.id,item.seller)">لغو</v-btn>
+              <v-btn outlined small color="red" @click="cancel(item.id,item.seller)">لغو</v-btn>
             </td>
           </tr>
           </tbody>

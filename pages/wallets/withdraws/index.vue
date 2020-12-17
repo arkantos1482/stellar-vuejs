@@ -1,13 +1,12 @@
 <template>
-  <v-row justify="center">
+  <v-row class="text-center">
     <v-col cols="12">
-      <!--      <json-viewer :value="withdraws" dir="ltr"/>-->
       <v-simple-table>
-        <thead>
+        <thead class="grey lighten-3">
         <tr>
-          <th>رمزارز</th>
-          <th>مقدار</th>
-          <th>زمان</th>
+          <th class="text-center">رمزارز</th>
+          <th class="text-center">مقدار</th>
+          <th class="text-center">زمان</th>
         </tr>
         </thead>
         <tbody>

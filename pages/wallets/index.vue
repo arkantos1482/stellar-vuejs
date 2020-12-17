@@ -1,24 +1,23 @@
 <template>
-  <v-row>
+  <v-row class="text-center">
     <v-col cols="12">
       <v-simple-table>
-        <thead>
+        <thead class="grey lighten-3">
         <tr>
-          <th>رمزارز</th>
-          <th>آدرس</th>
-          <th>موجودی</th>
-          <th>عملیات</th>
+          <th class="text-center">رمزارز</th>
+          <th class="text-center">موجودی</th>
+          <th class="text-center">عملیات</th>
         </tr>
         </thead>
         <tbody>
-        <crypto-address-tr type="irr" :address="addresses.IRR" :balance="balances.IRR"/>
-        <crypto-address-tr type="btc" :address="addresses.BTC" :balance="balances.BTC"/>
-        <crypto-address-tr type="eth" :address="addresses.ETH" :balance="balances.ETH"/>
-        <crypto-address-tr type="ltc" :address="addresses.LTC" :balance="balances.LTC"/>
-        <crypto-address-tr type="usdt" :address="addresses.USDT" :balance="balances.USDT"/>
-        <crypto-address-tr type="amin" :address="addresses.AMIN" :balance="balances.AMIN"/>
-        <crypto-address-tr type="barg" :address="addresses.BARG" :balance="balances.BARG"/>
-        <crypto-address-tr type="bch" :address="addresses.BCH" :balance="balances.BCH"/>
+        <crypto-address-tr type="irr" :balance="balances.IRR"/>
+        <crypto-address-tr type="btc" :balance="balances.BTC"/>
+        <crypto-address-tr type="eth" :balance="balances.ETH"/>
+        <crypto-address-tr type="ltc" :balance="balances.LTC"/>
+        <crypto-address-tr type="usdt" :balance="balances.USDT"/>
+        <crypto-address-tr type="amin" :balance="balances.AMIN"/>
+        <crypto-address-tr type="barg" :balance="balances.BARG"/>
+        <crypto-address-tr type="bch" :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
     </v-col>
@@ -34,16 +33,10 @@ export default {
   components: {CryptoAddressTr},
   data() {
     return {
-      addresses: [],
       balances: []
     }
   },
   async mounted() {
-    let addresses = await this.$axios.$get('/profiles/me/addresses')
-    this.addresses = collect(addresses)
-        .map(item => ({[item.type]: item.address}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-
     let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
     this.balances = collect(balances)
         .map(item => ({[item.asset_code]: item.balance}))

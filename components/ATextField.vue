@@ -4,12 +4,13 @@
                 :type="type"
                 :value="value"
                 :label="label"
-                :filled="filled"/>
+                :filled="filled"
+                :readonly="readonly"/>
 </template>
 <script>
 export default {
   name: 'a-text-field',
-  props: ['value', 'label', 'type', 'filled'],
+  props: ['value', 'label', 'type', 'filled', 'readonly'],
 }
 </script>
 
