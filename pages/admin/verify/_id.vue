@@ -120,7 +120,7 @@ export default {
         match_ssn_mobile: '',
       },
       state: {
-        email: true,
+        email: false,
         cell_phone: false,
         phone: false,
         ssn: false,

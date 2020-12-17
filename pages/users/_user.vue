@@ -69,7 +69,7 @@ export default {
         bank_account: ''
       },
       verifyState: {
-        email: true,
+        email: false,
         cell_phone: false,
         phone: false,
         ssn: false,
