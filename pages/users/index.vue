@@ -5,6 +5,7 @@
           @click:row="goto"
           :headers="headers"
           :items="profileList"
+          items-per-page="50"
           hide-default-footer/>
     </v-col>
   </v-row>
@@ -15,6 +16,7 @@ export default {
   data() {
     return {
       headers: [
+        {text: 'ایمیل', value: 'email'},
         {text: 'نام', value: 'name'},
         {text: 'نام خانوادگی', value: 'last_name'},
         {text: 'موبایل', value: 'cell_phone'}],
