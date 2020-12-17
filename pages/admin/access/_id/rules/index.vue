@@ -35,7 +35,7 @@ export default {
     return {
       levelId: this.$route.params.id,
       rule: {
-        email: true,
+        email: false,
         cell_phone: false,
         phone: false,
         ssn: false,
