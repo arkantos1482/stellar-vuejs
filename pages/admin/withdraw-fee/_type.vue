@@ -1,10 +1,18 @@
 <template>
   <div>
-    <v-col offset="3" cols="6" class="text-center">
-      <h3>{{ coin }}</h3>
-      <a-text-field filled v-model="withdrawFee" label="کارمزد برداشت"/>
-      <v-btn color="red" @click="setFee" :loading="l.setFee">اعمال</v-btn>
-    </v-col>
+    <v-row justify="center">
+      <v-col cols="6" class="text-center">
+        <h3>{{ coin }}</h3>
+        <a-text-field filled v-model="withdrawFee" label="کارمزد برداشت"/>
+        <v-btn color="red" @click="setFee" :loading="l.setFee">اعمال</v-btn>
+      </v-col>
+
+      <v-col v-show="isEthOrUsdt" cols="6" class="text-center">
+        <h3>{{ gasLimit }}</h3>
+        <a-text-field filled v-model="gasLimit" label="کارمزد برداشت"/>
+        <v-btn color="red" @click="setGasLimit" :loading="l.gasLimit">اعمال</v-btn>
+      </v-col>
+    </v-row>
 
     <div class="d-flex mt-12">
       <v-card width="50%" outlined class="px-8 ml-8">
@@ -15,8 +23,8 @@
       <v-card width="50%" outlined class="text-center px-8 pt-12">
         <a-text-field v-model="destAddress" label="حساب مقصد"/>
         <a-text-field v-model="amount" label="مقدار"/>
-        <v-btn @click="getTxSize" :loading="l.txSize">Tx Size</v-btn>
-        <p class="pink--text mt-8">{{ txSize }}</p>
+        <v-btn @click="getTxSize" :loading="l.txInfo">Tx Info</v-btn>
+        <p class="pink--text mt-8">{{ txInfo }}</p>
       </v-card>
     </div>
   </div>
@@ -27,15 +35,21 @@ import pstopper from "@/mixins/pstopper";
 
 export default {
   mixins: [pstopper],
+  computed: {
+    isEthOrUsdt() {
+      return ('ETH' === this.coin.toUpperCase() || 'USDT' === this.coin.toUpperCase())
+    }
+  },
   data() {
     return {
       coin: this.$route.params.type,
       withdrawFee: '',
       externalNetworkFee: '',
-      txSize: '',
+      txInfo: '',
       destAddress: '',
       amount: '',
-      l: {setFee: false, txSize: false}
+      gasLimit: '',
+      l: {setFee: false, txInfo: false, gasLimit: false}
     }
   },
   async mounted() {
@@ -45,6 +59,8 @@ export default {
 
     }
     this.withdrawFee = await this.$axios.$get('/crypto/fees/' + this.coin.toLowerCase())
+    this.gasLimit = await this.$axios.$get('/crypto/fees/'
+        + this.coin.toLowerCase() + '/network/gas-limit')
   },
   methods: {
     setFee() {
@@ -52,15 +68,21 @@ export default {
       this.$axios.put('/crypto/fees/' + this.coin.toLowerCase(), {amount: this.withdrawFee})
           .finally(() => this.l.setFee = false)
     },
+    async setGasLimit() {
+      this.l.gasLimit = true
+      this.gasLimit = await this.$axios.$post('/crypto/fees/'
+          + this.coin.toLowerCase() + '/network/gas-limit')
+      this.l.gasLimit = false
+    },
     async getTxSize() {
-      this.l.txSize = true
+      this.l.txInfo = true
       let res = await this.$axios.$post('/crypto/fees/' + this.coin.toLowerCase() +
-          '/network/tx-bytes', {
+          '/network/tx-info', {
         to: this.destAddress,
         amount: this.amount
       })
-      this.txSize = res.tx_size_bytes
-      this.l.txSize = false
+      this.txInfo = res.tx_size_bytes
+      this.l.txInfo = false
     }
   }
 }
