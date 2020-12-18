@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  name: 'ActiveOffers',
   data() {
     return {
       offers: []

@@ -44,7 +44,7 @@ export default {
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
     this.balance = keyValuedBalances[this.type]
 
-    this.$axios.$get('/crypto/fees/' + this.type.toLowerCase() + '/network')
+    this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
         .then(res => this.withdrawFee = res);
   },
   methods: {
