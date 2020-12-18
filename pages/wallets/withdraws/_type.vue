@@ -24,8 +24,10 @@ import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import collect from "collect.js";
+import pstopper from "@/mixins/pstopper";
 
 export default {
+  mixins: [pstopper],
   components: {Withdraws, ACard, ATextField},
   data() {
     return {
@@ -50,7 +52,7 @@ export default {
   methods: {
     async withdraw() {
       this.l.withdraw = true
-      await this.$axios.$post(`/crypto/${this.type}/withdraw`, {
+      await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
         to: this.destAddress,
         amount: this.amount
       })
