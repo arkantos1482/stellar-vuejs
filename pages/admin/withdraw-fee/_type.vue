@@ -57,7 +57,7 @@ export default {
     this.$axios.$get('/crypto/fees/' + this.coin.toLowerCase() + '/network')
         .then(res => this.externalNetworkFee = res)
 
-    this.$axios.$get('/crypto/fees/' + this.coin.toLowerCase())
+    this.$axios.$get('/crypto/fees/' + this.coin.toLowerCase() + '/fee-or-gas')
         .then(res => this.withdrawFee = res)
 
     if (this.isEthOrUsdt) {
