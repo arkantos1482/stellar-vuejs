@@ -26,8 +26,10 @@ import VueQrcode from 'vue-qrcode'
 import ACard from "@/components/ACard";
 import Deposits from "@/pages/wallets/deposits/index";
 import ATextField from "@/components/ATextField";
+import pstopper from "@/mixins/pstopper";
 
 export default {
+  mixins: [pstopper],
   components: {Deposits, VueQrcode, ACard, ATextField},
   data() {
     return {
