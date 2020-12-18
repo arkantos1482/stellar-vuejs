@@ -1,80 +1,92 @@
 <template>
-  <div>
-    <v-row justify="center">
-      <v-col cols="3">
-        <v-select filled @change="myOffers" v-model="baseAsset" :items="assets" class="mx-4"/>
-      </v-col>
-      <v-col cols="3">
-        <v-select filled @change="myOffers" v-model="counterAsset" :items="assets" class="mx-4"/>
-      </v-col>
-    </v-row>
+  <div class="mx-n12">
+    <div class="d-flex align-items-stretch">
 
-    <v-row>
-      <v-col cols="6">
-        <v-card outlined class="mb-4 p-16">
-          <v-row>
-            <a-text-field v-model="buy.amount" :label="amountLabel" class="mx-4"/>
-            <a-text-field v-model="buy.price" :label="priceLabel" class="mx-4"/>
-          </v-row>
-          <div class="text-center mb-4">
-            <v-btn @click="doBuy" :loading="l.buy" color="green">ثبت خرید</v-btn>
-          </div>
-        </v-card>
-
-        <p class="text-center mt-8 mb-1">پیشنهادهای فروش</p>
-        <v-simple-table>
-          <thead class="red">
+      <!--    SELL-->
+      <v-card max-width="27%" class="pa-2">
+        <v-simple-table dense fixed-header>
+          <thead>
           <tr>
             <th>{{ priceLabel }}</th>
             <th>{{ amountLabel }}</th>
+            <th>{{ totalLabel }}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item,index) in offers.asks" :key="index">
-            <td>{{ item.price }}</td>
+            <td class="red--text">{{ item.price }}</td>
             <td>{{ item.amount }}</td>
+            <td>{{ item.price * item.amount }}</td>
           </tr>
           </tbody>
         </v-simple-table>
-        <!--      <json-viewer dir="auto" :value="sell.offers"/>-->
-      </v-col>
+      </v-card>
 
-      <v-col cols="6">
-        <v-card outlined class="mb-4">
-          <v-row>
-            <a-text-field v-model="sell.amount" :label="amountLabel" class="mx-4"/>
-            <a-text-field v-model="sell.price" :label="priceLabel" class="mx-4"/>
-          </v-row>
-          <div class="text-center mb-4">
-            <v-btn @click="doSell" :loading="l.sell" color="red">ثبت فروش</v-btn>
-          </div>
-        </v-card>
+      <!--    MAIN-->
+      <v-card class="mx-4 px-4" max-width="46%">
+        <v-row justify="center">
+          <v-col cols="3">
+            <v-select @change="myOffers" v-model="baseAsset" :items="assets"
+                      dense outlined filled/>
+          </v-col>
+          <v-col cols="3">
+            <v-select @change="myOffers" v-model="counterAsset" :items="assets"
+                      dense outlined filled/>
+          </v-col>
+        </v-row>
 
-        <p class="text-center mt-8 mb-1">پیشنهادهای خرید</p>
-        <v-simple-table>
-          <thead class="green">
+        <v-row justify="center">
+          <v-col cols="6" class="px-2">
+            <p>موجودی: {{ balances[baseAsset] }}</p>
+            <a-text-field v-model="buy.amount" :label="amountLabel"/>
+            <a-text-field v-model="buy.price" :label="priceLabel"/>
+            <a-text-field readonly :value="buy.amount*buy.price" :label="totalLabel"/>
+            <v-btn block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
+          </v-col>
+
+          <v-col cols="6" class="px-2">
+            <p>موجودی: {{ balances[counterAsset] }}</p>
+            <a-text-field v-model="sell.amount" :label="amountLabel"/>
+            <a-text-field v-model="sell.price" :label="priceLabel"/>
+            <a-text-field readonly :value="sell.amount*sell.price" :label="totalLabel"/>
+            <v-btn block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+
+      <!--    BUY-->
+      <v-card max-width="27%" class="pa-2">
+        <v-simple-table dense fixed-header>
+          <thead>
           <tr>
             <th>{{ priceLabel }}</th>
             <th>{{ amountLabel }}</th>
+            <th>{{ totalLabel }}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td>{{ item.price }}</td>
+            <td class="green--text">{{ item.price }}</td>
             <td>{{ item.amount }}</td>
+            <td>{{ item.price * item.amount }}</td>
           </tr>
           </tbody>
         </v-simple-table>
-      </v-col>
-    </v-row>
-    <json-viewer dir="auto" :value="offers"/>
+      </v-card>
+
+    </div>
+
+    <active-offers/>
   </div>
 </template>
 
 <script>
 import collect from "collect.js";
+import ActiveOffers from "@/pages/ActiveOffers";
+import ATextField from "@/components/ATextField";
 
 export default {
+  components: {ActiveOffers, ATextField},
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
@@ -82,10 +94,13 @@ export default {
   name: "Offers",
   computed: {
     amountLabel() {
-      return 'مقدار ' + this.baseAsset
+      return 'مقدار ( ' + this.baseAsset + ' )'
     },
     priceLabel() {
-      return 'قیمت واحد ' + this.counterAsset
+      return 'قیمت واحد ( ' + this.counterAsset + ' )'
+    },
+    totalLabel() {
+      return 'قیمت مجموع ( ' + this.counterAsset + ' )'
     },
     buyOffers() {
       return collect(this.offers.bids)
@@ -93,14 +108,27 @@ export default {
             price: item.price,
             amount: (parseFloat(item.amount) / parseFloat(item.price_r.n)).toFixed(3)
           }))
-    }
+    },
+    // baseAssetList() {
+    //   collect(this.assets)
+    //       .reject(function (item) {
+    //         return item === this?.counterAsset
+    //       })
+    // },
+    // counterAssetList() {
+    //   collect(this.assets)
+    //       .reject(function (item) {
+    //         return item === this?.baseAsset
+    //       })
+    // }
   },
   data() {
     return {
-      assets: ['BTC', 'LTC', 'ETH', 'USDT', 'IRR', 'BCH', 'AMIN', 'BARG',],
+      assets: ['BTC', 'LTC', 'ETH', 'USDT', 'IRR', 'BCH', 'AMIN', 'BARG'],
       offers: [],
       baseAsset: 'BTC',
       counterAsset: 'ETH',
+      balances: [],
       l: {sell: false, buy: false},
       sell: {
         amount: '',
@@ -156,12 +184,21 @@ export default {
   },
   async mounted() {
     await this.myOffers()
-    // await this.buyOffers()
 
+    // this.$axios.$get('/profiles/me/stellar')
+    //     .then(function (res) {
+    //       this.balances = collect(res.balances)
+    //           .map(item => ({[item.asset_code]: item.balance}))
+    //           .reduce((_acc, item) => ({..._acc, ...item})) ?? []
+    //     })
+
+    let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
+    this.balances = collect(balances)
+        .map(item => ({[item.asset_code]: item.balance}))
+        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
   }
 }
 </script>
 
 <style scoped>
-
 </style>
