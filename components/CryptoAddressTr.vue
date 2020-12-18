@@ -33,7 +33,7 @@ export default {
     },
     async onSync() {
       this.l.sync = true
-      this.syncResult = await this.$axios.$get(`/crypto/${this.asset}/sync`)
+      this.syncResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
       this.l.sync = false
     }
   }
