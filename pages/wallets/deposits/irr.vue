@@ -38,7 +38,7 @@ export default {
     let keyValuedBalances = collect(arrayedBalances)
         .map(item => ({[item.asset_code]: item.balance}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances[this.type]
+    this.balance = keyValuedBalances.IRR
   },
   methods: {
     async onDeposit() {

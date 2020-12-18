@@ -28,8 +28,6 @@ export default {
   components: {Withdraws, ACard, ATextField},
   data() {
     return {
-      items: ['card', 'shaba'],
-      type: 'card',
       amount: '',
       balance: '',
       l: {withdraw: false}
@@ -40,7 +38,7 @@ export default {
     let keyValuedBalances = collect(arrayedBalances)
         .map(item => ({[item.asset_code]: item.balance}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances[this.type]
+    this.balance = keyValuedBalances.IRR
   },
   methods: {
     async onWithdraw() {
