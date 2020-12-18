@@ -1,18 +1,15 @@
 <template>
   <div>
-
-    <div class="text-center">
-      <h3>{{ coin }}</h3>
-      <p v-show="isEthOrUsdt" class="red--text">enter in WEI unit<br/>not Gwei or Ether</p>
-    </div>
-    <v-row justify="center">
+    <v-row justify="center" align="end">
       <v-col cols="6" class="text-center">
+        <h3>{{ coin }}</h3>
+        <p v-show="isEthOrUsdt" class="red--text">enter in WEI unit<br/>not Gwei or Ether</p>
         <a-text-field filled v-model="withdrawFee" label="کارمزد برداشت"/>
         <v-btn color="red" @click="setFee" :loading="l.setFee">اعمال</v-btn>
       </v-col>
 
       <v-col v-show="isEthOrUsdt" cols="6" class="text-center">
-        <h3>{{ gasLimit }}</h3>
+        <h3>Gas Limit</h3>
         <a-text-field filled v-model="gasLimit" label="gas limit"/>
         <v-btn color="red" @click="setGasLimit" :loading="l.gasLimit">اعمال</v-btn>
       </v-col>
@@ -77,7 +74,7 @@ export default {
     async setGasLimit() {
       this.l.gasLimit = true
       this.gasLimit = await this.$axios.$post('/crypto/fees/'
-          + this.coin.toLowerCase() + '/gas-limit')
+          + this.coin.toLowerCase() + '/gas-limit', {amount: this.gasLimit})
       this.l.gasLimit = false
     },
     async getTxSize() {
