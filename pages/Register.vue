@@ -7,8 +7,9 @@
         <v-tab>حقوقی</v-tab>
       </v-tabs>
       <v-divider/>
-      <a-text-field class="mt-4" label="ایمیل" v-model="email"/>
-      <a-text-field type="password" label="رمز عبور" v-model="password"
+      <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
+      <a-text-field :rules="[rules.required, rules.password, rules.counter]"
+                    type="password" label="رمز عبور" v-model="password"
                     hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"/>
       <a-text-field type="password" label="تکرار رمز عبور" v-model="passwordConfirm"/>
       <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
@@ -57,12 +58,27 @@ export default {
       referral_code: this.$route.query.referral_code,
       terms: false,
       l: {reg: false},
-      dialog: {terms: false}
+      dialog: {terms: false},
+      rules: {
+        required: value => !!value || 'الزامی است',
+        counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'ایمیل درست نیست.'
+        },
+        password: value => {
+          // at least number - small - capital
+          const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد.'
+        },
+      }
     }
   },
   methods: {
     async register() {
-      if (this.password !== '' && this.password === this.passwordConfirm) {
+      if (this.password === this.passwordConfirm
+          && typeof this.rules.required(this.password !== 'string')
+          && typeof this.rules.password(this.password) !== 'string') {
         if (this.terms === true) {
           this.l.reg = true
           await this.getCaptcha()
@@ -80,7 +96,7 @@ export default {
           this.$bus.$emit('snack', 'شرایط و قوانین پذیرفته نشده است.', 'error')
         }
       } else {
-        this.$bus.$emit('snack', 'رمز عبور و تکرار رمز عبور تطابق ندارند', 'error')
+        this.$bus.$emit('snack', 'رمز عبور نامناسب است ویا با تکرار رمز عبور تطابق ندارند', 'error')
       }
     }
   }

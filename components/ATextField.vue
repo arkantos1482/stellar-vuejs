@@ -7,12 +7,13 @@
                 :label="label"
                 :filled="filled"
                 :readonly="readonly"
+                :rules="rules"
   />
 </template>
 <script>
 export default {
   name: 'a-text-field',
-  props: ['value', 'label', 'type', 'filled', 'readonly', 'hint'],
+  props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
 }
 </script>
 
