@@ -65,24 +65,31 @@
       <v-container>
         <nuxt/>
       </v-container>
-      <v-snackbar v-model="snackBar.show">{{ snackBar.msg }}</v-snackbar>
+      <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
+      <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
+      <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
     </v-main>
   </v-app>
 </template>
 
 <script>
+
 export default {
   errorCaptured(err, vm, info) {
     //todo resolve by status code (err.response.status)
-    this.snackBar.show = true
-    this.snackBar.msg = err.response.data.error.msg
+    this.snackBar.fail.show = true
+    this.snackBar.fail.msg = err.response.data.error.msg
     return false
   },
   data() {
     return {
       btn_toggle: '',
       user: '',
-      snackBar: {show: false, msg: ''},
+      snackBar: {
+        normal: {show: false, msg: ''},
+        success: {show: false, msg: ''},
+        fail: {show: false, msg: ''}
+      },
       clipped: false,
       drawer: false,
       fixed: false,
@@ -118,6 +125,10 @@ export default {
     }
   },
   async mounted() {
+    this.$bus.$on('snack', (msg, level) => {
+      this.showErrorSnack(msg, level)
+    })
+
     try {
       this.user = await this.$axios.$get('/profiles/me')
       this.$store.commit("auth/profile", this.user)
@@ -137,7 +148,17 @@ export default {
       await this.$axios.$post('/logout')
       this.$store.commit('auth/logout')
       await this.$router.push('/login')
-    }
+    },
+    showErrorSnack(msg, level) {
+      if (level === 'success') {
+        this.snackBar.success.show = true
+        this.snackBar.success.msg = msg
+      } else {
+        this.snackBar.normal.show = true
+        this.snackBar.normal.msg = msg
+      }
+
+    },
   }
 }
 </script>

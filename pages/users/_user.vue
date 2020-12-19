@@ -4,9 +4,9 @@
       <v-stepper-header>
         <v-stepper-step :complete="stepNum > 1" step="1"> اطلاعات شخصی</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step :complete="stepNum > 2" step="2"> اطلاعات تکمیلی</v-stepper-step>
+        <v-stepper-step :complete="stepNum > 2" step="2"> اطلاعات مالی</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3"> اطلاعات مالی</v-stepper-step>
+        <v-stepper-step step="3"> اطلاعات تکمیلی</v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
