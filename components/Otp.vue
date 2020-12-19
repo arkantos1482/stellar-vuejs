@@ -3,7 +3,7 @@
     <a-text-field
         @input="$emit('otp',$event)"
         :label="label"/>
-    <div> 00:{{ counter }}</div>
+    <div> {{ counterToString }}</div>
     <div v-show="codeFailure" class="mt-8 grey--text">
       <span>کد تایید دریافت نشد؟</span>
       <a @click="onResend">ارسال مجدد</a>
@@ -24,8 +24,9 @@ export default {
   props: ['label', 'loading'],
   data() {
     return {
-      counter: 59,
-      codeFailure: false
+      counter: 150,
+      codeFailure: false,
+      counterToString: ''
     }
   },
   mounted() {
@@ -33,11 +34,14 @@ export default {
   },
   methods: {
     setTimer() {
-      this.counter = 59
+      this.counter = 150
       this.codeFailure = false
       const interval = setInterval(() => {
         if (this.counter > 0) {
           this.counter--
+          let remainder = this.counter % 60;
+          let remainToString = (remainder < 10) ? ('0' + remainder) : remainder
+          this.counterToString = Math.floor(this.counter / 60) + ':' + remainToString
         } else {
           this.codeFailure = true
           clearInterval(interval)

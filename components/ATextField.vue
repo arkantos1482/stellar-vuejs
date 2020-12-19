@@ -2,6 +2,7 @@
   <v-text-field outlined dense
                 @change="$emit('input',$event)"
                 :type="type"
+                :hint="hint"
                 :value="value"
                 :label="label"
                 :filled="filled"
@@ -10,7 +11,7 @@
 <script>
 export default {
   name: 'a-text-field',
-  props: ['value', 'label', 'type', 'filled', 'readonly'],
+  props: ['value', 'label', 'type', 'filled', 'readonly','hint'],
 }
 </script>
 

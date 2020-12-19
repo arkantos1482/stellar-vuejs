@@ -43,6 +43,9 @@ export default {
       if (level === 'success') {
         this.snackBar.success.show = true
         this.snackBar.success.msg = msg
+      } else if (level === 'error') {
+        this.snackBar.fail.show = true
+        this.snackBar.fail.msg = msg
       } else {
         this.snackBar.normal.show = true
         this.snackBar.normal.msg = msg
