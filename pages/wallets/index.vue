@@ -13,7 +13,7 @@
         <tbody>
         <crypto-address-tr namad="امین" :icon="require('@/assets/images/AminToken.svg')" type="amin"
                            :balance="balances.AMIN"/>
-        <crypto-address-tr namad="برگ" :icon="require('@/assets/images/AminToken.svg')" type="barg"
+        <crypto-address-tr namad="برگ" :icon="require('@/assets/images/Barg.jpeg')" type="barg"
                            :balance="balances.BARG"/>
         <crypto-address-tr namad="ریال" :icon="require('@/assets/images/IRR.png')" type="irr" :balance="balances.IRR"/>
         <crypto-address-tr namad="بیت کوین" :icon="require('@/assets/images/BTC.svg')" type="btc"
@@ -24,7 +24,7 @@
                            :balance="balances.LTC"/>
         <crypto-address-tr namad="تتر" :icon="require('@/assets/images/USDT.svg')" type="usdt"
                            :balance="balances.USDT"/>
-        <crypto-address-tr namad="بیت کوین کش" :icon="require('@/assets/images/AminToken.svg')" type="bch"
+        <crypto-address-tr namad="بیت کوین کش" :icon="require('@/assets/images/Bch.svg')" type="bch"
                            :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import collect from 'collect.js'
 import CryptoAddressTr from "@/components/CryptoAddressTr";
 
 export default {
@@ -45,10 +44,8 @@ export default {
     }
   },
   async mounted() {
-    let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
-    this.balances = collect(balances)
-        .map(item => ({[item.asset_code]: item.balance}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
+    await this.$store.dispatch('balances/refresh')
+    this.balances = this.$store.state.balances.balances
   }
 }
 </script>

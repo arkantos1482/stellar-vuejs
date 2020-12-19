@@ -12,7 +12,7 @@
     <td>
       <v-btn :disabled="isDepositDisabled" text small color="green" @click="onDeposit">واریز</v-btn>
       <v-btn :disabled="isWithdrawDisabled" text small color="red" @click="onWithdraw">برداشت</v-btn>
-      <v-btn :disabled="isDepositDisabled" icon @click="onSync" :loading="l.sync">
+      <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">
         <v-icon color="primary">mdi-refresh</v-icon>
       </v-btn>
     </td>
@@ -26,6 +26,10 @@ export default {
   name: 'CryptoAddressTr',
   props: ['type', 'address', 'balance', 'icon', 'namad'],
   computed: {
+    isRefreshDisabled() {
+      const type = this.type.toUpperCase();
+      return 'AMIN' === type || 'BARG' === type || 'IRR' === type
+    },
     isDepositDisabled() {
       const type = this.type.toUpperCase();
       return 'AMIN' === type || 'BARG' === type
@@ -52,6 +56,8 @@ export default {
       this.l.sync = true
       this.syncResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
       this.l.sync = false
+
+      await this.$store.dispatch('balances/refresh')
     }
   }
 }

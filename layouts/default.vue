@@ -23,7 +23,7 @@
              :src="require('../assets/images/Bitra_Logo.png')"/>
       <v-app-bar-nav-icon v-show="isAdmin" @click.stop="drawer = !drawer"/>
       <v-tabs v-show="!isAdmin">
-        <v-tab to="/OffersBook">ثبت سفارش</v-tab>
+        <v-tab to="/">ثبت سفارش</v-tab>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-tab v-bind="attrs" v-on="on"> کیف پول</v-tab>
@@ -97,10 +97,6 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-chart-bubble',
-          title: 'داشبورد',
-          to: '/'
-        }, {
           icon: 'mdi-chart-bubble',
           title: 'مدیریت کاربران',
           to: '/Users'

@@ -4,7 +4,7 @@
     <a-card class="ml-4 pb-8" width="30%" title="برداشت">
       <a-text-field readonly v-model="type" label="نوع ارز"
                     class="mt-8"/>
-      <a-text-field readonly v-model="balance" label="موجودی"/>
+      <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
       <a-text-field v-model="amount" label="مبلغ"/>
       <a-text-field v-model="destAddress" label="آدرس کیف پول مقصد"/>
       <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>
