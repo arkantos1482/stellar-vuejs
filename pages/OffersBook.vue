@@ -14,9 +14,9 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in offers.asks" :key="index">
-            <td class="red--text">{{ item.price }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.price * item.amount }}</td>
+            <td class="red--text">{{ parseFloat(item.price) }}</td>
+            <td>{{ parseFloat(item.amount) }}</td>
+            <td>{{ parseFloat(item.price) * parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -66,9 +66,9 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td class="green--text">{{ item.price }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.price * item.amount }}</td>
+            <td class="green--text">{{ parseFloat(item.price) }}</td>
+            <td>{{ parseFloat(item.amount) }}</td>
+            <td>{{ parseFloat(item.price) * parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -94,10 +94,10 @@ export default {
   name: "Offers",
   computed: {
     baseBalance() {
-      return `موجودی (${this.baseAsset}) : ${this.balances[this.baseAsset]}`
+      return `موجودی (${this.baseAsset}) : ${parseFloat(this.balances[this.baseAsset])}`
     },
     counterBalance() {
-      return `موجودی (${this.counterAsset}) : ${this.balances[this.counterAsset]}`
+      return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset])}`
     },
     amountLabel() {
       return 'مقدار ( ' + this.baseAsset + ' )'

@@ -12,10 +12,10 @@
         </thead>
         <tbody>
         <tr v-for="item in trades" :key="item.id">
-          <td>{{item.sold_amount}}</td>
-          <td>{{item.sold_asset_code}}</td>
-          <td>{{item.bought_amount}}</td>
-          <td>{{item.bought_asset_code}}</td>
+          <td>{{ parseFloat(item.sold_amount) }}</td>
+          <td>{{ item.sold_asset_code }}</td>
+          <td>{{ parseFloat(item.bought_amount) }}</td>
+          <td>{{ item.bought_asset_code }}</td>
         </tr>
         </tbody>
       </v-simple-table>

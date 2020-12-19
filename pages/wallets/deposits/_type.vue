@@ -14,7 +14,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%" title="لیست واریزها">
+    <a-card class="ml-4" width="70%">
       <deposits/>
     </a-card>
   </div>

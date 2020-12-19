@@ -4,20 +4,28 @@
       <v-simple-table>
         <thead class="grey lighten-3">
         <tr>
-          <th class="text-center">رمزارز</th>
+          <th>رمزارز</th>
+          <th class="text-center">نماد</th>
           <th class="text-center">موجودی</th>
           <th class="text-center">عملیات</th>
         </tr>
         </thead>
         <tbody>
-        <crypto-address-tr type="irr" :balance="balances.IRR"/>
-        <crypto-address-tr type="btc" :balance="balances.BTC"/>
-        <crypto-address-tr type="eth" :balance="balances.ETH"/>
-        <crypto-address-tr type="ltc" :balance="balances.LTC"/>
-        <crypto-address-tr type="usdt" :balance="balances.USDT"/>
-        <crypto-address-tr type="amin" :balance="balances.AMIN"/>
-        <crypto-address-tr type="barg" :balance="balances.BARG"/>
-        <crypto-address-tr type="bch" :balance="balances.BCH"/>
+        <crypto-address-tr namad="امین" :icon="require('@/assets/images/AminToken.svg')" type="amin"
+                           :balance="balances.AMIN"/>
+        <crypto-address-tr namad="برگ" :icon="require('@/assets/images/AminToken.svg')" type="barg"
+                           :balance="balances.BARG"/>
+        <crypto-address-tr namad="ریال" :icon="require('@/assets/images/IRR.png')" type="irr" :balance="balances.IRR"/>
+        <crypto-address-tr namad="بیت کوین" :icon="require('@/assets/images/BTC.svg')" type="btc"
+                           :balance="balances.BTC"/>
+        <crypto-address-tr namad="اتریوم" :icon="require('@/assets/images/ETH.svg')" type="eth"
+                           :balance="balances.ETH"/>
+        <crypto-address-tr namad="لایت کوین" :icon="require('@/assets/images/LTC.svg')" type="ltc"
+                           :balance="balances.LTC"/>
+        <crypto-address-tr namad="تتر" :icon="require('@/assets/images/USDT.svg')" type="usdt"
+                           :balance="balances.USDT"/>
+        <crypto-address-tr namad="بیت کوین کش" :icon="require('@/assets/images/AminToken.svg')" type="bch"
+                           :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
     </v-col>

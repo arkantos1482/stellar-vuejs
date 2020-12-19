@@ -1,11 +1,18 @@
 <template>
   <tr>
-    <td>{{ type }}</td>
-    <td>{{ balance }}</td>
     <td>
-      <v-btn text small color="green" @click="onDeposit">واریز</v-btn>
-      <v-btn text small color="red" @click="onWithdraw">برداشت</v-btn>
-      <v-btn icon @click="onSync" :loading="l.sync">
+      <div class="d-flex align-items-center">
+        <v-img class="ml-2" max-width="24" max-height="24"
+               :src="icon"/>
+        <p>{{ namad }}</p>
+      </div>
+    </td>
+    <td>{{ type.toUpperCase() }}</td>
+    <td>{{ parseFloat(balance) }}</td>
+    <td>
+      <v-btn :disabled="isDepositDisabled" text small color="green" @click="onDeposit">واریز</v-btn>
+      <v-btn :disabled="isWithdrawDisabled" text small color="red" @click="onWithdraw">برداشت</v-btn>
+      <v-btn :disabled="isDepositDisabled" icon @click="onSync" :loading="l.sync">
         <v-icon color="primary">mdi-refresh</v-icon>
       </v-btn>
     </td>
@@ -17,7 +24,17 @@ import ps from '@/mixins/pstopper'
 export default {
   mixins: [ps],
   name: 'CryptoAddressTr',
-  props: ['type', 'address', 'balance'],
+  props: ['type', 'address', 'balance', 'icon', 'namad'],
+  computed: {
+    isDepositDisabled() {
+      const type = this.type.toUpperCase();
+      return 'AMIN' === type || 'BARG' === type
+    },
+    isWithdrawDisabled() {
+      const type = this.type.toUpperCase();
+      return 'BCH' === type || 'AMIN' === type || 'BARG' === type
+    }
+  },
   data() {
     return {
       syncResult: '',

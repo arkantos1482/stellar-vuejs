@@ -13,7 +13,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%" title="لیست برداشت ها">
+    <a-card class="ml-4" width="70%">
       <withdraws/>
     </a-card>
   </div>
@@ -52,12 +52,25 @@ export default {
   methods: {
     async withdraw() {
       if (this.balance >= (this.amount + this.withdrawFee)) {
-        this.l.withdraw = true
-        await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
-          to: this.destAddress,
-          amount: this.amount
-        })
-        this.l.withdraw = false
+        console.log((this.balance >= (this.amount + this.withdrawFee)))
+        console.log((this.amount + this.withdrawFee))
+        console.log(this.balance)
+        try {
+          this.l.withdraw = true
+          await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
+            to: this.destAddress,
+            amount: this.amount
+          })
+
+          this.$router.back()
+          this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+        } catch (e) {
+          this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+        } finally {
+          this.l.withdraw = false
+        }
+      } else {
+        this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
       }
     },
   }

@@ -1,6 +1,7 @@
 <template>
   <v-row class="text-center">
     <v-col cols="12">
+      <div class="text-h6 mb-2 text-right">لیست برداشت ها</div>
       <v-simple-table>
         <thead class="grey lighten-3">
         <tr>
@@ -12,7 +13,7 @@
         <tbody>
         <tr v-for="item in withdraws" :key="item.id">
           <td>{{ item.asset_code }}</td>
-          <td>{{ item.amount }}</td>
+          <td>{{ parseFloat(item.amount) }}</td>
           <td>{{ item.created_at }}</td>
         </tr>
         </tbody>

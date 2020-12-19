@@ -19,6 +19,8 @@
       </v-list>
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
+      <v-img max-width="128" max-height="48"
+             :src="require('../assets/images/Bitra_Logo.png')"/>
       <v-app-bar-nav-icon v-show="isAdmin" @click.stop="drawer = !drawer"/>
       <v-tabs v-show="!isAdmin">
         <v-tab to="/OffersBook">ثبت سفارش</v-tab>

@@ -1,7 +1,7 @@
 <template>
   <v-row class="text-center">
     <v-col cols="12">
-      <!--      <json-viewer :value="deposits" dir="ltr"/>-->
+      <div class="text-h6 mb-2 text-right">لیست واریزها</div>
       <v-simple-table>
         <thead class="grey lighten-3">
         <tr>
@@ -13,7 +13,7 @@
         <tbody>
         <tr v-for="item in deposits" :key="item.id">
           <td>{{ item.asset_code }}</td>
-          <td>{{ item.amount }}</td>
+          <td>{{ parseFloat(item.amount) }}</td>
           <td>{{ item.created_at }}</td>
         </tr>
         </tbody>

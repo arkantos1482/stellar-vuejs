@@ -15,8 +15,8 @@
         <tbody>
         <tr v-for="item in offers" :key="item.id">
           <td>{{ item.type | toFarsi }}</td>
-          <td>{{ item.amount }}</td>
-          <td>{{ item.price }}</td>
+          <td>{{ parseFloat(item.amount) }}</td>
+          <td>{{ parseFloat(item.price) }}</td>
           <td>{{ item.selling_asset_code }}</td>
           <td>{{ item.buying_asset_code }}</td>
           <td>{{ item.created_at }}</td>

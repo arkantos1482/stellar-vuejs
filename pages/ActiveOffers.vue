@@ -16,8 +16,8 @@
           <tr v-for="item in offers" :key="item.id">
             <td>{{ item.selling.asset_code }}</td>
             <td>{{ item.buying.asset_code }}</td>
-            <td>{{ item.amount }}</td>
-            <td>{{ item.price }}</td>
+            <td>{{ parseFloat(item.amount) }}</td>
+            <td>{{ parseFloat(item.price) }}</td>
             <td>
               <v-btn outlined small color="red" @click="cancel(item.id,item.seller)">لغو</v-btn>
             </td>

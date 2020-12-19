@@ -10,7 +10,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%" title="لیست برداشت ها">
+    <a-card class="ml-4" width="70%">
       <withdraws/>
     </a-card>
   </div>
@@ -38,14 +38,24 @@ export default {
     let keyValuedBalances = collect(arrayedBalances)
         .map(item => ({[item.asset_code]: item.balance}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances.IRR
+    this.balance = parseFloat(keyValuedBalances.IRR)
   },
   methods: {
     async onWithdraw() {
-      if (this.balance >= this.amount) {
-        this.l.withdraw = true
-        await this.$axios.$post('/irr/withdraw', {amount: this.amount, type: this.type})
-        this.l.withdraw = false
+      if (this.balance >= parseFloat(this.amount)) {
+        try {
+          this.l.withdraw = true
+          await this.$axios.$post('/irr/withdraw', {amount: this.amount, type: this.type})
+
+          this.$router.back()
+          this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+        } catch (e) {
+          this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+        } finally {
+          this.l.withdraw = false
+        }
+      } else {
+        this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
       }
     },
   }
