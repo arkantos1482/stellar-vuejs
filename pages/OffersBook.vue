@@ -37,7 +37,7 @@
 
         <v-row justify="center">
           <v-col cols="6" class="px-2">
-            <p>موجودی: {{ balances[baseAsset] }}</p>
+            <p>{{ counterBalance }}</p>
             <a-text-field v-model="buy.amount" :label="amountLabel"/>
             <a-text-field v-model="buy.price" :label="priceLabel"/>
             <a-text-field readonly :value="buy.amount*buy.price" :label="totalLabel"/>
@@ -45,7 +45,7 @@
           </v-col>
 
           <v-col cols="6" class="px-2">
-            <p>موجودی: {{ balances[counterAsset] }}</p>
+            <p>{{ baseBalance }}</p>
             <a-text-field v-model="sell.amount" :label="amountLabel"/>
             <a-text-field v-model="sell.price" :label="priceLabel"/>
             <a-text-field readonly :value="sell.amount*sell.price" :label="totalLabel"/>
@@ -93,6 +93,12 @@ export default {
   },
   name: "Offers",
   computed: {
+    baseBalance() {
+      return `موجودی (${this.baseAsset}) : ${this.balances[this.baseAsset]}`
+    },
+    counterBalance() {
+      return `موجودی (${this.counterAsset}) : ${this.balances[this.counterAsset]}`
+    },
     amountLabel() {
       return 'مقدار ( ' + this.baseAsset + ' )'
     },
