@@ -42,9 +42,11 @@ export default {
   },
   methods: {
     async onWithdraw() {
-      this.l.withdraw = true
-      await this.$axios.$post('/irr/withdraw', {amount: this.amount, type: this.type})
-      this.l.withdraw = false
+      if (this.balance >= this.amount) {
+        this.l.withdraw = true
+        await this.$axios.$post('/irr/withdraw', {amount: this.amount, type: this.type})
+        this.l.withdraw = false
+      }
     },
   }
 }

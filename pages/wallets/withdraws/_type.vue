@@ -51,12 +51,14 @@ export default {
   },
   methods: {
     async withdraw() {
-      this.l.withdraw = true
-      await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
-        to: this.destAddress,
-        amount: this.amount
-      })
-      this.l.withdraw = false
+      if (this.balance >= (this.amount + this.withdrawFee)) {
+        this.l.withdraw = true
+        await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
+          to: this.destAddress,
+          amount: this.amount
+        })
+        this.l.withdraw = false
+      }
     },
   }
 }
