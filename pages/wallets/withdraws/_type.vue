@@ -2,7 +2,7 @@
   <div class="d-flex align-items-stretch mt-8">
 
     <a-card class="ml-4 pb-8" width="30%" title="برداشت">
-      <a-text-field readonly v-model="type" label="نوع ارز"
+      <a-text-field readonly :value="type|toFarsiCoin" label="نوع ارز"
                     class="mt-8"/>
       <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
       <a-text-field v-model="amount" label="مبلغ"/>

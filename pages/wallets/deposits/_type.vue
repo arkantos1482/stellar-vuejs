@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
     <a-card class="ml-4" width="30%" title="واریز">
-      <a-text-field readonly v-model="type" label="نوع ارز"
+      <a-text-field readonly :value="type|toFarsiCoin" label="نوع ارز"
                     class="mt-8"/>
       <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
 

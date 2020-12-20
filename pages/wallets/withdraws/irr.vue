@@ -2,7 +2,7 @@
   <div class="d-flex align-items-stretch mt-8">
 
     <a-card class="ml-4 pb-8" width="30%" title="برداشت">
-      <a-text-field readonly value="IRR" label="نوع ارز" class="mt-8"/>
+      <a-text-field readonly value="ریال" label="نوع ارز" class="mt-8"/>
       <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
       <a-text-field v-model="amount" label="مبلغ"/>
       <v-btn @click="onWithdraw" :loading="l.withdraw"
