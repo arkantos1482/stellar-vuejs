@@ -2180,6 +2180,11 @@ array.prototype.flat@^1.2.3:
     define-properties "^1.1.3"
     es-abstract "^1.17.0-next.1"
 
+arrayslicer@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/arrayslicer/-/arrayslicer-1.2.3.tgz#21a4903102a9aba7d8a73c44bf57f3e28c560136"
+  integrity sha1-IaSQMQKpq6fYpzxEv1fz4oxWATY=
+
 asn1.js@^5.2.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-5.4.1.tgz#11a980b84ebb91781ce35b0fdc2ee294e3783f07"
@@ -4727,6 +4732,16 @@ hable@^3.0.0:
   resolved "https://registry.yarnpkg.com/hable/-/hable-3.0.0.tgz#6de089b2df946635cf8134b9e4859f1b62de255f"
   integrity sha512-7+G0/2/COR8pwteYFqHIVYfQpuEiO2HXwJrhCBJVgrNrl9O5eaUoJVDGXUJX+0RpGncNVTuestexjk1afj01wQ==
 
+hammerjs@^2.0.8:
+  version "2.0.8"
+  resolved "https://registry.yarnpkg.com/hammerjs/-/hammerjs-2.0.8.tgz#04ef77862cff2bb79d30f7692095930222bf60f1"
+  integrity sha1-BO93hiz/K7edMPdpIJWTAiK/YPE=
+
+hamsterjs@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/hamsterjs/-/hamsterjs-1.1.3.tgz#4adc6b9100a3fcc7c65fc391debb249901a50df6"
+  integrity sha512-q4XBr7hnxx1WyZA8mpVDuZVa1YXaR0WZaFSBxnj8hUXltuqXJOt5yuWYkAbMXsj+q0REDUO990+/TuxEadXFyg==
+
 hard-source-webpack-plugin@^0.13.1:
   version "0.13.1"
   resolved "https://registry.yarnpkg.com/hard-source-webpack-plugin/-/hard-source-webpack-plugin-0.13.1.tgz#a99071e25b232f1438a5bc3c99f10a3869e4428e"
@@ -5780,6 +5795,11 @@ lru-cache@^5.1.1:
   dependencies:
     yallist "^3.0.2"
 
+lz-string@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
+  integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
+
 make-dir@^1.0.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.3.0.tgz#79c1033b80515bd6d24ec9933e860ca75ee27f0c"
@@ -6078,7 +6098,7 @@ moment-timezone@^0.5.21:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.22.2:
+"moment@>= 2.9.0", moment@^2.22.2, moment@^2.27.0:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -8737,6 +8757,19 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
+trading-vue-js@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/trading-vue-js/-/trading-vue-js-1.0.0-rc.1.tgz#9f3fc5bd1cbf6782d68d3e878e3e85a2687c3f35"
+  integrity sha512-4/cozes7rEb+BNQ5+zgBRaHZmXy46LG+Ehl3yZ9Jnxo6UnLaNYswlsC7CzTPB+rYHNHcVMRf4H8dJkPjDGfGhA==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    arrayslicer "^1.2.3"
+    hammerjs "^2.0.8"
+    hamsterjs "^1.1.3"
+    lz-string "^1.4.4"
+    moment "^2.27.0"
+    vue "^2.6.11"
+
 tryer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/tryer/-/tryer-1.0.1.tgz#f2c85406800b9b0f74c9f7465b81eaad241252f8"
@@ -9172,7 +9205,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.12, vue@^2.6.9:
+vue@^2.6.11, vue@^2.6.12, vue@^2.6.9:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

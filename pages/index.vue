@@ -24,6 +24,17 @@
 
       <!--    MAIN-->
       <v-card class="mx-4 px-4" max-width="46%">
+        <div class="d-flex justify-center pa-4">
+          <trading-vue dir="ltr"
+                       color-back="white"
+                       color-grid="grey"
+                       color-text="grey"
+                       color-title="black"
+                       :height="240"
+                       :width="windowWidth/3"
+                       :title-txt="this.baseAsset+this.counterAsset"
+                       :data="this.$data"></trading-vue>
+        </div>
         <v-row justify="center">
           <v-col cols="3">
             <v-select @change="myOffers" v-model="baseAsset" :items="assets"
@@ -84,9 +95,10 @@
 import collect from "collect.js";
 import ActiveOffers from "@/pages/ActiveOffers";
 import ATextField from "@/components/ATextField";
+import TradingVue from 'trading-vue-js'
 
 export default {
-  components: {ActiveOffers, ATextField},
+  components: {ActiveOffers, ATextField, TradingVue},
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
@@ -133,6 +145,7 @@ export default {
       offers: [],
       baseAsset: 'BTC',
       counterAsset: 'ETH',
+      windowWidth: window.innerWidth,
       balances: [],
       l: {sell: false, buy: false},
       sell: {
@@ -143,6 +156,13 @@ export default {
         amount: '',
         price: ''
       },
+      ohlcv: [
+        [1551128400000, 33, 37.1, 14, 14, 196],
+        [1551132000000, 13.7, 30, 6.6, 30, 206],
+        [1551135600000, 29.9, 33, 21.3, 21.8, 74],
+        // [1551139200000, 21.7, 25.9, 18, 24, 140],
+        // [1551142800000, 24.1, 24.1, 24, 24.1, 29],
+      ]
     }
   },
   methods: {
@@ -188,6 +208,10 @@ export default {
     // }
   },
   async mounted() {
+    window.onresize = () => {
+      this.windowWidth = window.innerWidth
+    }
+
     await this.myOffers()
 
     // this.$axios.$get('/profiles/me/stellar')
