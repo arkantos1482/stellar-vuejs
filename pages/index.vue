@@ -25,13 +25,13 @@
       <!--    MAIN-->
       <v-card class="mx-4 px-4" width="50%">
         <div class="d-flex justify-center">
-          <v-col cols="3">
+          <v-col cols="3" class="ml-n6">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
-                      dense filled/>
+                      dense filled rounded/>
           </v-col>
           <v-col cols="3">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="counterAsset" :items="assets"
-                      dense filled/>
+                      dense filled rounded/>
           </v-col>
         </div>
 
@@ -54,11 +54,11 @@
               <p><span class="text-caption">{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat }}</p>
             </v-row>
-            <v-text-field dense filled rounded
+            <v-text-field class="mt-n4" dense filled rounded
                           v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field dense filled rounded
+            <v-text-field class="mt-n4" dense filled rounded
                           v-model="buy.price" placeholder="قیمت" :suffix="counterAsset"/>
-            <v-text-field dense filled rounded readonly
+            <v-text-field class="mt-n4" dense filled rounded readonly
                           :value="buy.amount*buy.price" placeholder="مجموع" :suffix="counterAsset"/>
             <v-btn depressed class="white--text" block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
           </v-col>
@@ -69,11 +69,11 @@
               <p><span class="text-caption">{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat }}</p>
             </v-row>
-            <v-text-field dense filled rounded
+            <v-text-field class="mt-n4" dense filled rounded
                           v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field dense filled rounded
+            <v-text-field class="mt-n4" dense filled rounded
                           v-model="sell.price" placeholder="قیمت" :suffix="counterAsset"/>
-            <v-text-field dense filled rounded readonly
+            <v-text-field class="mt-n4" dense filled rounded readonly
                           :value="sell.amount*sell.price" placeholder="مجموع" :suffix="counterAsset"/>
             <v-btn depressed class="white--text" block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
           </v-col>
