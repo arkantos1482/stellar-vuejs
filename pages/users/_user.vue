@@ -13,15 +13,15 @@
         <v-stepper-content step="1">
           <v-row>
             <v-col cols="6">
-              <a-text-field :background-color="verifyState.ssn|toColor"
-                            v-model="user.name" label="نام"/>
-              <a-text-field :background-color="verifyState.ssn|toColor"
-                            v-model="user.last_name" label="نام خانوادگی"/>
+              <a-text-field
+                  v-model="user.name" label="نام"/>
+              <a-text-field
+                  v-model="user.last_name" label="نام خانوادگی"/>
             </v-col>
             <v-col cols="6">
-              <a-text-field :background-color="verifyState.ssn|toColor"
-                            v-model="user.ssn" label="کد ملی"/>
-              <v-text-field dense outlined :background-color="verifyState.cell_phone|toColor"
+              <a-text-field
+                  v-model="user.ssn" label="کد ملی"/>
+              <v-text-field dense outlined
                             v-model="user.cell_phone" label="موبایل">
                 <template v-slot:append>
                   <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
@@ -48,14 +48,14 @@
         <v-stepper-content step="2">
           <v-row justify="center">
             <v-col cols="6">
-              <a-text-field :background-color="verifyState.bank_card|toColor"
-                            v-model="user.bank_card" label="شماره کارت"/>
-              <a-text-field :background-color="verifyState.bank_shaba|toColor"
-                            v-model="user.bank_shaba" label="شماره شبا"/>
+              <a-text-field
+                  v-model="user.bank_card" label="شماره کارت"/>
+              <a-text-field
+                  v-model="user.bank_shaba" label="شماره شبا"/>
             </v-col>
             <v-col cols="6">
-              <a-text-field :background-color="verifyState.bank_account|toColor"
-                            v-model="user.bank_account" label="شماره حساب"/>
+              <a-text-field
+                  v-model="user.bank_account" label="شماره حساب"/>
               <v-row class="mt-n4">
                 <v-col>
                   <v-file-input dense prepend-icon=""
@@ -74,17 +74,17 @@
         <v-stepper-content step="3">
           <v-row>
             <v-col cols="6">
-              <a-text-field :background-color="verifyState.address|toColor"
-                            v-model="user.city" label="شهر"/>
-              <a-text-field :background-color="verifyState.address|toColor"
-                            v-model="user.address" label="آدرس"/>
+              <a-text-field
+                  v-model="user.city" label="شهر"/>
+              <a-text-field
+                  v-model="user.address" label="آدرس"/>
             </v-col>
             <v-col cols="6">
 
-              <a-text-field :background-color="verifyState.address|toColor"
-                            v-model="user.postal_code" label="کدپستی"/>
-              <v-text-field dense outlined :background-color="verifyState.phone|toColor"
-                            v-model="user.phone" label="تلفن ثابت">
+              <a-text-field
+                  v-model="user.postal_code" label="کدپستی"/>
+              <v-text-field dense outlined
+                  v-model="user.phone" label="تلفن ثابت">
                 <template v-slot:append>
                   <v-btn small depressed color="primary" @click="requestPhoneOtp"
                          :loading="l.phoneRequest">درخواست توکن
@@ -119,33 +119,29 @@
       <v-card>
         <v-card-title> آیا از ارسال مشخصات خود اطمینان دارید؟</v-card-title>
         <v-card-actions>
-          <v-btn text color="primary" @click="send">confirm</v-btn>
-          <v-btn text @click="dialog.send=false">cancel</v-btn>
+          <v-btn text color="primary" @click="send">بله</v-btn>
+          <v-btn text @click="dialog.send=false">خیر</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="dialog.mobileOtp" max-width="400">
-      <v-card>
-        <v-card-title>احراز اصالت موبایل</v-card-title>
-        <v-card-text>
-          <a-text-field v-model="mobile.otp" outlined label="رمز یکبار مصرف"/>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn text color="primary" @click="submitMobileOtp" :loading="l.mobileSubmit">تایید توکن</v-btn>
-        </v-card-actions>
+      <v-card class="text-center pt-12 pb-8 px-8" elevation="6">
+        <div class="text-h5">احراز اصالت موبایل</div>
+        <div class="mt-4 mx-6 text-body-2 grey--text text--darken-1">برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل
+          شما ارسال شده را در کادر زیر وارد نمایید.
+        </div>
+        <otp :loading="l.mobileSubmit" class="mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event" label="کد تایید"/>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="dialog.phoneOtp" max-width="400">
-      <v-card class="mt-8 mb-8">
-        <v-card-title>احراز اصالت تلفن ثابت</v-card-title>
-        <v-card-text>
-          <a-text-field v-model="phone.otp" outlined label="رمز یکبار مصرف"/>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn text color="primary" @click="submitPhoneOtp" :loading="l.phoneSubmit">تایید توکن</v-btn>
-        </v-card-actions>
+      <v-card class="text-center pt-12 pb-8 px-8" elevation="6">
+        <div class="text-h5">احراز اصالت تلفن ثابت</div>
+        <div class="mt-4 mx-6 text-body-2 grey--text text--darken-1">برای ایمن سازی حساب کاربری کد ۶رقمی با تماس تلفنی
+          برای شما قرایت شده را در کادر زیر وارد نمایید.
+        </div>
+        <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
       </v-card>
     </v-dialog>
 
@@ -158,10 +154,12 @@
 <script>
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
+import LoginRegCard from "@/components/LoginRegCard";
+import Otp from "@/components/Otp";
 
 export default {
   mixins: [pstopper],
-  components: {ATextField},
+  components: {Otp, LoginRegCard, ATextField},
   filters: {
     toColor: value => value
   },
@@ -226,6 +224,7 @@ export default {
       this.l.send = true
       await this.$axios.$put('/profiles/' + this.userId, this.user)
       this.l.send = false
+      this.$bus.$emit('snack', 'مشخصات شما با موفقیت ثبت شد.', 'success')
     },
     next() {
       if (this.stepNum === this.totalSteps) {
@@ -263,6 +262,7 @@ export default {
       formData.append('ssn', this.ssn)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
       this.l.ssn = false
+      this.$bus.$emit('snack', 'تصویر کارت ملی با موفیت ارسال شد.', 'success')
     },
     async uploadBill() {
       this.l.bill = true
@@ -270,6 +270,7 @@ export default {
       formData.append('bill', this.bill)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
       this.l.bill = false
+      this.$bus.$emit('snack', 'تصویر قبض تلفن با موفقیت انجام شد.', 'success')
     },
     async uploadBankCard() {
       this.l.bankCard = true
@@ -277,30 +278,35 @@ export default {
       formData.append('bank-card', this.bankCard)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
       this.l.bankCard = false
+      this.$bus.$emit('snack', 'تصویر کارت بانکی با موفیت انجام شد', 'success')
+    },
+    async requestMobileOtp() {
+      this.l.mobileRequest = true
+      await this.$axios.$post('/otp-m', {cell_phone: this.user.cell_phone})
+      this.l.mobileRequest = false
+      this.dialog.mobileOtp = true
     },
     async submitMobileOtp() {
       this.l.mobileSubmit = true
       await this.$axios.$post('/otp-m/verify', {otp: this.mobile.otp})
       this.mobile.otp = ''
       this.l.mobileSubmit = false
+      this.dialog.mobileOtp = false
+      this.$bus.$emit('snack', 'احراز اصالت موبایل با موفقیت انجام شد.', 'success')
     },
-    async requestMobileOtp() {
-      this.dialog.mobileOtp = true
-      this.l.mobileRequest = true
-      await this.$axios.$get('/otp-m')
-      this.l.mobileRequest = false
+    async requestPhoneOtp() {
+      this.l.phoneRequest = true
+      await this.$axios.$post('/otp-c', {phone: this.user.phone})
+      this.l.phoneRequest = false
+      this.dialog.phoneOtp = true
     },
     async submitPhoneOtp() {
       this.l.phoneSubmit = true
       await this.$axios.$post('/otp-c/verify', {otp: this.phone.otp})
       this.phone.otp = ''
       this.l.phoneSubmit = false
-    },
-    async requestPhoneOtp() {
-      this.dialog.phoneOtp = true
-      this.l.phoneRequest = true
-      await this.$axios.$get('/otp-c')
-      this.l.phoneRequest = false
+      this.dialog.phoneOtp = false
+      this.$bus.$emit('snack', 'احراز اصالت تلفن ثابت با موفقیت انجام شد.', 'success')
     },
   }
 }
