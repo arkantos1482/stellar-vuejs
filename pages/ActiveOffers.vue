@@ -5,8 +5,8 @@
         <template>
           <thead class="grey lighten-3">
           <tr>
-            <th class="text-center">خرید</th>
             <th class="text-center">فروش</th>
+            <th class="text-center">خرید</th>
             <th class="text-center">مقدار</th>
             <th class="text-center">قیمت</th>
             <th class="text-center">لغو</th>

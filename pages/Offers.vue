@@ -7,8 +7,8 @@
           <th class="text-center">نوع سفارش</th>
           <th class="text-center">مقدار</th>
           <th class="text-center">مبلغ واحد</th>
-          <th class="text-center">رمزارز خرید</th>
           <th class="text-center">رمزارز فروش</th>
+          <th class="text-center">رمزارز خرید</th>
           <th class="text-center">زمان</th>
         </tr>
         </thead>
@@ -16,7 +16,7 @@
         <tr v-for="item in offers" :key="item.id">
           <td>{{ item.type | toFarsi }}</td>
           <td>{{ parseFloat(item.amount) }}</td>
-          <td>{{ parseFloat(item.price) }}</td>
+          <td>{{ parseFloat(item.price_r.d) }}</td>
           <td>{{ item.selling_asset_code }}</td>
           <td>{{ item.buying_asset_code }}</td>
           <td>{{ item.created_at }}</td>
