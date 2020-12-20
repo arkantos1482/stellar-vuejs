@@ -21,14 +21,14 @@
             <v-col cols="6">
               <a-text-field :background-color="verifyState.ssn|toColor"
                             v-model="user.ssn" label="کد ملی"/>
-              <div class="d-flex">
-                <a-text-field :background-color="verifyState.cell_phone|toColor"
-                              v-model="user.cell_phone" label="موبایل">
-                </a-text-field>
-                <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                       text color="primary">درخواست توکن
-                </v-btn>
-              </div>
+              <v-text-field dense outlined :background-color="verifyState.cell_phone|toColor"
+                            v-model="user.cell_phone" label="موبایل">
+                <template v-slot:append>
+                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
+                         depressed small color="primary">درخواست توکن
+                  </v-btn>
+                </template>
+              </v-text-field>
             </v-col>
           </v-row>
           <v-row class="mt-n4">
@@ -37,7 +37,7 @@
                             prepend-inner-icon="mdi-camera"
                             height="96px"
                             outlined label="تصویر کارت ملی" show-size @change="ssn=$event"/>
-              <v-btn class="mt-n8" text color="primary"
+              <v-btn class="mt-n8" small depressed color="primary"
                      :loading="l.ssn" @click="uploadSsn">ارسال
               </v-btn>
             </v-col>
@@ -47,11 +47,13 @@
 
         <v-stepper-content step="2">
           <v-row justify="center">
-            <v-col cols="5">
+            <v-col cols="6">
               <a-text-field :background-color="verifyState.bank_card|toColor"
                             v-model="user.bank_card" label="شماره کارت"/>
               <a-text-field :background-color="verifyState.bank_shaba|toColor"
                             v-model="user.bank_shaba" label="شماره شبا"/>
+            </v-col>
+            <v-col cols="6">
               <a-text-field :background-color="verifyState.bank_account|toColor"
                             v-model="user.bank_account" label="شماره حساب"/>
               <v-row class="mt-n4">
@@ -60,7 +62,7 @@
                                 prepend-inner-icon="mdi-camera"
                                 height="96px"
                                 outlined label="تصویر کارت بانکی" show-size @change="bankCard=$event"/>
-                  <v-btn class="mt-n8" text color="primary"
+                  <v-btn class="mt-n8" depressed small color="primary"
                          :loading="l.bankCard" @click="uploadBankCard">ارسال
                   </v-btn>
                 </v-col>
@@ -81,13 +83,15 @@
 
               <a-text-field :background-color="verifyState.address|toColor"
                             v-model="user.postal_code" label="کدپستی"/>
-              <div class="d-flex">
-                <a-text-field :background-color="verifyState.phone|toColor"
-                              v-model="user.phone" label="تلفن ثابت"/>
-                <v-btn text color="primary" @click="requestPhoneOtp"
-                       :loading="l.phoneRequest">درخواست توکن
-                </v-btn>
-              </div>
+              <v-text-field dense outlined :background-color="verifyState.phone|toColor"
+                            v-model="user.phone" label="تلفن ثابت">
+                <template v-slot:append>
+                  <v-btn small depressed color="primary" @click="requestPhoneOtp"
+                         :loading="l.phoneRequest">درخواست توکن
+                  </v-btn>
+                </template>
+              </v-text-field>
+
             </v-col>
           </v-row>
 
@@ -97,7 +101,7 @@
                             prepend-inner-icon="mdi-camera"
                             height="96px"
                             outlined label="تصویر قبض تلفن" show-size @change="bill=$event"/>
-              <v-btn class="mt-n8" text color="primary"
+              <v-btn class="mt-n8" small depressed color="primary"
                      :loading="l.bill" @click="uploadBill">ارسال
               </v-btn>
             </v-col>
@@ -105,10 +109,10 @@
         </v-stepper-content>
       </v-stepper-items>
 
-      <v-row class="pb-4 pr-8">
-        <v-btn @click=prev text> {{ prevLabel }}</v-btn>
-        <v-btn @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
-      </v-row>
+      <v-col cols="4" class="d-flex pb-4 px-8">
+        <v-btn class="flex-grow-1 ml-2" outlined color="primary" @click=prev text> {{ prevLabel }}</v-btn>
+        <v-btn class="flex-grow-1" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
+      </v-col>
     </v-stepper>
 
     <v-dialog v-model="dialog.send" max-width="400">
@@ -159,7 +163,7 @@ export default {
   mixins: [pstopper],
   components: {ATextField},
   filters: {
-    toColor: value => value ? 'green' : 'red'
+    toColor: value => value
   },
   computed: {
     totalSteps: () => 3
