@@ -2,7 +2,7 @@
   <div class="d-flex align-items-stretch mt-8">
     <a-card class="ml-4" width="30%" title="واریز">
       <a-text-field readonly value="ریال" label="نوع ارز" class="mt-8"/>
-      <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
+      <a-text-field readonly :value="balance|toFloat" label="موجودی"/>
       <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn @click="onDeposit" :loading="l.deposit"
              block color="primary" class="mt-4">واریز

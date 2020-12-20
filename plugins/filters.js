@@ -16,3 +16,7 @@ Vue.filter('toFarsiCoin', (val) => {
     if (val === 'IRR') value = 'ریال'
     return value
 })
+
+Vue.filter('toFloat', (val) => {
+    return val ? parseFloat(val) : ''
+})

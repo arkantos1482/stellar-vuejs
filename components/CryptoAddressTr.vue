@@ -8,7 +8,7 @@
       </div>
     </td>
     <td>{{ type.toUpperCase() }}</td>
-    <td>{{ parseFloat(balance) }}</td>
+    <td>{{ balance|toFloat }}</td>
     <td>
       <v-btn :disabled="isDepositDisabled" text small color="green" @click="onDeposit">واریز</v-btn>
       <v-btn :disabled="isWithdrawDisabled" text small color="red" @click="onWithdraw">برداشت</v-btn>

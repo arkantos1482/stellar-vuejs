@@ -51,7 +51,8 @@
           <v-col cols="6" class="px-2">
             <v-row justify="space-between px-8">
               <p class="text-subtitle-2"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p class="text-subtitle-2">{{ counterAsset + ' ' + parseFloat(balances[counterAsset]) }}</p>
+              <p><span class="text-caption">{{ counterAsset }}</span>
+                {{ balances[counterAsset]|toFloat }}</p>
             </v-row>
             <v-text-field dense filled rounded
                           v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
@@ -65,7 +66,8 @@
           <v-col cols="6" class="px-2">
             <v-row justify="space-between px-8">
               <p class="text-subtitle-2"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p class="text-subtitle-2">{{ baseAsset + ' ' + parseFloat(balances[baseAsset]) }}</p>
+              <p><span class="text-caption">{{ baseAsset }}</span>
+                {{ balances[baseAsset]|toFloat }}</p>
             </v-row>
             <v-text-field dense filled rounded
                           v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>

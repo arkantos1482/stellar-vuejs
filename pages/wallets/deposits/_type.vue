@@ -3,7 +3,7 @@
     <a-card class="ml-4" width="30%" title="واریز">
       <a-text-field readonly :value="type|toFarsiCoin" label="نوع ارز"
                     class="mt-8"/>
-      <a-text-field readonly :value="parseFloat(balance)" label="موجودی"/>
+      <a-text-field readonly :value="balance|toFloat" label="موجودی"/>
 
       <div class="mt-12 text-center" v-if="address">
         <vue-qrcode :value="address"/>
