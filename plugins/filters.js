@@ -35,5 +35,11 @@ Vue.filter('toCoinIcon', (type) => {
 })
 
 Vue.filter('toFloat', (val) => {
-    return val ? parseFloat(val) : ''
+    if (val) {
+        return parseFloat(val).toString()
+    } else if (parseFloat(val) === 0) {
+        return '0'
+    } else {
+        return ''
+    }
 })
