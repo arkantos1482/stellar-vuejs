@@ -25,7 +25,7 @@
       <!--    MAIN-->
       <v-card class="mx-4 px-4" width="50%">
         <div class="d-flex justify-center">
-          <v-col cols="3" class="ml-n6">
+          <v-col cols="3" class="ml-n4">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
                       dense filled rounded/>
           </v-col>
@@ -243,6 +243,8 @@ export default {
   }
 }
 </script>
-
 <style scoped>
+.v-text-field--rounded {
+  border-radius: 4px
+}
 </style>
