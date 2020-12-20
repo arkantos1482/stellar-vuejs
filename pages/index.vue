@@ -3,13 +3,13 @@
     <div class="d-flex align-items-stretch">
 
       <!--    SELL-->
-      <v-card max-width="27%" class="pa-2">
+      <v-card width="25%" class="pa-2">
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th>{{ priceLabel }}</th>
-            <th>{{ amountLabel }}</th>
-            <th>{{ totalLabel }}</th>
+            <th>قیمت</th>
+            <th>مقدار</th>
+            <th>مجموع</th>
           </tr>
           </thead>
           <tbody>
@@ -23,8 +23,19 @@
       </v-card>
 
       <!--    MAIN-->
-      <v-card class="mx-4 px-4" max-width="46%">
-        <div class="d-flex justify-center pa-4">
+      <v-card class="mx-4 px-4" width="50%">
+        <div class="d-flex justify-center">
+          <v-col cols="3">
+            <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
+                      dense filled/>
+          </v-col>
+          <v-col cols="3">
+            <v-select background-color="blue lighten-5" @change="myOffers" v-model="counterAsset" :items="assets"
+                      dense filled/>
+          </v-col>
+        </div>
+
+        <div class="d-flex justify-center px-4 ">
           <trading-vue dir="ltr"
                        color-back="white"
                        color-grid="grey"
@@ -35,44 +46,46 @@
                        :title-txt="this.baseAsset+this.counterAsset"
                        :data="this.$data"></trading-vue>
         </div>
-        <v-row justify="center">
-          <v-col cols="3">
-            <v-select @change="myOffers" v-model="baseAsset" :items="assets"
-                      dense outlined filled/>
-          </v-col>
-          <v-col cols="3">
-            <v-select @change="myOffers" v-model="counterAsset" :items="assets"
-                      dense outlined filled/>
-          </v-col>
-        </v-row>
 
         <v-row justify="center">
           <v-col cols="6" class="px-2">
-            <p>{{ counterBalance }}</p>
-            <a-text-field v-model="buy.amount" :label="amountLabel"/>
-            <a-text-field v-model="buy.price" :label="priceLabel"/>
-            <a-text-field readonly :value="buy.amount*buy.price" :label="totalLabel"/>
-            <v-btn block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
+            <v-row justify="space-between px-8">
+              <p>موجودی</p>
+              <p>{{ counterAsset + ' ' + parseFloat(balances[counterAsset]) }}</p>
+            </v-row>
+            <v-text-field dense filled rounded
+                          v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
+            <v-text-field dense filled rounded
+                          v-model="buy.price" placeholder="قیمت" :suffix="counterAsset"/>
+            <v-text-field dense filled rounded readonly
+                          :value="buy.amount*buy.price" placeholder="مجموع" :suffix="counterAsset"/>
+            <v-btn depressed class="white--text" block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
           </v-col>
 
           <v-col cols="6" class="px-2">
-            <p>{{ baseBalance }}</p>
-            <a-text-field v-model="sell.amount" :label="amountLabel"/>
-            <a-text-field v-model="sell.price" :label="priceLabel"/>
-            <a-text-field readonly :value="sell.amount*sell.price" :label="totalLabel"/>
-            <v-btn block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
+            <v-row justify="space-between px-8">
+              <p>موجودی</p>
+              <p>{{ baseAsset + ' ' + parseFloat(balances[baseAsset]) }}</p>
+            </v-row>
+            <v-text-field dense filled rounded
+                          v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>
+            <v-text-field dense filled rounded
+                          v-model="sell.price" placeholder="قیمت" :suffix="counterAsset"/>
+            <v-text-field dense filled rounded readonly
+                          :value="sell.amount*sell.price" placeholder="مجموع" :suffix="counterAsset"/>
+            <v-btn depressed class="white--text" block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
           </v-col>
         </v-row>
       </v-card>
 
       <!--    BUY-->
-      <v-card max-width="27%" class="pa-2">
+      <v-card width="25%" class="pa-2">
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th>{{ priceLabel }}</th>
-            <th>{{ amountLabel }}</th>
-            <th>{{ totalLabel }}</th>
+            <th>قیمت</th>
+            <th>مقدار</th>
+            <th>مجموع</th>
           </tr>
           </thead>
           <tbody>
@@ -114,10 +127,10 @@ export default {
       return 'مقدار ( ' + this.baseAsset + ' )'
     },
     priceLabel() {
-      return 'قیمت واحد ( ' + this.counterAsset + ' )'
+      return 'قیمت ( ' + this.counterAsset + ' )'
     },
     totalLabel() {
-      return 'قیمت مجموع ( ' + this.counterAsset + ' )'
+      return 'مجموع ( ' + this.counterAsset + ' )'
     },
     buyOffers() {
       return collect(this.offers.bids)
