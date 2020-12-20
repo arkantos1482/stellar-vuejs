@@ -7,8 +7,9 @@
           <tr>
             <th class="text-center">فروش</th>
             <th class="text-center">خرید</th>
-            <th class="text-center">مقدار</th>
-            <th class="text-center">قیمت</th>
+            <th class="text-center">مقدار فروش</th>
+            <th class="text-center">مقدار خرید</th>
+            <th class="text-center">قیمت واحد</th>
             <th class="text-center">لغو</th>
           </tr>
           </thead>
@@ -17,6 +18,7 @@
             <td>{{ item.selling.asset_code }}</td>
             <td>{{ item.buying.asset_code }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
+            <td>{{ parseFloat(item.amount) * parseFloat(item.price) }}</td>
             <td>{{ parseFloat(item.price) }}</td>
             <td>
               <v-btn outlined small color="red" @click="cancel(item.id,item.seller)">لغو</v-btn>
