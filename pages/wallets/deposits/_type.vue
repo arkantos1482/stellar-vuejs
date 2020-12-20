@@ -1,9 +1,7 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
-    <a-card class="ml-4" width="30%" title="واریز">
-      <a-text-field readonly :value="type|toFarsiCoin" label="نوع ارز"
-                    class="mt-8"/>
-      <a-text-field readonly :value="balance|toFloat" label="موجودی"/>
+    <a-card class="ml-4 py-8" width="30%" title="واریز">
+      <crypto-upper :balance="balance" :type="type"/>
 
       <div class="mt-12 text-center" v-if="address">
         <vue-qrcode :value="address"/>
@@ -25,12 +23,12 @@ import collect from "collect.js";
 import VueQrcode from 'vue-qrcode'
 import ACard from "@/components/ACard";
 import Deposits from "@/pages/wallets/deposits/index";
-import ATextField from "@/components/ATextField";
 import pstopper from "@/mixins/pstopper";
+import CryptoUpper from "@/components/CryptoUpper";
 
 export default {
   mixins: [pstopper],
-  components: {Deposits, VueQrcode, ACard, ATextField},
+  components: {CryptoUpper, Deposits, VueQrcode, ACard},
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
@@ -62,6 +60,3 @@ export default {
 }
 </script>
 
-<style scoped>
-
-</style>

@@ -1,8 +1,7 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
-    <a-card class="ml-4" width="30%" title="واریز">
-      <a-text-field readonly value="ریال" label="نوع ارز" class="mt-8"/>
-      <a-text-field readonly :value="balance|toFloat" label="موجودی"/>
+    <a-card class="ml-4 py-8" width="30%" title="واریز">
+      <crypto-upper :balance="balance" type="IRR"/>
       <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn @click="onDeposit" :loading="l.deposit"
              block color="primary" class="mt-4">واریز
@@ -21,10 +20,11 @@ import Deposits from "@/pages/wallets/deposits/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import collect from "collect.js";
+import CryptoUpper from "@/components/CryptoUpper";
 
 export default {
   mixins: [ps],
-  components: {Deposits, ACard, ATextField},
+  components: {CryptoUpper, Deposits, ACard, ATextField},
   data() {
     return {
       amount: '',

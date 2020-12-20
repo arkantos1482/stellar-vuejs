@@ -1,10 +1,9 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
 
-    <a-card class="ml-4 pb-8" width="30%" title="برداشت">
-      <a-text-field readonly :value="type|toFarsiCoin" label="نوع ارز"
-                    class="mt-8"/>
-      <a-text-field readonly :value="balance|toFloat" label="موجودی"/>
+    <a-card class="ml-4 py-8" width="30%" title="برداشت">
+      <crypto-upper :balance="balance" :type="type"/>
+
       <a-text-field v-model="amount" label="مبلغ"/>
       <a-text-field v-model="destAddress" label="آدرس کیف پول مقصد"/>
       <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>
@@ -25,10 +24,11 @@ import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import collect from "collect.js";
 import pstopper from "@/mixins/pstopper";
+import CryptoUpper from "@/components/CryptoUpper";
 
 export default {
   mixins: [pstopper],
-  components: {Withdraws, ACard, ATextField},
+  components: {CryptoUpper, Withdraws, ACard, ATextField},
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),

@@ -3,7 +3,7 @@
     <td>
       <div class="d-flex align-items-center">
         <v-img class="ml-2" max-width="24" max-height="24"
-               :src="icon"/>
+               :src="type|toCoinIcon"/>
         <p>{{ namad }}</p>
       </div>
     </td>
@@ -24,7 +24,7 @@ import ps from '@/mixins/pstopper'
 export default {
   mixins: [ps],
   name: 'CryptoAddressTr',
-  props: ['type', 'address', 'balance', 'icon', 'namad'],
+  props: ['type', 'address', 'balance', 'namad'],
   computed: {
     isRefreshDisabled() {
       const type = this.type.toUpperCase();

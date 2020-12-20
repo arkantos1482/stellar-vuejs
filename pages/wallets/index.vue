@@ -11,20 +11,21 @@
         </tr>
         </thead>
         <tbody>
-        <crypto-address-tr namad="امین" :icon="require('@/assets/images/AminToken.svg')" type="amin"
+        <crypto-address-tr namad="امین" type="amin"
                            :balance="balances.AMIN"/>
-        <crypto-address-tr namad="برگ" :icon="require('@/assets/images/Barg.jpeg')" type="barg"
+        <crypto-address-tr namad="برگ" type="barg"
                            :balance="balances.BARG"/>
-        <crypto-address-tr namad="ریال" :icon="require('@/assets/images/IRR.png')" type="irr" :balance="balances.IRR"/>
-        <crypto-address-tr namad="بیت کوین" :icon="require('@/assets/images/BTC.svg')" type="btc"
+        <crypto-address-tr namad="ریال" type="irr"
+                           :balance="balances.IRR"/>
+        <crypto-address-tr namad="بیت کوین" type="btc"
                            :balance="balances.BTC"/>
-        <crypto-address-tr namad="اتریوم" :icon="require('@/assets/images/ETH.svg')" type="eth"
+        <crypto-address-tr namad="اتریوم" type="eth"
                            :balance="balances.ETH"/>
-        <crypto-address-tr namad="لایت کوین" :icon="require('@/assets/images/LTC.svg')" type="ltc"
+        <crypto-address-tr namad="لایت کوین" type="ltc"
                            :balance="balances.LTC"/>
-        <crypto-address-tr namad="تتر" :icon="require('@/assets/images/USDT.svg')" type="usdt"
+        <crypto-address-tr namad="تتر" type="usdt"
                            :balance="balances.USDT"/>
-        <crypto-address-tr namad="بیت کوین کش" :icon="require('@/assets/images/Bch.svg')" type="bch"
+        <crypto-address-tr namad="بیت کوین کش" type="bch"
                            :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
