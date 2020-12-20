@@ -15,8 +15,8 @@
           <tbody>
           <tr v-for="(item,index) in offers.asks" :key="index">
             <td class="red--text">{{ parseFloat(item.price) }}</td>
+            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(5)) }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
-            <td>{{ parseFloat(item.price) * parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -91,8 +91,8 @@
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
             <td class="green--text">{{ parseFloat(item.price) }}</td>
+            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(5)) }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
-            <td>{{ parseFloat(item.price) * parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -136,7 +136,7 @@ export default {
       return collect(this.offers.bids)
           .map(item => ({
             price: item.price,
-            amount: (parseFloat(item.amount) / parseFloat(item.price_r.n)).toFixed(3)
+            amount: (parseFloat(item.amount) / parseFloat(item.price_r.n)).toFixed(5)
           }))
     },
     // baseAssetList() {
