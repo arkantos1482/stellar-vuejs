@@ -15,7 +15,7 @@
           <tbody>
           <tr v-for="(item,index) in offers.asks" :key="index">
             <td class="red--text">{{ parseFloat(item.price) }}</td>
-            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(5)) }}</td>
+            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(10)) }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
@@ -93,7 +93,7 @@
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
             <td class="green--text">{{ parseFloat(item.price) }}</td>
-            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(5)) }}</td>
+            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(10)) }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
