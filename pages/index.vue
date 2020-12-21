@@ -13,7 +13,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in offers.asks" :key="index">
+          <tr v-for="(item,index) in sellOffers" :key="index">
             <td class="red--text">{{ offersPrice(item) }}</td>
             <td>{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
@@ -141,7 +141,12 @@ export default {
             price_r: item.price_r,
             amount: (parseFloat(item.amount) / item.price_r.n)
           }))
+          .sortByDesc('price_r.n')
     },
+    sellOffers() {
+      return collect(this.offers.asks)
+          .sortBy('price_r.n')
+    }
     // baseAssetList() {
     //   collect(this.assets)
     //       .reject(function (item) {
@@ -251,8 +256,9 @@ export default {
 .v-text-field--rounded {
   border-radius: 4px
 }
-.small-font{
-  white-space:nowrap;
+
+.small-font {
+  white-space: nowrap;
   /*font-size: 10px;*/
 }
 </style>
