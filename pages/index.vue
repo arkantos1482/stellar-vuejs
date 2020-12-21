@@ -111,6 +111,7 @@ import collect from "collect.js";
 import ActiveOffers from "@/pages/ActiveOffers";
 import ATextField from "@/components/ATextField";
 import TradingVue from 'trading-vue-js'
+import {mapActions} from "vuex";
 
 export default {
   components: {ActiveOffers, ATextField, TradingVue},
@@ -119,6 +120,9 @@ export default {
     this.l.sell = false
   },
   computed: {
+    balances() {
+      return this.$store.state.balances.list
+    },
     baseBalance() {
       return `موجودی (${this.baseAsset}) : ${parseFloat(this.balances[this.baseAsset])}`
     },
@@ -167,7 +171,6 @@ export default {
       baseAsset: 'BTC',
       counterAsset: 'ETH',
       windowWidth: window.innerWidth,
-      balances: [],
       l: {sell: false, buy: false},
       sell: {
         amount: '',
@@ -187,6 +190,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions("offers", {refreshActiveOffers: 'refresh'}),
+    ...mapActions("balances", {refreshBalances: 'refresh'}),
     async doSell() {
       this.l.sell = true
       await this.$axios.$post('/offers/sell', {
@@ -197,6 +202,8 @@ export default {
       })
       this.l.sell = false
       await this.myOffers()
+      await this.refreshActiveOffers()
+      await this.refreshBalances()
       // await this.buyOffers()
     },
     async doBuy() {
@@ -209,6 +216,8 @@ export default {
       })
       this.l.buy = false
       await this.myOffers()
+      await this.refreshActiveOffers()
+      await this.refreshBalances()
       // await this.buyOffers()
     },
     async myOffers() {
@@ -231,24 +240,13 @@ export default {
     //   }))
     // }
   },
-  async mounted() {
+  mounted() {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
 
-    await this.myOffers()
-
-    // this.$axios.$get('/profiles/me/stellar')
-    //     .then(function (res) {
-    //       this.balances = collect(res.balances)
-    //           .map(item => ({[item.asset_code]: item.balance}))
-    //           .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    //     })
-
-    let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
-    this.balances = collect(balances)
-        .map(item => ({[item.asset_code]: item.balance}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
+    this.myOffers()
+    this.refreshBalances()
   }
 }
 </script>
