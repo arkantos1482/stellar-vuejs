@@ -29,10 +29,14 @@ import CryptoUpper from "@/components/CryptoUpper";
 export default {
   mixins: [pstopper],
   components: {CryptoUpper, Withdraws, ACard, ATextField},
+  computed: {
+    balance() {
+      return this.$store.state.balances.list[this.type]
+    }
+  },
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
-      balance: '',
       destAddress: '',
       amount: '',
       withdrawFee: '',
@@ -40,12 +44,6 @@ export default {
     }
   },
   async mounted() {
-    let arrayedBalances = (await this.$axios.$get('/profiles/me/stellar')).balances
-    let keyValuedBalances = collect(arrayedBalances)
-        .map(item => ({[item.asset_code]: item.balance}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances[this.type]
-
     this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
         .then(res => this.withdrawFee = res);
   },

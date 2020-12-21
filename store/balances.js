@@ -1,10 +1,10 @@
 import collect from "collect.js";
 
-export const state = () => ({balances: []})
+export const state = () => ({list: []})
 
 export const mutations = {
     set(state, payload) {
-        state.balances = payload
+        state.list = payload
     }
 }
 

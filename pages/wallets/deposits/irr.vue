@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
     <a-card class="ml-4 py-8" width="30%" title="واریز">
-      <crypto-upper :balance="balance" type="IRR"/>
+      <crypto-upper :balance="balance" :type="type"/>
       <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn @click="onDeposit" :loading="l.deposit"
              block color="primary" class="mt-4">واریز
@@ -25,20 +25,18 @@ import CryptoUpper from "@/components/CryptoUpper";
 export default {
   mixins: [ps],
   components: {CryptoUpper, Deposits, ACard, ATextField},
-  data() {
-    return {
-      amount: '',
-      link: '',
-      balance: '',
-      l: {deposit: false}
+  computed: {
+    balance() {
+      return this.$store.state.balances.list[this.type]
     }
   },
-  async mounted() {
-    let arrayedBalances = (await this.$axios.$get('/profiles/me/stellar')).balances
-    let keyValuedBalances = collect(arrayedBalances)
-        .map(item => ({[item.asset_code]: item.balance}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances.IRR
+  data() {
+    return {
+      type: 'IRR',
+      amount: '',
+      link: '',
+      l: {deposit: false}
+    }
   },
   methods: {
     async onDeposit() {

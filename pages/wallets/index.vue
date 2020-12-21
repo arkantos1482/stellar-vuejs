@@ -39,14 +39,17 @@ import CryptoAddressTr from "@/components/CryptoAddressTr";
 export default {
   name: "CryptoAddresses",
   components: {CryptoAddressTr},
+  computed: {
+    balances() {
+      return this.$store.state.balances.list
+    }
+  },
   data() {
     return {
-      balances: []
     }
   },
   async mounted() {
     await this.$store.dispatch('balances/refresh')
-    this.balances = this.$store.state.balances.balances
   }
 }
 </script>

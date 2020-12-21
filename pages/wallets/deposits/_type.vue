@@ -29,11 +29,15 @@ import CryptoUpper from "@/components/CryptoUpper";
 export default {
   mixins: [pstopper],
   components: {CryptoUpper, Deposits, VueQrcode, ACard},
+  computed: {
+    balance() {
+      return this.$store.state.balances.list[this.type]
+    }
+  },
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
       address: '',
-      balance: '',
       l: {create: false}
     }
   },
@@ -43,12 +47,6 @@ export default {
         .map(item => ({[item.type]: item.address}))
         .reduce((_acc, item) => ({..._acc, ...item})) ?? []
     this.address = keyValuedAddress[this.type]
-
-    let arrayedBalances = (await this.$axios.$get('/profiles/me/stellar')).balances
-    let keyValuedBalances = collect(arrayedBalances)
-        .map(item => ({[item.asset_code]: item.balance}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.balance = keyValuedBalances[this.type]
   },
   methods: {
     async createCrypto() {
