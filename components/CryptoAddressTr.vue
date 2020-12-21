@@ -55,9 +55,8 @@ export default {
     async onSync() {
       this.l.sync = true
       this.syncResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
-      this.l.sync = false
-
       await this.$store.dispatch('balances/refresh')
+      this.l.sync = false
     }
   }
 }
