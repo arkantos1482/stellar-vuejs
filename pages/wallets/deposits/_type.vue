@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import collect from "collect.js";
 import VueQrcode from 'vue-qrcode'
 import ACard from "@/components/ACard";
 import Deposits from "@/pages/wallets/deposits/index";
@@ -41,12 +40,8 @@ export default {
       l: {create: false}
     }
   },
-  async mounted() {
-    let arrayedAddress = await this.$axios.$get('/profiles/me/addresses')
-    let keyValuedAddress = collect(arrayedAddress)
-        .map(item => ({[item.type]: item.address}))
-        .reduce((_acc, item) => ({..._acc, ...item})) ?? []
-    this.address = keyValuedAddress[this.type]
+  mounted() {
+    this.address = this.$store.state.addresses.list[this.type]
   },
   methods: {
     async createCrypto() {

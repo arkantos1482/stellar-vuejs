@@ -44,12 +44,9 @@ export default {
       return this.$store.state.balances.list
     }
   },
-  data() {
-    return {
-    }
-  },
-  async mounted() {
-    await this.$store.dispatch('balances/refresh')
+  mounted() {
+    this.$store.dispatch('balances/refresh')
+    this.$store.dispatch('addresses/refresh')
   }
 }
 </script>
