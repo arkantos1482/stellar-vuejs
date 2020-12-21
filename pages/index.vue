@@ -3,19 +3,19 @@
     <div class="d-flex align-items-stretch">
 
       <!--    SELL-->
-      <v-card width="25%" class="pa-2">
+      <v-card width="28%" class="pa-2">
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th>قیمت</th>
-            <th>مقدار</th>
-            <th>مجموع</th>
+            <th class="small-font">{{ priceLabel }}</th>
+            <th class="small-font">{{ unitNumberLabel }}</th>
+            <th class="small-font">{{ amountLabel }}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item,index) in offers.asks" :key="index">
-            <td class="red--text">{{ parseFloat(item.price) }}</td>
-            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(10)) }}</td>
+            <td class="red--text">{{ offersPrice(item) }}</td>
+            <td>{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
@@ -23,7 +23,7 @@
       </v-card>
 
       <!--    MAIN-->
-      <v-card class="mx-4 px-4" width="50%">
+      <v-card class="mx-4 px-4" width="46%">
         <div class="d-flex justify-center">
           <v-col cols="3" class="ml-n4">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
@@ -81,19 +81,19 @@
       </v-card>
 
       <!--    BUY-->
-      <v-card width="25%" class="pa-2">
+      <v-card width="28%" class="pa-2">
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th>قیمت</th>
-            <th>مقدار</th>
-            <th>مجموع</th>
+            <th class="small-font">{{ priceLabel }}</th>
+            <th class="small-font">{{ unitNumberLabel }}</th>
+            <th class="small-font">{{ amountLabel }}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td class="green--text">{{ parseFloat(item.price) }}</td>
-            <td>{{ parseFloat((parseFloat(item.amount) / parseFloat(item.price)).toFixed(10)) }}</td>
+            <td class="green--text">{{ offersPrice(item) }}</td>
+            <td>{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
@@ -125,20 +125,21 @@ export default {
     counterBalance() {
       return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset])}`
     },
-    amountLabel() {
-      return 'مقدار ( ' + this.baseAsset + ' )'
-    },
     priceLabel() {
       return 'قیمت ( ' + this.counterAsset + ' )'
     },
-    totalLabel() {
+    unitNumberLabel() {
+      return 'مقدار ( ' + this.baseAsset + ' )'
+    },
+    amountLabel() {
       return 'مجموع ( ' + this.counterAsset + ' )'
     },
     buyOffers() {
       return collect(this.offers.bids)
           .map(item => ({
             price: item.price,
-            amount: (parseFloat(item.amount) / parseFloat(item.price_r.n)).toFixed(5)
+            price_r: item.price_r,
+            amount: (parseFloat(item.amount) / item.price_r.n)
           }))
     },
     // baseAssetList() {
@@ -213,6 +214,9 @@ export default {
         }
       }))
     },
+    offersPrice(item) {
+      return parseFloat(parseFloat(item.price_r.n / item.price_r.d).toFixed(10))
+    }
     // async buyOffers() {
     //   this.buy.offers = (await this.$axios.$get('/offers-book', {
     //     params: {
@@ -246,5 +250,9 @@ export default {
 <style scoped>
 .v-text-field--rounded {
   border-radius: 4px
+}
+.small-font{
+  white-space:nowrap;
+  /*font-size: 10px;*/
 }
 </style>
