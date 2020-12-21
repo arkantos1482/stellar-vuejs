@@ -126,13 +126,13 @@ export default {
       return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset])}`
     },
     priceLabel() {
-      return 'قیمت ( ' + this.counterAsset + ' )'
+      return 'قیمت (' + this.counterAsset + ')'
     },
     unitNumberLabel() {
-      return 'مقدار ( ' + this.baseAsset + ' )'
+      return 'مقدار (' + this.baseAsset + ')'
     },
     amountLabel() {
-      return 'مجموع ( ' + this.counterAsset + ' )'
+      return 'مجموع (' + this.counterAsset + ')'
     },
     buyOffers() {
       return collect(this.offers.bids)
