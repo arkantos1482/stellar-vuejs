@@ -14,14 +14,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="item in offers" :key="item.id">
+          <tr v-for="(item,idx) in offers" :key="idx">
             <td>{{ item.selling.asset_code }}</td>
             <td>{{ item.buying.asset_code }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
             <td>{{ parseFloat(item.amount) * parseFloat(item.price) }}</td>
             <td>{{ parseFloat(item.price) }}</td>
             <td>
-              <v-btn outlined small color="red" @click="cancel(item.id,item.seller)">لغو</v-btn>
+              <v-btn ref="deleteBtn"
+                     @click="cancel(item.id,item.seller,idx)"
+                     outlined small color="red">لغو
+              </v-btn>
             </td>
           </tr>
           </tbody>
@@ -33,20 +36,24 @@
 </template>
 
 <script>
+import pstopper from "@/mixins/pstopper";
+
 export default {
+  mixins: [pstopper],
   name: 'ActiveOffers',
-  data() {
-    return {
-      offers: []
+  computed: {
+    offers() {
+      return this.$store.state.offers.activeOffers
     }
   },
   async mounted() {
-    this.offers = (await this.$axios.$get('/offers'))._embedded.records
+    await this.$store.dispatch("offers/refresh")
   },
   methods: {
-    async cancel(id, seller) {
-      await this.$axios.$post('/offers/delete', {id, seller})
-      console.log(id)
+    async cancel(id, seller,index) {
+      this.$refs.deleteBtn[index].loading = true
+      await this.$store.dispatch("offers/delete", {id, seller})
+      await this.$store.dispatch("offers/refresh")
     }
   }
 }
