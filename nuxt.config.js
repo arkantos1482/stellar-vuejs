@@ -95,12 +95,15 @@ export default {
         }
     },
 
+    generate:{
+      dir:'dist/app'
+    },
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
-        extend(config, {isDev}) {
-            if (!isDev) {
-                config.output.publicPath = '/_nuxt/'
-            }
-        }
+        // extend(config, {isDev}) {
+        //     if (!isDev) {
+        //         config.output.publicPath = '/_nuxt/'
+        //     }
+        // }
     }
 }
