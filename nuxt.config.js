@@ -48,11 +48,11 @@ export default {
         // https://go.nuxtjs.dev/axios
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
-        // '@nuxtjs/pwa',
+        '@nuxtjs/pwa',
     ],
 
     router: {
-        base:'/app/',
+        base: '/app/',
         middleware: ['auth']
     },
 
@@ -96,5 +96,11 @@ export default {
     },
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
-    build: {}
+    build: {
+        extend(config, {isDev}) {
+            if (!isDev) {
+                config.output.publicPath = '/_nuxt/'
+            }
+        }
+    }
 }
