@@ -38,6 +38,10 @@ export default {
       l: {deposit: false}
     }
   },
+  mounted() {
+    this.$store.dispatch('balances/refresh')
+    this.$store.dispatch('addresses/refresh')
+  },
   methods: {
     async onDeposit() {
       this.l.deposit = true

@@ -43,7 +43,9 @@ export default {
       l: {withdraw: false}
     }
   },
-  async mounted() {
+  mounted() {
+    this.$store.dispatch('balances/refresh')
+    this.$store.dispatch('addresses/refresh')
     this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
         .then(res => this.withdrawFee = res);
   },

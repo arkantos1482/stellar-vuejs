@@ -37,6 +37,10 @@ export default {
       l: {withdraw: false}
     }
   },
+  mounted() {
+    this.$store.dispatch('balances/refresh')
+    this.$store.dispatch('addresses/refresh')
+  },
   methods: {
     async onWithdraw() {
       if (this.balance >= parseFloat(this.amount)) {
