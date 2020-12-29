@@ -18,8 +18,8 @@
             <td>{{ item.selling.asset_code }}</td>
             <td>{{ item.buying.asset_code }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
-            <td>{{ parseFloat(item.amount) * parseFloat(item.price) }}</td>
-            <td>{{ parseFloat(item.price) }}</td>
+            <td>{{ (parseFloat(item.amount) / parseFloat(item.price_r.d))|toFloat }}</td>
+            <td>{{ parseFloat(item.price_r.d) }}</td>
             <td>
               <v-btn ref="deleteBtn"
                      @click="cancel(item.id,item.seller,idx)"
@@ -50,7 +50,7 @@ export default {
     await this.$store.dispatch("offers/refresh")
   },
   methods: {
-    async cancel(id, seller,index) {
+    async cancel(id, seller, index) {
       this.$refs.deleteBtn[index].loading = true
       await this.$store.dispatch("offers/delete", {id, seller})
       await this.$store.dispatch("offers/refresh")
