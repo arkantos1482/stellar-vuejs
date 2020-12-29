@@ -143,7 +143,7 @@ export default {
           .map(item => ({
             price: item.price,
             price_r: item.price_r,
-            amount: (parseFloat(item.amount) / item.price_r.n)
+            amount: parseFloat(item.amount)
           }))
           .sortByDesc('price_r.n')
     },
