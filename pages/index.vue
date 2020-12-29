@@ -15,8 +15,8 @@
           <tbody>
           <tr v-for="(item,index) in sellOffers" :key="index">
             <td class="red--text">{{ offersPrice(item) }}</td>
-            <td>{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
             <td>{{ parseFloat(item.amount) }}</td>
+            <td>{{ parseFloat(parseFloat(item.amount) * offersPrice(item)) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
