@@ -55,9 +55,9 @@
                 {{ balances[counterAsset]|toFloat }}</p>
             </v-row>
             <v-text-field class="mt-n4" dense filled rounded
-                          v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded
                           v-model="buy.price" placeholder="قیمت" :suffix="counterAsset"/>
+            <v-text-field class="mt-n4" dense filled rounded
+                          v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
             <v-text-field class="mt-n4" dense filled rounded readonly
                           :value="buy.amount*buy.price" placeholder="مجموع" :suffix="counterAsset"/>
             <v-btn depressed class="white--text" block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
@@ -70,9 +70,9 @@
                 {{ balances[baseAsset]|toFloat }}</p>
             </v-row>
             <v-text-field class="mt-n4" dense filled rounded
-                          v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded
                           v-model="sell.price" placeholder="قیمت" :suffix="counterAsset"/>
+            <v-text-field class="mt-n4" dense filled rounded
+                          v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>
             <v-text-field class="mt-n4" dense filled rounded readonly
                           :value="sell.amount*sell.price" placeholder="مجموع" :suffix="counterAsset"/>
             <v-btn depressed class="white--text" block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
