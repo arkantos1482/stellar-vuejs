@@ -1,26 +1,24 @@
 <template>
-  <v-row class="text-center">
-    <v-col cols="12">
-      <v-simple-table>
-        <thead class="grey lighten-3">
-        <tr>
-          <th class="text-center">مقدار فروش</th>
-          <th class="text-center">رمزارز فروش</th>
-          <th class="text-center">مقدار خرید</th>
-          <th class="text-center">رمزارز خرید</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="item in trades" :key="item.id">
-          <td>{{ parseFloat(item.sold_amount) }}</td>
-          <td>{{ item.sold_asset_code }}</td>
-          <td>{{ parseFloat(item.bought_amount) }}</td>
-          <td>{{ item.bought_asset_code }}</td>
-        </tr>
-        </tbody>
-      </v-simple-table>
-    </v-col>
-  </v-row>
+  <v-card width="100%" class="text-center">
+    <v-simple-table>
+      <thead class="grey lighten-3">
+      <tr>
+        <th class="text-center">مقدار فروش</th>
+        <th class="text-center">رمزارز فروش</th>
+        <th class="text-center">مقدار خرید</th>
+        <th class="text-center">رمزارز خرید</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="item in trades" :key="item.id">
+        <td>{{ parseFloat(item.sold_amount) }}</td>
+        <td>{{ item.sold_asset_code }}</td>
+        <td>{{ parseFloat(item.bought_amount) }}</td>
+        <td>{{ item.bought_asset_code }}</td>
+      </tr>
+      </tbody>
+    </v-simple-table>
+  </v-card>
 </template>
 
 <script>

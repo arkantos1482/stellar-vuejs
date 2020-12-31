@@ -15,15 +15,15 @@
       <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
       <v-checkbox v-model="terms" class="mt-0">
         <template v-slot:label>
-          <a @click="dialog.terms=true">قوانین و شرایط</a>
-          <span>&nbsp;بیترا را می پذیرم.</span>
+          <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
+          <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
         </template>
       </v-checkbox>
       <v-btn @click="register" :loading="l.reg"
              class="mb-8" color="primary" block> تایید
       </v-btn>
-      <span>قبلا ثبت نام کرده اید؟</span>
-      <nuxt-link to="/Login">ورود</nuxt-link>
+      <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
+      <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
     </v-card-text>
 
     <v-dialog v-model="dialog.terms" max-width="400">

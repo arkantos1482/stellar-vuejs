@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-n12">
+  <div>
     <div class="d-flex align-items-stretch">
 
       <!--    SELL-->
@@ -7,23 +7,23 @@
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th class="small-font">{{ priceLabel }}</th>
-            <th class="small-font">{{ unitNumberLabel }}</th>
-            <th class="small-font">{{ amountLabel }}</th>
+            <th class="small-font text-body-1" style="font-family: serif">{{ priceLabel }}</th>
+            <th class="small-font text-body-1">{{ unitNumberLabel }}</th>
+            <th class="small-font text-body-1">{{ amountLabel }}</th>
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in sellOffers" :key="index">
-            <td class="red--text">{{ offersPrice(item) }}</td>
-            <td>{{ parseFloat(item.amount) }}</td>
-            <td>{{ parseFloat(parseFloat(item.amount) * offersPrice(item)) }}</td>
+          <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1">
+            <td class="red--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
+            <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
+            <td style="font-size: 1.4rem">{{ parseFloat(parseFloat(item.amount) * offersPrice(item)) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
       </v-card>
 
       <!--    MAIN-->
-      <v-card class="mx-4 px-4" width="46%">
+      <v-card class="mx-4 pa-2" width="46%">
         <div class="d-flex justify-center">
           <v-col cols="3" class="ml-n4">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
@@ -85,16 +85,16 @@
         <v-simple-table dense fixed-header>
           <thead>
           <tr>
-            <th class="small-font">{{ priceLabel }}</th>
-            <th class="small-font">{{ unitNumberLabel }}</th>
-            <th class="small-font">{{ amountLabel }}</th>
+            <th class="small-font text-body-1">{{ priceLabel }}</th>
+            <th class="small-font text-body-1">{{ unitNumberLabel }}</th>
+            <th class="small-font text-body-1">{{ amountLabel }}</th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td class="green--text">{{ offersPrice(item) }}</td>
-            <td>{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
-            <td>{{ parseFloat(item.amount) }}</td>
+            <td class="green--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
+            <td style="font-size: 1.4rem">{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
+            <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -102,7 +102,7 @@
 
     </div>
 
-    <active-offers/>
+    <active-offers class="mt-4"/>
   </div>
 </template>
 
@@ -257,6 +257,5 @@ export default {
 
 .small-font {
   white-space: nowrap;
-  /*font-size: 10px;*/
 }
 </style>

@@ -1,119 +1,128 @@
 <template>
   <div>
-    <v-stepper v-model="stepNum">
-      <v-stepper-header>
-        <v-stepper-step :complete="stepNum > 1" step="1"> اطلاعات شخصی</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step :complete="stepNum > 2" step="2"> اطلاعات مالی</v-stepper-step>
-        <v-divider></v-divider>
-        <v-stepper-step step="3"> اطلاعات تکمیلی</v-stepper-step>
-      </v-stepper-header>
-
-      <v-stepper-items>
-        <v-stepper-content step="1">
+    <v-card class="d-flex align-stretch" style="height: 80vh">
+      <v-col cols="3" class="py-16 secondary d-flex justify-end">
+        <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n4">
           <v-row>
-            <v-col cols="6">
-              <a-text-field
-                  v-model="user.name" label="نام"/>
-              <a-text-field
-                  v-model="user.last_name" label="نام خانوادگی"/>
-            </v-col>
-            <v-col cols="6">
-              <a-text-field
-                  v-model="user.ssn" label="کد ملی"/>
-              <v-text-field dense outlined
-                            v-model="user.cell_phone" label="موبایل">
-                <template v-slot:append>
-                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                         depressed small color="primary">درخواست توکن
-                  </v-btn>
-                </template>
-              </v-text-field>
-            </v-col>
+            <div class="ml-6" :class="stepTextColor(0)">اطلاعات شخصی</div>
+            <v-avatar :class="circleTextColor(0)" :color="circleColor(0)" size="42">1</v-avatar>
           </v-row>
-          <v-row class="mt-n4">
-            <v-col cols="6">
-              <v-file-input dense prepend-icon=""
-                            prepend-inner-icon="mdi-camera"
-                            height="96px"
-                            outlined label="تصویر کارت ملی" show-size @change="ssn=$event"/>
-              <v-btn class="mt-n8" small depressed color="primary"
-                     :loading="l.ssn" @click="uploadSsn">ارسال
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-stepper-content>
-
-
-        <v-stepper-content step="2">
-          <v-row justify="center">
-            <v-col cols="6">
-              <a-text-field
-                  v-model="user.bank_card" label="شماره کارت"/>
-              <a-text-field
-                  v-model="user.bank_shaba" label="شماره شبا"/>
-            </v-col>
-            <v-col cols="6">
-              <a-text-field
-                  v-model="user.bank_account" label="شماره حساب"/>
-              <v-row class="mt-n4">
-                <v-col>
-                  <v-file-input dense prepend-icon=""
-                                prepend-inner-icon="mdi-camera"
-                                height="96px"
-                                outlined label="تصویر کارت بانکی" show-size @change="bankCard=$event"/>
-                  <v-btn class="mt-n8" depressed small color="primary"
-                         :loading="l.bankCard" @click="uploadBankCard">ارسال
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-col>
-          </v-row>
-        </v-stepper-content>
-
-        <v-stepper-content step="3">
           <v-row>
-            <v-col cols="6">
-              <a-text-field
-                  v-model="user.city" label="شهر"/>
-              <a-text-field
-                  v-model="user.address" label="آدرس"/>
-            </v-col>
-            <v-col cols="6">
-
-              <a-text-field
-                  v-model="user.postal_code" label="کدپستی"/>
-              <v-text-field dense outlined
-                  v-model="user.phone" label="تلفن ثابت">
-                <template v-slot:append>
-                  <v-btn small depressed color="primary" @click="requestPhoneOtp"
-                         :loading="l.phoneRequest">درخواست توکن
-                  </v-btn>
-                </template>
-              </v-text-field>
-
-            </v-col>
+            <div class="ml-6" :class="stepTextColor(1)">اطلاعات مالی</div>
+            <v-avatar :class="circleTextColor(1)" :color="circleColor(1)" size="42">2</v-avatar>
           </v-row>
-
-          <v-row class="mt-n4">
-            <v-col cols="6">
-              <v-file-input dense prepend-icon=""
-                            prepend-inner-icon="mdi-camera"
-                            height="96px"
-                            outlined label="تصویر قبض تلفن" show-size @change="bill=$event"/>
-              <v-btn class="mt-n8" small depressed color="primary"
-                     :loading="l.bill" @click="uploadBill">ارسال
-              </v-btn>
-            </v-col>
+          <v-row>
+            <div class="ml-6" :class="stepTextColor(2)">اطلاعات تکمیلی</div>
+            <v-avatar :class="circleTextColor(2)" :color="circleColor(2)" size="42">3</v-avatar>
           </v-row>
-        </v-stepper-content>
-      </v-stepper-items>
-
-      <v-col cols="4" class="d-flex pb-4 px-8">
-        <v-btn class="flex-grow-1 ml-2" outlined color="primary" @click=prev text> {{ prevLabel }}</v-btn>
-        <v-btn class="flex-grow-1" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
+        </div>
       </v-col>
-    </v-stepper>
+
+      <v-col>
+        <v-window v-model="stepNum" style="padding: 32px 96px ">
+          <v-window-item>
+            <v-row>
+              <v-col cols="6">
+                <a-text-field
+                    v-model="user.name" label="نام"/>
+                <a-text-field
+                    v-model="user.last_name" label="نام خانوادگی"/>
+              </v-col>
+              <v-col cols="6">
+                <a-text-field
+                    v-model="user.ssn" label="کد ملی"/>
+                <v-text-field dense outlined
+                              v-model="user.cell_phone" label="موبایل">
+                  <template v-slot:append>
+                    <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
+                           depressed small color="primary">درخواست توکن
+                    </v-btn>
+                  </template>
+                </v-text-field>
+              </v-col>
+            </v-row>
+            <v-row class="mt-n4">
+              <v-col cols="6">
+                <v-file-input dense prepend-icon=""
+                              prepend-inner-icon="mdi-camera"
+                              height="96px"
+                              outlined label="تصویر کارت ملی" show-size @change="ssn=$event"/>
+                <v-btn class="mt-n8" small depressed color="primary"
+                       :loading="l.ssn" @click="uploadSsn">ارسال
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-window-item>
+          <v-window-item>
+            <v-row justify="center">
+              <v-col cols="6">
+                <a-text-field
+                    v-model="user.bank_card" label="شماره کارت"/>
+                <a-text-field
+                    v-model="user.bank_shaba" label="شماره شبا"/>
+              </v-col>
+              <v-col cols="6">
+                <a-text-field
+                    v-model="user.bank_account" label="شماره حساب"/>
+                <v-row class="mt-n4">
+                  <v-col>
+                    <v-file-input dense prepend-icon=""
+                                  prepend-inner-icon="mdi-camera"
+                                  height="96px"
+                                  outlined label="تصویر کارت بانکی" show-size @change="bankCard=$event"/>
+                    <v-btn class="mt-n8" depressed small color="primary"
+                           :loading="l.bankCard" @click="uploadBankCard">ارسال
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-window-item>
+          <v-window-item>
+            <v-row>
+              <v-col cols="6">
+                <a-text-field
+                    v-model="user.city" label="شهر"/>
+                <a-text-field
+                    v-model="user.address" label="آدرس"/>
+              </v-col>
+              <v-col cols="6">
+
+                <a-text-field
+                    v-model="user.postal_code" label="کدپستی"/>
+                <v-text-field dense outlined
+                              v-model="user.phone" label="تلفن ثابت">
+                  <template v-slot:append>
+                    <v-btn small depressed color="primary" @click="requestPhoneOtp"
+                           :loading="l.phoneRequest">درخواست توکن
+                    </v-btn>
+                  </template>
+                </v-text-field>
+
+              </v-col>
+            </v-row>
+            <v-row class="mt-n4">
+              <v-col cols="6">
+                <v-file-input dense prepend-icon=""
+                              prepend-inner-icon="mdi-camera"
+                              height="96px"
+                              outlined label="تصویر قبض تلفن" show-size @change="bill=$event"/>
+                <v-btn class="mt-n8" small depressed color="primary"
+                       :loading="l.bill" @click="uploadBill">ارسال
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-window-item>
+        </v-window>
+        <div style=" position: absolute; bottom: 0; width: 100%">
+          <v-divider class="my-0 ml-6"/>
+          <div class="d-flex py-4">
+            <v-btn class="px-16 ml-2" outlined color="primary" @click=prev text> {{ prevLabel }}</v-btn>
+            <v-btn class="px-16" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
+          </div>
+        </div>
+      </v-col>
+    </v-card>
 
     <v-dialog v-model="dialog.send" max-width="400">
       <v-card>
@@ -164,7 +173,7 @@ export default {
     toColor: value => value
   },
   computed: {
-    totalSteps: () => 3
+    totalSteps: () => 3,
   },
   data() {
     return {
@@ -184,7 +193,7 @@ export default {
 
       userId: this.$route.params.user,
       isAdmin: this.$store.state.auth.profile?.role === 'admin',
-      stepNum: 1,
+      stepNum: 0,
       dialog: {send: false, mobileOtp: false, phoneOtp: false},
       nextLabel: 'بعدی',
       prevLabel: 'قبلی',
@@ -227,7 +236,7 @@ export default {
       this.$bus.$emit('snack', 'مشخصات شما با موفقیت ثبت شد.', 'success')
     },
     next() {
-      if (this.stepNum === this.totalSteps) {
+      if (this.stepNum === this.totalSteps - 1) {
         this.dialog.send = true
       } else {
         this.stepNum++
@@ -235,7 +244,7 @@ export default {
       }
     },
     async prev() {
-      if (this.stepNum === 1) {
+      if (this.stepNum === 0) {
         // await $router.push('/')
       } else {
         this.stepNum--
@@ -243,16 +252,37 @@ export default {
       }
     },
     setBtnState() {
-      if (this.stepNum === this.totalSteps) {
+      if (this.stepNum === this.totalSteps - 1) {
         this.nextLabel = 'ارسال'
         this.prevLabel = 'قبلی'
-      } else if (this.stepNum === 1) {
+      } else if (this.stepNum === 0) {
         this.nextLabel = 'بعدی'
         this.prevLabel = 'بازگشت'
       } else {
         this.nextLabel = 'بعدی'
         this.prevLabel = 'قبلی'
       }
+    },
+    circleColor(step) {
+      if (step === this.stepNum) {
+        return 'primary'
+      } else if (step > this.stepNum) {
+        return 'white'
+      } else {
+        return 'secondary'
+      }
+    },
+    circleTextColor(step) {
+      if (this.stepNum === step) {
+        return 'white--text'
+      } else if (step > this.stepNum) {
+        return 'grey--text'
+      } else {
+        return 'white--text'
+      }
+    },
+    stepTextColor(step) {
+      return this.stepNum === step ? 'white--text' : 'grey--text';
     },
 
 

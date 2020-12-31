@@ -1,13 +1,14 @@
 <template>
   <div>
-    <p class="primary--text">با فعال سازی شناسایی دوعاملی، امنیت تراکنش ها و دارایی های خود را افزایش دهید.</p>
+    <p class="text-h4 primary--text">با فعال سازی شناسایی دوعاملی، امنیت تراکنش ها و دارایی های خود را افزایش دهید.</p>
     <a-card divider title="شناسایی دو عاملی">
-      <p>شناسایی دوعاملی برای حساب کاربری شما
+      <p class="text-h5">شناسایی دوعاملی برای حساب کاربری شما
         <span :class="statusClass">{{ statusText }}</span>
         است.</p>
       <div class="text-center mt-12">
         <v-btn @click="onToggle" :loading="l.toggle"
-               :color="btnColor">{{ btnText }}
+               :color="btnColor" depressed :class="btnClass">
+          {{ btnText }}
         </v-btn>
       </div>
     </a-card>
@@ -33,13 +34,16 @@ export default {
       return this.mfaIsEnabled ? 'لغو شناسایی دو عاملی' : 'فعال سازی شناسایی دو عاملی'
     },
     btnColor() {
-      return this.mfaIsEnabled ? 'red' : 'green'
+      return this.mfaIsEnabled ? 'F849601E' : '#02c0761E'
     },
     statusText() {
       return this.mfaIsEnabled ? 'فعال' : 'غیرفعال'
     },
     statusClass() {
-      return this.mfaIsEnabled ? 'green--text' : 'red--text'
+      return this.mfaIsEnabled ? 'success--text' : 'error--text'
+    },
+    btnClass() {
+      return this.mfaIsEnabled ? 'error--text' : 'success--text'
     }
   },
   data() {

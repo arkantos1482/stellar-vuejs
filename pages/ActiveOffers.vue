@@ -1,38 +1,36 @@
 <template>
-  <v-row class="text-center">
-    <v-col cols="12">
-      <v-simple-table>
-        <template>
-          <thead class="grey lighten-3">
-          <tr>
-            <th class="text-center">فروش</th>
-            <th class="text-center">خرید</th>
-            <th class="text-center">مقدار فروش</th>
-            <th class="text-center">مقدار خرید</th>
-            <th class="text-center">قیمت واحد</th>
-            <th class="text-center">لغو</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item,idx) in offers" :key="idx">
-            <td>{{ item.selling.asset_code }}</td>
-            <td>{{ item.buying.asset_code }}</td>
-            <td>{{ parseFloat(item.amount) }}</td>
-            <td>{{ (parseFloat(item.amount) / parseFloat(item.price_r.d))|toFloat }}</td>
-            <td>{{ parseFloat(item.price_r.d) }}</td>
-            <td>
-              <v-btn ref="deleteBtn"
-                     @click="cancel(item.id,item.seller,idx)"
-                     outlined small color="red">لغو
-              </v-btn>
-            </td>
-          </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-      <!--      <json-viewer :value="offers" dir="ltr"/>-->
-    </v-col>
-  </v-row>
+  <v-card width="100%" class="text-center">
+    <v-simple-table>
+      <template>
+        <thead class="grey lighten-3">
+        <tr>
+          <th class="text-center">فروش</th>
+          <th class="text-center">خرید</th>
+          <th class="text-center">مقدار فروش</th>
+          <th class="text-center">مقدار خرید</th>
+          <th class="text-center">قیمت واحد</th>
+          <th class="text-center">لغو</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,idx) in offers" :key="idx">
+          <td>{{ item.selling.asset_code }}</td>
+          <td>{{ item.buying.asset_code }}</td>
+          <td>{{ parseFloat(item.amount) }}</td>
+          <td>{{ (parseFloat(item.amount) / parseFloat(item.price_r.d))|toFloat }}</td>
+          <td>{{ parseFloat(item.price_r.d) }}</td>
+          <td>
+            <v-btn ref="deleteBtn"
+                   @click="cancel(item.id,item.seller,idx)"
+                   outlined small color="red">لغو
+            </v-btn>
+          </td>
+        </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+    <!--      <json-viewer :value="offers" dir="ltr"/>-->
+  </v-card>
 </template>
 
 <script>

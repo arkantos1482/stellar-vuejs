@@ -1,30 +1,28 @@
 <template>
-  <v-row class="text-center">
-    <v-col cols="12">
-      <v-simple-table>
-        <thead class="grey lighten-3">
-        <tr>
-          <th class="text-center">نوع سفارش</th>
-          <th class="text-center">مقدار</th>
-          <th class="text-center">مبلغ واحد</th>
-          <th class="text-center">رمزارز فروش</th>
-          <th class="text-center">رمزارز خرید</th>
-          <th class="text-center">زمان</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="item in offers" :key="item.id">
-          <td>{{ item.type | toFarsi }}</td>
-          <td>{{ parseFloat(item.amount) }}</td>
-          <td>{{ parseFloat(item.price_r.d) }}</td>
-          <td>{{ item.selling_asset_code }}</td>
-          <td>{{ item.buying_asset_code }}</td>
-          <td>{{ item.created_at }}</td>
-        </tr>
-        </tbody>
-      </v-simple-table>
-    </v-col>
-  </v-row>
+  <v-card width="100%" class="text-center">
+    <v-simple-table>
+      <thead class="grey lighten-3">
+      <tr>
+        <th class="text-center">نوع سفارش</th>
+        <th class="text-center">مقدار</th>
+        <th class="text-center">مبلغ واحد</th>
+        <th class="text-center">رمزارز فروش</th>
+        <th class="text-center">رمزارز خرید</th>
+        <th class="text-center">زمان</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="item in offers" :key="item.id">
+        <td>{{ item.type | toFarsi }}</td>
+        <td>{{ parseFloat(item.amount) }}</td>
+        <td>{{ parseFloat(item.price_r.d) }}</td>
+        <td>{{ item.selling_asset_code }}</td>
+        <td>{{ item.buying_asset_code }}</td>
+        <td>{{ item.created_at }}</td>
+      </tr>
+      </tbody>
+    </v-simple-table>
+  </v-card>
 </template>
 
 <script>

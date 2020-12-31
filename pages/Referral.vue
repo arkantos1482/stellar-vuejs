@@ -2,18 +2,18 @@
   <div>
     <div class="d-flex align-items-stretch">
       <a-card class="ml-4" width="40%" divider title="ایجاد کد دعوت">
-        <p class="text-body-2 grey--text text--darken-1">
+        <p class="text-h5 grey--text text--darken-1">
           نرخ کارمزد ۲۰درصد به شما تعلق گرفته است، سهم دوستان خود را مشخص کنید.
         </p>
         <v-row>
           <v-col class="text-center">
-            <p>درصد شما</p>
-            <p>{{ myPercent + "درصد" }}</p>
+            <p class="text-h6">درصد شما</p>
+            <p class="text-h6">{{ myPercent + "درصد" }}</p>
           </v-col>
           <v-divider vertical/>
           <v-col class="text-center">
-            <p>درصد دوستان</p>
-            <p>{{ guestPercent + "درصد" }}</p>
+            <p class="text-h6">درصد دوستان</p>
+            <p class="text-h5">{{ guestPercent + "درصد" }}</p>
           </v-col>
         </v-row>
         <v-slider v-model="myPercent"
@@ -27,22 +27,22 @@
       </a-card>
 
       <a-card width="60%" divider title="کد دعوت شما">
-        <p class="text-body-2 grey--text text--darken-1">
+        <p class="text-h5 grey--text text--darken-1">
           برای پیوستن دوستان خود به بیترا، کد زیر را با آنها به اشتراک بگذارید.
         </p>
         <div class="d-flex justify-space-between">
-          <p>لینک دعوت</p>
-          <p>{{ myLink }}</p>
+          <p class="text-h5">لینک دعوت</p>
+          <p class="text-h4">{{ myLink }}</p>
         </div>
         <div class="d-flex justify-space-between">
-          <p>کد دعوت</p>
-          <p>{{ myCode }}</p>
+          <p class="text-h5">کد دعوت</p>
+          <p class="text-h4">{{ myCode }}</p>
         </div>
       </a-card>
     </div>
 
     <a-card class="mt-4" divider title="کد دعوت کننده شما">
-      <p class="text-body-2 grey--text text--darken-1">
+      <p class="text-h5 grey--text text--darken-1">
         چنانچه از طریق یکی از کاربران بیترا با ما آشنا شده اید. با وارد کد این کار به عتوان معرف خود، درصدی از کارمزد
         معاملات شما بدون هزینه اضافه برای شما، به معرف شما تخصیص داده میشود.
       </p>

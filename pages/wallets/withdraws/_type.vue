@@ -1,7 +1,6 @@
 <template>
-  <div class="d-flex align-items-stretch mt-8">
-
-    <a-card class="ml-4 py-8" width="30%" title="برداشت">
+  <div class="d-flex align-items-stretch">
+    <a-card class="ml-4" width="30%" title="برداشت">
       <crypto-upper :balance="balance" :type="type"/>
 
       <a-text-field v-model="amount" label="مبلغ"/>
@@ -12,9 +11,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%">
-      <withdraws/>
-    </a-card>
+    <withdraws/>
   </div>
 </template>
 

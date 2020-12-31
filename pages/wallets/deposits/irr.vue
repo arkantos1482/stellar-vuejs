@@ -8,9 +8,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%">
-      <deposits/>
-    </a-card>
+    <deposits/>
   </div>
 </template>
 
@@ -19,7 +17,6 @@ import ps from '@/mixins/pstopper'
 import Deposits from "@/pages/wallets/deposits/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
-import collect from "collect.js";
 import CryptoUpper from "@/components/CryptoUpper";
 
 export default {

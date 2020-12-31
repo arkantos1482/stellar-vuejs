@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="text-right">
     <v-navigation-drawer v-show="isAdmin" v-model="drawer" fixed right app>
       <v-list>
         <v-list-item
@@ -64,7 +64,7 @@
       </v-btn>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container fluid class="pa-4">
         <nuxt/>
       </v-container>
       <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>

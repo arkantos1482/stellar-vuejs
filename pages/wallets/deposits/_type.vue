@@ -1,12 +1,12 @@
 <template>
-  <div class="d-flex align-items-stretch mt-8">
+  <div class="d-flex align-items-stretch">
     <a-card class="ml-4 py-8" width="30%" title="واریز">
       <div v-show="address !== 'not_loaded'">
         <crypto-upper :balance="balance" :type="type"/>
 
         <div v-if="address !== 'no_address'" class="mt-12 text-center">
           <vue-qrcode :value="address"/>
-          <p>{{ address }}</p>
+          <p style="font-family: serif; font-size: 1.6rem">{{ address }}</p>
         </div>
         <v-btn v-else @click="createCrypto" :loading="l.create"
                class="mt-16 mb-8" block color="primary">ایجاد
@@ -14,9 +14,7 @@
       </div>
     </a-card>
 
-    <a-card class="ml-4" width="70%">
-      <deposits/>
-    </a-card>
+    <deposits />
   </div>
 </template>
 

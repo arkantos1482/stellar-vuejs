@@ -1,6 +1,6 @@
 <template>
   <v-card :width="width" class="py-4 px-8" elevation="4">
-    <div class="text-h6 mb-2">{{ title }}</div>
+    <div class="text-h4 mb-2">{{ title }}</div>
     <v-divider v-show="divider" class="mb-2"/>
     <slot></slot>
   </v-card>

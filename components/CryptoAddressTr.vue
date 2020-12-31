@@ -2,16 +2,15 @@
   <tr>
     <td>
       <div class="d-flex align-items-center">
-        <v-img class="ml-2" max-width="24" max-height="24"
+        <v-img class="ml-2" max-width="36" max-height="36"
                :src="type|toCoinIcon"/>
-        <p>{{ namad }}</p>
+        {{ namad }}
       </div>
     </td>
-    <td>{{ type.toUpperCase() }}</td>
-    <td>{{ balance|toFloat }}</td>
+    <td>{{ balance|toFloat }}&nbsp{{ type.toUpperCase() }}</td>
     <td>
-      <v-btn :disabled="isDepositDisabled" text small color="green" @click="onDeposit">واریز</v-btn>
-      <v-btn :disabled="isWithdrawDisabled" text small color="red" @click="onWithdraw">برداشت</v-btn>
+      <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">واریز</v-btn>
+      <v-btn :disabled="isWithdrawDisabled" small depressed color="#F849601E" class="error--text" @click="onWithdraw">برداشت</v-btn>
       <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">
         <v-icon color="primary">mdi-refresh</v-icon>
       </v-btn>

@@ -49,6 +49,7 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
+        'bootstrap-vue/nuxt'
     ],
 
     router: {
@@ -69,6 +70,8 @@ export default {
         progress: false
     },
 
+    bootstrapVue: {},
+
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
     vuetify: {
         treeShake: true,
@@ -85,18 +88,22 @@ export default {
                 light: {
                     primary: '#0074ff',
                     accent: colors.grey.darken3,
-                    secondary: colors.amber.darken3,
+                    secondary: '#001254',
                     info: colors.teal.lighten1,
                     warning: colors.amber.base,
-                    error: colors.deepOrange.accent4,
-                    success: colors.green.accent3
+                    // error: colors.deepOrange.accent4,
+                    // success: colors.green.accent3,
+                    error: '#F84960',
+                    errorBack: '#F849601E',
+                    success: '#02c076',
+                    successBack: '#02c0761E'
                 }
             }
         }
     },
 
-    generate:{
-      dir:'dist/app'
+    generate: {
+        dir: 'dist/app'
     },
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {

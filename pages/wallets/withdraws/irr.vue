@@ -9,9 +9,7 @@
       </v-btn>
     </a-card>
 
-    <a-card class="ml-4" width="70%">
-      <withdraws/>
-    </a-card>
+    <withdraws/>
   </div>
 </template>
 

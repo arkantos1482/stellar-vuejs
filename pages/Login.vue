@@ -1,11 +1,13 @@
 <template>
   <login-reg-card title="ورود به حساب کاربری">
     <v-card-text class="mt-16">
-      <a-text-field v-model="email" label="ایمیل"/>
-      <a-text-field v-model="password" label="رمز عبور" type="password"/>
-      <v-btn @click="login" :loading="l.login"
-             block color="primary" class="mt-8">تایید
-      </v-btn>
+      <v-form @submit.prevent="login">
+        <a-text-field class="a-field" v-model="email" label="ایمیل" :rules="[rules.email]"/>
+        <a-text-field v-model="password" label="رمز عبور" type="password"/>
+        <v-btn type="submit" :loading="l.login"
+               block color="primary" class="mt-8">تایید
+        </v-btn>
+      </v-form>
       <v-row justify="space-between" dense class="mt-2">
         <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
         <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
@@ -25,9 +27,25 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
+      text: 'salalm',
+      name: 'asd',
+      state: 'asdasdasd',
       l: {login: false},
       email: '',
       password: '',
+      rules: {
+        required: value => !!value || 'الزامی است',
+        counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
+        email(value) {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'ایمیل درست نیست.'
+        },
+        password: value => {
+          // at least number - small - capital
+          const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد.'
+        },
+      }
     }
   },
   methods: {
@@ -54,4 +72,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.a-field fieldset {
+  border: 1px solid #eee !important;
+}
+</style>
 
