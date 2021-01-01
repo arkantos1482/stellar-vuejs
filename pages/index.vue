@@ -14,7 +14,7 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1">
-            <td class="red--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
+            <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
             <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
             <td style="font-size: 1.4rem">{{ parseFloat(parseFloat(item.amount) * offersPrice(item)) }}</td>
           </tr>
@@ -23,8 +23,8 @@
       </v-card>
 
       <!--    MAIN-->
-      <v-card class="mx-4 pa-2" width="46%">
-        <div class="d-flex justify-center">
+      <v-card class="mx-4 pa-2" width="46%" ref="card">
+        <div class="d-flex justify-center mb-n8 mt-n2">
           <v-col cols="3" class="ml-n4">
             <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
                       dense filled rounded/>
@@ -41,43 +41,48 @@
                        color-grid="grey"
                        color-text="grey"
                        color-title="black"
-                       :height="240"
-                       :width="windowWidth/3"
+                       :height="200"
+                       :width="windowWidth*42/100"
                        :title-txt="this.baseAsset+this.counterAsset"
                        :data="this.$data"></trading-vue>
         </div>
 
-        <v-row justify="center">
-          <v-col cols="6" class="px-2">
-            <v-row justify="space-between px-8">
-              <p class="text-subtitle-2"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p><span class="text-caption">{{ counterAsset }}</span>
-                {{ balances[counterAsset]|toFloat }}</p>
-            </v-row>
-            <v-text-field class="mt-n4" dense filled rounded
-                          v-model="buy.price" placeholder="قیمت" :suffix="counterAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded
-                          v-model="buy.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded readonly
-                          :value="buy.amount*buy.price" placeholder="مجموع" :suffix="counterAsset"/>
-            <v-btn depressed class="white--text" block @click="doBuy" :loading="l.buy" color="green">خرید</v-btn>
+        <div class="d-flex justify-center text-display-1">
+          <v-col cols="6" class="px-2 py-0">
+            <div class="d-flex justify-space-between">
+              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
+              <p class="ma-0 grey--text"><span>{{ counterAsset }}</span>
+                {{ balances[counterAsset]|toFloat }}
+                <v-icon>mdi-wallet</v-icon>
+              </p>
+            </div>
+
+            <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
+            <order-text-field v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
+            <order-text-field class="mt-6" readonly :value="buy.amount*buy.price" prepend="مجموع"
+                              :append="counterAsset"/>
+            <v-btn depressed small class="white--text mt-8 py-4" block color="success"
+                   @click="doBuy" :loading="l.buy">خرید
+            </v-btn>
           </v-col>
 
-          <v-col cols="6" class="px-2">
-            <v-row justify="space-between px-8">
-              <p class="text-subtitle-2"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p><span class="text-caption">{{ baseAsset }}</span>
-                {{ balances[baseAsset]|toFloat }}</p>
-            </v-row>
-            <v-text-field class="mt-n4" dense filled rounded
-                          v-model="sell.price" placeholder="قیمت" :suffix="counterAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded
-                          v-model="sell.amount" placeholder="مقدار" :suffix="baseAsset"/>
-            <v-text-field class="mt-n4" dense filled rounded readonly
-                          :value="sell.amount*sell.price" placeholder="مجموع" :suffix="counterAsset"/>
-            <v-btn depressed class="white--text" block @click="doSell" :loading="l.sell" color="red">فروش</v-btn>
+          <v-col cols="6" class="px-2 py-0">
+            <div class="d-flex justify-space-between">
+              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
+              <p class="ma-0 grey--text"><span>{{ baseAsset }}</span>
+                {{ balances[baseAsset]|toFloat }}
+                <v-icon>mdi-wallet</v-icon>
+              </p>
+            </div>
+            <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
+            <order-text-field v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
+            <order-text-field class="mt-6" readonly :value="sell.amount*sell.price" prepend="مجموع"
+                              :append="counterAsset"/>
+            <v-btn depressed small class="white--text mt-8 py-4" block color="error"
+                   @click="doSell" :loading="l.sell">فروش
+            </v-btn>
           </v-col>
-        </v-row>
+        </div>
       </v-card>
 
       <!--    BUY-->
@@ -92,7 +97,7 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td class="green--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
+            <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
             <td style="font-size: 1.4rem">{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
             <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
           </tr>
@@ -109,12 +114,12 @@
 <script>
 import collect from "collect.js";
 import ActiveOffers from "@/pages/ActiveOffers";
-import ATextField from "@/components/ATextField";
 import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
+import OrderTextField from "@/pages/OrderTextField";
 
 export default {
-  components: {ActiveOffers, ATextField, TradingVue},
+  components: {OrderTextField, ActiveOffers, TradingVue},
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
