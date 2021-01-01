@@ -2,7 +2,7 @@
   <div>
     <v-card class="d-flex align-stretch" style="height: 80vh">
       <v-col cols="3" class="py-16 secondary d-flex justify-end">
-        <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n4">
+        <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n5">
           <v-row>
             <div class="ml-6" :class="stepTextColor(0)">اطلاعات شخصی</div>
             <v-avatar :class="circleTextColor(0)" :color="circleColor(0)" size="42">1</v-avatar>
@@ -19,7 +19,7 @@
       </v-col>
 
       <v-col>
-        <v-window v-model="stepNum" style="padding: 32px 96px ">
+        <v-window vertical reverse v-model="stepNum" style="padding: 32px 96px ">
           <v-window-item>
             <v-row>
               <v-col cols="6">
@@ -31,14 +31,15 @@
               <v-col cols="6">
                 <a-text-field
                     v-model="user.ssn" label="کد ملی"/>
-                <v-text-field dense outlined
-                              v-model="user.cell_phone" label="موبایل">
-                  <template v-slot:append>
-                    <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                           depressed small color="primary">درخواست توکن
-                    </v-btn>
-                  </template>
-                </v-text-field>
+
+                <a-text-field
+                    v-model="user.cell_phone" label="موبایل">
+                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
+                         outlined tile depressed small class="primary--text py-4" color="primary lighten-4">دریافت کد
+                    تایید
+                  </v-btn>
+                </a-text-field>
+
               </v-col>
             </v-row>
             <v-row class="mt-n4">
@@ -87,17 +88,13 @@
                     v-model="user.address" label="آدرس"/>
               </v-col>
               <v-col cols="6">
-
                 <a-text-field
                     v-model="user.postal_code" label="کدپستی"/>
-                <v-text-field dense outlined
-                              v-model="user.phone" label="تلفن ثابت">
-                  <template v-slot:append>
-                    <v-btn small depressed color="primary" @click="requestPhoneOtp"
-                           :loading="l.phoneRequest">درخواست توکن
-                    </v-btn>
-                  </template>
-                </v-text-field>
+                <a-text-field v-model="user.phone" label="تلفن ثابت">
+                  <v-btn outlined tile depressed small class="primary--text py-4" color="primary lighten-4"
+                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
+                  </v-btn>
+                </a-text-field>
 
               </v-col>
             </v-row>
@@ -117,7 +114,9 @@
         <div style=" position: absolute; bottom: 0; width: 100%">
           <v-divider class="my-0 ml-6"/>
           <div class="d-flex py-4">
-            <v-btn class="px-16 ml-2" outlined color="primary" @click=prev text> {{ prevLabel }}</v-btn>
+            <v-btn style="border: 1px solid #0074ff" class="px-16 ml-2" outlined color="primary" @click=prev text>
+              {{ prevLabel }}
+            </v-btn>
             <v-btn class="px-16" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
           </div>
         </div>
@@ -257,7 +256,7 @@ export default {
         this.prevLabel = 'قبلی'
       } else if (this.stepNum === 0) {
         this.nextLabel = 'بعدی'
-        this.prevLabel = 'بازگشت'
+        this.prevLabel = 'قبلی'
       } else {
         this.nextLabel = 'بعدی'
         this.prevLabel = 'قبلی'
