@@ -1,55 +1,58 @@
 <template>
-  <div class="text-right">
-    <label class="text-h6">{{ label }}</label>
-    <b-form-input
-        class="text-h5"
-        :readonly="readonly"
-        :value="value"
-        @input="$emit('input',$event)"
-        :type="type"
-        :state="isValid"/>
+  <!--  <v-text-field outlined dense-->
+  <!--                @change="$emit('input',$event)"-->
+  <!--                :type="type"-->
+  <!--                :hint="hint"-->
+  <!--                :value="value"-->
+  <!--                :label="label"-->
+  <!--                :filled="filled"-->
+  <!--                :readonly="readonly"-->
+  <!--                :rules="rules"-->
+  <!--  />-->
 
-    <!-- This will only be shown if the preceding input has an invalid state -->
-    <b-form-invalid-feedback> {{ errorMsg }}</b-form-invalid-feedback>
-
-    <!-- This is a form text block (formerly known as help block) -->
-    <b-form-text>{{ hint }}</b-form-text>
-
-<!--    <v-text-field outlined dense-->
-<!--                  @change="$emit('input',$event)"-->
-<!--                  :type="type"-->
-<!--                  :hint="hint"-->
-<!--                  :value="value"-->
-<!--                  :label="label"-->
-<!--                  :filled="filled"-->
-<!--                  :readonly="readonly"-->
-<!--                  :rules="rules"-->
-<!--    />-->
+  <div style="text-align: right">
+    <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
+    <div class="d-flex gray-border">
+      <input :type="type" class="text-field  text-h5" :class="{'red-border':hasError}" :value="value"
+             @input="$emit('input', $event.target.value)">
+      <slot></slot>
+      <p v-show="hasError" class="red--text text-body-2">{{ errorBucket[0] }}</p>
+    </div>
   </div>
 </template>
 <script>
-import collect from 'collect.js'
+import VTextField from 'vuetify/lib/components/VTextField/VTextField'
 
 export default {
   name: 'a-text-field',
-  props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
-  computed: {
-    isValid() {
-      let value = this.value
-      return collect(this.rules)
-          .every(item => typeof item(value) !== 'string') ? null : false
-    },
-    errorMsg() {
-      let value = this.value
-      const first = collect(this.rules)
-          .first(item => item(value) !== 'string')
-      return first ? first(value) : 'hichi'
-    }
-  }
+  extends: VTextField,
+  // props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
 }
 </script>
 
 <style>
+.text-field {
+  width: 100%;
+  padding: 6px 12px;
+}
+
+.gray-border {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.gray-border:focus {
+  outline: none !important;
+  border: 1px solid dodgerblue;
+  box-shadow: 0 0 4px lightblue;
+}
+
+.red-border {
+  border-radius: 4px;
+  border: 1px solid red;
+}
+
+
 /*.v-text-field input {*/
 /*  font-size: 12.2em;*/
 /*}*/
