@@ -16,8 +16,8 @@
       <input :type="type" class="text-field input-border text-h5" :class="{'red-border':hasError}" :value="value"
              @input="$emit('input', $event.target.value)">
       <slot></slot>
-      <p v-show="hasError" class="red--text text-body-2">{{ errorBucket[0] }}</p>
     </div>
+    <p v-show="hasError" class="red--text text-body-2">{{ errorBucket[0] }}</p>
   </div>
 </template>
 <script>
