@@ -6,6 +6,7 @@
         :readonly="readonly"
         :value="value"
         @input="$emit('input',$event)"
+        :type="type"
         :state="isValid"/>
 
     <!-- This will only be shown if the preceding input has an invalid state -->
