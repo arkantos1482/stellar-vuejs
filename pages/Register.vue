@@ -1,6 +1,6 @@
 <template>
   <login-reg-card title="ایجاد حساب کاربری"
-                  subtitle="خوش آمدید">
+                  subtitle="به بیترا خوش آمدید">
     <v-card-text>
       <v-tabs>
         <v-tab>حقیقی</v-tab>

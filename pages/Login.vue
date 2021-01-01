@@ -1,11 +1,11 @@
 <template>
   <login-reg-card title="ورود به حساب کاربری">
-    <v-card-text class="mt-16">
+    <v-card-text>
       <v-form @submit.prevent="login">
         <a-text-field class="a-field" v-model="email" label="ایمیل" :rules="[rules.email]"/>
         <a-text-field v-model="password" label="رمز عبور" type="password"/>
         <v-btn type="submit" :loading="l.login"
-               block color="primary" class="mt-8">تایید
+               block color="primary" class="mt-12">تایید
         </v-btn>
       </v-form>
       <v-row justify="space-between" dense class="mt-2">

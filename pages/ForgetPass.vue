@@ -1,11 +1,14 @@
 <template>
-  <login-reg-card title="بازیابی رمز عبور"
-                  subtitle="برای بازیابی رمز عبور ایمیلی که با آن ثبت نام نموده اید را وارد نمایید.">
+  <login-reg-card title="بازیابی رمز عبور">
     <a-text-field v-model="email" label="ایمیل"
                   class="mt-8"/>
     <v-btn @click="onSubmit" :loading="l.submit"
-           block color="primary" class="mt-8">تایید
+           block color="primary" class="mt-8">ارسال ایمیل بازیابی
     </v-btn>
+    <div class="pt-16">
+      <span class="text-h6">رمزتان را به خاطر دارید؟</span>
+      <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
+    </div>
   </login-reg-card>
 </template>
 

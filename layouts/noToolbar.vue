@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-img max-width="128" max-height="48"
-             :src="require('../assets/images/Bitra_Logo.png')"/>
+             :src="require('../assets/images/logo.jpeg')"/>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -12,6 +12,10 @@
       <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
       <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
     </v-main>
+
+    <v-footer class="text-h6 grey--text d-flex justify-center" style="z-index: 0" app>
+      <p class="mb-1"> کلیه حقوق برای بیترا محفوظ است.</p>
+    </v-footer>
   </v-app>
 </template>
 
