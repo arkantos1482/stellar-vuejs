@@ -49,7 +49,6 @@ export default {
         '@nuxtjs/axios',
         // https://go.nuxtjs.dev/pwa
         '@nuxtjs/pwa',
-        'bootstrap-vue/nuxt'
     ],
 
     router: {
@@ -69,8 +68,6 @@ export default {
         credentials: true,
         progress: false
     },
-
-    bootstrapVue: {},
 
     // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
     vuetify: {
