@@ -56,7 +56,7 @@
         <v-list>
           <v-list-item to="/Users/me">پروفایل</v-list-item>
           <v-list-item to="/Security">امنیت</v-list-item>
-          <v-list-item @click="logout">خروج</v-list-item>
+          <v-list-item class="text-h6" @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
       <v-btn text small>

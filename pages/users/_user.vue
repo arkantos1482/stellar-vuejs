@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-card class="d-flex align-stretch" style="height: 80vh">
-      <v-col cols="3" class="py-16 secondary d-flex justify-end">
-        <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n5">
-          <v-row>
+      <v-col cols="3" class="secondary d-flex justify-end">
+        <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n5 mb-16">
+          <v-row align="center">
             <div class="ml-6" :class="stepTextColor(0)">اطلاعات شخصی</div>
             <v-avatar :class="circleTextColor(0)" :color="circleColor(0)" size="42">1</v-avatar>
           </v-row>
-          <v-row>
+          <v-row align="center">
             <div class="ml-6" :class="stepTextColor(1)">اطلاعات مالی</div>
             <v-avatar :class="circleTextColor(1)" :color="circleColor(1)" size="42">2</v-avatar>
           </v-row>
-          <v-row>
+          <v-row align="center">
             <div class="ml-6" :class="stepTextColor(2)">اطلاعات تکمیلی</div>
             <v-avatar :class="circleTextColor(2)" :color="circleColor(2)" size="42">3</v-avatar>
           </v-row>
@@ -44,13 +44,16 @@
             </v-row>
             <v-row class="mt-n4">
               <v-col cols="6">
-                <v-file-input dense prepend-icon=""
-                              prepend-inner-icon="mdi-camera"
-                              height="96px"
-                              outlined label="تصویر کارت ملی" show-size @change="ssn=$event"/>
-                <v-btn class="mt-n8" small depressed color="primary"
-                       :loading="l.ssn" @click="uploadSsn">ارسال
-                </v-btn>
+                <div>
+                  <p class="text-h6 mb-1 mt-2">تصویر کارت ملی</p>
+                  <vue2-dropzone :options="dropzoneOptions.ssn" :useCustomSlot=true>
+                    <v-row>
+                      <v-icon color="primary">mdi-camera</v-icon>
+                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                    </v-row>
+                  </vue2-dropzone>
+                </div>
+
               </v-col>
             </v-row>
           </v-window-item>
@@ -67,13 +70,15 @@
                     v-model="user.bank_account" label="شماره حساب"/>
                 <v-row class="mt-n4">
                   <v-col>
-                    <v-file-input dense prepend-icon=""
-                                  prepend-inner-icon="mdi-camera"
-                                  height="96px"
-                                  outlined label="تصویر کارت بانکی" show-size @change="bankCard=$event"/>
-                    <v-btn class="mt-n8" depressed small color="primary"
-                           :loading="l.bankCard" @click="uploadBankCard">ارسال
-                    </v-btn>
+                    <div>
+                      <p class="text-h6 mb-1 mt-6">تصویر کارت بانکی</p>
+                      <vue2-dropzone :options="dropzoneOptions.bankCard" :useCustomSlot=true>
+                        <v-row>
+                          <v-icon color="primary">mdi-camera</v-icon>
+                          <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                        </v-row>
+                      </vue2-dropzone>
+                    </div>
                   </v-col>
                 </v-row>
               </v-col>
@@ -100,17 +105,20 @@
             </v-row>
             <v-row class="mt-n4">
               <v-col cols="6">
-                <v-file-input dense prepend-icon=""
-                              prepend-inner-icon="mdi-camera"
-                              height="96px"
-                              outlined label="تصویر قبض تلفن" show-size @change="bill=$event"/>
-                <v-btn class="mt-n8" small depressed color="primary"
-                       :loading="l.bill" @click="uploadBill">ارسال
-                </v-btn>
+                <div>
+                  <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن</p>
+                  <vue2-dropzone :options="dropzoneOptions.bill" :useCustomSlot=true>
+                    <v-row>
+                      <v-icon color="primary">mdi-camera</v-icon>
+                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                    </v-row>
+                  </vue2-dropzone>
+                </div>
               </v-col>
             </v-row>
           </v-window-item>
         </v-window>
+        <!--        <div>-->
         <div style=" position: absolute; bottom: 0; width: 100%">
           <v-divider class="my-0 ml-6"/>
           <div class="d-flex py-4">
@@ -160,6 +168,9 @@
 </template>
 
 <script>
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
+
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
 import LoginRegCard from "@/components/LoginRegCard";
@@ -167,7 +178,7 @@ import Otp from "@/components/Otp";
 
 export default {
   mixins: [pstopper],
-  components: {Otp, LoginRegCard, ATextField},
+  components: {vue2Dropzone, Otp, LoginRegCard, ATextField},
   filters: {
     toColor: value => value
   },
@@ -182,6 +193,32 @@ export default {
       mobile: {otp: ''},
       phone: {otp: ''},
       config: {headers: {"Content-Type": "multipart/form-data"}},
+      dropzoneOptions: {
+        ssn: {
+          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
+          paramName: 'ssn',
+          withCredentials: true,
+          headers: {'X-XSRF-TOKEN': this.$cookies.get('XSRF-TOKEN')},
+          maxFiles: 1,
+          thumbnailWidth: 64,
+          thumbnailHeight: 64,
+          maxFilesize: 0.5,
+        },
+        bill: {
+          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
+          paramName: 'bill',
+          withCredentials: true,
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+        },
+        bankCard: {
+          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
+          paramName: 'bank-card',
+          withCredentials: true,
+          thumbnailWidth: 150,
+          maxFilesize: 0.5,
+        }
+      },
       l: {
         ssn: false, bill: false, bankCard: false,
         mobileSubmit: false, mobileRequest: false,
@@ -285,12 +322,12 @@ export default {
     },
 
 
-    async uploadSsn() {
-      this.l.ssn = true
+    async uploadSsn(file) {
+      // this.l.ssn = true
       const formData = new FormData();
-      formData.append('ssn', this.ssn)
+      formData.append('ssn', file)
       await this.$axios.$post('/profiles/me/docs', formData, this.config)
-      this.l.ssn = false
+      // this.l.ssn = false
       this.$bus.$emit('snack', 'تصویر کارت ملی با موفیت ارسال شد.', 'success')
     },
     async uploadBill() {

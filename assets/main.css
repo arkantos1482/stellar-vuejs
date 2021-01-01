@@ -18,6 +18,22 @@ th {
     font-weight: 400;
 }
 
+a {
+    font-size: 1.6rem;
+}
+
+.vue-dropzone {
+    border: 1px solid #ccc !important;
+    font-family: IranSans, sans-serif !important;
+    letter-spacing: 0 !important;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*color: black !important;*/
+    /*transition: .2s linear;*/
+}
+
 /*@font-face {*/
 /*    font-family: 'IranSans';*/
 /*    font-display: swap;*/

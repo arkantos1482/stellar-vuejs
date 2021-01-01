@@ -13,7 +13,7 @@
   <div style="text-align: right">
     <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
     <div class="d-flex gray-border">
-      <input :type="type" class="text-field  text-h5" :class="{'red-border':hasError}" :value="value"
+      <input :type="type" class="text-field input-border text-h5" :class="{'red-border':hasError}" :value="value"
              @input="$emit('input', $event.target.value)">
       <slot></slot>
       <p v-show="hasError" class="red--text text-body-2">{{ errorBucket[0] }}</p>
@@ -41,7 +41,7 @@ export default {
   border: 1px solid #ccc;
 }
 
-.gray-border:focus {
+.input-border:focus {
   outline: none !important;
   border: 1px solid dodgerblue;
   box-shadow: 0 0 4px lightblue;

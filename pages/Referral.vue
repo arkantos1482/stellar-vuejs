@@ -1,5 +1,6 @@
 <template>
   <div>
+    <p class="text-h4 primary--text">با دعوت از دوستان خود سود بیشتری کسب کنید.</p>
     <div class="d-flex align-items-stretch">
       <a-card class="ml-4" width="40%" divider title="ایجاد کد دعوت">
         <p class="text-h5 grey--text text--darken-1">
@@ -8,7 +9,7 @@
         <v-row>
           <v-col class="text-center">
             <p class="text-h6">درصد شما</p>
-            <p class="text-h6">{{ myPercent + "درصد" }}</p>
+            <p class="text-h5">{{ myPercent + "درصد" }}</p>
           </v-col>
           <v-divider vertical/>
           <v-col class="text-center">
