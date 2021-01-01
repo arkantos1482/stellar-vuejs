@@ -3,9 +3,9 @@
     <a-text-field v-model="email" label="ایمیل"
                   class="mt-8"/>
     <v-btn @click="onSubmit" :loading="l.submit"
-           block color="primary" class="mt-8">ارسال ایمیل بازیابی
+           block color="primary" class="mt-16 mb-8">ارسال ایمیل بازیابی
     </v-btn>
-    <div class="pt-16">
+    <div>
       <span class="text-h6">رمزتان را به خاطر دارید؟</span>
       <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
     </div>
