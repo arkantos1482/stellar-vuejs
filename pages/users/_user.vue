@@ -47,7 +47,7 @@
                 <div>
                   <p class="text-h6 mb-1 mt-2">تصویر کارت ملی</p>
                   <vue2-dropzone :options="dropzoneOptions.ssn" :useCustomSlot=true>
-                    <v-row>
+                    <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
                       <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
                     </v-row>
@@ -73,7 +73,7 @@
                     <div>
                       <p class="text-h6 mb-1 mt-6">تصویر کارت بانکی</p>
                       <vue2-dropzone :options="dropzoneOptions.bankCard" :useCustomSlot=true>
-                        <v-row>
+                        <v-row align="center">
                           <v-icon color="primary">mdi-camera</v-icon>
                           <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
                         </v-row>
@@ -108,7 +108,7 @@
                 <div>
                   <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن</p>
                   <vue2-dropzone :options="dropzoneOptions.bill" :useCustomSlot=true>
-                    <v-row>
+                    <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
                       <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
                     </v-row>
