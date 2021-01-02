@@ -4,21 +4,21 @@
       <template>
         <thead class="grey lighten-3">
         <tr>
-          <th class="text-center">فروش</th>
-          <th class="text-center">خرید</th>
-          <th class="text-center">مقدار فروش</th>
-          <th class="text-center">مقدار خرید</th>
-          <th class="text-center">قیمت واحد</th>
+          <th class="text-center">نوع</th>
+          <th class="text-center">رمزارزها</th>
+          <th class="text-center">قیمت</th>
+          <th class="text-center">مقدار</th>
+          <th class="text-center">مجموع</th>
           <th class="text-center">لغو</th>
         </tr>
         </thead>
         <tbody>
         <tr v-for="(item,idx) in offers" :key="idx">
-          <td>{{ item.selling.asset_code }}</td>
-          <td>{{ item.buying.asset_code }}</td>
-          <td>{{ parseFloat(item.amount) }}</td>
-          <td>{{ (parseFloat(item.amount) / parseFloat(item.price_r.d))|toFloat }}</td>
-          <td>{{ parseFloat(item.price_r.d) }}</td>
+          <td>{{ item.type|toFarsi }}</td>
+          <td>{{ item|cryptoPair }}</td>
+          <td>{{ item|price }}</td>
+          <td>{{ item|amount }}</td>
+          <td>{{ item|total }}</td>
           <td>
             <v-btn ref="deleteBtn"
                    @click="cancel(item.id,item.seller,idx)"
@@ -39,6 +39,37 @@ import pstopper from "@/mixins/pstopper";
 export default {
   mixins: [pstopper],
   name: 'ActiveOffers',
+  filters: {
+    toFarsi(val) {
+      return val === 'buy' ? 'خرید' : 'فروش'
+    },
+    cryptoPair(item) {
+      return item.type === 'buy'
+          ? item.buying_asset_code + '/' + item.selling_asset_code
+          : item.selling_asset_code + '/' + item.buying_asset_code
+    },
+    price(item) {
+      let price = parseFloat(item.price_r.n / item.price_r.d)
+      return price
+      // return item.type === 'buy'
+      //     ? price + item.buying_asset_code
+      //     : price + item.selling_asset_code
+    },
+    amount(item) {
+      let amount = parseFloat(item.amount)
+      return amount
+      // return item.type === 'buy'
+      //     ? amount + item.buying_asset_code
+      //     : amount + item.selling_asset_code
+    },
+    total(item) {
+      let total = parseFloat(item.amount * item.price_r.n / item.price_r.d)
+      return total
+      // return item.type === 'buy'
+      //     ? total + item.buying_asset_code
+      //     : total + item.selling_asset_code
+    }
+  },
   computed: {
     offers() {
       return this.$store.state.offers.activeOffers

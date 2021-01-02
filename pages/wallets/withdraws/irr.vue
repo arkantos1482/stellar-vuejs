@@ -5,7 +5,7 @@
       <crypto-upper :balance="balance" :type="type"/>
       <a-text-field v-model="amount" label="مبلغ"/>
       <v-btn @click="onWithdraw" :loading="l.withdraw"
-             block color="primary" class="mt-4">تایید
+             block color="primary" class="mt-4">برداشت
       </v-btn>
     </a-card>
 

@@ -7,7 +7,7 @@
       <a-text-field v-model="destAddress" label="آدرس کیف پول مقصد"/>
       <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>
       <v-btn @click="withdraw" :loading="l.withdraw"
-             block color="primary" class="mt-4">تایید
+             block color="primary" class="mt-4">برداشت
       </v-btn>
     </a-card>
 

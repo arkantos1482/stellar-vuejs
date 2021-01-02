@@ -106,7 +106,7 @@
             <v-row class="mt-n4">
               <v-col cols="6">
                 <div>
-                  <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن</p>
+                  <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن یا قبوض خدماتی</p>
                   <vue2-dropzone :options="dropzoneOptions.bill" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>

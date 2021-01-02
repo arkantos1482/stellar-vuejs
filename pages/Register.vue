@@ -36,7 +36,7 @@
 
     <v-dialog v-model="dialog.terms" max-width="400">
       <v-card>
-        <v-card-title>شرایط و قوانین</v-card-title>
+        <v-card-title>قوانین و شرایط استفاده از خدمات بیترا</v-card-title>
         <v-card-text>
           مجموعه قوانین به شرح زیر است
         </v-card-text>
