@@ -48,8 +48,8 @@ export default {
 }
 
 .red-border {
-  border-radius: 4px;
-  border: 1px solid red;
+  /*border-radius: 4px;*/
+  /*border: 1px solid red;*/
 }
 
 

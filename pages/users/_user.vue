@@ -133,10 +133,11 @@
 
     <div>
       <v-dialog v-model="dialog.send" max-width="400">
-        <a-card title="ارسال مشخصات" subtitle="آیا از ارسال مشخصات خود اطمینان دارید؟">
+        <a-card title="ارسال مشخصات"
+                subtitle="آیا از ارسال مشخصات خود اطمینان دارید؟ در صورت ارسال مشخصات فرایند تایید مدارک مجددا انجام خواهند شد.">
           <v-card-actions class="mt-12 pa-0">
-            <v-btn text color="primary" @click="send">بله</v-btn>
-            <v-btn text @click="dialog.send=false">خیر</v-btn>
+            <v-btn text color="primary" @click="send">ارسال</v-btn>
+            <v-btn text @click="dialog.send=false">انصراف</v-btn>
           </v-card-actions>
         </a-card>
       </v-dialog>

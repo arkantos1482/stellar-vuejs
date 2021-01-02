@@ -22,7 +22,8 @@
                   ticks thumb-label/>
         <div class="text-center">
           <v-btn @click="submitMyPercent" :loading="l.percent"
-                 color="primary">اعمال
+                 small depressed class="primary--text px-12 py-4"
+                 color="primary lighten-4">اعمال
           </v-btn>
         </div>
       </a-card>
@@ -33,11 +34,11 @@
         </p>
         <div class="d-flex justify-space-between">
           <p class="text-h5">لینک دعوت</p>
-          <p class="text-h4">{{ myLink }}</p>
+          <p style="font-family: serif !important;" class="text-h4">{{ myLink }}</p>
         </div>
         <div class="d-flex justify-space-between">
           <p class="text-h5">کد دعوت</p>
-          <p class="text-h4">{{ myCode }}</p>
+          <p style="font-family: serif !important;" class="text-h4">{{ myCode }}</p>
         </div>
       </a-card>
     </div>
@@ -47,11 +48,13 @@
         چنانچه از طریق یکی از کاربران بیترا با ما آشنا شده اید. با وارد کد این کار به عتوان معرف خود، درصدی از کارمزد
         معاملات شما بدون هزینه اضافه برای شما، به معرف شما تخصیص داده میشود.
       </p>
-      <div class="d-flex justify-center mt-12">
-        <a-text-field class="flex-grow-0 mx-2" filled label="کد معرف" v-model="myHostCode"/>
-        <v-btn @click="submitTheHostCode" :loading="l.hostCode"
-               color="primary">تایید
-        </v-btn>
+      <div class="d-flex justify-center mt-4">
+        <a-text-field class="flex-grow-0 mx-2" filled label="کد معرف" v-model="myHostCode">
+          <v-btn @click="submitTheHostCode" :loading="l.hostCode"
+                 outlined tile depressed small class="primary--text py-4 px-12" color="primary lighten-4">تایید
+          </v-btn>
+        </a-text-field>
+
       </div>
     </a-card>
   </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-stretch mt-8">
-    <a-card class="ml-4 py-8" width="30%" title="واریز">
+    <a-card class="ml-4 py-8" width="45%" title="واریز">
       <crypto-upper :balance="balance" :type="type"/>
       <a-text-field v-model="amount" filled label="مقدار ریال"/>
       <v-btn @click="onDeposit" :loading="l.deposit"

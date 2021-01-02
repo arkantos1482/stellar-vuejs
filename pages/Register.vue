@@ -9,9 +9,17 @@
       <v-divider/>
       <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
       <a-text-field :rules="[rules.required, rules.password, rules.counter]"
-                    type="password" label="رمز عبور" v-model="password"
-                    hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"/>
-      <a-text-field type="password" label="تکرار رمز عبور" v-model="passwordConfirm"/>
+                    :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password"
+                    hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد">
+        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+        </v-icon>
+      </a-text-field>
+      <a-text-field :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور" v-model="passwordConfirm">
+        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+        </v-icon>
+      </a-text-field>
       <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
       <v-checkbox v-model="terms" class="mt-0">
         <template v-slot:label>
@@ -52,6 +60,7 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
+      showPass: false,
       email: '',
       password: '',
       passwordConfirm: '',

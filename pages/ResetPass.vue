@@ -2,9 +2,17 @@
   <login-reg-card title="ایجاد رمز عبور جدید">
     <a-text-field :rules="[rules.required, rules.password, rules.counter]"
                   hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"
-                  type="password" v-model="password" label="رمز عبور"
-                  class="mt-16"/>
-    <a-text-field type="password" v-model="passwordConfirm" label="تکرار رمز عبور"/>
+                  :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
+                  class="mt-16">
+      <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+        {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+      </v-icon>
+    </a-text-field>
+    <a-text-field :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
+      <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+        {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+      </v-icon>
+    </a-text-field>
     <v-btn :loading="l.send" @click="onSend"
            block color="primary" class="mt-8">تایید
     </v-btn>
@@ -23,6 +31,7 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
+      showPass: false,
       l: {send: false},
       password: '',
       passwordConfirm: '',

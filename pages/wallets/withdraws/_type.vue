@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-stretch">
-    <a-card class="ml-4" width="30%" title="برداشت">
+    <a-card class="ml-4" width="45%" title="برداشت">
       <crypto-upper :balance="balance" :type="type"/>
 
       <a-text-field v-model="amount" label="مبلغ"/>

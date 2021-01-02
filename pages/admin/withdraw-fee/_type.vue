@@ -33,9 +33,11 @@
 
 <script>
 import pstopper from "@/mixins/pstopper";
+import ATextField from "@/components/ATextField";
 
 export default {
   mixins: [pstopper],
+  components: {ATextField},
   computed: {
     isEthOrUsdt() {
       return ('ETH' === this.coin.toUpperCase() || 'USDT' === this.coin.toUpperCase())

@@ -2,8 +2,12 @@
   <login-reg-card title="ورود به حساب کاربری">
     <v-card-text>
       <v-form @submit.prevent="login">
-        <a-text-field class="a-field" v-model="email" label="ایمیل" :rules="[rules.email]"/>
-        <a-text-field v-model="password" label="رمز عبور" type="password"/>
+        <a-text-field class="a-field" v-model="email" label="ایمیل"/>
+        <a-text-field v-model="password" label="رمز عبور" :type="showPass ? 'text' : 'password'">
+          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+          </v-icon>
+        </a-text-field>
         <v-btn type="submit" :loading="l.login"
                block color="primary" class="mt-12">تایید
         </v-btn>
@@ -27,25 +31,10 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
-      text: 'salalm',
-      name: 'asd',
-      state: 'asdasdasd',
+      showPass: false,
       l: {login: false},
       email: '',
       password: '',
-      rules: {
-        required: value => !!value || 'الزامی است',
-        counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
-        email(value) {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'ایمیل درست نیست.'
-        },
-        password: value => {
-          // at least number - small - capital
-          const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
-          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد.'
-        },
-      }
     }
   },
   methods: {

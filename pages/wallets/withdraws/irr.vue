@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-items-stretch mt-12">
 
-    <a-card class="ml-4 py-8" width="30%" title="برداشت">
+    <a-card class="ml-4 py-8" width="45%" title="برداشت">
       <crypto-upper :balance="balance" :type="type"/>
       <a-text-field v-model="amount" label="مبلغ"/>
       <v-btn @click="onWithdraw" :loading="l.withdraw"

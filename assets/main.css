@@ -26,6 +26,11 @@ a, p {
     line-height: 1.6rem !important;
 }
 
+.v-tab {
+    font-size: 1.4rem !important;
+    font-weight: 600 !important;
+}
+
 .vue-dropzone {
     border: 1px solid #ccc !important;
     font-family: IranSans, sans-serif !important;

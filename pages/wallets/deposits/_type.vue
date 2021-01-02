@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-stretch">
-    <a-card class="ml-4 py-8" width="30%" title="واریز">
+    <a-card class="ml-4 py-8" width="45%" title="واریز">
       <div v-show="address !== 'not_loaded'">
         <crypto-upper :balance="balance" :type="type"/>
 
