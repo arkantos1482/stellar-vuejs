@@ -3,7 +3,7 @@
     <a-text-field
         @input="$emit('otp',$event)"
         :label="label"/>
-    <div class="text-h6"> {{ counterToString }}</div>
+    <div class="text-h6 text-center mt-4"> {{ counterToString }}</div>
     <div v-show="codeFailure" class="mt-8 text-h6">
       <span class="grey--text">کد تایید دریافت نشد؟</span>
       <a @click="onResend">ارسال مجدد</a>

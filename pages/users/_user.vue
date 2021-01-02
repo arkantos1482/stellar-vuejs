@@ -18,7 +18,7 @@
         </div>
       </v-col>
 
-      <v-col>
+      <v-col cols="9">
         <v-window vertical reverse v-model="stepNum" style="padding: 32px 96px ">
           <v-window-item>
             <v-row>
@@ -131,38 +131,34 @@
       </v-col>
     </v-card>
 
-    <v-dialog v-model="dialog.send" max-width="400">
-      <v-card>
-        <v-card-title> آیا از ارسال مشخصات خود اطمینان دارید؟</v-card-title>
-        <v-card-actions>
-          <v-btn text color="primary" @click="send">بله</v-btn>
-          <v-btn text @click="dialog.send=false">خیر</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <div>
+      <v-dialog v-model="dialog.send" max-width="400">
+        <a-card title="ارسال مشخصات" subtitle="آیا از ارسال مشخصات خود اطمینان دارید؟">
+          <v-card-actions class="mt-12 pa-0">
+            <v-btn text color="primary" @click="send">بله</v-btn>
+            <v-btn text @click="dialog.send=false">خیر</v-btn>
+          </v-card-actions>
+        </a-card>
+      </v-dialog>
 
-    <v-dialog v-model="dialog.mobileOtp" max-width="400">
-      <v-card class="text-center pt-12 pb-8 px-8" elevation="6">
-        <div class="text-h5">احراز اصالت موبایل</div>
-        <div class="mt-4 mx-6 text-body-2 grey--text text--darken-1">برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل
-          شما ارسال شده را در کادر زیر وارد نمایید.
-        </div>
-        <otp :loading="l.mobileSubmit" class="mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event" label="کد تایید"/>
-      </v-card>
-    </v-dialog>
+      <v-dialog v-model="dialog.mobileOtp" max-width="400">
+        <a-card title="احراز اصالت موبایل"
+                subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل  شما ارسال شده را در کادر زیر وارد نمایید.">
+          <otp :loading="l.mobileSubmit" class="mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event"
+               label="کد تایید"/>
+        </a-card>
+      </v-dialog>
 
-    <v-dialog v-model="dialog.phoneOtp" max-width="400">
-      <v-card class="text-center pt-12 pb-8 px-8" elevation="6">
-        <div class="text-h5">احراز اصالت تلفن ثابت</div>
-        <div class="mt-4 mx-6 text-body-2 grey--text text--darken-1">برای ایمن سازی حساب کاربری کد ۶رقمی با تماس تلفنی
-          برای شما قرایت شده را در کادر زیر وارد نمایید.
-        </div>
-        <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
-      </v-card>
-    </v-dialog>
+      <v-dialog v-model="dialog.phoneOtp" max-width="400">
+        <a-card title="احراز اصالت تلفن ثابت"
+                subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی با تماس تلفنی برای شما قرایت شده را در کادر زیر وارد نمایید.">
+          <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
+        </a-card>
+      </v-dialog>
 
-    <div class="text-center">
-      <v-btn v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
+      <div class="text-center">
+        <v-btn v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
+      </div>
     </div>
   </div>
 </template>
@@ -173,12 +169,12 @@ import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
-import LoginRegCard from "@/components/LoginRegCard";
+import ACard from "@/components/ACard";
 import Otp from "@/components/Otp";
 
 export default {
   mixins: [pstopper],
-  components: {vue2Dropzone, Otp, LoginRegCard, ATextField},
+  components: {vue2Dropzone, Otp, ACard, ATextField},
   filters: {
     toColor: value => value
   },
