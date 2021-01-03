@@ -1,17 +1,20 @@
 <template>
   <div>
-    <v-card class="d-flex align-stretch" style="height: 80vh">
+    <v-card class="d-flex align-stretch" style="height: 85vh">
       <v-col cols="3" class="secondary d-flex justify-end">
         <div class="text-h4 d-flex flex-column justify-space-between align-end ml-n5 mb-16">
-          <v-row align="center">
+          <v-row align="center" style="cursor: pointer"
+                 @click="navigate(0)">
             <div class="ml-6" :class="stepTextColor(0)">اطلاعات شخصی</div>
             <v-avatar :class="circleTextColor(0)" :color="circleColor(0)" size="42">1</v-avatar>
           </v-row>
-          <v-row align="center">
+          <v-row align="center" style="cursor: pointer"
+                 @click="navigate(1)">
             <div class="ml-6" :class="stepTextColor(1)">اطلاعات مالی</div>
             <v-avatar :class="circleTextColor(1)" :color="circleColor(1)" size="42">2</v-avatar>
           </v-row>
-          <v-row align="center">
+          <v-row align="center" style="cursor: pointer"
+                 @click="navigate(2)">
             <div class="ml-6" :class="stepTextColor(2)">اطلاعات تکمیلی</div>
             <v-avatar :class="circleTextColor(2)" :color="circleColor(2)" size="42">3</v-avatar>
           </v-row>
@@ -42,10 +45,10 @@
 
               </v-col>
             </v-row>
-            <v-row class="mt-n4">
+            <v-row class="mt-1">
               <v-col cols="6">
                 <div>
-                  <p class="text-h6 mb-1 mt-2">تصویر کارت ملی</p>
+                  <p class="text-h6 mb-2">تصویر کارت ملی</p>
                   <vue2-dropzone :options="dropzoneOptions.ssn" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
@@ -53,7 +56,18 @@
                     </v-row>
                   </vue2-dropzone>
                 </div>
+              </v-col>
 
+              <v-col cols="6">
+                <div>
+                  <p class="text-h6 mb-2">تصویر تایید هویت</p>
+                  <vue2-dropzone :options="dropzoneOptions.bankCard" :useCustomSlot=true>
+                    <v-row align="center">
+                      <v-icon color="primary">mdi-camera</v-icon>
+                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                    </v-row>
+                  </vue2-dropzone>
+                </div>
               </v-col>
             </v-row>
           </v-window-item>
@@ -64,23 +78,6 @@
                     v-model="user.bank_card" label="شماره کارت"/>
                 <a-text-field
                     v-model="user.bank_shaba" label="شماره شبا"/>
-              </v-col>
-              <v-col cols="6">
-                <a-text-field
-                    v-model="user.bank_account" label="شماره حساب"/>
-                <v-row class="mt-n4">
-                  <v-col>
-                    <div>
-                      <p class="text-h6 mb-1 mt-6">تصویر کارت بانکی</p>
-                      <vue2-dropzone :options="dropzoneOptions.bankCard" :useCustomSlot=true>
-                        <v-row align="center">
-                          <v-icon color="primary">mdi-camera</v-icon>
-                          <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
-                        </v-row>
-                      </vue2-dropzone>
-                    </div>
-                  </v-col>
-                </v-row>
               </v-col>
             </v-row>
           </v-window-item>
@@ -267,6 +264,10 @@ export default {
       await this.$axios.$put('/profiles/' + this.userId, this.user)
       this.l.send = false
       this.$bus.$emit('snack', 'مشخصات شما با موفقیت ثبت شد.', 'success')
+    },
+    navigate(step) {
+      this.stepNum = step
+      this.setBtnState()
     },
     next() {
       if (this.stepNum === this.totalSteps - 1) {
