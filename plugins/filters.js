@@ -4,6 +4,11 @@ Vue.filter('prettyJson', (value) => {
     return JSON.stringify(value, null, 2)
 })
 
+Vue.filter('toFarsiDate', (val) => {
+    const date = new Date(val);
+    return date.toLocaleTimeString('fa-IR') + ' ' + date.toLocaleDateString('fa-IR')
+})
+
 Vue.filter('toFarsiCoin', (type) => {
     let typeUp = type.toUpperCase()
 

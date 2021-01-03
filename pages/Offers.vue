@@ -18,7 +18,7 @@
         <td>{{ parseFloat(item.price_r.d) }}</td>
         <td>{{ item.selling_asset_code }}</td>
         <td>{{ item.buying_asset_code }}</td>
-        <td>{{ item.created_at }}</td>
+        <td>{{ item.created_at|toFarsiDate }}</td>
       </tr>
       </tbody>
     </v-simple-table>

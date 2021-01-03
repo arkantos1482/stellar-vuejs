@@ -13,7 +13,7 @@
       <tr v-for="item in withdraws" :key="item.id">
         <td>{{ item.asset_code }}</td>
         <td>{{ parseFloat(item.amount) }}</td>
-        <td>{{ item.created_at }}</td>
+        <td>{{ item.created_at|toFarsiDate }}</td>
       </tr>
       </tbody>
     </v-simple-table>

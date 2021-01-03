@@ -9,6 +9,7 @@
           <th class="text-center">قیمت</th>
           <th class="text-center">مقدار</th>
           <th class="text-center">مجموع</th>
+          <th class="text-center">تاریخ</th>
           <th class="text-center">لغو</th>
         </tr>
         </thead>
@@ -19,6 +20,7 @@
           <td>{{ item|price }}</td>
           <td>{{ item|amount }}</td>
           <td>{{ item|total }}</td>
+          <td>{{ item.created_at|toFarsiDate }}</td>
           <td>
             <v-btn ref="deleteBtn"
                    @click="cancel(item.id,item.seller,idx)"
