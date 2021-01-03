@@ -93,9 +93,9 @@ export default {
                     // error: colors.deepOrange.accent4,
                     // success: colors.green.accent3,
                     error: '#F84960',
-                    errorBack: '#F849601E',
+                    // errorBack: '#F849601E',
                     success: '#02c076',
-                    successBack: '#02c0761E'
+                    // successBack: '#02c0761E'
                 }
             }
         }

@@ -32,13 +32,27 @@
         <p class="text-h5 grey--text text--darken-1">
           برای پیوستن دوستان خود به بیترا، کد زیر را با آنها به اشتراک بگذارید.
         </p>
-        <div class="d-flex justify-space-between">
-          <p class="text-h5">لینک دعوت</p>
-          <p style="font-family: serif !important;" class="text-h4">{{ myLink }}</p>
-        </div>
-        <div class="d-flex justify-space-between">
-          <p class="text-h5">کد دعوت</p>
-          <p style="font-family: serif !important;" class="text-h4">{{ myCode }}</p>
+        <div v-if="myLink">
+          <div class="d-flex justify-space-between align-center">
+            <p class="text-h5 ma-0">لینک دعوت</p>
+            <p style="font-family: sans-serif !important;"
+               class="d-flex align-center text-h5 ma-0">
+              <v-btn icon @click="copy(myLink)">
+                <v-icon color="primary">mdi-clipboard-text-multiple-outline</v-icon>
+              </v-btn>
+              {{ myLink }}
+            </p>
+          </div>
+          <div class="d-flex justify-space-between align-center">
+            <p class="text-h5 ma-0">کد دعوت</p>
+            <p style="font-family: sans-serif !important;"
+               class="d-flex align-center text-h5 ma-0">
+              <v-btn icon @click="copy(myCode)">
+                <v-icon color="primary">mdi-clipboard-text-multiple-outline</v-icon>
+              </v-btn>
+              {{ myCode }}
+            </p>
+          </div>
         </div>
       </a-card>
     </div>
@@ -100,6 +114,14 @@ export default {
       this.l.hostCode = true
       await this.$axios.$post('/referrals/me/my-host', {referral_code: this.myHostCode})
       this.l.hostCode = false
+    },
+    copy(value) {
+      let tempInput = document.createElement("input");
+      tempInput.value = value;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
     }
   }
 }

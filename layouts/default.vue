@@ -49,8 +49,8 @@
       <!--      <v-spacer/>-->
       <v-menu>
         <template v-slot:activator="{on,attrs}">
-          <v-btn text v-bind="attrs" v-on="on">{{ title }}
-            <v-icon>mdi-account</v-icon>
+          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ title }}
+            <v-icon>mdi-account-outline</v-icon>
           </v-btn>
         </template>
         <v-list>
@@ -60,7 +60,7 @@
         </v-list>
       </v-menu>
       <v-btn text small>
-        <v-icon>mdi-bell</v-icon>
+        <v-icon color="grey darken-2">mdi-bell-outline</v-icon>
       </v-btn>
     </v-app-bar>
     <v-main>

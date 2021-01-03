@@ -53,7 +53,7 @@
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
               <p class="ma-0 grey--text"><span>{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat }}
-                <v-icon>mdi-wallet</v-icon>
+                <v-icon>mdi-wallet-outline</v-icon>
               </p>
             </div>
 
@@ -71,7 +71,7 @@
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
               <p class="ma-0 grey--text"><span>{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat }}
-                <v-icon>mdi-wallet</v-icon>
+                <v-icon>mdi-wallet-outline</v-icon>
               </p>
             </div>
             <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
