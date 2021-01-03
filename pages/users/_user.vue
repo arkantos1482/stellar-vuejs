@@ -129,16 +129,6 @@
     </v-card>
 
     <div>
-      <v-dialog v-model="dialog.send" max-width="400">
-        <a-card title="ارسال مشخصات"
-                subtitle="آیا از ارسال مشخصات خود اطمینان دارید؟ در صورت ارسال مشخصات فرایند تایید مدارک مجددا انجام خواهند شد.">
-          <v-card-actions class="mt-12 pa-0">
-            <v-btn text color="primary" @click="send">ارسال</v-btn>
-            <v-btn text @click="dialog.send=false">انصراف</v-btn>
-          </v-card-actions>
-        </a-card>
-      </v-dialog>
-
       <v-dialog v-model="dialog.mobileOtp" max-width="400">
         <a-card title="احراز اصالت موبایل"
                 subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل  شما ارسال شده را در کادر زیر وارد نمایید.">
@@ -226,7 +216,7 @@ export default {
       isAdmin: this.$store.state.auth.profile?.role === 'admin',
       stepNum: 0,
       dialog: {send: false, mobileOtp: false, phoneOtp: false},
-      nextLabel: 'بعدی',
+      nextLabel: 'ارسال',
       prevLabel: 'قبلی',
       user: {
         name: '',
@@ -269,27 +259,27 @@ export default {
           .all()
     },
     async send() {
-      this.dialog.send = false
       this.l.send = true
       await this.$axios.$put('/profiles/' + this.userId, this.user)
       this.l.send = false
-      this.$bus.$emit('snack', 'مشخصات شما با موفقیت ثبت شد.', 'success')
+      this.$bus.$emit('snack', 'با موفقیت ثبت شد.', 'success')
     },
     navigate(step) {
       this.stepNum = step
       this.setBtnState()
     },
-    next() {
-      if (this.stepNum === this.totalSteps - 1) {
-        this.dialog.send = true
+    async next() {
+      await this.send()
+      this.stepNum++
+      if (this.stepNum === this.totalSteps) {
+        await this.$router.push('/')
       } else {
-        this.stepNum++
         this.setBtnState()
       }
     },
     async prev() {
       if (this.stepNum === 0) {
-        // await $router.push('/')
+        await this.$router.push('/')
       } else {
         this.stepNum--
         this.setBtnState()
@@ -300,10 +290,10 @@ export default {
         this.nextLabel = 'ارسال'
         this.prevLabel = 'قبلی'
       } else if (this.stepNum === 0) {
-        this.nextLabel = 'بعدی'
+        this.nextLabel = 'ارسال'
         this.prevLabel = 'قبلی'
       } else {
-        this.nextLabel = 'بعدی'
+        this.nextLabel = 'ارسال'
         this.prevLabel = 'قبلی'
       }
     },
