@@ -22,34 +22,19 @@
       </v-col>
 
       <v-col cols="9">
-        <v-window vertical reverse v-model="stepNum" style="padding: 32px 96px ">
+        <v-window vertical reverse v-model="stepNum" style="padding: 2px 96px ">
           <v-window-item>
             <v-row>
               <v-col cols="6">
-                <a-text-field
-                    v-model="user.name" label="نام"/>
-                <a-text-field
-                    v-model="user.last_name" label="نام خانوادگی"/>
-              </v-col>
-              <v-col cols="6">
-                <a-text-field
-                    v-model="user.ssn" label="کد ملی"/>
+                <a-text-field v-model="user.name" label="نام"
+                              :disabled="verifyState.ssn"/>
+                <a-text-field v-model="user.last_name" label="نام خانوادگی"
+                              :disabled="verifyState.ssn"/>
+                <custom-date-picker v-model="user.birth_date"/>
 
-                <a-text-field
-                    v-model="user.cell_phone" label="موبایل">
-                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                         outlined tile depressed small class="primary--text py-4" color="primary lighten-4">دریافت کد
-                    تایید
-                  </v-btn>
-                </a-text-field>
-
-              </v-col>
-            </v-row>
-            <v-row class="mt-1">
-              <v-col cols="6">
                 <div>
                   <p class="text-h6 mb-2">تصویر کارت ملی</p>
-                  <vue2-dropzone :options="dropzoneOptions.ssn" :useCustomSlot=true>
+                  <vue2-dropzone id="ssn_id" :options="dropzoneOptions.ssn" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
                       <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
@@ -57,11 +42,23 @@
                   </vue2-dropzone>
                 </div>
               </v-col>
-
               <v-col cols="6">
+                <a-text-field v-model="user.ssn" label="کد ملی"
+                              :disabled="verifyState.ssn"/>
+
+                <a-text-field v-model="user.cell_phone" label="موبایل"
+                              :disabled="verifyState.cell_phone">
+                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
+                         outlined tile depressed small class="primary--text py-4" color="primary lighten-4">دریافت کد
+                    تایید
+                  </v-btn>
+                </a-text-field>
+                <v-select :items="genderList" v-model="user.gender"
+                          :disabled="verifyState.ssn"/>
+
                 <div>
                   <p class="text-h6 mb-2">تصویر تایید هویت</p>
-                  <vue2-dropzone :options="dropzoneOptions.bankCard" :useCustomSlot=true>
+                  <vue2-dropzone id="bank_card_id" :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
                       <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
@@ -75,42 +72,45 @@
             <v-row justify="center">
               <v-col cols="6">
                 <a-text-field
-                    v-model="user.bank_card" label="شماره کارت"/>
+                    v-model="user.bank_card" label="شماره کارت"
+                    :disabled="verifyState.bank_card"/>
                 <a-text-field
-                    v-model="user.bank_shaba" label="شماره شبا"/>
+                    v-model="user.bank_shaba" label="شماره شبا"
+                    :disabled="verifyState.bank_shaba"/>
               </v-col>
             </v-row>
           </v-window-item>
           <v-window-item>
             <v-row>
               <v-col cols="6">
+                <v-select :items="provinceList" v-model="user.province"
+                          :disabled="verifyState.address"/>
+                <v-select :items="cityList(user.province)" v-model="user.city"
+                          :disabled="verifyState.address"/>
                 <a-text-field
-                    v-model="user.city" label="شهر"/>
+                    v-model="user.address" label="آدرس"
+                    :disabled="verifyState.address"/>
                 <a-text-field
-                    v-model="user.address" label="آدرس"/>
+                    v-model="user.postal_code" label="کدپستی"
+                    :disabled="verifyState.address"/>
               </v-col>
               <v-col cols="6">
-                <a-text-field
-                    v-model="user.postal_code" label="کدپستی"/>
-                <a-text-field v-model="user.phone" label="تلفن ثابت">
+                <a-text-field v-model="user.phone" label="تلفن ثابت"
+                              :disabled="verifyState.phone">
                   <v-btn outlined tile depressed small class="primary--text py-4" color="primary lighten-4"
                          @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
                   </v-btn>
                 </a-text-field>
-
-              </v-col>
-            </v-row>
-            <v-row class="mt-n4">
-              <v-col cols="6">
                 <div>
                   <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن یا قبوض خدماتی</p>
-                  <vue2-dropzone :options="dropzoneOptions.bill" :useCustomSlot=true>
+                  <vue2-dropzone id="bill_id" :options="dropzoneOptions.bill" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
                       <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
                     </v-row>
                   </vue2-dropzone>
                 </div>
+
               </v-col>
             </v-row>
           </v-window-item>
@@ -169,18 +169,21 @@ import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
 import ACard from "@/components/ACard";
 import Otp from "@/components/Otp";
+import plist from '@/models/provinceList'
+import collect from 'collect.js'
 
 export default {
   mixins: [pstopper],
   components: {vue2Dropzone, Otp, ACard, ATextField},
-  filters: {
-    toColor: value => value
-  },
   computed: {
     totalSteps: () => 3,
+    provinceList() {
+      return collect(plist).pluck('province').all()
+    },
   },
   data() {
     return {
+      genderList: ['خانم', 'آقا'],
       ssn: '',
       bill: '',
       bankCard: '',
@@ -214,10 +217,8 @@ export default {
         }
       },
       l: {
-        ssn: false, bill: false, bankCard: false,
         mobileSubmit: false, mobileRequest: false,
         phoneSubmit: false, phoneRequest: false,
-
         send: false
       },
 
@@ -232,6 +233,9 @@ export default {
         last_name: '',
         ssn: '',
         cell_phone: '',
+        province: '',
+        gender: '',
+        birth_date: '',
         city: '',
         address: '',
         postal_code: '',
@@ -258,6 +262,12 @@ export default {
     this.verifyState = await this.$axios.$get('/profiles/' + id + '/verifies');
   },
   methods: {
+    cityList(province) {
+      return collect(plist)
+          .filter(item => item.province === province)
+          .pluck('city')
+          .all()
+    },
     async send() {
       this.dialog.send = false
       this.l.send = true
@@ -317,32 +327,6 @@ export default {
     },
     stepTextColor(step) {
       return this.stepNum === step ? 'white--text' : 'grey--text';
-    },
-
-
-    async uploadSsn(file) {
-      // this.l.ssn = true
-      const formData = new FormData();
-      formData.append('ssn', file)
-      await this.$axios.$post('/profiles/me/docs', formData, this.config)
-      // this.l.ssn = false
-      this.$bus.$emit('snack', 'تصویر کارت ملی با موفیت ارسال شد.', 'success')
-    },
-    async uploadBill() {
-      this.l.bill = true
-      const formData = new FormData();
-      formData.append('bill', this.bill)
-      await this.$axios.$post('/profiles/me/docs', formData, this.config)
-      this.l.bill = false
-      this.$bus.$emit('snack', 'تصویر قبض تلفن با موفقیت انجام شد.', 'success')
-    },
-    async uploadBankCard() {
-      this.l.bankCard = true
-      const formData = new FormData();
-      formData.append('bank-card', this.bankCard)
-      await this.$axios.$post('/profiles/me/docs', formData, this.config)
-      this.l.bankCard = false
-      this.$bus.$emit('snack', 'تصویر کارت بانکی با موفیت انجام شد', 'success')
     },
     async requestMobileOtp() {
       this.l.mobileRequest = true

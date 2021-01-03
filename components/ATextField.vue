@@ -13,7 +13,7 @@
   <div class="text-right">
     <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
     <div class="d-flex gray-border">
-      <input :type="type" class="text-field input-border text-h5" :class="{'red-border':hasError}" :value="value"
+      <input :disabled="disabled" :type="type" class="text-field input-border text-h5" :class="{'red-border':hasError}" :value="value"
              @input="$emit('input', $event.target.value)">
       <slot></slot>
     </div>

@@ -1,0 +1,20 @@
+import Vue from 'vue'
+import VuePersianDatetimePicker from 'vue-persian-datetime-picker'
+
+Vue.use(VuePersianDatetimePicker, {
+    name: 'custom-date-picker',
+    props: {
+        inputFormat: 'YYYY-MM-DD',
+        format: "YYYY-MM-DD",
+        displayFormat: "jDD jMMMM jYYYY",
+        editable: false,
+        inputClass: 'persian-date-picker',
+        placeholder: '',
+        // altFormat: 'YYYY-MM-DD HH:mm',
+        color: '#0074ff',
+        autoSubmit: false,
+        //...
+        //... And whatever you want to set as default
+        //...
+    }
+});

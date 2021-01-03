@@ -43,6 +43,14 @@ a, p {
     /*transition: .2s linear;*/
 }
 
+.vue-pincode-input {
+    font-size: 2rem !important;
+}
+
+.persian-date-picker {
+    font-size: 1.6rem;
+}
+
 /*@font-face {*/
 /*    font-family: 'IranSans';*/
 /*    font-display: swap;*/
