@@ -20,7 +20,7 @@
              v-mask="mask">
       <slot></slot>
     </div>
-    <p v-show="hasError" class="red--text text-body-2">{{ errorBucket[0] }}</p>
+    <p v-show="shouldValidate" class="red--text text-body-2">{{ errorBucket[0] }}</p>
   </div>
 </template>
 <script>
