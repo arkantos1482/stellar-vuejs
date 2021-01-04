@@ -10,6 +10,7 @@ Vue.use(VuePersianDatetimePicker, {
         editable: false,
         inputClass: 'persian-date-picker',
         placeholder: '',
+        // clearable: true,
         // altFormat: 'YYYY-MM-DD HH:mm',
         color: '#0074ff',
         autoSubmit: false,

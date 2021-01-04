@@ -30,9 +30,15 @@
                               :disabled="verifyState.ssn"/>
                 <a-text-field v-model="user.last_name" label="نام خانوادگی"
                               :disabled="verifyState.ssn"/>
-                <custom-date-picker v-model="user.birth_date"/>
 
-                <div>
+                <div class="mt-4">
+                  <p class="text-h6 mb-1">تاریخ تولد</p>
+                  <custom-date-picker v-model="user.birth_date" :disabled="verifyState.ssn">
+                    <template slot="label">
+                    </template>
+                  </custom-date-picker>
+                </div>
+                <div class="mt-4">
                   <p class="text-h6 mb-2">تصویر کارت ملی</p>
                   <vue2-dropzone id="ssn_id" :options="dropzoneOptions.ssn" :useCustomSlot=true>
                     <v-row align="center">
@@ -53,10 +59,15 @@
                     تایید
                   </v-btn>
                 </a-text-field>
-                <v-select :items="genderList" v-model="user.gender"
-                          :disabled="verifyState.ssn"/>
 
-                <div>
+                <div class="mt-3">
+                  <p class="text-h6 mb-1">جنسیت</p>
+                  <v-select dense outlined flat
+                            :items="genderList" v-model="user.gender"
+                            :disabled="verifyState.ssn"/>
+                </div>
+
+                <div class="mt-n2">
                   <p class="text-h6 mb-2">تصویر تایید هویت</p>
                   <vue2-dropzone id="bank_card_id" :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                     <v-row align="center">
@@ -81,28 +92,41 @@
             </v-row>
           </v-window-item>
           <v-window-item>
-            <v-row>
+            <v-row class="mt-4">
               <v-col cols="6">
-                <v-select :items="provinceList" v-model="user.province"
-                          :disabled="verifyState.address"/>
-                <v-select :items="cityList(user.province)" v-model="user.city"
-                          :disabled="verifyState.address"/>
+                <div class="mb-n6">
+                  <p class="text-h6 mb-1">استان</p>
+                  <v-select dense outlined flat
+                            :items="provinceList" v-model="user.province"
+                            :disabled="verifyState.address"/>
+                </div>
+
                 <a-text-field
                     v-model="user.address" label="آدرس"
                     :disabled="verifyState.address"/>
-                <a-text-field
-                    v-model="user.postal_code" label="کدپستی"
-                    :disabled="verifyState.address"/>
-              </v-col>
-              <v-col cols="6">
+
                 <a-text-field v-model="user.phone" label="تلفن ثابت"
                               :disabled="verifyState.phone">
                   <v-btn outlined tile depressed small class="primary--text py-4" color="primary lighten-4"
                          @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
                   </v-btn>
                 </a-text-field>
-                <div>
-                  <p class="text-h6 mb-1 mt-2">تصویر قبض تلفن یا قبوض خدماتی</p>
+
+              </v-col>
+              <v-col cols="6">
+                <div class="mb-n6">
+                  <p class="text-h6 mb-1">شهر</p>
+                  <v-select dense outlined flat
+                            :items="cityList(user.province)" v-model="user.city"
+                            :disabled="verifyState.address"/>
+                </div>
+
+                <a-text-field
+                    v-model="user.postal_code" label="کدپستی"
+                    :disabled="verifyState.address"/>
+
+                <div class="mt-4">
+                  <p class="text-h6 mb-1">تصویر قبض تلفن یا قبوض خدماتی</p>
                   <vue2-dropzone id="bill_id" :options="dropzoneOptions.bill" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>

@@ -49,6 +49,19 @@ a, p {
 
 .persian-date-picker {
     font-size: 1.6rem;
+    width: 100%;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    padding: 4px 12px !important;
+}
+
+.vpd-icon-btn {
+    display: none !important;
+}
+
+.v-text-field fieldset {
+    border: 1px solid #ccc !important;
+
 }
 
 /*@font-face {*/
