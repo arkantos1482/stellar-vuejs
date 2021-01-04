@@ -26,9 +26,13 @@
           <v-window-item>
             <v-row>
               <v-col cols="6">
-                <a-text-field v-model="user.name" label="نام"
+                <a-text-field :rules="[rules.required,rules.persian]"
+                              v-model="user.name" label="نام"
+                              hint="احمد"
                               :disabled="verifyState.ssn"/>
-                <a-text-field v-model="user.last_name" label="نام خانوادگی"
+                <a-text-field :rules="[rules.required,rules.persian]"
+                              v-model="user.last_name" label="نام خانوادگی"
+                              hint="برزین"
                               :disabled="verifyState.ssn"/>
 
                 <div class="mt-4">
@@ -43,19 +47,26 @@
                   <vue2-dropzone id="ssn_id" :options="dropzoneOptions.ssn" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
-                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                      <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
                     </v-row>
                   </vue2-dropzone>
                 </div>
               </v-col>
               <v-col cols="6">
-                <a-text-field v-model="user.ssn" label="کد ملی"
+                <a-text-field :rules="[rules.required,rules.tenDigit]"
+                              mask="##########"
+                              hint="1234567890"
+                              v-model="user.ssn" label="کد ملی"
                               :disabled="verifyState.ssn"/>
 
-                <a-text-field v-model="user.cell_phone" label="موبایل"
+                <a-text-field :rules="[rules.required,rules.elevenDigit]"
+                              mask="####-######"
+                              v-model="user.cell_phone" label="موبایل"
+                              hint="09121234567"
                               :disabled="verifyState.cell_phone">
                   <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                         outlined tile depressed small class="primary--text py-4" color="primary lighten-4">دریافت کد
+                         outlined tile depressed small class="primary--text inside-btn" color="primary lighten-4">دریافت
+                    کد
                     تایید
                   </v-btn>
                 </a-text-field>
@@ -72,7 +83,7 @@
                   <vue2-dropzone id="bank_card_id" :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
-                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                      <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
                     </v-row>
                   </vue2-dropzone>
                 </div>
@@ -81,11 +92,15 @@
           </v-window-item>
           <v-window-item>
             <v-row justify="center">
-              <v-col cols="6">
+              <v-col cols="6" dir="ltr">
                 <a-text-field
+                    mask="#### #### #### ####"
+                    hint="6037 9912 3456 7890"
                     v-model="user.bank_card" label="شماره کارت"
                     :disabled="verifyState.bank_card"/>
                 <a-text-field
+                    mask="AA########################"
+                    hint="IR123456789012345678901234"
                     v-model="user.bank_shaba" label="شماره شبا"
                     :disabled="verifyState.bank_shaba"/>
               </v-col>
@@ -96,18 +111,22 @@
               <v-col cols="6">
                 <div class="mb-n6">
                   <p class="text-h6 mb-1">استان</p>
-                  <v-select dense outlined flat
+                  <v-select dense outlined flat :rules="[rules.required]"
                             :items="provinceList" v-model="user.province"
                             :disabled="verifyState.address"/>
                 </div>
 
                 <a-text-field
+                    :rules="[rules.required]"
                     v-model="user.address" label="آدرس"
                     :disabled="verifyState.address"/>
 
-                <a-text-field v-model="user.phone" label="تلفن ثابت"
+                <a-text-field hint="02112345678"
+                              mask="###############"
+                              :rules="[rules.required]"
+                              v-model="user.phone" label="تلفن ثابت"
                               :disabled="verifyState.phone">
-                  <v-btn outlined tile depressed small class="primary--text py-4" color="primary lighten-4"
+                  <v-btn outlined tile depressed small class="primary--text inside-btn" color="primary lighten-4"
                          @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
                   </v-btn>
                 </a-text-field>
@@ -116,12 +135,15 @@
               <v-col cols="6">
                 <div class="mb-n6">
                   <p class="text-h6 mb-1">شهر</p>
-                  <v-select dense outlined flat
+                  <v-select dense outlined flat :rules="[rules.required]"
                             :items="cityList(user.province)" v-model="user.city"
                             :disabled="verifyState.address"/>
                 </div>
 
                 <a-text-field
+                    :rules="[rules.required, rules.tenDigit ]"
+                    mask="##########"
+                    hint="1234567890"
                     v-model="user.postal_code" label="کدپستی"
                     :disabled="verifyState.address"/>
 
@@ -130,7 +152,7 @@
                   <vue2-dropzone id="bill_id" :options="dropzoneOptions.bill" :useCustomSlot=true>
                     <v-row align="center">
                       <v-icon color="primary">mdi-camera</v-icon>
-                      <div class="text-h6 mr-2">تصویر مربوطه را بارگذاری نمایید.</div>
+                      <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
                     </v-row>
                   </vue2-dropzone>
                 </div>
@@ -155,7 +177,7 @@
     <div>
       <v-dialog v-model="dialog.mobileOtp" max-width="400">
         <a-card title="احراز اصالت موبایل"
-                subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی که به موبایل  شما ارسال شده را در کادر زیر وارد نمایید.">
+                subtitle="کد تایید ۶رقمی ارسال شده به شماره موبایل خود را وارد کنید.">
           <otp :loading="l.mobileSubmit" class="mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event"
                label="کد تایید"/>
         </a-card>
@@ -163,7 +185,7 @@
 
       <v-dialog v-model="dialog.phoneOtp" max-width="400">
         <a-card title="احراز اصالت تلفن ثابت"
-                subtitle="برای ایمن سازی حساب کاربری کد ۶رقمی با تماس تلفنی برای شما قرایت شده را در کادر زیر وارد نمایید.">
+                subtitle="کد تایید ۶رقمی ارسال شده به شماره تلفن ثابت خود را وارد کنید.">
           <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
         </a-card>
       </v-dialog>
@@ -185,6 +207,7 @@ import ACard from "@/components/ACard";
 import Otp from "@/components/Otp";
 import plist from '@/models/provinceList'
 import collect from 'collect.js'
+import persianRex from 'persian-rex'
 
 export default {
   mixins: [pstopper],
@@ -197,6 +220,12 @@ export default {
   },
   data() {
     return {
+      rules: {
+        required: value => !!value || 'الزامی است',
+        persian: value => persianRex.letter.test(value) || 'الزاما فارسی وارد شود.',
+        tenDigit: value => !!value && value.length === 10 || 'میبایست ۱۰ رقم باشد.',
+        elevenDigit: value => !!value && value.length === 11 || 'میبایست ۱۱ رقم باشد.',
+      },
       genderList: ['خانم', 'آقا'],
       ssn: '',
       bill: '',
@@ -315,7 +344,7 @@ export default {
         this.prevLabel = 'قبلی'
       } else if (this.stepNum === 0) {
         this.nextLabel = 'ارسال'
-        this.prevLabel = 'قبلی'
+        this.prevLabel = 'بازگشت'
       } else {
         this.nextLabel = 'ارسال'
         this.prevLabel = 'قبلی'
@@ -375,5 +404,8 @@ export default {
 </script>
 
 <style scoped>
-
+.inside-btn {
+  padding-top: 18px !important;
+  padding-bottom: 18px !important;
+}
 </style>

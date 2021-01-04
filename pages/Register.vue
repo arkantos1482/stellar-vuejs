@@ -9,8 +9,7 @@
       <v-divider/>
       <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
       <a-text-field :rules="[rules.required, rules.password, rules.counter]"
-                    :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password"
-                    hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد">
+                    :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
         <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
           {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
         </v-icon>

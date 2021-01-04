@@ -4,7 +4,7 @@
     <!--        @input="$emit('otp',$event)"-->
     <!--        :label="label"/>-->
 
-    <div class="text-center my-12">
+    <div class="text-center my-8">
       <PincodeInput
           dir="ltr"
           v-model="code"
