@@ -24,19 +24,27 @@
 
       <!--    MAIN-->
       <v-card class="mx-4 pa-2" width="46%" ref="card">
-        <div class="d-flex justify-center mb-n8 mt-n2">
-          <v-col cols="3" class="ml-n4">
-            <v-select background-color="blue lighten-5" @change="myOffers" v-model="baseAsset" :items="assets"
-                      dense filled rounded/>
-          </v-col>
-          <v-col cols="3">
-            <v-select background-color="blue lighten-5" @change="myOffers" v-model="counterAsset" :items="assets"
+        <div class="d-flex justify-space-between mb-n8 mt-n2">
+          <v-tabs v-model="tabIndex">
+            <v-tab>ریال</v-tab>
+            <v-tab>تتر</v-tab>
+            <v-tab>رمزارز به رمزارز</v-tab>
+          </v-tabs>
+          <!--          <v-col cols="3" class="ml-n4">-->
+          <!--            <v-select background-color="blue lighten-5"-->
+          <!--                      @change="myOffers" v-model="baseAsset" :items="assets"-->
+          <!--                      dense filled rounded/>-->
+          <!--          </v-col>-->
+          <v-col cols="4">
+            <v-select background-color="blue lighten-5"
+                      @change="myOffers" v-model="pairAsset" :items="pairAssetList"
                       dense filled rounded/>
           </v-col>
         </div>
 
-        <div class="d-flex justify-center px-4 ">
+        <div class="d-flex justify-center px-4">
           <trading-vue dir="ltr"
+                       style="z-index: 0"
                        color-back="white"
                        color-grid="grey"
                        color-text="grey"
@@ -124,7 +132,20 @@ export default {
     this.l.buy = false
     this.l.sell = false
   },
+  watch: {
+    pairAsset(val) {
+      let array = val.split('/')
+      this.baseAsset = array[0]
+      this.counterAsset = array[1]
+    },
+    tabIndex(val) {
+      this.pairAsset = this.list[val][0]
+    },
+  },
   computed: {
+    pairAssetList() {
+      return this.list[this.tabIndex]
+    },
     balances() {
       return this.$store.state.balances.list
     },
@@ -171,10 +192,15 @@ export default {
   },
   data() {
     return {
-      assets: ['BTC', 'LTC', 'ETH', 'USDT', 'IRR', 'BCH', 'AMIN', 'BARG'],
+      list: [
+        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR'],
+        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT'],
+        ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH', 'LTC/BCH']],
       offers: [],
+      tabIndex: 0,
+      pairAsset: 'BTC/IRR',
       baseAsset: 'BTC',
-      counterAsset: 'ETH',
+      counterAsset: 'IRR',
       windowWidth: window.innerWidth,
       l: {sell: false, buy: false},
       sell: {
