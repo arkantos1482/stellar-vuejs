@@ -65,7 +65,7 @@
       <div class="d-flex justify-center mt-4">
         <a-text-field class="flex-grow-0 mx-2" filled label="کد معرف" v-model="myHostCode">
           <v-btn @click="submitTheHostCode" :loading="l.hostCode"
-                 outlined tile depressed small class="primary--text py-4 px-12" color="primary lighten-4">تایید
+                 outlined tile depressed small class="inside-btn primary--text px-12" color="primary lighten-4">تایید
           </v-btn>
         </a-text-field>
 

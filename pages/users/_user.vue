@@ -426,8 +426,4 @@ export default {
 </script>
 
 <style scoped>
-.inside-btn {
-  padding-top: 18px !important;
-  padding-bottom: 18px !important;
-}
 </style>
