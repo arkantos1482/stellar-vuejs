@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app>
       <v-img max-width="128" max-height="48"
-             :src="require('../assets/images/logo.jpeg')"/>
+             :src="require('../assets/images/logo.png')"/>
     </v-app-bar>
     <v-main>
       <v-container>
