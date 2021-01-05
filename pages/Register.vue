@@ -7,28 +7,31 @@
         <v-tab>حقوقی</v-tab>
       </v-tabs>
       <v-divider/>
-      <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
-      <a-text-field :rules="[rules.required, rules.password, rules.counter]"
-                    :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
-        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-        </v-icon>
-      </a-text-field>
-      <a-text-field :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور" v-model="passwordConfirm">
-        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-        </v-icon>
-      </a-text-field>
-      <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
-      <v-checkbox v-model="terms" class="mt-0">
-        <template v-slot:label>
-          <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
-          <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
-        </template>
-      </v-checkbox>
-      <v-btn @click="register" :loading="l.reg"
-             class="mb-8" color="primary" block> تایید
-      </v-btn>
+      <v-form @submit.prevent="register" v-model="form" ref="form">
+        <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
+        <a-text-field :rules="[rules.required, rules.password, rules.counter]"
+                      :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
+          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+          </v-icon>
+        </a-text-field>
+        <a-text-field :rules="[rules.passEqual]" :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور"
+                      v-model="passwordConfirm">
+          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+          </v-icon>
+        </a-text-field>
+        <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
+        <v-checkbox v-model="terms" class="mt-0" :rules="[rules.required]">
+          <template v-slot:label>
+            <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
+            <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
+          </template>
+        </v-checkbox>
+        <v-btn type="submit" :loading="l.reg"
+               class="mb-8" color="primary" block> تایید
+        </v-btn>
+      </v-form>
       <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
       <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
     </v-card-text>
@@ -55,11 +58,12 @@ import LoginRegCard from "@/components/LoginRegCard";
 import Terms from "@/pages/Terms";
 
 export default {
-  components: {ATextField, LoginRegCard,Terms},
+  components: {ATextField, LoginRegCard, Terms},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {
     return {
+      form: false,
       showPass: false,
       email: this.$route.query.email,
       password: '',
@@ -85,10 +89,9 @@ export default {
   },
   methods: {
     async register() {
-      if (this.password === this.passwordConfirm
-          && typeof this.rules.required(this.password !== 'string')
-          && typeof this.rules.password(this.password) !== 'string') {
-        if (this.terms === true) {
+      this.$refs.form.validate()
+      if (this.form) {
+        if (this.password === this.passwordConfirm) {
           this.l.reg = true
           await this.getCaptcha()
           await this.$axios.$get('/csrf-cookie')
@@ -102,10 +105,8 @@ export default {
           await this.$router.push('/RegisterVerify')
           this.l.reg = false
         } else {
-          this.$bus.$emit('snack', 'شرایط و قوانین پذیرفته نشده است.', 'error')
+          this.$bus.$emit('snack', 'رمز عبور با تکرار تطابق ندارد.', 'error')
         }
-      } else {
-        this.$bus.$emit('snack', 'رمز عبور نامناسب است ویا با تکرار رمز عبور تطابق ندارند', 'error')
       }
     }
   }

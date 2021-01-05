@@ -24,7 +24,7 @@
       <v-col cols="9">
         <v-window vertical reverse v-model="stepNum" style="padding: 2px 96px ">
           <v-window-item>
-            <v-form v-model="valid.step0" ref="stepOnefrom">
+            <v-form v-model="valid.step0" ref="stepOneForm">
               <v-row>
                 <v-col cols="6">
                   <a-text-field :rules="[rules.required,rules.persian]"
@@ -94,7 +94,7 @@
             </v-form>
           </v-window-item>
           <v-window-item>
-            <v-form v-model="valid.step1">
+            <v-form v-model="valid.step1" ref="stepTwoForm">
               <v-row justify="center">
                 <v-col cols="6" dir="ltr">
                   <a-text-field
@@ -112,7 +112,7 @@
             </v-form>
           </v-window-item>
           <v-window-item>
-            <v-form v-model="valid.step2">
+            <v-form v-model="valid.step2" ref="stepThreeForm">
               <v-row class="mt-4">
                 <v-col cols="6">
                   <div class="mb-n6">
@@ -286,7 +286,7 @@ export default {
       stepNum: 0,
       dialog: {send: false, mobileOtp: false, phoneOtp: false},
       nextLabel: 'ارسال',
-      prevLabel: 'قبلی',
+      prevLabel: 'بازگشت',
       user: {
         name: '',
         last_name: '',
@@ -317,7 +317,7 @@ export default {
   },
   async mounted() {
     window.rex = persianRex
-    this.$refs.stepOnefrom.resetValidation()
+    this.$refs.stepOneForm.resetValidation()
     this.user = await this.$axios.$get('/profiles/' + this.userId);
     let id = this.isAdmin ? this.userId : 'me'
     this.verifyState = await this.$axios.$get('/profiles/' + id + '/verifies');
@@ -340,6 +340,10 @@ export default {
       this.setBtnState()
     },
     async next() {
+      if (this.stepNum === 0) this.$refs.stepOneForm.validate()
+      if (this.stepNum === 1) this.$refs.stepTwoForm.validate()
+      if (this.stepNum === 2) this.$refs.stepThreeForm.validate()
+
       if ((this.stepNum === 0 && this.valid.step0) ||
           (this.stepNum === 1 && this.valid.step1) ||
           (this.stepNum === 2 && this.valid.step2)) {

@@ -2,7 +2,7 @@
   <div class="d-flex align-items-stretch mt-8">
     <a-card class="ml-4 py-8" width="45%" title="واریز">
       <crypto-upper :balance="balance" :type="type"/>
-      <v-form @submit.prevent="onDeposit" v-model="v.deposit">
+      <v-form @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
         <a-text-field mask="####################"
                       :rules="[rules.moreThanBillion]"
                       hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
@@ -49,6 +49,7 @@ export default {
   },
   methods: {
     async onDeposit() {
+      this.$refs.form.validate()
       if (this.v.deposit) {
         this.l.deposit = true
         this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount})
