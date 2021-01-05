@@ -30,29 +30,26 @@
             <v-tab>تتر</v-tab>
             <v-tab>رمزارز به رمزارز</v-tab>
           </v-tabs>
-          <!--          <v-col cols="3" class="ml-n4">-->
-          <!--            <v-select background-color="blue lighten-5"-->
-          <!--                      @change="myOffers" v-model="baseAsset" :items="assets"-->
-          <!--                      dense filled rounded/>-->
-          <!--          </v-col>-->
+
           <v-col cols="4">
             <v-select background-color="blue lighten-5"
-                      @change="myOffers" v-model="pairAsset" :items="pairAssetList"
+                      v-model="pairAsset" :items="pairAssetList"
                       dense filled rounded/>
           </v-col>
         </div>
 
         <div class="d-flex justify-center px-4">
           <trading-vue dir="ltr"
+                       ref="tradingVue"
                        style="z-index: 0"
                        color-back="white"
                        color-grid="grey"
                        color-text="grey"
                        color-title="black"
-                       :height="200"
+                       :height="240"
                        :width="windowWidth*42/100"
                        :title-txt="this.baseAsset+this.counterAsset"
-                       :data="this.$data"></trading-vue>
+                       :data="tradeData"></trading-vue>
         </div>
 
         <div class="d-flex justify-center text-display-1">
@@ -137,6 +134,9 @@ export default {
       let array = val.split('/')
       this.baseAsset = array[0]
       this.counterAsset = array[1]
+
+      this.refreshOffers()
+      this.refreshTrades()
     },
     tabIndex(val) {
       this.pairAsset = this.list[val][0]
@@ -177,18 +177,6 @@ export default {
       return collect(this.offers.asks)
           .sortBy('price_r.n')
     }
-    // baseAssetList() {
-    //   collect(this.assets)
-    //       .reject(function (item) {
-    //         return item === this?.counterAsset
-    //       })
-    // },
-    // counterAssetList() {
-    //   collect(this.assets)
-    //       .reject(function (item) {
-    //         return item === this?.baseAsset
-    //       })
-    // }
   },
   data() {
     return {
@@ -201,6 +189,7 @@ export default {
       pairAsset: 'BTC/IRR',
       baseAsset: 'BTC',
       counterAsset: 'IRR',
+      interval: {offers: null, trades: null},
       windowWidth: window.innerWidth,
       l: {sell: false, buy: false},
       sell: {
@@ -211,13 +200,17 @@ export default {
         amount: '',
         price: ''
       },
-      ohlcv: [
-        [1551128400000, 33, 37.1, 14, 14, 196],
-        [1551132000000, 13.7, 30, 6.6, 30, 206],
-        [1551135600000, 29.9, 33, 21.3, 21.8, 74],
-        // [1551139200000, 21.7, 25.9, 18, 24, 140],
-        // [1551142800000, 24.1, 24.1, 24, 24.1, 29],
-      ]
+      tradeData: {
+        chart: {
+          data: [
+            [1551128400000, 33, 37.1, 14, 14, 196],
+            [1551132000000, 13.7, 30, 6.6, 30, 206],
+            [1551135600000, 29.9, 33, 21.3, 21.8, 74],
+            // [1551139200000, 21.7, 25.9, 18, 24, 140],
+            // [1551142800000, 24.1, 24.1, 24, 24.1, 29],
+          ]
+        }
+      },
     }
   },
   methods: {
@@ -232,10 +225,9 @@ export default {
         price: this.sell.price
       })
       this.l.sell = false
-      await this.myOffers()
-      await this.refreshActiveOffers()
       await this.refreshBalances()
-      // await this.buyOffers()
+      await this.refreshActiveOffers()
+      await this.refreshOffers()
     },
     async doBuy() {
       this.l.buy = true
@@ -246,12 +238,11 @@ export default {
         price: this.buy.price
       })
       this.l.buy = false
-      await this.myOffers()
-      await this.refreshActiveOffers()
       await this.refreshBalances()
-      // await this.buyOffers()
+      await this.refreshActiveOffers()
+      await this.refreshOffers()
     },
-    async myOffers() {
+    async refreshOffers() {
       this.offers = (await this.$axios.$get('/offers-book', {
         params: {
           sell: this.baseAsset,
@@ -259,25 +250,46 @@ export default {
         }
       }))
     },
+    async refreshTrades() {
+      let result = await this.$axios.$get('/trade-aggregates', {
+        params: {
+          base: this.baseAsset,
+          counter: this.counterAsset
+        }
+      })
+      this.tradeData.chart.data = collect(result)
+          .map(item => [
+            parseFloat(item.timestamp),
+            parseFloat(item.open),
+            parseFloat(item.high),
+            parseFloat(item.low),
+            parseFloat(item.close),
+            parseFloat(item.base_volume)])
+          .all()
+      this.$refs.tradingVue.resetChart()
+    },
     offersPrice(item) {
       return parseFloat(parseFloat(item.price_r.n / item.price_r.d).toFixed(10))
     }
-    // async buyOffers() {
-    //   this.buy.offers = (await this.$axios.$get('/offers-book', {
-    //     params: {
-    //       sell: this.buy.counterAsset,
-    //       buy: this.buy.baseAsset
-    //     }
-    //   }))
-    // }
   },
   mounted() {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
-
-    this.myOffers()
     this.refreshBalances()
+
+    this.refreshOffers()
+    this.refreshTrades()
+    this.interval.offers = setInterval(() => {
+      this.refreshOffers()
+    }, 20 * 1000);
+    // this.interval.offers = setInterval(() => {
+    //   this.refreshOffers()
+    // }, 5 * 60 * 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval.offers)
+    // clearInterval(this.interval.trades)
   }
 }
 </script>
