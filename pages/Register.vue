@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       showPass: false,
-      email: '',
+      email: this.$route.query.email,
       password: '',
       passwordConfirm: '',
       referral_code: this.$route.query.referral_code,
