@@ -37,7 +37,7 @@
       <v-card>
         <v-card-title>قوانین و شرایط استفاده از خدمات بیترا</v-card-title>
         <v-card-text>
-          مجموعه قوانین به شرح زیر است
+          <terms/>
         </v-card-text>
         <v-card-actions>
           <v-btn @click="dialog.terms=false" text color="primary">بله</v-btn>
@@ -52,9 +52,10 @@ import captcha from "@/mixins/captcha";
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
 import LoginRegCard from "@/components/LoginRegCard";
+import Terms from "@/pages/Terms";
 
 export default {
-  components: {ATextField, LoginRegCard},
+  components: {ATextField, LoginRegCard,Terms},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   data() {

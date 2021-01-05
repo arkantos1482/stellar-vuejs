@@ -2,12 +2,14 @@
   <div class="d-flex align-items-stretch mt-8">
     <a-card class="ml-4 py-8" width="45%" title="واریز">
       <crypto-upper :balance="balance" :type="type"/>
-      <a-text-field mask="####################"
-                    :rules="[rules.moreThanBillion]"
-                    hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
-      <v-btn @click="onDeposit" :loading="l.deposit"
-             block color="primary" class="mt-4">واریز
-      </v-btn>
+      <v-form @submit.prevent="onDeposit" v-model="v.deposit">
+        <a-text-field mask="####################"
+                      :rules="[rules.moreThanBillion]"
+                      hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
+        <v-btn type="submit" :loading="l.deposit"
+               block color="primary" class="mt-4">واریز
+        </v-btn>
+      </v-form>
     </a-card>
 
     <deposits/>
@@ -31,6 +33,7 @@ export default {
   },
   data() {
     return {
+      v: {deposit: false},
       rules: {
         moreThanBillion: value => !!value && parseFloat(value) >= 1000 * 1000 || 'حداقل باید بیشتر از ۱ میلیون ریال باشد.'
       },
@@ -46,10 +49,12 @@ export default {
   },
   methods: {
     async onDeposit() {
-      this.l.deposit = true
-      this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount})
-      window.open(this.link, '_blank')
-      this.l.deposit = false
+      if (this.v.deposit) {
+        this.l.deposit = true
+        this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount})
+        window.open(this.link, '_blank')
+        this.l.deposit = false
+      }
     }
   }
 }
