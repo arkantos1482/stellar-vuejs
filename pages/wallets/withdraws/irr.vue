@@ -3,6 +3,13 @@
 
     <a-card class="ml-4 py-8" width="45%" title="برداشت">
       <crypto-upper :balance="balance" :type="type"/>
+      <p class="text-display-2 ma-0">
+        باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+      </p>
+      <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+        <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+      </p>
+
       <a-text-field v-model="amount" label="مبلغ"/>
       <v-btn @click="onWithdraw" :loading="l.withdraw"
              block color="primary" class="mt-4">برداشت
@@ -31,6 +38,8 @@ export default {
   data() {
     return {
       type: 'IRR',
+      daily_rem_usage: 0,
+      monthly_rem_usage: 0,
       amount: '',
       l: {withdraw: false}
     }
@@ -38,6 +47,11 @@ export default {
   mounted() {
     this.$store.dispatch('balances/refresh')
     this.$store.dispatch('addresses/refresh')
+    this.$axios.$post('/access/limits/remained', {resource: 'irr'})
+        .then(res => {
+          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? res.daily_rem_usage + 'ریال' : 'نامحدود'
+          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? res.monthly_rem_usage + 'ریال' : 'نامحدود'
+        })
   },
   methods: {
     async onWithdraw() {

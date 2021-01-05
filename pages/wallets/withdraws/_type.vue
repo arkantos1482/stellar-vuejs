@@ -2,6 +2,12 @@
   <div class="d-flex align-items-stretch">
     <a-card class="ml-4" width="45%" title="برداشت">
       <crypto-upper :balance="balance" :type="type"/>
+      <p class="text-display-2 ma-0">
+        باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+      </p>
+      <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+        <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+      </p>
 
       <a-text-field v-model="amount" label="مبلغ"/>
       <a-text-field v-model="destAddress" label="آدرس کیف پول مقصد"/>
@@ -19,7 +25,6 @@
 import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
-import collect from "collect.js";
 import pstopper from "@/mixins/pstopper";
 import CryptoUpper from "@/components/CryptoUpper";
 
@@ -34,6 +39,8 @@ export default {
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
+      daily_rem_usage: 0,
+      monthly_rem_usage: 0,
       destAddress: '',
       amount: '',
       withdrawFee: '',
@@ -45,6 +52,11 @@ export default {
     this.$store.dispatch('addresses/refresh')
     this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
         .then(res => this.withdrawFee = res);
+    this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
+        .then(res => {
+          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? res.daily_rem_usage + 'ریال' : 'نامحدود'
+          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? res.monthly_rem_usage + 'ریال' : 'نامحدود'
+        })
   },
   methods: {
     async withdraw() {
