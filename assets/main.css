@@ -1,17 +1,27 @@
-@font-face {
-    font-family: 'IranSans';
-    font-display: swap;
-    font-weight: normal;
-    font-style: normal;
-    src: url('~assets/fonts/iransans.woff') format("woff");
-}
+/*@font-face {*/
+/*    font-family: 'IranSans';*/
+/*    font-display: swap;*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*    src: url('~assets/fonts/iransans.woff') format("woff");*/
+/*}*/
+
+/*@font-face {*/
+/*    font-family: 'IranSans';*/
+/*    font-display: swap;*/
+/*    font-weight: bold;*/
+/*    font-style: normal;*/
+/*    src: url('~assets/fonts/iransans_medium.woff') format("woff");*/
+/*}*/
 
 @font-face {
-    font-family: 'IranSans';
-    font-display: swap;
-    font-weight: bold;
-    font-style: normal;
-    src: url('~assets/fonts/iransans_medium.woff') format("woff");
+    font-family: "IranSans";
+    src: url("~assets/font/iransans/eot/IRANSansWeb\(FaNum\).eot");
+    src: url("~assets/font/iransans/eot/IRANSans\(FaNum\)_Medium.eot") format("embedded-opentype"),
+    url("~assets/font/iransans/woff2/IRANSansWeb\(FaNum\).woff2") format("woff2"),
+    url("~assets/font/iransans/woff/IRANSansWeb\(FaNum\).woff") format("woff"),
+    url("~assets/font/iransans/ttf/IRANSansWeb\(FaNum\).ttf") format("truetype"),
+    url("//db.onlinewebfonts.com/t/3967f8bfcdf02e2b966e2f252738ddca.svg#IRANSans") format("svg");
 }
 
 th {
