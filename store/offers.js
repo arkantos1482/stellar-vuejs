@@ -8,7 +8,7 @@ export const mutations = {
 
 export const actions = {
     async refresh(context) {
-        let offers = await this.$axios.$get('/offers')
+        let offers = await this.$axios.$get('/offers/active')
         context.commit("activeOffers", offers)
     },
     async delete(context, payload) {

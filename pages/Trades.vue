@@ -3,18 +3,22 @@
     <v-simple-table>
       <thead class="grey lighten-3">
       <tr>
-        <th class="text-center">مقدار فروش</th>
-        <th class="text-center">رمزارز فروش</th>
-        <th class="text-center">مقدار خرید</th>
-        <th class="text-center">رمزارز خرید</th>
+        <th class="text-center">نوع</th>
+        <th class="text-center">رمزارزها</th>
+        <th class="text-center">قیمت</th>
+        <th class="text-center">مقدار</th>
+        <th class="text-center">مجموع</th>
+        <th class="text-center">تاریخ</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="item in trades" :key="item.id">
-        <td>{{ parseFloat(item.sold_amount) }}</td>
-        <td>{{ item.sold_asset_code }}</td>
-        <td>{{ parseFloat(item.bought_amount) }}</td>
-        <td>{{ item.bought_asset_code }}</td>
+        <td>{{ item.base_is_seller|toFarsiSellOrBuy }}</td>
+        <td>{{ item|cryptoPair }}</td>
+        <td>{{ item|price }}</td>
+        <td>{{ item|amount }}</td>
+        <td>{{ item|total }}</td>
+        <td>{{ item.ledger_close_time|toFarsiDate }}</td>
       </tr>
       </tbody>
     </v-simple-table>
@@ -22,21 +26,44 @@
 </template>
 
 <script>
-import collect from "collect.js";
 
 export default {
   name: "Trades",
+  filters: {
+    toFarsiSellOrBuy: (val) => val ? 'فروش' : 'خرید',
+    cryptoPair(item) {
+      return item.base_is_seler
+          ? item.counter_asset_code + '/' + item.base_asset_code
+          : item.base_asset_code + '/' + item.counter_asset_code
+    },
+    price(item) {
+      return item.base_is_seler
+          ? parseFloat(item.price.n / item.price.d)
+          : parseFloat(item.price.d / item.price.n)
+    },
+    amount(item) {
+      return item.base_is_seler
+          ? parseFloat(item.base_amount)
+          : parseFloat(item.counter_amount)
+    },
+    total(item) {
+      return item.base_is_seler
+          ? parseFloat(item.base_amount * item.price.n / item.price.d)
+          : parseFloat(item.counter_amount * item.price.d / item.price.n)
+    }
+  },
+
   data() {
     return {
       trades: []
     }
   },
   async mounted() {
-    // this.trades = (await this.$axios.$get('/trades'))._embedded.records
-    let list = (await this.$axios.$get('/effects'))._embedded.records;
-    this.trades = collect(list)
-        .filter(item => item.type === 'trade')
-        .all();
+    this.trades = (await this.$axios.$get('/trades'))._embedded.records
+    // let list = (await this.$axios.$get('/effects'))._embedded.records;
+    // this.trades = collect(list)
+    //     .filter(item => item.type === 'trade')
+    //     .all();
   }
 }
 </script>

@@ -1,51 +1,82 @@
 <template>
   <v-card width="100%" class="text-center">
     <v-simple-table>
-      <thead class="grey lighten-3">
-      <tr>
-        <th class="text-center">نوع سفارش</th>
-        <th class="text-center">مقدار</th>
-        <th class="text-center">مبلغ واحد</th>
-        <th class="text-center">رمزارز فروش</th>
-        <th class="text-center">رمزارز خرید</th>
-        <th class="text-center">زمان</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="item in offers" :key="item.id">
-        <td>{{ item.type | toFarsi }}</td>
-        <td>{{ parseFloat(item.amount) }}</td>
-        <td>{{ parseFloat(item.price_r.d) }}</td>
-        <td>{{ item.selling_asset_code }}</td>
-        <td>{{ item.buying_asset_code }}</td>
-        <td>{{ item.created_at|toFarsiDate }}</td>
-      </tr>
-      </tbody>
+      <template>
+        <thead class="grey lighten-3">
+        <tr>
+          <th class="text-center">نوع</th>
+          <th class="text-center">رمزارزها</th>
+          <th class="text-center">قیمت</th>
+          <th class="text-center">مقدار</th>
+          <th class="text-center">مجموع</th>
+          <th class="text-center">تاریخ</th>
+          <th class="text-center">وضعیت</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(item,idx) in offers" :key="idx">
+          <td>{{ item.type|toFarsi }}</td>
+          <td>{{ item|cryptoPair }}</td>
+          <td>{{ item|price }}</td>
+          <td>{{ item|amount }}</td>
+          <td>{{ item|total }}</td>
+          <td>{{ item.created_at|toFarsiDate }}</td>
+          <td :class="item|cancelColor">{{ item|cancelText }}</td>
+        </tr>
+        </tbody>
+      </template>
     </v-simple-table>
   </v-card>
 </template>
 
 <script>
-import collect from "collect.js";
+import pstopper from "@/mixins/pstopper";
 
 export default {
-  name: "Offers",
+  mixins: [pstopper],
+  name: 'ActiveOffers',
   filters: {
-    toFarsi(value) {
-      let type = 'نامشخص'
-      if (value === 'manage_sell_offer') type = 'فروش'
-      if (value === 'manage_buy_offer') type = 'خرید'
-      return type
+    toFarsi(val) {
+      return val === 'buy' ? 'خرید' : 'فروش'
+    },
+    cryptoPair(item) {
+      return item.type === 'buy'
+          ? item.buying_asset_code + '/' + item.selling_asset_code
+          : item.selling_asset_code + '/' + item.buying_asset_code
+    },
+    price(item) {
+      let price = parseFloat(item.price_r.n / item.price_r.d)
+      return price
+      // return item.type === 'buy'
+      //     ? price + item.buying_asset_code
+      //     : price + item.selling_asset_code
+    },
+    amount(item) {
+      let amount = parseFloat(item.amount)
+      return amount
+      // return item.type === 'buy'
+      //     ? amount + item.buying_asset_code
+      //     : amount + item.selling_asset_code
+    },
+    total(item) {
+      let total = parseFloat(item.amount * item.price_r.n / item.price_r.d)
+      return total
+      // return item.type === 'buy'
+      //     ? total + item.buying_asset_code
+      //     : total + item.selling_asset_code
+    },
+    cancelText(item) {
+      return parseFloat(item.price) === 0 ? 'لغو شده' : 'موفقیت آمیز'
+    },
+    cancelColor(item) {
+      return parseFloat(item.price) === 0 ? 'red--text' : 'green--text'
     }
   },
   data() {
     return {offers: []}
   },
   async mounted() {
-    let list = (await this.$axios.$get('/operations'))._embedded.records;
-    this.offers = collect(list)
-        .filter(item => parseFloat(item.amount) !== 0.0)
-        .filter(item => item.type === 'manage_buy_offer' || item.type === 'manage_sell_offer').all();
+    this.offers = await this.$axios.$get('/offers')
   }
 }
 </script>
