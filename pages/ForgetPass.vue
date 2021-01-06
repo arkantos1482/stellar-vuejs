@@ -1,10 +1,13 @@
 <template>
   <login-reg-card title="بازیابی رمز عبور">
-    <a-text-field v-model="email" label="ایمیل"
-                  class="mt-8"/>
-    <v-btn @click="onSubmit" :loading="l.submit"
-           block color="primary" class="mt-16 mb-8">ارسال ایمیل بازیابی
-    </v-btn>
+    <v-form v-model="form" @submit.prevent="onSubmit" ref="form">
+      <a-text-field :rules="[rules.required, rules.email]"
+                    v-model="email" label="ایمیل"
+                    class="mt-8"/>
+      <v-btn type="submit" :loading="l.submit"
+             block color="primary" class="mt-16 mb-8">ارسال ایمیل بازیابی
+      </v-btn>
+    </v-form>
     <div>
       <span class="text-h6">رمزتان را به خاطر دارید؟</span>
       <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
@@ -25,21 +28,32 @@ export default {
   data() {
     return {
       l: {submit: false},
-      email: ''
+      form: false,
+      email: '',
+      rules: {
+        required: value => !!value || 'الزامی است',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'ایمیل درست نیست.'
+        },
+      }
     }
   },
   methods: {
     async onSubmit() {
-      this.l.submit = true
-      await this.getCaptcha()
-      await this.$axios.$get('/csrf-cookie')
-      await this.$axios.$post('/forget-pass', {
-        email: this.email,
-        captcha_token: this.captcha_token
-      })
-      this.$store.commit("credentials/set", {email: this.email})
-      this.l.submit = false
-      await this.$router.push('/ForgetPassVerify')
+      this.$refs.form.validate()
+      if (this.form) {
+        this.l.submit = true
+        await this.getCaptcha()
+        await this.$axios.$get('/csrf-cookie')
+        await this.$axios.$post('/forget-pass', {
+          email: this.email,
+          captcha_token: this.captcha_token
+        })
+        this.$store.commit("credentials/set", {email: this.email})
+        this.l.submit = false
+        await this.$router.push('/ForgetPassVerify')
+      }
     }
   }
 }

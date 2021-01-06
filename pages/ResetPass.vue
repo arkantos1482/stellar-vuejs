@@ -1,21 +1,23 @@
 <template>
   <login-reg-card title="ایجاد رمز عبور جدید">
-    <a-text-field :rules="[rules.required, rules.password, rules.counter]"
-                  hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"
-                  :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
-                  class="mt-16">
-      <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-        {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-      </v-icon>
-    </a-text-field>
-    <a-text-field :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
-      <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-        {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-      </v-icon>
-    </a-text-field>
-    <v-btn :loading="l.send" @click="onSend"
-           block color="primary" class="mt-8">تایید
-    </v-btn>
+    <v-form v-model="form" @submit.prevent="onSend" ref="form">
+      <a-text-field :rules="[rules.required, rules.password, rules.counter]"
+                    hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"
+                    :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
+                    class="mt-16">
+        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+        </v-icon>
+      </a-text-field>
+      <a-text-field :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
+        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+        </v-icon>
+      </a-text-field>
+      <v-btn :loading="l.send" type="submit"
+             block color="primary" class="mt-8">تایید
+      </v-btn>
+    </v-form>
   </login-reg-card>
 </template>
 
@@ -35,6 +37,7 @@ export default {
       l: {send: false},
       password: '',
       passwordConfirm: '',
+      form: false,
       rules: {
         required: value => !!value || 'الزامی است',
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
@@ -52,22 +55,23 @@ export default {
   },
   methods: {
     async onSend() {
-      if (this.password === this.passwordConfirm
-          && typeof this.rules.required(this.password !== 'string')
-          && typeof this.rules.password(this.password) !== 'string') {
-        this.loading = true
-        await this.getCaptcha()
-        await this.$axios.$post('/reset-pass', {
-          email: this.$store.state.credentials.email,
-          password: this.password,
-          otp: this.$store.state.credentials.otp,
-          captcha_token: this.captcha_token
-        })
-        this.$store.commit('credentials/reset')
-        await this.$router.push('/Login')
-        this.loading = false
-      } else {
-        this.$bus.$emit('snack', 'رمز عبور نامناسب است ویا با تکرار رمز عبور تطابق ندارند', 'error')
+      this.$refs.form.validate()
+      if (this.form) {
+        if (this.password === this.passwordConfirm) {
+          this.loading = true
+          await this.getCaptcha()
+          await this.$axios.$post('/reset-pass', {
+            email: this.$store.state.credentials.email,
+            password: this.password,
+            otp: this.$store.state.credentials.otp,
+            captcha_token: this.captcha_token
+          })
+          this.$store.commit('credentials/reset')
+          await this.$router.push('/Login')
+          this.loading = false
+        } else {
+          this.$bus.$emit('snack', 'رمز عبور با تکرار رمز تطابق ندارند', 'error')
+        }
       }
     }
   }
