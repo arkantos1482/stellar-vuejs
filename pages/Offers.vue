@@ -66,10 +66,10 @@ export default {
       //     : total + item.selling_asset_code
     },
     cancelText(item) {
-      return parseFloat(item.price) === 0 ? 'لغو شده' : 'موفقیت آمیز'
+      return parseFloat(item.amount) === 0 ? 'لغو شده' : 'موفقیت آمیز'
     },
     cancelColor(item) {
-      return parseFloat(item.price) === 0 ? 'red--text' : 'green--text'
+      return parseFloat(item.amount) === 0 ? 'red--text' : 'green--text'
     }
   },
   data() {
