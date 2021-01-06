@@ -23,7 +23,7 @@
           <td>{{ item.created_at|toFarsiDate }}</td>
           <td>
             <v-btn ref="deleteBtn"
-                   @click="cancel(item.id,item.seller,idx)"
+                   @click="cancel(item.offer_id,item.type,idx)"
                    outlined small color="red">لغو
             </v-btn>
           </td>
@@ -81,9 +81,9 @@ export default {
     await this.$store.dispatch("offers/refresh")
   },
   methods: {
-    async cancel(id, seller, index) {
+    async cancel(id, type, index) {
       this.$refs.deleteBtn[index].loading = true
-      await this.$store.dispatch("offers/delete", {id, seller})
+      await this.$store.dispatch("offers/delete", {id, type})
       await this.$store.dispatch("offers/refresh")
     }
   }
