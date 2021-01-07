@@ -9,8 +9,12 @@
     </td>
     <td>{{ balance|toFloat }}&nbsp{{ type.toUpperCase() }}</td>
     <td>
-      <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">واریز</v-btn>
-      <v-btn :disabled="isWithdrawDisabled" small depressed color="#F849601E" class="error--text" @click="onWithdraw">برداشت</v-btn>
+      <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">
+        واریز
+      </v-btn>
+      <v-btn :disabled="isWithdrawDisabled" small depressed color="#F849601E" class="error--text" @click="onWithdraw">
+        برداشت
+      </v-btn>
       <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">
         <v-icon color="primary">mdi-refresh</v-icon>
       </v-btn>
@@ -27,15 +31,17 @@ export default {
   computed: {
     isRefreshDisabled() {
       const type = this.type.toUpperCase();
-      return 'AMIN' === type || 'BARG' === type || 'IRR' === type
+      return 'AMN' === type || 'EBG' === type || 'IRR' === type
     },
     isDepositDisabled() {
       const type = this.type.toUpperCase();
-      return 'AMIN' === type || 'BARG' === type
+      // return 'AMN' === type || 'EBG' === type
+      return false
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
-      return 'BCH' === type || 'AMIN' === type || 'BARG' === type
+      // return 'BCH' === type || 'AMN' === type || 'EBG' === type
+      return 'BCH' === type
     }
   },
   data() {

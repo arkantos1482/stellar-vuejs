@@ -16,8 +16,8 @@ Vue.filter('toFarsiCoin', (type) => {
     if (typeUp === 'BTC') value = 'بیت کوین'
     if (typeUp === 'LTC') value = 'لایت کوین'
     if (typeUp === 'BCH') value = 'بیت کوین کش'
-    if (typeUp === 'AMIN') value = 'امین'
-    if (typeUp === 'BARG') value = 'برگ'
+    if (typeUp === 'AMN') value = 'امین'
+    if (typeUp === 'EBG') value = 'برگ'
     if (typeUp === 'ETH') value = 'اتریوم'
     if (typeUp === 'USDT') value = 'تتر'
     if (typeUp === 'IRR') value = 'ریال'
@@ -31,8 +31,8 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'BTC') value = require('@/assets/images/BTC.svg')
     if (typeUp === 'LTC') value = require('@/assets/images/LTC.svg')
     if (typeUp === 'BCH') value = require('@/assets/images/Bch.svg')
-    if (typeUp === 'AMIN') value = require('@/assets/images/AminToken.svg')
-    if (typeUp === 'BARG') value = require('@/assets/images/Barg.jpeg')
+    if (typeUp === 'AMN') value = require('@/assets/images/AminToken.svg')
+    if (typeUp === 'EBG') value = require('@/assets/images/Barg.jpeg')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')
     if (typeUp === 'IRR') value = require('@/assets/images/IRR.png')

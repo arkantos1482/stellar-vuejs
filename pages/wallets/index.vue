@@ -9,10 +9,10 @@
       </tr>
       </thead>
       <tbody>
-      <crypto-address-tr namad="امین" type="amin"
-                         :balance="balances.AMIN"/>
-      <crypto-address-tr namad="برگ" type="barg"
-                         :balance="balances.BARG"/>
+      <crypto-address-tr namad="امین" type="amn"
+                         :balance="balances.AMN"/>
+      <crypto-address-tr namad="برگ" type="ebg"
+                         :balance="balances.EBG"/>
       <crypto-address-tr namad="ریال" type="irr"
                          :balance="balances.IRR"/>
       <crypto-address-tr namad="بیت کوین" type="btc"
