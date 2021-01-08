@@ -1,7 +1,7 @@
 <template>
-  <login-reg-card title="بازیابی رمز عبور">
+  <login-reg-card dir="ltr" title="بازیابی رمز عبور">
     <v-form v-model="form" @submit.prevent="onSubmit" ref="form">
-      <a-text-field :rules="[rules.required, rules.email]"
+      <a-text-field eng :rules="[rules.required, rules.email]"
                     v-model="email" label="ایمیل"
                     class="mt-8"/>
       <v-btn type="submit" :loading="l.submit"
@@ -34,7 +34,7 @@ export default {
         required: value => !!value || 'الزامی است',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'ایمیل درست نیست.'
+          return pattern.test(value) || 'ایمیل درست نیست'
         },
       }
     }

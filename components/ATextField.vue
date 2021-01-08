@@ -13,14 +13,15 @@
   <div class="text-right">
     <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
     <div class="d-flex gray-border">
-      <input class="text-field input-border text-h6" :class="{'red-border':hasError}"
+      <input class="text-field input-border text-h6"
+             :class="{'red-border':shouldValidate ,'py-2':eng, eng:eng, ef1:eng,ef2:eng}"
              :disabled="disabled" :type="type"
              :placeholder="hint"
              :value="value" @input="$emit('input', $event.target.value)"
              v-mask="mask">
       <slot></slot>
     </div>
-    <p v-show="shouldValidate" class="red--text text-body-2">{{ errorBucket[0] }}</p>
+    <p v-show="shouldValidate" class="red--text text-body-2 mt-2">{{ errorBucket[0] }}</p>
   </div>
 </template>
 <script>
@@ -29,7 +30,7 @@ import VTextField from 'vuetify/lib/components/VTextField/VTextField'
 export default {
   name: 'a-text-field',
   extends: VTextField,
-  props: ['mask']
+  props: {mask: Object, eng: Boolean}
   // props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
 }
 </script>

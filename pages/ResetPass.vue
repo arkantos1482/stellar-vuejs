@@ -1,7 +1,7 @@
 <template>
-  <login-reg-card title="ایجاد رمز عبور جدید">
+  <login-reg-card dir="ltr" title="ایجاد رمز عبور جدید">
     <v-form v-model="form" @submit.prevent="onSend" ref="form">
-      <a-text-field :rules="[rules.required, rules.password, rules.counter]"
+      <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
                     hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"
                     :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
                     class="mt-16">
@@ -9,7 +9,7 @@
           {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
         </v-icon>
       </a-text-field>
-      <a-text-field :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
+      <a-text-field eng :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
         <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
           {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
         </v-icon>
@@ -43,12 +43,12 @@ export default {
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'ایمیل درست نیست.'
+          return pattern.test(value) || 'ایمیل درست نیست'
         },
         password: value => {
           // at least number - small - capital
           const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
-          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد.'
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد'
         },
       }
     }

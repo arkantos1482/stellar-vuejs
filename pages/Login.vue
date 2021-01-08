@@ -1,9 +1,10 @@
 <template>
   <login-reg-card title="ورود به حساب کاربری">
-    <v-card-text>
-      <v-form @submit.prevent="login">
-        <a-text-field class="a-field" v-model="email" label="ایمیل"/>
-        <a-text-field v-model="password" label="رمز عبور" :type="showPass ? 'text' : 'password'">
+    <v-card-text dir="ltr">
+      <v-form @submit.prevent="login" v-model="form" ref="form">
+        <a-text-field :rules="[rules.required]" eng class="a-field" v-model="email" label="ایمیل"/>
+        <a-text-field :rules="[rules.required]" eng v-model="password" label="رمز عبور"
+                      :type="showPass ? 'text' : 'password'">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
@@ -31,33 +32,50 @@ export default {
   layout: 'noToolbar',
   data() {
     return {
+      form: false,
       showPass: false,
       l: {login: false},
       email: '',
       password: '',
+      rules: {
+        required: value => !!value || 'الزامی است',
+        counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'ایمیل درست نیست'
+        },
+        password: value => {
+          // at least number - small - capital
+          const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد'
+        },
+      }
     }
   },
   methods: {
     async login() {
-      this.l.login = true
-      try {
-        await this.getCaptcha()
-        await this.$axios.$get('/csrf-cookie')
-        const loginState = await this.$axios.$post('/login', {
-          email: this.email,
-          password: this.password,
-          captcha_token: this.captcha_token
-        });
-        if (loginState.meta === 'success') {
-          await this.$router.replace('/')
-        } else if (loginState.meta === 'token_needed') {
-          this.$store.commit('credentials/set', {email: this.email, password: this.password})
-          await this.$router.push('/LoginOtp')
+      this.$refs.form.validate()
+      if (this.form) {
+        this.l.login = true
+        try {
+          await this.getCaptcha()
+          await this.$axios.$get('/csrf-cookie')
+          const loginState = await this.$axios.$post('/login', {
+            email: this.email,
+            password: this.password,
+            captcha_token: this.captcha_token
+          });
+          if (loginState.meta === 'success') {
+            await this.$router.replace('/')
+          } else if (loginState.meta === 'token_needed') {
+            this.$store.commit('credentials/set', {email: this.email, password: this.password})
+            await this.$router.push('/LoginOtp')
+          }
+        } finally {
+          this.l.login = false
         }
-      } finally {
-        this.l.login = false
       }
-    },
+    }
   }
 }
 </script>

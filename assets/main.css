@@ -23,6 +23,9 @@
     url("~assets/font/iransans/ttf/IRANSansWeb\(FaNum\).ttf") format("truetype"),
     url("//db.onlinewebfonts.com/t/3967f8bfcdf02e2b966e2f252738ddca.svg#IRANSans") format("svg");
 }
+.eng.ef1.ef2{
+    font-family: sans-serif !important;
+}
 
 th {
     font-weight: 400;

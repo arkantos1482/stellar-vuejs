@@ -7,29 +7,31 @@
         <v-tab>حقوقی</v-tab>
       </v-tabs>
       <v-divider/>
-      <v-form @submit.prevent="register" v-model="form" ref="form">
-        <a-text-field :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
-        <a-text-field :rules="[rules.required, rules.password, rules.counter]"
+      <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
+        <a-text-field eng :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
+        <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
                       :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
-        <a-text-field :rules="[rules.passEqual]" :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور"
+        <a-text-field eng :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور"
                       v-model="passwordConfirm">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
-        <a-text-field filled label="کد معرف(اختیاری)" v-model="referral_code"/>
-        <v-checkbox v-model="terms" class="mt-0" :rules="[rules.required]">
-          <template v-slot:label>
-            <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
-            <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
-          </template>
-        </v-checkbox>
+        <a-text-field eng filled label="کد معرف(اختیاری)" v-model="referral_code"/>
+        <div dir="rtl">
+          <v-checkbox v-model="terms" :rules="[rules.required]">
+            <template v-slot:label>
+              <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
+              <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
+            </template>
+          </v-checkbox>
+        </div>
         <v-btn type="submit" :loading="l.reg"
-               class="mb-8" color="primary" block> تایید
+               class="mb-8 mt-4" color="primary" block> تایید
         </v-btn>
       </v-form>
       <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
@@ -77,12 +79,12 @@ export default {
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
         email: value => {
           const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'ایمیل درست نیست.'
+          return pattern.test(value) || 'ایمیل درست نیست'
         },
         password: value => {
           // at least number - small - capital
           const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
-          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد.'
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد'
         },
       }
     }

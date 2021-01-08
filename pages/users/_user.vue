@@ -231,10 +231,10 @@ export default {
         required: value => !!value || 'الزامی است',
         persian: value => {
           let pattern = /^[\u06A9\u06AF\u06C0\u06CC\u060C\u062A\u062B\u062C\u062D\u062E\u062F\u063A\u064A\u064B\u064C\u064D\u064E\u064F\u067E\u0670\u0686\u0698\u200C\u0621-\u0629\u0630-\u0639\u0641-\u0654\s]+$/
-          return pattern.test(value) || 'الزاما فارسی وارد شود.'
+          return pattern.test(value) || 'الزاما فارسی وارد شود'
         },
-        tenDigit: value => !!value && value.length === 10 || 'میبایست ۱۰ رقم باشد.',
-        elevenDigit: value => !!value && value.length === 11 || 'میبایست ۱۱ رقم باشد.',
+        tenDigit: value => !!value && value.length === 10 || 'میبایست ۱۰ رقم باشد',
+        elevenDigit: value => !!value && value.length === 11 || 'میبایست ۱۱ رقم باشد',
       },
       valid: {step0: false, step1: false, step2: false},
       genderList: ['خانم', 'آقا'],
