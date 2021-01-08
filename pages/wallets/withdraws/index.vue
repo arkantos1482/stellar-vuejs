@@ -27,12 +27,16 @@ export default {
   name: "Withdraws",
   data() {
     return {
-      withdraws: []
+      withdraws: [],
+      type: this.$route.params.type,
     }
   },
   async mounted() {
-    let list = (await this.$axios.$get('/effects'))._embedded.records;
-    this.withdraws = collect(list).filter(item => item.type === 'account_debited').all();
+    let list1 = (await this.$axios.$get('/effects'))._embedded.records;
+    let list2 = collect(list1)
+        .filter(item => item.type === 'account_debited')
+    if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.asset_code)
+    this.withdraws = list2.all()
   }
 }
 </script>

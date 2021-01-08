@@ -28,11 +28,16 @@ export default {
   data() {
     return {
       deposits: [],
+      type: this.$route.params.type,
     }
   },
   async mounted() {
-    let list = (await this.$axios.$get('/effects'))._embedded.records;
-    this.deposits = collect(list).filter(item => item.type === 'account_credited').all();
+    let list1 = (await this.$axios.$get('/effects'))._embedded.records;
+    let list2 = collect(list1)
+        .filter(item => item.type === 'account_credited')
+    if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.asset_code)
+    this.deposits = list2.all()
+
   }
 }
 </script>
