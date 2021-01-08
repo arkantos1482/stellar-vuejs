@@ -8,7 +8,7 @@
       </v-tabs>
       <v-divider/>
       <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
-        <a-text-field eng :rules="[rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
+        <a-text-field eng :rules="[rules.required, rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
         <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
                       :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
