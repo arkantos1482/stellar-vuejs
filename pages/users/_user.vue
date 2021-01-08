@@ -61,7 +61,7 @@
                                 :disabled="verifyState.ssn"/>
 
                   <a-text-field :rules="[rules.required,rules.elevenDigit]"
-                                mask="####-######"
+                                mask="##########"
                                 v-model="user.cell_phone" label="موبایل"
                                 hint="09121234567"
                                 :disabled="verifyState.cell_phone">
@@ -98,8 +98,8 @@
               <v-row justify="center">
                 <v-col cols="6" dir="ltr">
                   <a-text-field
-                      mask="#### #### #### ####"
-                      hint="6037 9912 3456 7890"
+                      mask="################"
+                      hint="6037991234567890"
                       v-model="user.bank_card" label="شماره کارت"
                       :disabled="verifyState.bank_card"/>
                   <a-text-field
