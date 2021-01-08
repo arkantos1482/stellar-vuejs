@@ -61,7 +61,7 @@
                                 :disabled="verifyState.ssn"/>
 
                   <a-text-field :rules="[rules.required,rules.elevenDigit]"
-                                mask="##########"
+                                mask="###########"
                                 v-model="user.cell_phone" label="موبایل"
                                 hint="09121234567"
                                 :disabled="verifyState.cell_phone">
