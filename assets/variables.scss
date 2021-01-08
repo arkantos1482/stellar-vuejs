@@ -118,14 +118,20 @@ $headings: (
 );
 
 //$list-item-title-font-size: map-deep-get($headings, 'subtitle-1', 'size') !default;
-$list-item-title-font-size: 1.6rem !default;
+$list-item-title-font-size: 1.4rem !default;
 //$list-item-subtitle-font-size: map-deep-get($headings, 'subtitle-2', 'size') !default;
-$list-item-subtitle-font-size: 1.6rem !default;
+$list-item-subtitle-font-size: 1.4rem !default;
 //$list-item-action-text-font-size: map-deep-get($headings, 'caption', 'size') !default;
-$list-item-action-text-font-size: 1.6rem !default;
-$list-item-dense-title-font-size: 1.6rem !default;
+$list-item-action-text-font-size: 1.4rem !default;
+$list-item-dense-title-font-size: 1.4rem !default;
 $list-item-dense-title-font-weight: 400 !default;
-$list-dense-subheader-font-size: 1.6rem !default;
+$list-dense-subheader-font-size: 1.4rem !default;
+
+$select-selections-padding-top: 0px !default;
+$select-prefix-line-height: 0px !default;
+$select-selections-line-height: 18px !default;
+$select-dense-selections-margin: 5px 4px 3px 0 !default;
+
 
 @import '~vuetify/src/styles/settings/colors';
 

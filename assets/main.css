@@ -32,6 +32,20 @@ a, p {
     font-size: 1.6rem;
 }
 
+/*selector collapse font size*/
+.v-input.v-select {
+    font-size: 14px !important;
+}
+
+/*selector collapse font color*/
+.v-select__selection{
+    color: #0074ff !important;
+}
+/*selector collapse icon color*/
+.v-select .v-icon.mdi.mdi-menu-down {
+    color: #0074ff !important;
+}
+
 .v-list-item__title {
     line-height: 1.6rem !important;
 }
