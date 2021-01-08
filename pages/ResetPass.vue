@@ -2,7 +2,6 @@
   <login-reg-card dir="ltr" title="ایجاد رمز عبور جدید">
     <v-form v-model="form" @submit.prevent="onSend" ref="form">
       <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
-                    hint="رمز عبور بایستی ترکیبی از اعداد و حروف کوچک و بزرگ و بزرگتر از ۶ حرف باشد"
                     :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
                     class="mt-16">
         <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
