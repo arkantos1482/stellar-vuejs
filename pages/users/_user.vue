@@ -398,10 +398,12 @@ export default {
       return this.stepNum === step ? 'white--text' : 'grey--text';
     },
     async requestMobileOtp() {
-      this.l.mobileRequest = true
-      await this.$axios.$post('/otp-m', {cell_phone: this.user.cell_phone})
-      this.l.mobileRequest = false
-      this.dialog.mobileOtp = true
+      if (!!this.user.cell_phone && this.user.cell_phone.length === 11) {
+        this.l.mobileRequest = true
+        await this.$axios.$post('/otp-m', {cell_phone: this.user.cell_phone})
+        this.l.mobileRequest = false
+        this.dialog.mobileOtp = true
+      }
     },
     async submitMobileOtp() {
       this.l.mobileSubmit = true
