@@ -99,11 +99,13 @@ export default {
           await this.$axios.$get('/csrf-cookie')
           await this.$axios.$post('/register', {
             email: this.email,
-            password: this.password,
-            referral_code: this.referral_code,
             captcha_token: this.captcha_token
           })
-          this.$store.commit('credentials/set', {email: this.email})
+          this.$store.commit('credentials/set', {
+            email: this.email,
+            password: this.password,
+            referral_code: this.referral_code
+          })
           await this.$router.push('/RegisterVerify')
           this.l.reg = false
         } else {

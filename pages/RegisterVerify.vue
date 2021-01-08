@@ -27,6 +27,8 @@ export default {
       await this.getCaptcha()
       await this.$axios.$post('/verify-email', {
         email: this.$store.state.credentials.email,
+        password: this.$store.state.credentials.password,
+        referral_code: this.$store.state.credentials.referral_code,
         otp: this.token,
         captcha_token: this.captcha_token
       })
