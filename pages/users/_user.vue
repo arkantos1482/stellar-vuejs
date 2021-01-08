@@ -98,11 +98,13 @@
               <v-row justify="center">
                 <v-col cols="6" dir="ltr">
                   <a-text-field
+                      :rules="[rules.required]"
                       mask="################"
                       hint="6037991234567890"
                       v-model="user.bank_card" label="شماره کارت"
                       :disabled="verifyState.bank_card"/>
                   <a-text-field
+                      :rules="[rules.required]"
                       mask="AA########################"
                       hint="IR123456789012345678901234"
                       v-model="user.bank_shaba" label="شماره شبا"
