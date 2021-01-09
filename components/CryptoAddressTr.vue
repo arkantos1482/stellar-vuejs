@@ -10,10 +10,10 @@
     <td>{{ balance|toFloat }}&nbsp{{ type.toUpperCase() }}</td>
     <td>
       <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">
-        واریز
+        {{ depositLabel }}
       </v-btn>
       <v-btn :disabled="isWithdrawDisabled" small depressed color="#F849601E" class="error--text" @click="onWithdraw">
-        برداشت
+        {{ withdrawLabel }}
       </v-btn>
       <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">
         <v-icon color="primary">mdi-refresh</v-icon>
@@ -41,7 +41,15 @@ export default {
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
       // return 'BCH' === type || 'AMN' === type || 'EBG' === type
-      return 'BCH' === type
+      return false
+    },
+    withdrawLabel() {
+      const type = this.type.toUpperCase();
+      return ('AMN' === type || 'EBG' === type) ? 'ارسال' : 'برداشت'
+    },
+    depositLabel() {
+      const type = this.type.toUpperCase();
+      return ('AMN' === type || 'EBG' === type) ? 'دریافت' : 'واریز'
     }
   },
   data() {
