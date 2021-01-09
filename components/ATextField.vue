@@ -30,7 +30,7 @@ import VTextField from 'vuetify/lib/components/VTextField/VTextField'
 export default {
   name: 'a-text-field',
   extends: VTextField,
-  props: {mask: Object, eng: Boolean}
+  props: {mask: String, eng: Boolean}
   // props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
 }
 </script>
