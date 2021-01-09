@@ -4,7 +4,7 @@
       <crypto-upper :balance="balance" :type="type"/>
       <v-form @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
         <a-text-field mask="####################"
-                      :rules="[rules.moreThanBillion]"
+                      :rules="[rules.required,rules.moreThanBillion]"
                       hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
         <v-btn type="submit" :loading="l.deposit"
                block color="primary" class="mt-4">واریز
@@ -35,6 +35,7 @@ export default {
     return {
       v: {deposit: false},
       rules: {
+        required: value => !!value || 'الزامی است',
         moreThanBillion: value => !!value && parseFloat(value) >= 10 * 1000 || 'حداقل باید بیشتر از ۱ میلیون ریال باشد'
       },
       type: 'IRR',

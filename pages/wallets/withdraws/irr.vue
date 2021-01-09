@@ -10,10 +10,13 @@
         <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
       </p>
 
-      <a-text-field mask="####################" v-model="amount" label="مبلغ"/>
-      <v-btn @click="onWithdraw" :loading="l.withdraw"
-             block color="primary" class="mt-4">برداشت
-      </v-btn>
+      <v-form @submit.prevent="onWithdraw" v-model="form" ref="form">
+        <a-text-field :rules="[rules.required]"
+                      mask="####################" v-model="amount" label="مبلغ"/>
+        <v-btn type="submit" :loading="l.withdraw"
+               block color="primary" class="mt-4">برداشت
+        </v-btn>
+      </v-form>
     </a-card>
 
     <withdraws/>
@@ -41,7 +44,11 @@ export default {
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
       amount: '',
-      l: {withdraw: false}
+      form: false,
+      l: {withdraw: false},
+      rules: {
+        required: value => !!value || 'الزامی است',
+      },
     }
   },
   mounted() {
@@ -55,20 +62,23 @@ export default {
   },
   methods: {
     async onWithdraw() {
-      if (this.balance >= parseFloat(this.amount)) {
-        try {
-          this.l.withdraw = true
-          await this.$axios.$post('/irr/withdraw', {amount: this.amount})
+      this.$refs.form.validate()
+      if (this.form) {
+        if (this.balance >= parseFloat(this.amount)) {
+          try {
+            this.l.withdraw = true
+            await this.$axios.$post('/irr/withdraw', {amount: this.amount})
 
-          this.$router.back()
-          this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
-        } catch (e) {
-          this.$bus.$emit('snack', e.response.data.error.msg, 'error')
-        } finally {
-          this.l.withdraw = false
+            this.$router.back()
+            this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+          } catch (e) {
+            this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+          } finally {
+            this.l.withdraw = false
+          }
+        } else {
+          this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
         }
-      } else {
-        this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
       }
     },
   }
