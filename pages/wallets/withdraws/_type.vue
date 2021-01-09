@@ -61,9 +61,6 @@ export default {
   methods: {
     async withdraw() {
       if (this.balance >= (this.amount + this.withdrawFee)) {
-        console.log((this.balance >= (this.amount + this.withdrawFee)))
-        console.log((this.amount + this.withdrawFee))
-        console.log(this.balance)
         try {
           this.l.withdraw = true
           await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
