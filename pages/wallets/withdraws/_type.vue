@@ -9,7 +9,7 @@
         <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
       </p>
 
-      <a-text-field v-model="amount" label="مبلغ"/>
+      <a-text-field :mask="mask" v-model="amount" label="مبلغ"/>
       <a-text-field v-model="destAddress" label="آدرس کیف پول مقصد"/>
       <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>
       <v-btn @click="withdraw" :loading="l.withdraw"
@@ -40,6 +40,9 @@ export default {
     },
     listTitle() {
       return ('AMN' === this.type || 'EBG' === this.type) ? 'لیست ارسال ها' : 'لیست برداشت ها'
+    },
+    mask() {
+      return ('AMN' === this.type || 'EBG' === this.type) ? '###############' : ''
     }
   },
   data() {

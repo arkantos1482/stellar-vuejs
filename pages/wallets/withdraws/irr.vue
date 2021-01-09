@@ -10,7 +10,7 @@
         <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
       </p>
 
-      <a-text-field v-model="amount" label="مبلغ"/>
+      <a-text-field mask="####################" v-model="amount" label="مبلغ"/>
       <v-btn @click="onWithdraw" :loading="l.withdraw"
              block color="primary" class="mt-4">برداشت
       </v-btn>
