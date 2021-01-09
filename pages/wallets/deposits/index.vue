@@ -25,11 +25,10 @@ import collect from "collect.js";
 
 export default {
   name: "Deposits",
-  props: {title: {type: String, default: 'لیست واریزها'}},
+  props: {title: {type: String, default: 'لیست واریزها'}, type: String},
   data() {
     return {
       deposits: [],
-      type: this.$route.params.type,
     }
   },
   async mounted() {
@@ -38,7 +37,6 @@ export default {
         .filter(item => item.type === 'account_credited')
     if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.asset_code)
     this.deposits = list2.all()
-
   }
 }
 </script>

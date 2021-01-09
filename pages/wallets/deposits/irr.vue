@@ -12,7 +12,7 @@
       </v-form>
     </a-card>
 
-    <deposits/>
+    <deposits :type="type"/>
   </div>
 </template>
 

@@ -14,7 +14,7 @@
       </div>
     </a-card>
 
-    <deposits :title="listTitle"/>
+    <deposits :type="type" :title="listTitle"/>
   </div>
 </template>
 

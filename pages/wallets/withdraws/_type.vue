@@ -19,7 +19,7 @@
       </v-form>
     </a-card>
 
-    <withdraws :title="listTitle"/>
+    <withdraws :type="type" :title="listTitle"/>
   </div>
 </template>
 

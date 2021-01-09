@@ -25,7 +25,7 @@ import collect from 'collect.js'
 
 export default {
   name: "Withdraws",
-  props: {title: {type: String, default: 'لیست برداشت ها'}},
+  props: {title: {type: String, default: 'لیست برداشت ها'},type: String},
   data() {
     return {
       withdraws: [],
