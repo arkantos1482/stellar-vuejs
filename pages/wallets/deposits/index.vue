@@ -1,6 +1,6 @@
 <template>
   <v-card width="100%" class="text-center pa-4">
-    <div class="text-h4 mb-4 text-right">لیست واریزها</div>
+    <div class="text-h4 mb-4 text-right">{{ title }}</div>
     <v-simple-table>
       <thead class="grey lighten-3">
       <tr>
@@ -25,6 +25,7 @@ import collect from "collect.js";
 
 export default {
   name: "Deposits",
+  props: {title: {type: String, default: 'لیست واریزها'}},
   data() {
     return {
       deposits: [],

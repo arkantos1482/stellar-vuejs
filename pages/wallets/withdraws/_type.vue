@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-stretch">
-    <a-card class="ml-4" width="45%" title="برداشت">
+    <a-card class="ml-4" width="45%" :title="actionTitle">
       <crypto-upper :balance="balance" :type="type"/>
       <p class="text-display-2 ma-0">
         باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
@@ -17,7 +17,7 @@
       </v-btn>
     </a-card>
 
-    <withdraws/>
+    <withdraws :title="listTitle"/>
   </div>
 </template>
 
@@ -34,6 +34,12 @@ export default {
   computed: {
     balance() {
       return this.$store.state.balances.list[this.type]
+    },
+    actionTitle() {
+      return ('AMN' === this.type || 'EBG' === this.type) ? 'ارسال' : 'برداشت'
+    },
+    listTitle() {
+      return ('AMN' === this.type || 'EBG' === this.type) ? 'لیست ارسال ها' : 'لیست برداشت ها'
     }
   },
   data() {

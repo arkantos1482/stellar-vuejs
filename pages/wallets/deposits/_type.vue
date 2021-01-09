@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex align-items-stretch">
-    <a-card class="ml-4 py-8" width="45%" title="واریز">
+    <a-card class="ml-4 py-8" width="45%" :title="actionTitle">
       <div v-show="address !== 'not_loaded'">
         <crypto-upper :balance="balance" :type="type"/>
 
@@ -14,7 +14,7 @@
       </div>
     </a-card>
 
-    <deposits />
+    <deposits :title="listTitle"/>
   </div>
 </template>
 
@@ -31,6 +31,12 @@ export default {
   computed: {
     balance() {
       return this.$store.state.balances.list[this.type]
+    },
+    actionTitle() {
+      return ('AMN' === this.type || 'EBG' === this.type) ? 'دریافت' : 'واریز'
+    },
+    listTitle() {
+      return ('AMN' === this.type || 'EBG' === this.type) ? 'لیست دریافت ها' : 'لیست واریزها'
     }
   },
   data() {
