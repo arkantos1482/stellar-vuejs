@@ -245,34 +245,36 @@ export default {
       this.sell.price = ''
     },
     async doSell() {
-      if (!this.rules.sellSufficient) return
-      this.l.sell = true
-      await this.$axios.$post('/offers/sell', {
-        sell: this.baseAsset,
-        buy: this.counterAsset,
-        amount: this.sell.amount,
-        price: this.sell.price
-      })
-      this.l.sell = false
-      this.clear()
-      await this.refreshBalances()
-      await this.refreshActiveOffers()
-      await this.refreshOffers()
+      if (!this.rules.sellSufficient) {
+        this.l.sell = true
+        await this.$axios.$post('/offers/sell', {
+          sell: this.baseAsset,
+          buy: this.counterAsset,
+          amount: this.sell.amount,
+          price: this.sell.price
+        })
+        this.l.sell = false
+        this.clear()
+        await this.refreshBalances()
+        await this.refreshActiveOffers()
+        await this.refreshOffers()
+      }
     },
     async doBuy() {
-      if (!this.rules.buySufficient) return
-      this.l.buy = true
-      await this.$axios.$post('/offers/buy', {
-        buy: this.baseAsset,
-        sell: this.counterAsset,
-        amount: this.buy.amount,
-        price: this.buy.price
-      })
-      this.l.buy = false
-      this.clear()
-      await this.refreshBalances()
-      await this.refreshActiveOffers()
-      await this.refreshOffers()
+      if (!this.rules.buySufficient) {
+        this.l.buy = true
+        await this.$axios.$post('/offers/buy', {
+          buy: this.baseAsset,
+          sell: this.counterAsset,
+          amount: this.buy.amount,
+          price: this.buy.price
+        })
+        this.l.buy = false
+        this.clear()
+        await this.refreshBalances()
+        await this.refreshActiveOffers()
+        await this.refreshOffers()
+      }
     },
     async refreshOffers() {
       this.offers = (await this.$axios.$get('/offers-book', {
