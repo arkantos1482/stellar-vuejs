@@ -90,6 +90,11 @@ export default {
         buy: item.buying_asset_code,
         price: item.price
       })
+      await new Promise(r => setTimeout(r, 2000))
+      await this.$store.dispatch("offers/refresh")
+      await new Promise(r => setTimeout(r, 2000))
+      await this.$store.dispatch("offers/refresh")
+      await new Promise(r => setTimeout(r, 2000))
       await this.$store.dispatch("offers/refresh")
     }
   }

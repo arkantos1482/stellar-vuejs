@@ -263,8 +263,13 @@ export default {
       this.l.sell = false
       this.clear()
       await this.refreshBalances()
-      await this.refreshActiveOffers()
       await this.refreshOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
 
     },
     async doBuy() {
@@ -279,8 +284,13 @@ export default {
       this.l.buy = false
       this.clear()
       await this.refreshBalances()
-      await this.refreshActiveOffers()
       await this.refreshOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
+      await new Promise(r => setTimeout(r, 2000))
+      await this.refreshActiveOffers()
 
     },
     async refreshOffers() {
