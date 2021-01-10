@@ -64,7 +64,8 @@
 
             <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
             <order-text-field v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
-            <order-text-field class="mt-6" readonly :value="buy.amount*buy.price" prepend="مجموع"
+            <order-text-field :rules="[rules.buySufficient]"
+                              class="mt-6" readonly :value="buyTotal" prepend="مجموع"
                               :append="counterAsset"/>
             <v-btn depressed small class="white--text mt-8 py-4" block color="success"
                    @click="doBuy" :loading="l.buy">خرید
@@ -80,8 +81,9 @@
               </p>
             </div>
             <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
-            <order-text-field v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
-            <order-text-field class="mt-6" readonly :value="sell.amount*sell.price" prepend="مجموع"
+            <order-text-field :rules="[rules.sellSufficient]"
+                              v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
+            <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
                               :append="counterAsset"/>
             <v-btn depressed small class="white--text mt-8 py-4" block color="error"
                    @click="doSell" :loading="l.sell">فروش
@@ -134,7 +136,7 @@ export default {
       let array = val.split('/')
       this.baseAsset = array[0]
       this.counterAsset = array[1]
-
+      this.clear()
       this.refreshOffers()
       this.refreshTrades()
     },
@@ -185,6 +187,12 @@ export default {
     sellOffers() {
       return collect(this.offers.asks)
           .sortBy('price_r.n')
+    },
+    sellTotal() {
+      return this.sell.amount * this.sell.price
+    },
+    buyTotal() {
+      return this.buy.amount * this.buy.price
     }
   },
   data() {
@@ -209,6 +217,11 @@ export default {
         amount: '',
         price: ''
       },
+      rules: {
+        required: value => !!value || 'الزامی است',
+        buySufficient: value => this.balances[this.counterAsset] >= this.buyTotal || 'اعتبار ناکافی',
+        sellSufficient: value => this.balances[this.baseAsset] >= this.sell.amount || 'اعتبار ناکافی',
+      },
       tradeData: {
         chart: {
           data: [
@@ -225,7 +238,14 @@ export default {
   methods: {
     ...mapActions("offers", {refreshActiveOffers: 'refresh'}),
     ...mapActions("balances", {refreshBalances: 'refresh'}),
+    clear() {
+      this.buy.amount = ''
+      this.buy.price = ''
+      this.sell.amount = ''
+      this.sell.price = ''
+    },
     async doSell() {
+      if (!this.rules.sellSufficient) return
       this.l.sell = true
       await this.$axios.$post('/offers/sell', {
         sell: this.baseAsset,
@@ -234,11 +254,13 @@ export default {
         price: this.sell.price
       })
       this.l.sell = false
+      this.clear()
       await this.refreshBalances()
       await this.refreshActiveOffers()
       await this.refreshOffers()
     },
     async doBuy() {
+      if (!this.rules.buySufficient) return
       this.l.buy = true
       await this.$axios.$post('/offers/buy', {
         buy: this.baseAsset,
@@ -247,6 +269,7 @@ export default {
         price: this.buy.price
       })
       this.l.buy = false
+      this.clear()
       await this.refreshBalances()
       await this.refreshActiveOffers()
       await this.refreshOffers()
