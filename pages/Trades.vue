@@ -33,8 +33,8 @@ export default {
     toFarsiSellOrBuy: (val) => val ? 'فروش' : 'خرید',
     cryptoPair(item) {
       return item.base_is_seler
-          ? item.counter_asset_code + '/' + item.base_asset_code
-          : item.base_asset_code + '/' + item.counter_asset_code
+          ? item.base_asset_code + '/' + item.counter_asset_code
+          : item.counter_asset_code + '/' + item.base_asset_code
     },
     price(item) {
       return item.base_is_seler
