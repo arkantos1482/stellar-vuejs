@@ -62,14 +62,16 @@
               </p>
             </div>
 
-            <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
-            <order-text-field v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
-            <order-text-field :rules="[rules.buySufficient]"
-                              class="mt-6" readonly :value="buyTotal" prepend="مجموع"
-                              :append="counterAsset"/>
-            <v-btn depressed small class="white--text mt-8 py-4" block color="success"
-                   @click="doBuy" :loading="l.buy">خرید
-            </v-btn>
+            <v-form v-model="buyForm" @submit.prevent="doBuy">
+              <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
+              <order-text-field v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
+              <order-text-field :rules="[rules.buySufficient]"
+                                class="mt-6" readonly :value="buyTotal" prepend="مجموع"
+                                :append="counterAsset"/>
+              <v-btn depressed small class="white--text mt-8 py-4" block color="success"
+                     type="submit" :loading="l.buy">خرید
+              </v-btn>
+            </v-form>
           </v-col>
 
           <v-col cols="6" class="px-2 py-0">
@@ -80,14 +82,17 @@
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
             </div>
-            <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
-            <order-text-field :rules="[rules.sellSufficient]"
-                              v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
-            <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
-                              :append="counterAsset"/>
-            <v-btn depressed small class="white--text mt-8 py-4" block color="error"
-                   @click="doSell" :loading="l.sell">فروش
-            </v-btn>
+
+            <v-form v-model="sellForm" @submit.prevent="doSell">
+              <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
+              <order-text-field :rules="[rules.sellSufficient]"
+                                v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
+              <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
+                                :append="counterAsset"/>
+              <v-btn depressed small class="white--text mt-8 py-4" block color="error"
+                     type="submit" :loading="l.sell">فروش
+              </v-btn>
+            </v-form>
           </v-col>
         </div>
       </v-card>
@@ -217,6 +222,8 @@ export default {
         amount: '',
         price: ''
       },
+      sellForm: false,
+      buyForm: false,
       rules: {
         required: value => !!value || 'الزامی است',
         buySufficient: value => this.balances[this.counterAsset] >= this.buyTotal || 'اعتبار ناکافی',
@@ -245,36 +252,36 @@ export default {
       this.sell.price = ''
     },
     async doSell() {
-      if (this.rules.sellSufficient) {
-        this.l.sell = true
-        await this.$axios.$post('/offers/sell', {
-          sell: this.baseAsset,
-          buy: this.counterAsset,
-          amount: this.sell.amount,
-          price: this.sell.price
-        })
-        this.l.sell = false
-        this.clear()
-        await this.refreshBalances()
-        await this.refreshActiveOffers()
-        await this.refreshOffers()
-      }
+      if (!this.sellForm) return
+      this.l.sell = true
+      await this.$axios.$post('/offers/sell', {
+        sell: this.baseAsset,
+        buy: this.counterAsset,
+        amount: this.sell.amount,
+        price: this.sell.price
+      })
+      this.l.sell = false
+      this.clear()
+      await this.refreshBalances()
+      await this.refreshActiveOffers()
+      await this.refreshOffers()
+
     },
     async doBuy() {
-      if (this.rules.buySufficient) {
-        this.l.buy = true
-        await this.$axios.$post('/offers/buy', {
-          buy: this.baseAsset,
-          sell: this.counterAsset,
-          amount: this.buy.amount,
-          price: this.buy.price
-        })
-        this.l.buy = false
-        this.clear()
-        await this.refreshBalances()
-        await this.refreshActiveOffers()
-        await this.refreshOffers()
-      }
+      if (!this.buyForm) return
+      this.l.buy = true
+      await this.$axios.$post('/offers/buy', {
+        buy: this.baseAsset,
+        sell: this.counterAsset,
+        amount: this.buy.amount,
+        price: this.buy.price
+      })
+      this.l.buy = false
+      this.clear()
+      await this.refreshBalances()
+      await this.refreshActiveOffers()
+      await this.refreshOffers()
+
     },
     async refreshOffers() {
       this.offers = (await this.$axios.$get('/offers-book', {
