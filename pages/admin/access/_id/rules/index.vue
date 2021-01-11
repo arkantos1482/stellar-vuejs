@@ -6,6 +6,7 @@
         <v-switch label="ایمیل" v-model="rule.email"/>
         <v-switch label="موبایل" v-model="rule.cell_phone"/>
         <v-switch label="کارت ملی" v-model="rule.ssn"/>
+        <v-switch label="تصویر هویت" v-model="rule.bank_account"/>
       </v-col>
 
       <v-col cols="4">
@@ -18,7 +19,6 @@
         <h3>اطلاعات مالی</h3>
         <v-switch label="شماره کارت" v-model="rule.bank_card"/>
         <v-switch label="شبا" v-model="rule.bank_shaba"/>
-        <v-switch label="شماره حساب" v-model="rule.bank_account"/>
       </v-col>
     </v-row>
 
