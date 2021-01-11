@@ -205,7 +205,7 @@ export default {
       list: [
         ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR'],
         ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT'],
-        ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH', 'LTC/BCH']],
+        ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,
       pairAsset: 'BTC/IRR',
