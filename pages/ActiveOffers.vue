@@ -37,6 +37,7 @@
 
 <script>
 import pstopper from "@/mixins/pstopper";
+import Decimal from "decimal.js-light";
 
 export default {
   mixins: [pstopper],
@@ -51,7 +52,7 @@ export default {
           : item.selling_asset_code + '/' + item.buying_asset_code
     },
     price(item) {
-      let price = parseFloat(item.price_r.n / item.price_r.d)
+      let price = new Decimal(item.price_r.n).div(item.price_r.d)
       return price
       // return item.type === 'buy'
       //     ? price + item.buying_asset_code
@@ -65,7 +66,7 @@ export default {
       //     : amount + item.selling_asset_code
     },
     total(item) {
-      let total = parseFloat(item.amount * item.price_r.n / item.price_r.d)
+      let total = new Decimal(item.amount).times(item.price_r.n).div(item.price_r.d)
       return total
       // return item.type === 'buy'
       //     ? total + item.buying_asset_code

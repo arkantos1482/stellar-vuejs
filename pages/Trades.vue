@@ -27,6 +27,8 @@
 
 <script>
 
+import Decimal from "decimal.js-light";
+
 export default {
   name: "Trades",
   filters: {
@@ -38,8 +40,8 @@ export default {
     },
     price(item) {
       return item.base_is_seler
-          ? parseFloat(item.price.n / item.price.d)
-          : parseFloat(item.price.d / item.price.n)
+          ? new Decimal(item.price.n).div(item.price.d)
+          : new Decimal(item.price.d).div(item.price.n)
     },
     amount(item) {
       return item.base_is_seler
@@ -48,8 +50,8 @@ export default {
     },
     total(item) {
       return item.base_is_seler
-          ? parseFloat(item.base_amount * item.price.n / item.price.d)
-          : parseFloat(item.counter_amount * item.price.d / item.price.n)
+          ? new Decimal(item.base_amount).times(item.price.n).div(item.price.d)
+          : new Decimal(item.counter_amount).times(item.price.d).div(item.price.n)
     }
   },
 
