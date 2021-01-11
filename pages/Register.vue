@@ -2,11 +2,11 @@
   <login-reg-card title="ایجاد حساب کاربری"
                   subtitle="به بیترا خوش آمدید">
     <v-card-text>
-      <v-tabs>
-        <v-tab>حقیقی</v-tab>
-        <v-tab>حقوقی</v-tab>
-      </v-tabs>
-      <v-divider/>
+<!--      <v-tabs>-->
+<!--        <v-tab>حقیقی</v-tab>-->
+<!--        <v-tab>حقوقی</v-tab>-->
+<!--      </v-tabs>-->
+<!--      <v-divider/>-->
       <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
         <a-text-field eng :rules="[rules.required, rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
         <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
