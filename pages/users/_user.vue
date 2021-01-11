@@ -181,6 +181,7 @@
               {{ prevLabel }}
             </v-btn>
             <v-btn class="px-16" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
+            <v-btn class="mr-4" v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
           </div>
         </div>
       </v-col>
@@ -201,10 +202,6 @@
           <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
         </a-card>
       </v-dialog>
-
-      <div class="text-center">
-        <v-btn v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
-      </div>
     </div>
   </div>
 </template>

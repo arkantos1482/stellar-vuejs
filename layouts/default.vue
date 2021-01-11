@@ -110,11 +110,6 @@ export default {
           title: ' سطوح بهره برداری',
           to: '/admin/access'
         },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'api test',
-          to: '/admin/ApiTest'
-        },
       ],
       miniVariant: false,
       right: true,
