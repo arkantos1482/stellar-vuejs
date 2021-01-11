@@ -43,7 +43,7 @@
                       </template>
                     </custom-date-picker>
                   </div>
-                  <div class="mt-4">
+                  <div class="mt-8">
                     <p class="text-h6 mb-2">تصویر کارت ملی</p>
                     <vue2-dropzone id="ssn_id" :options="dropzoneOptions.ssn" :useCustomSlot=true>
                       <v-row align="center">
@@ -81,7 +81,10 @@
                   </div>
 
                   <div class="mt-n2">
-                    <p class="text-h6 mb-2">تصویر تایید هویت</p>
+                    <p class="text-h6 mb-2">
+                      تصویر تایید هویت
+                      <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
+                    </p>
                     <vue2-dropzone id="bank_card_id" :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
@@ -429,6 +432,9 @@ export default {
       this.dialog.phoneOtp = false
       this.$bus.$emit('snack', 'احراز اصالت تلفن ثابت با موفقیت انجام شد.', 'success')
     },
+    onGuide() {
+      window.open('https://bitra.market/registerGuide/', '_blank')
+    }
   }
 }
 </script>

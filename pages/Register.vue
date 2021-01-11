@@ -25,7 +25,7 @@
         <div dir="rtl">
           <v-checkbox v-model="terms" :rules="[rules.required]">
             <template v-slot:label>
-              <a class="text-h6" @click="dialog.terms=true">قوانین و شرایط</a>
+              <a class="text-h6" @click="gotoTerms">قوانین و شرایط</a>
               <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
             </template>
           </v-checkbox>
@@ -37,18 +37,6 @@
       <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
       <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
     </v-card-text>
-
-    <v-dialog v-model="dialog.terms" max-width="400">
-      <v-card>
-        <v-card-title>قوانین و شرایط استفاده از خدمات بیترا</v-card-title>
-        <v-card-text>
-          <terms/>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn @click="dialog.terms=false" text color="primary">بله</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </login-reg-card>
 </template>
 
@@ -73,7 +61,6 @@ export default {
       referral_code: this.$route.query.referral_code,
       terms: false,
       l: {reg: false},
-      dialog: {terms: false},
       rules: {
         required: value => !!value || 'الزامی است',
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
@@ -112,6 +99,9 @@ export default {
           this.$bus.$emit('snack', 'رمز عبور با تکرار تطابق ندارد.', 'error')
         }
       }
+    },
+    gotoTerms() {
+      window.open('https://bitra.market/terms/', '_blank')
     }
   }
 }
