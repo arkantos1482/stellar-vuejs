@@ -142,6 +142,7 @@ export default {
     },
     title() {
       return this.user.name
+      // return this.user.name + '  ' + this.user.access_level
     }
   },
   methods: {
