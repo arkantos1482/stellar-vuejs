@@ -7,7 +7,7 @@
         {{ namad }}
       </div>
     </td>
-    <td>{{ balance|toFloat }}&nbsp{{ type.toUpperCase() }}</td>
+    <td>{{ balance|toFloat|separated }}&nbsp{{ type.toUpperCase() }}</td>
     <td>
       <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">
         {{ depositLabel }}

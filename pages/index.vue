@@ -14,9 +14,9 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1">
-            <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
-            <td style="font-size: 1.4rem">{{ item.amount|toFloat }}</td>
-            <td style="font-size: 1.4rem">{{ sellRecordTotal(item) }}</td>
+            <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
+            <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
+            <td style="font-size: 1.4rem">{{ sellRecordTotal(item)|separated }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -57,7 +57,7 @@
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
               <p class="ma-0 grey--text"><span>{{ counterAsset }}</span>
-                {{ balances[counterAsset]|toFloat }}
+                {{ balances[counterAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
             </div>
@@ -78,7 +78,7 @@
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
               <p class="ma-0 grey--text"><span>{{ baseAsset }}</span>
-                {{ balances[baseAsset]|toFloat }}
+                {{ balances[baseAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
             </div>
@@ -109,9 +109,9 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
-            <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
-            <td style="font-size: 1.4rem">{{ buyRecordPrice(item) }}</td>
-            <td style="font-size: 1.4rem">{{ item.amount|toFloat }}</td>
+            <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
+            <td style="font-size: 1.4rem">{{ buyRecordPrice(item)|separated }}</td>
+            <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -130,6 +130,7 @@ import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/pages/OrderTextField";
 import Decimal from "decimal.js-light";
+import {toSeparated} from "@/models/NumberUtil";
 
 export default {
   components: {OrderTextField, ActiveOffers, TradingVue},
@@ -195,12 +196,16 @@ export default {
           .sortBy('price_r.n')
     },
     sellTotal() {
-      if (this.sell.amount)
-        return new Decimal(this.sell.amount).times(this.sell.price)
+      if (this.sell.amount) {
+        const decimal = new Decimal(this.sell.amount).times(this.sell.price);
+        return toSeparated(decimal)
+      }
     },
     buyTotal() {
-      if (this.buy.amount)
-        return new Decimal(this.buy.amount).times(this.buy.price)
+      if (this.buy.amount) {
+        const decimal = new Decimal(this.buy.amount).times(this.buy.price);
+        return toSeparated(decimal)
+      }
     },
   },
   data() {

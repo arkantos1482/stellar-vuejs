@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import {toSeparated} from "@/models/NumberUtil";
 
 Vue.filter('prettyJson', (value) => {
     return JSON.stringify(value, null, 2)
@@ -48,4 +49,8 @@ Vue.filter('toFloat', (val) => {
     } else {
         return ''
     }
+})
+
+Vue.filter('separated', (val) => {
+    return toSeparated(val)
 })

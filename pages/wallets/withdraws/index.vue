@@ -12,7 +12,7 @@
       <tbody>
       <tr v-for="item in withdraws" :key="item.id">
         <td>{{ item.asset_code }}</td>
-        <td>{{ parseFloat(item.amount) }}</td>
+        <td>{{ item.amount|toFloat|separated }}</td>
         <td>{{ item.created_at|toFarsiDate }}</td>
       </tr>
       </tbody>
@@ -25,7 +25,7 @@ import collect from 'collect.js'
 
 export default {
   name: "Withdraws",
-  props: {title: {type: String, default: 'لیست برداشت ها'},type: String},
+  props: {title: {type: String, default: 'لیست برداشت ها'}, type: String},
   data() {
     return {
       withdraws: [],

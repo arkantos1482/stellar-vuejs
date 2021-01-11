@@ -38,6 +38,7 @@
 <script>
 import pstopper from "@/mixins/pstopper";
 import Decimal from "decimal.js-light";
+import {toSeparated} from "@/models/NumberUtil";
 
 export default {
   mixins: [pstopper],
@@ -53,21 +54,21 @@ export default {
     },
     price(item) {
       let price = new Decimal(item.price_r.n).div(item.price_r.d)
-      return price
+      return toSeparated(price)
       // return item.type === 'buy'
       //     ? price + item.buying_asset_code
       //     : price + item.selling_asset_code
     },
     amount(item) {
       let amount = parseFloat(item.amount)
-      return amount
+      return toSeparated(amount)
       // return item.type === 'buy'
       //     ? amount + item.buying_asset_code
       //     : amount + item.selling_asset_code
     },
     total(item) {
       let total = new Decimal(item.amount).times(item.price_r.n).div(item.price_r.d)
-      return total
+      return toSeparated(total)
       // return item.type === 'buy'
       //     ? total + item.buying_asset_code
       //     : total + item.selling_asset_code

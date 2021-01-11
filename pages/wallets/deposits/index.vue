@@ -12,7 +12,7 @@
       <tbody>
       <tr v-for="item in deposits" :key="item.id">
         <td>{{ item.asset_code }}</td>
-        <td>{{ parseFloat(item.amount) }}</td>
+        <td>{{ item.amount|toFloat|separated }}</td>
         <td>{{ item.created_at|toFarsiDate }}</td>
       </tr>
       </tbody>

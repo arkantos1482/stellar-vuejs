@@ -28,6 +28,7 @@
 <script>
 
 import Decimal from "decimal.js-light";
+import {toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: "Trades",
@@ -40,18 +41,18 @@ export default {
     },
     price(item) {
       return item.base_is_seler
-          ? new Decimal(item.price.n).div(item.price.d)
-          : new Decimal(item.price.d).div(item.price.n)
+          ? toSeparated(new Decimal(item.price.n).div(item.price.d))
+          : toSeparated(new Decimal(item.price.d).div(item.price.n))
     },
     amount(item) {
       return item.base_is_seler
-          ? parseFloat(item.base_amount)
-          : parseFloat(item.counter_amount)
+          ? toSeparated(parseFloat(item.base_amount))
+          : toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
       return item.base_is_seler
-          ? new Decimal(item.base_amount).times(item.price.n).div(item.price.d)
-          : new Decimal(item.counter_amount).times(item.price.d).div(item.price.n)
+          ? toSeparated(new Decimal(item.base_amount).times(item.price.n).div(item.price.d))
+          : toSeparated(new Decimal(item.counter_amount).times(item.price.d).div(item.price.n))
     }
   },
 
