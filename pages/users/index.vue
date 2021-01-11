@@ -16,15 +16,18 @@ export default {
   data() {
     return {
       headers: [
+        {text: 'ردیف', value: 'index'},
         {text: 'ایمیل', value: 'email'},
         {text: 'نام', value: 'name'},
         {text: 'نام خانوادگی', value: 'last_name'},
+        {text: 'سطح دسترسی', value: 'access_level'},
         {text: 'موبایل', value: 'cell_phone'}],
       profileList: []
     }
   },
   async mounted() {
-    this.profileList = await this.$axios.$get('/profiles');
+    let list = await this.$axios.$get('/profiles')
+    this.profileList = list.map((item, index) => ({...item, index: index + 1}))
   },
   methods: {
     goto($item) {

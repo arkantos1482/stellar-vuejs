@@ -130,6 +130,9 @@ export default {
     try {
       this.user = await this.$axios.$get('/profiles/me')
       this.$store.commit("auth/profile", this.user)
+      if (this.isAdmin) {
+        await this.$router.push('/Users')
+      }
     } catch (e) {
     }
   },
