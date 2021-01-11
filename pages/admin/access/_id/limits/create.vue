@@ -17,7 +17,7 @@ export default {
     return {
       levelId: this.$route.params.id,
       choices: {
-        resource: ['crypto', 'IRR'],
+        resource: ['CRYPTO', 'IRR'],
         action: ['withdraw', 'deposit'],
         period: ['daily', 'monthly'],
       },
