@@ -15,8 +15,8 @@
           <tbody>
           <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1">
             <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
-            <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
-            <td style="font-size: 1.4rem">{{ parseFloat(parseFloat(item.amount) * offersPrice(item)) }}</td>
+            <td style="font-size: 1.4rem">{{ item.amount|toFloat }}</td>
+            <td style="font-size: 1.4rem">{{ sellRecordTotal(item) }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -110,8 +110,8 @@
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index">
             <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item) }}</td>
-            <td style="font-size: 1.4rem">{{ (parseFloat(item.amount) / offersPrice(item)).toFixed(10)|toFloat }}</td>
-            <td style="font-size: 1.4rem">{{ parseFloat(item.amount) }}</td>
+            <td style="font-size: 1.4rem">{{ buyRecordPrice(item) }}</td>
+            <td style="font-size: 1.4rem">{{ item.amount|toFloat }}</td>
           </tr>
           </tbody>
         </v-simple-table>
@@ -129,6 +129,7 @@ import ActiveOffers from "@/pages/ActiveOffers";
 import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/pages/OrderTextField";
+import Decimal from "decimal.js-light";
 
 export default {
   components: {OrderTextField, ActiveOffers, TradingVue},
@@ -194,11 +195,13 @@ export default {
           .sortBy('price_r.n')
     },
     sellTotal() {
-      return this.sell.amount * this.sell.price
+      if (this.sell.amount)
+        return new Decimal(this.sell.amount).times(this.sell.price)
     },
     buyTotal() {
-      return this.buy.amount * this.buy.price
-    }
+      if (this.buy.amount)
+        return new Decimal(this.buy.amount).times(this.buy.price)
+    },
   },
   data() {
     return {
@@ -319,8 +322,14 @@ export default {
           .all()
       this.$refs.tradingVue.resetChart()
     },
+    sellRecordTotal(item) {
+      return new Decimal(item.amount).times(this.offersPrice(item))
+    },
+    buyRecordPrice(item) {
+      return new Decimal(item.amount).div(this.offersPrice(item))
+    },
     offersPrice(item) {
-      return parseFloat(parseFloat(item.price_r.n / item.price_r.d).toFixed(10))
+      return new Decimal(item.price_r.n).div(item.price_r.d)
     }
   },
   mounted() {
