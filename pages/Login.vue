@@ -27,7 +27,7 @@
         <div class="mt-4 text-h6 grey--text text--darken-1">طراحی نسخه موبایل در دست اقدام است.
           لطفا از نسخه دسکتاپ استفاده نمایید.
         </div>
-        <v-btn text small class="mt-16">متوجه شدم</v-btn>
+        <v-btn text small class="mt-16" @click="notDesktopAlert = !notDesktopAlert">متوجه شدم</v-btn>
       </v-card>
     </v-dialog>
   </div>
