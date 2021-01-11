@@ -6,7 +6,7 @@
                :src="type|toCoinIcon"/>
       </template>
     </v-text-field>
-    <v-text-field dense outlined readonly :suffix="balance|toFloat" placeholder="موجودی"/>
+    <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"/>
   </div>
 </template>
 <script>

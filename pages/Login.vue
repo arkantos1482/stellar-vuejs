@@ -1,24 +1,36 @@
 <template>
-  <login-reg-card title="ورود به حساب کاربری">
-    <v-card-text dir="ltr">
-      <v-form @submit.prevent="login" v-model="form" ref="form">
-        <a-text-field :rules="[rules.required]" eng class="a-field" v-model="email" label="ایمیل"/>
-        <a-text-field :rules="[rules.required]" eng v-model="password" label="رمز عبور"
-                      :type="showPass ? 'text' : 'password'">
-          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-          </v-icon>
-        </a-text-field>
-        <v-btn type="submit" :loading="l.login"
-               block color="primary" class="mt-12">تایید
-        </v-btn>
-      </v-form>
-      <v-row justify="space-between" dense class="mt-2">
-        <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
-        <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
-      </v-row>
-    </v-card-text>
-  </login-reg-card>
+  <div>
+    <login-reg-card title="ورود به حساب کاربری">
+      <v-card-text dir="ltr">
+        <v-form @submit.prevent="login" v-model="form" ref="form">
+          <a-text-field :rules="[rules.required]" eng class="a-field" v-model="email" label="ایمیل"/>
+          <a-text-field :rules="[rules.required]" eng v-model="password" label="رمز عبور"
+                        :type="showPass ? 'text' : 'password'">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </a-text-field>
+          <v-btn type="submit" :loading="l.login"
+                 block color="primary" class="mt-12">تایید
+          </v-btn>
+        </v-form>
+        <v-row justify="space-between" dense class="mt-2">
+          <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
+          <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
+        </v-row>
+      </v-card-text>
+    </login-reg-card>
+
+    <v-dialog v-model="notDesktopAlert">
+      <v-card class="pt-12 pb-8 px-8 text-center" elevation=2>
+        <div class="text-h3">توجه</div>
+        <div class="mt-4 text-h6 grey--text text--darken-1">طراحی نسخه موبایل در دست اقدام است.
+          لطفا از نسخه دسکتاپ استفاده نمایید.
+        </div>
+        <v-btn text small class="mt-16">متوجه شدم</v-btn>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -30,6 +42,11 @@ export default {
   components: {LoginRegCard, ATextField},
   mixins: [captcha],
   layout: 'noToolbar',
+  computed: {
+    notDesktopAlert() {
+      return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+    }
+  },
   data() {
     return {
       form: false,

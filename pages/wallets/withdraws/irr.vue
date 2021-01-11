@@ -29,6 +29,7 @@ import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import CryptoUpper from "@/components/CryptoUpper";
+import {toSeparated} from "@/models/NumberUtil";
 
 export default {
   mixins: [ps],
@@ -56,8 +57,8 @@ export default {
     this.$store.dispatch('addresses/refresh')
     this.$axios.$post('/access/limits/remained', {resource: 'irr'})
         .then(res => {
-          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? res.daily_rem_usage + 'ریال' : 'نامحدود'
-          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? res.monthly_rem_usage + 'ریال' : 'نامحدود'
+          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'ریال' : 'نامحدود'
+          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'ریال' : 'نامحدود'
         })
   },
   methods: {
