@@ -64,7 +64,8 @@
 
             <v-form v-model="buyForm" @submit.prevent="doBuy">
               <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
-              <order-text-field v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
+              <order-text-field :rules="[rules.buyWalletExist]"
+                                v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
               <order-text-field :rules="[rules.buySufficient]"
                                 class="mt-6" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset"/>
@@ -84,7 +85,8 @@
             </div>
 
             <v-form v-model="sellForm" @submit.prevent="doSell">
-              <order-text-field v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
+              <order-text-field :rules="[rules.sellWalletExist]"
+                                v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
               <order-text-field :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
               <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
@@ -235,7 +237,9 @@ export default {
       rules: {
         required: value => !!value || 'الزامی است',
         buySufficient: value => this.balances[this.counterAsset] >= this.buyTotal || 'اعتبار ناکافی',
+        buyWalletExist: value => this.balances[this.baseAsset] || 'کیف پول ساخته نشده است',
         sellSufficient: value => this.balances[this.baseAsset] >= this.sell.amount || 'اعتبار ناکافی',
+        sellWalletExist: value => this.balances[this.counterAsset] || 'کیف پول ساخته نشده است',
       },
       tradeData: {
         chart: {

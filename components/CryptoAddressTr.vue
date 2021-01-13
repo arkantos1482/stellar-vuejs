@@ -40,8 +40,8 @@ export default {
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
-      // return 'BCH' === type || 'AMN' === type || 'EBG' === type
-      return false
+      return 'USDT' === type || 'ETH' === type
+      // return false
     },
     withdrawLabel() {
       const type = this.type.toUpperCase();
