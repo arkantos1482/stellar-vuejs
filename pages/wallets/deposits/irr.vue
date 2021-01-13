@@ -36,7 +36,7 @@ export default {
       v: {deposit: false},
       rules: {
         required: value => !!value || 'الزامی است',
-        moreThanBillion: value => !!value && parseFloat(value) >= 1000 || 'حداقل باید بیشتر از ۱ میلیون ریال باشد'
+        moreThanBillion: value => !!value && parseFloat(value) >= 1000 * 1000 || 'حداقل باید بیشتر از ۱ میلیون ریال باشد'
       },
       type: 'IRR',
       amount: '',
