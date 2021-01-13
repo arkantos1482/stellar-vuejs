@@ -131,8 +131,7 @@ import ActiveOffers from "@/pages/ActiveOffers";
 import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/pages/OrderTextField";
-import Decimal from "decimal.js-light";
-import {toSeparated} from "@/models/NumberUtil";
+import {safeDecimal} from "@/models/NumberUtil";
 
 export default {
   components: {OrderTextField, ActiveOffers, TradingVue},
@@ -198,16 +197,10 @@ export default {
           .sortBy('price_r.n')
     },
     sellTotal() {
-      if (this.sell.amount) {
-        const decimal = new Decimal(this.sell.amount).times(this.sell.price);
-        return toSeparated(decimal)
-      }
+      return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
     },
     buyTotal() {
-      if (this.buy.amount) {
-        const decimal = new Decimal(this.buy.amount).times(this.buy.price);
-        return toSeparated(decimal)
-      }
+      return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
     },
   },
   data() {
@@ -236,10 +229,10 @@ export default {
       buyForm: false,
       rules: {
         required: value => !!value || 'الزامی است',
-        buySufficient: value => this.balances[this.counterAsset] >= this.buyTotal || 'اعتبار ناکافی',
-        buyWalletExist: value => this.balances[this.baseAsset] || 'کیف پول ساخته نشده است',
-        sellSufficient: value => this.balances[this.baseAsset] >= this.sell.amount || 'اعتبار ناکافی',
-        sellWalletExist: value => this.balances[this.counterAsset] || 'کیف پول ساخته نشده است',
+        buySufficient: value => this.balances[this.counterAsset]?.gte(safeDecimal(this.buyTotal)) || 'اعتبار ناکافی',
+        buyWalletExist: value => !!this.balances[this.baseAsset] || 'کیف پول ساخته نشده است',
+        sellSufficient: value => this.balances[this.baseAsset]?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
+        sellWalletExist: value => !!this.balances[this.counterAsset] || 'کیف پول ساخته نشده است',
       },
       tradeData: {
         chart: {
@@ -332,13 +325,13 @@ export default {
       this.$refs.tradingVue.resetChart()
     },
     sellRecordTotal(item) {
-      return new Decimal(item.amount).times(this.offersPrice(item))
+      return safeDecimal(item.amount).times(this.offersPrice(item))
     },
     buyRecordPrice(item) {
-      return new Decimal(item.amount).div(this.offersPrice(item))
+      return safeDecimal(item.amount).div(this.offersPrice(item))
     },
     offersPrice(item) {
-      return new Decimal(item.price_r.n).div(item.price_r.d)
+      return safeDecimal(item.price_r.n).div(item.price_r.d)
     }
   },
   mounted() {
