@@ -63,7 +63,7 @@
             </div>
 
             <v-form v-model="buyForm" @submit.prevent="doBuy">
-              <order-text-field v-model="buy.price" prepend="قیمت" :append="counterAsset"/>
+              <order-text-field v-model="buy.price" prepend="قیمت"/>
               <order-text-field :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
               <order-text-field :rules="[rules.buySufficient]"
@@ -86,7 +86,7 @@
 
             <v-form v-model="sellForm" @submit.prevent="doSell">
               <order-text-field :rules="[rules.sellWalletExist]"
-                                v-model="sell.price" prepend="قیمت" :append="counterAsset"/>
+                                v-model="sell.price" prepend="قیمت"/>
               <order-text-field :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
               <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
