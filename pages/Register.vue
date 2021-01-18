@@ -2,11 +2,11 @@
   <login-reg-card title="ایجاد حساب کاربری"
                   subtitle="به بیترا خوش آمدید">
     <v-card-text>
-<!--      <v-tabs>-->
-<!--        <v-tab>حقیقی</v-tab>-->
-<!--        <v-tab>حقوقی</v-tab>-->
-<!--      </v-tabs>-->
-<!--      <v-divider/>-->
+      <!--      <v-tabs>-->
+      <!--        <v-tab>حقیقی</v-tab>-->
+      <!--        <v-tab>حقوقی</v-tab>-->
+      <!--      </v-tabs>-->
+      <!--      <v-divider/>-->
       <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
         <a-text-field eng :rules="[rules.required, rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
         <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
@@ -21,7 +21,8 @@
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
-        <a-text-field eng filled label="کد معرف(اختیاری)" v-model="referral_code"/>
+        <a-text-field :disabled="hasReferral"
+                      eng filled label="کد معرف(اختیاری)" v-model="referral_code"/>
         <div dir="rtl">
           <v-checkbox v-model="terms" :rules="[rules.required]">
             <template v-slot:label>
@@ -51,6 +52,11 @@ export default {
   components: {ATextField, LoginRegCard, Terms},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
+  computed: {
+    hasReferral() {
+      return !!this.$route.query.referral_code
+    }
+  },
   data() {
     return {
       form: false,
