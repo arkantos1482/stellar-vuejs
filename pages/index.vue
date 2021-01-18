@@ -13,7 +13,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1">
+          <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1"
+              @click="select('sell',item)">
             <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
             <td style="font-size: 1.4rem">{{ sellRecordTotal(item)|separated }}</td>
@@ -110,7 +111,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in buyOffers" :key="index">
+          <tr v-for="(item,index) in buyOffers" :key="index"
+              @click="select('buy',item)">
             <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ buyRecordPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
@@ -332,6 +334,15 @@ export default {
     },
     offersPrice(item) {
       return safeDecimal(item.price_r.n).div(item.price_r.d)
+    },
+    select(action, item) {
+      if (action === 'sell') {
+        this.sell.price = this.offersPrice(item)
+        this.sell.amount = parseFloat(item.amount)
+      } else if (action === 'buy') {
+        this.buy.price = this.offersPrice(item)
+        this.buy.amount = this.buyRecordPrice(item)
+      }
     }
   },
   mounted() {
