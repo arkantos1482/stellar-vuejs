@@ -71,7 +71,7 @@
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
-                <span>{{ sellBestPrice }}</span></p>
+                <span>{{ sellBestPrice|toFloat|separated }}</span></p>
               <order-text-field :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset"/>
@@ -99,7 +99,7 @@
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
-                <span>{{ buyBestPrice }}</span></p>
+                <span>{{ buyBestPrice|toFloat|separated }}</span></p>
               <order-text-field class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset"/>
               <v-btn depressed small class="white--text mt-8 py-4" block color="error"
@@ -230,7 +230,8 @@ export default {
         } catch (e) {
           percent = 0
         }
-        return parseInt(percent)
+        // return more than 100, cause it to call set 100
+        return parseInt(percent > 100 ? 100 : percent)
       },
       set(val) {
         try {
@@ -247,7 +248,8 @@ export default {
         } catch (e) {
           percent = 0
         }
-        return parseInt(percent)
+        // return more than 100, cause it to call set 100
+        return parseInt(percent > 100 ? 100 : percent)
       },
       set(val) {
         try {
