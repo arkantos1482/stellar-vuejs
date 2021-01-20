@@ -1,10 +1,10 @@
 <template>
   <v-row justify="center">
     <v-col cols="9">
-      <v-carousel cycle height="400">
-        <v-carousel-item :src="docs.ssn"/>
-        <v-carousel-item :src="docs.bill"/>
-        <v-carousel-item :src="docs.bank_card"/>
+      <v-carousel height="400" >
+        <v-carousel-item contain :src="docs.ssn"/>
+        <v-carousel-item contain :src="docs.bill"/>
+        <v-carousel-item contain :src="docs.bank_card"/>
       </v-carousel>
 
       <h2 class="mt-8">مشخصات استعلامی</h2>
