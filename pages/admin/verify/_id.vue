@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="9">
-      <v-carousel height="400" >
+      <v-carousel >
         <v-carousel-item contain :src="docs.ssn"/>
         <v-carousel-item contain :src="docs.bill"/>
         <v-carousel-item contain :src="docs.bank_card"/>
