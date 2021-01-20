@@ -14,7 +14,7 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1"
-              @click="select('sell',item)">
+              @click="select('buy',item)">
             <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
             <td style="font-size: 1.4rem">{{ sellRecordTotal(item)|separated }}</td>
@@ -57,7 +57,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p class="ma-0 grey--text"><span>{{ counterAsset }}</span>
+              <p @click="buyPercent=100" class="ma-0 grey--text"><span>{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
@@ -67,8 +67,13 @@
               <order-text-field v-model="buy.price" prepend="قیمت"/>
               <order-text-field :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
+              <v-slider color="accent" track-color="accent lighten-4" class="mt-4"
+                        v-model="buyPercent"
+                        min="0" thumb-label/>
+              <p @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
+                <span>{{ sellBestPrice }}</span></p>
               <order-text-field :rules="[rules.buySufficient]"
-                                class="mt-6" readonly :value="buyTotal" prepend="مجموع"
+                                class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset"/>
               <v-btn depressed small class="white--text mt-8 py-4" block color="success"
                      type="submit" :loading="l.buy">خرید
@@ -79,7 +84,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p class="ma-0 grey--text"><span>{{ baseAsset }}</span>
+              <p @click="sellPercent=100" class="ma-0 grey--text"><span>{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
@@ -90,7 +95,12 @@
                                 v-model="sell.price" prepend="قیمت"/>
               <order-text-field :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
-              <order-text-field class="mt-6" readonly :value="sellTotal" prepend="مجموع"
+              <v-slider color="accent" track-color="accent lighten-4"
+                        v-model="sellPercent"
+                        min="0" thumb-label/>
+              <p @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
+                <span>{{ buyBestPrice }}</span></p>
+              <order-text-field class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset"/>
               <v-btn depressed small class="white--text mt-8 py-4" block color="error"
                      type="submit" :loading="l.sell">فروش
@@ -112,7 +122,7 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index"
-              @click="select('buy',item)">
+              @click="select('sell',item)">
             <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ buyRecordPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
@@ -198,12 +208,54 @@ export default {
       return collect(this.offers.asks)
           .sortBy('price_r.n')
     },
+    buyBestPrice() {
+      if (this.buyOffers.isNotEmpty())
+        return this.offersPrice(this.buyOffers.first())
+    },
+    sellBestPrice() {
+      if (this.sellOffers.isNotEmpty())
+        return this.offersPrice(this.sellOffers.first())
+    },
     sellTotal() {
       return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
     },
     buyTotal() {
       return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
     },
+    buyPercent: {
+      get() {
+        let percent
+        try {
+          percent = safeDecimal(this.buyTotal).times(100).div(this.balances[this.counterAsset])
+        } catch (e) {
+          percent = 0
+        }
+        return parseInt(percent)
+      },
+      set(val) {
+        try {
+          this.buy.amount = safeDecimal(this.balances[this.counterAsset]).times(val).div(100).div(this.buy.price)
+        } catch (e) {
+        }
+      }
+    },
+    sellPercent: {
+      get() {
+        let percent
+        try {
+          percent = safeDecimal(this.sell.amount).times(100).div(this.balances[this.baseAsset])
+        } catch (e) {
+          percent = 0
+        }
+        return parseInt(percent)
+      },
+      set(val) {
+        try {
+          this.sell.amount = safeDecimal(this.balances[this.baseAsset]).times(val).div(100)
+        } catch (e) {
+        }
+      }
+    }
   },
   data() {
     return {
