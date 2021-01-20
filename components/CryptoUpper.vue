@@ -6,12 +6,19 @@
                :src="type|toCoinIcon"/>
       </template>
     </v-text-field>
-    <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"/>
+    <div @click="emitBalance">
+      <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"/>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: 'crypto-upper',
-  props: ['balance', 'type']
+  props: ['balance', 'type'],
+  methods: {
+    emitBalance() {
+      this.$emit('balanceClick', this.balance)
+    }
+  }
 }
 </script>
