@@ -390,10 +390,10 @@ export default {
     select(action, item) {
       if (action === 'sell') {
         this.sell.price = this.offersPrice(item)
-        this.sell.amount = parseFloat(item.amount)
+        this.sell.amount = this.buyRecordPrice(item)
       } else if (action === 'buy') {
         this.buy.price = this.offersPrice(item)
-        this.buy.amount = this.buyRecordPrice(item)
+        this.buy.amount = parseFloat(item.amount)
       }
     }
   },
