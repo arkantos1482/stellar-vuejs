@@ -8,8 +8,8 @@
         <th class="text-center">مقدار</th>
         <th class="text-center">زمان</th>
         <th class="text-center">وضعیت</th>
-        <th class="text-center">توضیحات</th>
         <th class="text-center">آدرس برداشت کننده</th>
+        <th class="text-center">توضیحات</th>
       </tr>
       </thead>
       <tbody>
@@ -18,10 +18,13 @@
         <td>{{ item.amount|toFloat|separated }}</td>
         <td>{{ item.updated_at|toFarsiDate }}</td>
         <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
-        <td>
-          <a v-show="item.track_code" :href="item.track_code ">لینک پیگیری</a>
-        </td>
         <td>{{ item.destination }}</td>
+        <td>
+          <div v-show="item.track_code">
+            <p v-if="item.coin === 'IRR'">{{ item.track_code }}کد رهگیری= </p>
+            <a v-else :href="item.track_code" target="_blank">لینک پیگیری</a>
+          </div>
+        </td>
       </tr>
       </tbody>
     </v-simple-table>

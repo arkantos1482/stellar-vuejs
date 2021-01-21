@@ -18,7 +18,8 @@
         <td>{{ item.updated_at|toFarsiDate }}</td>
         <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
         <td>
-          <a v-show="item.track_code" :href="item.track_code ">لینک پیگیری</a>
+          <p v-if="item.coin === 'IRR'">{{ 'کد رهگیری= ' + item.track_code }}</p>
+          <a v-else v-show="item.track_code" :href="item.track_code" target="_blank">لینک پیگیری</a>
         </td>
       </tr>
       </tbody>
