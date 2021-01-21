@@ -7,13 +7,21 @@
         <th class="text-center">رمزارز</th>
         <th class="text-center">مقدار</th>
         <th class="text-center">زمان</th>
+        <th class="text-center">وضعیت</th>
+        <th class="text-center">توضیحات</th>
+        <th class="text-center">آدرس برداشت کننده</th>
       </tr>
       </thead>
       <tbody>
       <tr v-for="item in withdraws" :key="item.id">
-        <td>{{ item.asset_code }}</td>
+        <td>{{ item.coin }}</td>
         <td>{{ item.amount|toFloat|separated }}</td>
-        <td>{{ item.created_at|toFarsiDate }}</td>
+        <td>{{ item.updated_at|toFarsiDate }}</td>
+        <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
+        <td>
+          <a v-show="item.track_code" :href="item.track_code ">لینک پیگیری</a>
+        </td>
+        <td>{{ item.destination }}</td>
       </tr>
       </tbody>
     </v-simple-table>
@@ -26,6 +34,14 @@ import collect from 'collect.js'
 export default {
   name: "Withdraws",
   props: {title: {type: String, default: 'لیست برداشت ها'}, type: String},
+  filters: {
+    toFarsiTitle(val) {
+      return (val === 'success') ? 'موفقیت آمیز' : 'ناموفق'
+    },
+    toFarsiColor(val) {
+      return (val === 'success') ? 'success--text' : 'error--text'
+    }
+  },
   data() {
     return {
       withdraws: [],
@@ -33,9 +49,8 @@ export default {
     }
   },
   async mounted() {
-    let list1 = (await this.$axios.$get('/effects'))._embedded.records;
+    let list1 = (await this.$axios.$get('/reports/withdraws'))
     let list2 = collect(list1)
-        .filter(item => item.type === 'account_debited')
     if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.asset_code)
     this.withdraws = list2.all()
   }
