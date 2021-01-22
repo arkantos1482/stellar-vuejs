@@ -46,12 +46,12 @@ export default {
     },
     amount(item) {
       return item.base_is_seller
-          ? toSeparated(parseFloat(item.base_amount))
+          ? toSeparated(new Decimal(item.base_amount).times(item.price.n).div(item.price.d))
           : toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
       return item.base_is_seller
-          ? toSeparated(new Decimal(item.base_amount).times(item.price.n).div(item.price.d))
+          ? toSeparated(parseFloat(item.base_amount))
           : toSeparated(new Decimal(item.counter_amount).times(item.price.d).div(item.price.n))
     },
     fee(item) {
