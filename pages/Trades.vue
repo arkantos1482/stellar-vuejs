@@ -14,7 +14,7 @@
       </thead>
       <tbody>
       <tr v-for="item in trades" :key="item.id">
-        <td>{{ item.base_is_seller|toFarsiSellOrBuy }}</td>
+        <td :class="item.base_is_seller|toColor">{{ item.base_is_seller|toFarsiSellOrBuy }}</td>
         <td>{{ item|cryptoPair }}</td>
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
@@ -36,6 +36,9 @@ export default {
   name: "Trades",
   filters: {
     toFarsiSellOrBuy: (val) => val ? 'فروش' : 'خرید',
+    toColor(val) {
+      return val ? 'error--text' : 'success--text'
+    },
     cryptoPair(item) {
       return item.counter_asset_code + '/' + item.base_asset_code
     },
@@ -49,11 +52,13 @@ export default {
       return toSeparated(parseFloat(item.base_amount))
     },
     fee(item) {
-      if (item.base_is_seller && item.counter_asset_code !== 'IRR') {
-        return item.base_is_seller
-            ? toSeparated(parseFloat(0.002 * item.base_amount))
-            : toSeparated(parseFloat(0.002 * item.counter_amount))
+      if ((item.base_is_seller && item.base_asset_code === 'IRR')
+          || (!item.base_is_seller && item.counter_asset_code === 'IRR')) {
+        return
       }
+      return item.base_is_seller
+          ? toSeparated(parseFloat(0.002 * item.base_amount))
+          : toSeparated(parseFloat(0.002 * item.counter_amount))
     },
   },
 
