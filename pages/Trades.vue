@@ -8,6 +8,7 @@
         <th class="text-center">قیمت</th>
         <th class="text-center">مقدار</th>
         <th class="text-center">مجموع</th>
+        <th class="text-center">کارمزد</th>
         <th class="text-center">تاریخ</th>
       </tr>
       </thead>
@@ -18,6 +19,7 @@
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
         <td>{{ item|total }}</td>
+        <td>{{ item|fee }}</td>
         <td>{{ item.ledger_close_time|toFarsiDate }}</td>
       </tr>
       </tbody>
@@ -35,25 +37,32 @@ export default {
   filters: {
     toFarsiSellOrBuy: (val) => val ? 'فروش' : 'خرید',
     cryptoPair(item) {
-      return item.base_is_seler
+      return item.base_is_seller
           ? item.base_asset_code + '/' + item.counter_asset_code
           : item.counter_asset_code + '/' + item.base_asset_code
     },
     price(item) {
-      return item.base_is_seler
+      return item.base_is_seller
           ? toSeparated(new Decimal(item.price.n).div(item.price.d))
           : toSeparated(new Decimal(item.price.d).div(item.price.n))
     },
     amount(item) {
-      return item.base_is_seler
+      return item.base_is_seller
           ? toSeparated(parseFloat(item.base_amount))
           : toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
-      return item.base_is_seler
+      return item.base_is_seller
           ? toSeparated(new Decimal(item.base_amount).times(item.price.n).div(item.price.d))
           : toSeparated(new Decimal(item.counter_amount).times(item.price.d).div(item.price.n))
-    }
+    },
+    fee(item) {
+      if (item.base_is_seller && item.counter_asset_code !== 'IRR') {
+        return item.base_is_seller
+            ? toSeparated(parseFloat(0.002 * item.base_amount))
+            : toSeparated(parseFloat(0.002 * item.counter_amount))
+      }
+    },
   },
 
   data() {
