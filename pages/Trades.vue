@@ -14,13 +14,13 @@
       </thead>
       <tbody>
       <tr v-for="item in trades" :key="item.id">
-        <td :class="item.base_is_seller|toColor">{{ item.base_is_seller|toFarsiSellOrBuy }}</td>
+        <td :class="item|toColor">{{ item|toFarsiSellOrBuy }}</td>
         <td>{{ item|cryptoPair }}</td>
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
         <td>{{ item|total }}</td>
         <td>{{ item|fee }}</td>
-        <td>{{ item.ledger_close_time|toFarsiDate }}</td>
+        <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
       </tr>
       </tbody>
     </v-simple-table>
@@ -35,15 +35,15 @@ import {toSeparated} from "@/models/NumberUtil";
 export default {
   name: "Trades",
   filters: {
-    toFarsiSellOrBuy: (val) => val ? 'خرید' : 'فروش',
+    toFarsiSellOrBuy: (val) => val.op_type === 'buy' ? 'خرید' : 'فروش',
     toColor(val) {
-      return val ? 'success--text' : 'error--text'
+      return val.op_type === 'buy' ? 'success--text' : 'error--text'
     },
     cryptoPair(item) {
       return item.counter_asset_code + '/' + item.base_asset_code
     },
     price(item) {
-      return toSeparated(new Decimal(item.price.d).div(item.price.n))
+      return toSeparated(new Decimal(item.price_d).div(item.price_n))
     },
     amount(item) {
       return toSeparated(parseFloat(item.counter_amount))
@@ -68,7 +68,7 @@ export default {
     }
   },
   async mounted() {
-    this.trades = (await this.$axios.$get('/trades'))._embedded.records
+    this.trades = (await this.$axios.$get('/trades'))
     // let list = (await this.$axios.$get('/effects'))._embedded.records;
     // this.trades = collect(list)
     //     .filter(item => item.type === 'trade')
