@@ -35,9 +35,9 @@ import {toSeparated} from "@/models/NumberUtil";
 export default {
   name: "Trades",
   filters: {
-    toFarsiSellOrBuy: (val) => val ? 'فروش' : 'خرید',
+    toFarsiSellOrBuy: (val) => val ? 'خرید' : 'فروش',
     toColor(val) {
-      return val ? 'error--text' : 'success--text'
+      return val ? 'success--text' : 'error--text'
     },
     cryptoPair(item) {
       return item.counter_asset_code + '/' + item.base_asset_code
