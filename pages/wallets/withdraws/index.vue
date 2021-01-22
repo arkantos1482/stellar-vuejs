@@ -54,7 +54,7 @@ export default {
   async mounted() {
     let list1 = (await this.$axios.$get('/reports/withdraws'))
     let list2 = collect(list1)
-    if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.asset_code)
+    if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.coin)
     this.withdraws = list2.all()
   }
 }

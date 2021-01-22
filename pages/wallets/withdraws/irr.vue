@@ -2,7 +2,7 @@
   <div class="d-flex align-items-stretch mt-12">
 
     <a-card class="ml-4 py-8" width="45%" title="برداشت">
-      <crypto-upper :balance="balance" :type="type"/>
+      <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
       <p class="text-display-2 ma-0">
         باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
       </p>
@@ -82,6 +82,9 @@ export default {
         }
       }
     },
+    onBalanceClicked(event) {
+      this.amount = event
+    }
   }
 }
 </script>
