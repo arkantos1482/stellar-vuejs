@@ -40,19 +40,13 @@ export default {
       return item.counter_asset_code + '/' + item.base_asset_code
     },
     price(item) {
-      return item.base_is_seller
-          ? toSeparated(new Decimal(item.price.n).div(item.price.d))
-          : toSeparated(new Decimal(item.price.d).div(item.price.n))
+      return toSeparated(new Decimal(item.price.d).div(item.price.n))
     },
     amount(item) {
-      return item.base_is_seller
-          ? toSeparated(new Decimal(item.base_amount).times(item.price.n).div(item.price.d))
-          : toSeparated(parseFloat(item.counter_amount))
+      return toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
-      return item.base_is_seller
-          ? toSeparated(parseFloat(item.base_amount))
-          : toSeparated(new Decimal(item.counter_amount).times(item.price.d).div(item.price.n))
+      return toSeparated(parseFloat(item.base_amount))
     },
     fee(item) {
       if (item.base_is_seller && item.counter_asset_code !== 'IRR') {
