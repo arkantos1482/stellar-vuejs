@@ -52,13 +52,13 @@ export default {
       return toSeparated(parseFloat(item.base_amount))
     },
     fee(item) {
-      if ((item.base_is_seller && item.base_asset_code === 'IRR')
-          || (!item.base_is_seller && item.counter_asset_code === 'IRR')) {
+      if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
+          || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
         return
       }
-      return item.base_is_seller
-          ? toSeparated(parseFloat(0.002 * item.base_amount))
-          : toSeparated(parseFloat(0.002 * item.counter_amount))
+      return item.op_type === 'buy'
+          ? toSeparated(parseFloat(0.002 * item.counter_amount))
+          : toSeparated(parseFloat(0.002 * item.base_amount))
     },
   },
 
