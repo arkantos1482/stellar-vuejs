@@ -23,7 +23,8 @@
     url("~assets/font/iransans/ttf/IRANSansWeb\(FaNum\).ttf") format("truetype"),
     url("//db.onlinewebfonts.com/t/3967f8bfcdf02e2b966e2f252738ddca.svg#IRANSans") format("svg");
 }
-.eng.ef1.ef2{
+
+.eng.ef1.ef2 {
     font-family: sans-serif !important;
 }
 
@@ -41,9 +42,10 @@ a, p {
 }
 
 /*selector collapse font color*/
-.v-select__selection{
+.v-select__selection {
     color: #0074ff !important;
 }
+
 /*selector collapse icon color*/
 .v-select .v-icon.mdi.mdi-menu-down {
     color: #0074ff !important;
@@ -93,7 +95,10 @@ a, p {
 
 .v-text-field fieldset {
     border: 1px solid #ccc !important;
+}
 
+.pointer {
+    cursor: pointer;
 }
 
 /*@font-face {*/

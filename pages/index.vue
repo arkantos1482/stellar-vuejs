@@ -13,7 +13,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(item,index) in sellOffers" :key="index" class="text-body-1"
+          <tr v-for="(item,index) in sellOffers" :key="index" class="pointer text-body-1"
               @click="select('buy',item)">
             <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
@@ -57,7 +57,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="buyPercent=100" class="ma-0 grey--text"><span>{{ counterAsset }}</span>
+              <p @click="buyPercent=100" class="pointer ma-0 grey--text"><span>{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
@@ -70,7 +70,7 @@
               <v-slider color="accent" track-color="accent lighten-4" class="mt-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
-              <p @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
+              <p class="pointer" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
               <order-text-field :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
@@ -84,7 +84,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="sellPercent=100" class="ma-0 grey--text"><span>{{ baseAsset }}</span>
+              <p @click="sellPercent=100" class="pointer ma-0 grey--text"><span>{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat|separated }}
                 <v-icon>mdi-wallet-outline</v-icon>
               </p>
@@ -98,7 +98,7 @@
               <v-slider color="accent" track-color="accent lighten-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
-              <p @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
+              <p class="pointer" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
               <order-text-field class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset"/>
@@ -122,6 +122,7 @@
           </thead>
           <tbody>
           <tr v-for="(item,index) in buyOffers" :key="index"
+              class="pointer text-body-1"
               @click="select('sell',item)">
             <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ buyRecordPrice(item)|separated }}</td>

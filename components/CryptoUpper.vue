@@ -7,7 +7,8 @@
       </template>
     </v-text-field>
     <div @click="emitBalance">
-      <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"/>
+      <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"
+                    style="cursor: pointer"/>
     </div>
   </div>
 </template>
@@ -22,3 +23,8 @@ export default {
   }
 }
 </script>
+<style>
+.v-text-field__prefix, .v-text-field__suffix {
+  cursor: pointer;
+}
+</style>
