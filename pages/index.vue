@@ -55,7 +55,7 @@
 
         <div class="d-flex justify-center text-display-1">
           <v-col cols="6" class="px-2 py-0">
-            <div class="d-flex justify-space-between">
+            <div class="d-flex justify-space-between px-2">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
               <p @click="buyPercent=100" class="pointer ma-0 primary--text"><span>{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat|separated }}
@@ -63,26 +63,26 @@
               </p>
             </div>
 
-            <v-form v-model="buyForm" @submit.prevent="doBuy">
+            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3">
               <order-text-field v-model="buy.price" prepend="قیمت"/>
-              <order-text-field :rules="[rules.buyWalletExist]"
+              <order-text-field class="mt-n4" :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
-              <v-slider color="accent" track-color="accent lighten-4"
+              <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
-              <p class="pointer" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
+              <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
               <order-text-field :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset"/>
-              <v-btn depressed small class="white--text mt-8 py-4" block color="success"
+              <v-btn depressed small class="white--text py-4 mt-n3" block color="success"
                      type="submit" :loading="l.buy">خرید
               </v-btn>
             </v-form>
           </v-col>
 
           <v-col cols="6" class="px-2 py-0">
-            <div class="d-flex justify-space-between">
+            <div class="d-flex justify-space-between px-2">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
               <p @click="sellPercent=100" class="pointer ma-0 primary--text"><span>{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat|separated }}
@@ -90,19 +90,19 @@
               </p>
             </div>
 
-            <v-form v-model="sellForm" @submit.prevent="doSell">
+            <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3">
               <order-text-field :rules="[rules.sellWalletExist]"
                                 v-model="sell.price" prepend="قیمت"/>
-              <order-text-field :rules="[rules.sellSufficient]"
+              <order-text-field class="mt-n4" :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
-              <v-slider color="accent" track-color="accent lighten-4"
+              <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
-              <p class="pointer" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
+              <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
               <order-text-field class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset"/>
-              <v-btn depressed small class="white--text mt-8 py-4" block color="error"
+              <v-btn depressed small class="white--text py-4 mt-n3" block color="error"
                      type="submit" :loading="l.sell">فروش
               </v-btn>
             </v-form>
@@ -143,7 +143,7 @@ import collect from "collect.js";
 import ActiveOffers from "@/pages/ActiveOffers";
 import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
-import OrderTextField from "@/pages/OrderTextField";
+import OrderTextField from "@/components/OrderTextField";
 import {safeDecimal} from "@/models/NumberUtil";
 
 export default {
