@@ -57,9 +57,9 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="buyPercent=100" class="pointer ma-0 grey--text"><span>{{ counterAsset }}</span>
+              <p @click="buyPercent=100" class="pointer ma-0 primary--text"><span>{{ counterAsset }}</span>
                 {{ balances[counterAsset]|toFloat|separated }}
-                <v-icon>mdi-wallet-outline</v-icon>
+                <v-icon color="primary">mdi-wallet-outline</v-icon>
               </p>
             </div>
 
@@ -67,7 +67,7 @@
               <order-text-field v-model="buy.price" prepend="قیمت"/>
               <order-text-field :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
-              <v-slider color="accent" track-color="accent lighten-4" class="mt-4"
+              <v-slider color="accent" track-color="accent lighten-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p class="pointer" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
@@ -84,9 +84,9 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="sellPercent=100" class="pointer ma-0 grey--text"><span>{{ baseAsset }}</span>
+              <p @click="sellPercent=100" class="pointer ma-0 primary--text"><span>{{ baseAsset }}</span>
                 {{ balances[baseAsset]|toFloat|separated }}
-                <v-icon>mdi-wallet-outline</v-icon>
+                <v-icon color="primary">mdi-wallet-outline</v-icon>
               </p>
             </div>
 

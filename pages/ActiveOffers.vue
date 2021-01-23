@@ -15,7 +15,7 @@
         </thead>
         <tbody>
         <tr v-for="(item,idx) in offers" :key="idx">
-          <td>{{ item.type|toFarsi }}</td>
+          <td :class="item|toColor">{{ item|toFarsi }}</td>
           <td>{{ item|cryptoPair }}</td>
           <td>{{ item|price }}</td>
           <td>{{ item|amount }}</td>
@@ -45,7 +45,10 @@ export default {
   name: 'ActiveOffers',
   filters: {
     toFarsi(val) {
-      return val === 'buy' ? 'خرید' : 'فروش'
+      return val.type === 'buy' ? 'خرید' : 'فروش'
+    },
+    toColor(val) {
+      return val.type === 'buy' ? 'success--text' : 'error--text'
     },
     cryptoPair(item) {
       return item.type === 'buy'
