@@ -54,7 +54,7 @@ export default {
     fee(item) {
       if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
           || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
-        return
+        return 0
       }
       return item.op_type === 'buy'
           ? toSeparated(parseFloat(0.002 * item.counter_amount))
