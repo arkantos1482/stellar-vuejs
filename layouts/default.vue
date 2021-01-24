@@ -80,7 +80,12 @@ export default {
   errorCaptured(err, vm, info) {
     //todo resolve by status code (err.response.status)
     this.snackBar.fail.show = true
-    this.snackBar.fail.msg = err.response.data.error.msg
+
+    if (err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]) {
+      this.snackBar.fail.msg = err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]
+    } else {
+      this.snackBar.fail.msg = err.response.data.error.msg
+    }
     return false
   },
   data() {
