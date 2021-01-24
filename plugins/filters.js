@@ -6,6 +6,7 @@ Vue.filter('prettyJson', (value) => {
 })
 
 Vue.filter('toFarsiDate', (val) => {
+    if (!val) return
     const utcDate = val.endsWith('Z') ? val : val + 'Z'
     const date = new Date(utcDate);
     return date.toLocaleTimeString('fa-IR') + ' ' + date.toLocaleDateString('fa-IR')
