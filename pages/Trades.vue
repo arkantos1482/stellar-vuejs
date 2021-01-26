@@ -30,7 +30,7 @@
 <script>
 
 import Decimal from "decimal.js-light";
-import {toSeparated} from "@/models/NumberUtil";
+import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: "Trades",
@@ -57,8 +57,8 @@ export default {
         return 0
       }
       return item.op_type === 'buy'
-          ? toSeparated(parseFloat(0.002 * item.counter_amount))
-          : toSeparated(parseFloat(0.002 * item.base_amount))
+          ? toSeparated(safeDecimal(item.counter_amount).times(0.002))
+          : toSeparated(safeDecimal(item.base_amount).times(0.002))
     },
   },
 
