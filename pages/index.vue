@@ -236,7 +236,8 @@ export default {
       },
       set(val) {
         try {
-          this.buy.amount = safeDecimal(this.balances[this.counterAsset]).times(val).div(100).div(this.buy.price)
+          this.buy.amount = safeDecimal(this.balances[this.counterAsset])
+              .times(val).div(100).div(this.buy.price).toFixed(6)
         } catch (e) {
         }
       }
