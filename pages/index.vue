@@ -64,15 +64,15 @@
             </div>
 
             <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3">
-              <order-text-field v-model="buy.price" prepend="قیمت"/>
-              <order-text-field class="mt-n4" :rules="[rules.buyWalletExist]"
+              <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت"/>
+              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
               <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
-              <order-text-field :rules="[rules.buySufficient]"
+              <order-text-field :type="counterAsset" :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="success"
@@ -91,16 +91,16 @@
             </div>
 
             <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3">
-              <order-text-field :rules="[rules.sellWalletExist]"
+              <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist]"
                                 v-model="sell.price" prepend="قیمت"/>
-              <order-text-field class="mt-n4" :rules="[rules.sellSufficient]"
+              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
               <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
-              <order-text-field class="mt-0" readonly :value="sellTotal" prepend="مجموع"
+              <order-text-field :type="counterAsset" class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="error"
                      type="submit" :loading="l.sell">فروش
@@ -237,7 +237,7 @@ export default {
       set(val) {
         try {
           this.buy.amount = safeDecimal(this.balances[this.counterAsset])
-              .times(val).div(100).div(this.buy.price).toFixed(6)
+              .times(val).div(100).div(this.buy.price).todp(6)
         } catch (e) {
         }
       }
