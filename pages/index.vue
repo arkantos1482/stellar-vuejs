@@ -219,10 +219,10 @@ export default {
         return this.offersPrice(this.sellOffers.first())
     },
     sellTotal() {
-      return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
+      return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price)).todp(getDp(this.counterAsset))
     },
     buyTotal() {
-      return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
+      return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price)).todp(getDp(this.counterAsset))
     },
     buyPercent: {
       get() {

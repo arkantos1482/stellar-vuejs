@@ -35,7 +35,13 @@ export default {
   },
   methods: {
     decimalRegex(dp) {
-      let pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
+      let pattern
+      if (dp > 0) {
+        pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
+      } else {
+        pattern = '^$|^(\\d+)$'
+      }
+
       let regex = new RegExp(pattern)
       return regex
     },
