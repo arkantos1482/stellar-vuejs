@@ -13,7 +13,7 @@
 </template>
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
-import {safeDecimal} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   name: 'order-text-field',
@@ -21,38 +21,25 @@ export default {
   props: ['prepend', 'append', 'readonly', 'type'],
   data() {
     return {
-      temp: '',
+      myText: ''
     }
   },
   watch: {
     value(newValue, oldValue) {
-      console.log('value watcher :' + newValue)
       this.myText = newValue
-    }
-  },
-  computed: {
-    myText: {
-      set(v) {
-        console.log('setter :' + v)
-        this.temp = v
-      },
-      get() {
-        console.log('getter :' + this.temp)
-        let val
-        if (this.type === 'IRR') {
-          val = safeDecimal(this.temp).todp(0)
-        } else if (this.type === 'USDT') {
-          val = this.temp = safeDecimal(this.temp).todp(2)
-        } else {
-          val = this.temp = safeDecimal(this.temp).todp(6)
-        }
-        return val
+      const regex = this.decimalRegex(getDp(this.type));
+      if (!regex.test(newValue)) {
+        this.$emit('input', oldValue)
       }
     }
   },
   methods: {
+    decimalRegex(dp) {
+      let pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
+      let regex = new RegExp(pattern)
+      return regex
+    },
     emit(event) {
-      console.log('event :' + event.target.value)
       this.$emit('input', event.target.value)
     }
   },

@@ -145,6 +145,7 @@ import TradingVue from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/components/OrderTextField";
 import {safeDecimal} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   components: {OrderTextField, ActiveOffers, TradingVue},
@@ -237,7 +238,8 @@ export default {
       set(val) {
         try {
           this.buy.amount = safeDecimal(this.balances[this.counterAsset])
-              .times(val).div(100).div(this.buy.price).todp(6)
+              .times(val).div(100).div(this.buy.price)
+              .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
@@ -256,6 +258,7 @@ export default {
       set(val) {
         try {
           this.sell.amount = safeDecimal(this.balances[this.baseAsset]).times(val).div(100)
+              .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
