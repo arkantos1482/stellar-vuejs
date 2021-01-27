@@ -34,18 +34,19 @@ export default {
     myText: {
       set(v) {
         console.log('setter :' + v)
-        this.temp = Math.random()
-        if (this.type === 'IRR') {
-          this.temp = safeDecimal(v).todp(0)
-        } else if (this.type === 'USDT') {
-          this.temp = safeDecimal(v).todp(2)
-        } else {
-          this.temp = safeDecimal(v).todp(6)
-        }
+        this.temp = v
       },
       get() {
         console.log('getter :' + this.temp)
-        return this.temp
+        let val
+        if (this.type === 'IRR') {
+          val = safeDecimal(this.temp).todp(0)
+        } else if (this.type === 'USDT') {
+          val = this.temp = safeDecimal(this.temp).todp(2)
+        } else {
+          val = this.temp = safeDecimal(this.temp).todp(6)
+        }
+        return val
       }
     }
   },
