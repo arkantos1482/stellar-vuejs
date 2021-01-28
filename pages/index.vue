@@ -125,7 +125,7 @@
               class="pointer text-body-1"
               @click="select('sell',item)">
             <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
-            <td style="font-size: 1.4rem">{{ buyRecordPrice(item)|separated }}</td>
+            <td style="font-size: 1.4rem">{{ buyRecordAmount(item)|separated }}</td>
             <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
           </tr>
           </tbody>
@@ -387,8 +387,9 @@ export default {
     },
     sellRecordTotal(item) {
       return safeDecimal(item.amount).times(this.offersPrice(item))
+          .todp(getDp(this.counterAsset))
     },
-    buyRecordPrice(item) {
+    buyRecordAmount(item) {
       return safeDecimal(item.amount).div(this.offersPrice(item))
     },
     offersPrice(item) {
@@ -397,7 +398,7 @@ export default {
     select(action, item) {
       if (action === 'sell') {
         this.sell.price = this.offersPrice(item)
-        this.sell.amount = this.buyRecordPrice(item)
+        this.sell.amount = this.buyRecordAmount(item)
       } else if (action === 'buy') {
         this.buy.price = this.offersPrice(item)
         this.buy.amount = parseFloat(item.amount)

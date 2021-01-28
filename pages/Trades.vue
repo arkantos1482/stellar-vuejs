@@ -31,6 +31,7 @@
 
 import Decimal from "decimal.js-light";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   name: "Trades",
@@ -49,7 +50,7 @@ export default {
       return toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
-      return toSeparated(parseFloat(item.base_amount))
+      return toSeparated(safeDecimal(item.base_amount).todp(getDp(item.base_asset_code)))
     },
     fee(item) {
       if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
