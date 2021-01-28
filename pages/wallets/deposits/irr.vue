@@ -1,25 +1,41 @@
 <template>
-  <div class="d-flex align-items-stretch mt-8">
-    <a-card class="ml-4 py-8" width="45%" title="واریز">
-      <crypto-upper :balance="balance" :type="type"/>
-      <p class="text-display-2 ma-0">
-        باقی مانده واریز روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
-      </p>
-      <p class="text-display-2 ma-0">باقی مانده واریز ماهیانه:
-        <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
-      </p>
+  <div class="mt-0">
+    <v-alert color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
+      <ul>
+        <li>جهت افزایش اعتبار کیف پول ریالی خود با استفاده از کارت‌های بانکی عضو شبکه شتاب و از
+          طریق درگاه پرداخت
+          اینترنتی اقدام نمایید.
+        </li>
+        <li>به آدرس صفحه‌ درگاه بانکی دقت نموده و تنها پس از اطمینان از حضور در سایت‌های سامانه‌ی شاپرک مشخصات کارت
+          بانکی خود را وارد نمایید.
+        </li>
+        <li>در صفحه درگاه دقت کنید که حتما مبلغ نمایش داده شده درست باشد.</li>
+        <li>جهت واریز وجه، حتما باید از کارت‌ بانکی به نام خودتان که در پروفایل‌تان ثبت و تایید شده است، استفاده
+          نمایید.
+        </li>
+      </ul>
+    </v-alert>
+    <div class="d-flex align-items-stretch">
+      <a-card class="ml-4 py-8" width="45%" title="واریز">
+        <crypto-upper :balance="balance" :type="type"/>
+        <p class="text-display-2 ma-0">
+          باقی مانده واریز روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+        </p>
+        <p class="text-display-2 ma-0">باقی مانده واریز ماهیانه:
+          <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+        </p>
 
-      <v-form class="mt-12" @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
-        <a-text-field mask="####################"
-                      :rules="[rules.required,rules.moreThanBillion]"
-                      hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
-        <v-btn type="submit" :loading="l.deposit"
-               block color="primary" class="mt-4">واریز
-        </v-btn>
-      </v-form>
-    </a-card>
-
-    <deposits :type="type"/>
+        <v-form class="mt-12" @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
+          <a-text-field mask="####################"
+                        :rules="[rules.required,rules.moreThanBillion]"
+                        hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
+          <v-btn type="submit" :loading="l.deposit"
+                 block color="primary" class="mt-4">واریز
+          </v-btn>
+        </v-form>
+      </a-card>
+      <deposits :type="type"/>
+    </div>
   </div>
 </template>
 
