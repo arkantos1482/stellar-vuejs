@@ -59,12 +59,18 @@
           <v-list-item class="text-h6" @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
-      <v-menu>
+      <v-menu nudge-width="96">
         <template v-slot:activator="{on,attrs}">
-          <v-btn class="grey--text text--darken-2" text>{{ accessLevel }}
+          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ accessLevel }}
             <v-icon>mdi-bell-outline</v-icon>
           </v-btn>
         </template>
+        <v-list class="pa-4">
+          <div v-for="(item,idx) in translateVerify" :key="idx" class="d-flex justify-space-between">
+            <p>{{ item.name }}:</p>
+            <p :class="item.value|farsiBoolClass">{{ item.value|toFarsiBool }}</p>
+          </div>
+        </v-list>
       </v-menu>
     </v-app-bar>
     <v-main>
@@ -92,10 +98,19 @@ export default {
     }
     return false
   },
+  filters: {
+    toFarsiBool(value) {
+      return value ? 'تایید شده' : 'عدم تایید'
+    },
+    farsiBoolClass(value) {
+      return value ? 'success--text' : 'error--text'
+    }
+  },
   data() {
     return {
       btn_toggle: '',
       user: '',
+      userVerify: '',
       snackBar: {
         normal: {show: false, msg: ''},
         success: {show: false, msg: ''},
@@ -123,7 +138,6 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      // title: 'My Exchange'
     }
   },
   async mounted() {
@@ -137,6 +151,7 @@ export default {
       if (this.isAdmin) {
         await this.$router.push('/Users')
       }
+      this.userVerify = await this.$axios.$get('/profiles/me/verifies')
     } catch (e) {
     }
   },
@@ -150,6 +165,13 @@ export default {
     },
     accessLevel() {
       return this.user.access_level
+    },
+    translateVerify() {
+      return Object.keys(this.userVerify)
+          .map((key) => ({
+            name: this.$options.filters.verifyToFarsi(key),
+            value: this.userVerify[key]
+          }))
     }
   },
   methods: {

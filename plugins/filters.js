@@ -63,3 +63,17 @@ Vue.filter('toFloat', (val) => {
 Vue.filter('separated', (val) => {
     return toSeparated(val)
 })
+
+Vue.filter('verifyToFarsi', (key) => {
+    let dic = {
+        email: 'ایمیل',
+        cell_phone: 'موبایل',
+        phone: 'تلفن ثابت',
+        ssn: 'کارت ملی',
+        address: 'آدرس',
+        bank_card: 'کارت بانکی',
+        bank_shaba: 'شبا',
+        bank_account: 'اطلاعات هویتی'
+    }
+    return dic[key]
+})
