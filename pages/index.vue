@@ -170,14 +170,10 @@ export default {
     pairAssetList() {
       const list1 = this.list[this.tabIndex];
       return collect(list1)
-          .map(item => {
-            let array = item.split('/')
-            let filter = this.$options.filters.toFarsiCoin
-            return {
-              text: filter(array[0]) + '/' + filter(array[1]),
-              value: item
-            };
-          }).all()
+          .map(item => ({
+            text: this.$options.filters.toFarsiCoinPair(item),
+            value: item
+          })).all()
     },
     balances() {
       return this.$store.state.balances.list

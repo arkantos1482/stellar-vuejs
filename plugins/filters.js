@@ -12,7 +12,7 @@ Vue.filter('toFarsiDate', (val) => {
     return date.toLocaleTimeString('fa-IR') + ' ' + date.toLocaleDateString('fa-IR')
 })
 
-Vue.filter('toFarsiCoin', (type) => {
+const toFarsiCoin = (type) => {
     let typeUp = type.toUpperCase()
 
     let value = typeUp
@@ -25,6 +25,14 @@ Vue.filter('toFarsiCoin', (type) => {
     if (typeUp === 'USDT') value = 'تتر'
     if (typeUp === 'IRR') value = 'ریال'
     return value
+}
+
+Vue.filter('toFarsiCoin', toFarsiCoin)
+
+Vue.filter('toFarsiCoinPair', (pair) => {
+    let array = pair.split('/')
+    let filter = toFarsiCoin
+    return filter(array[0]) + '/' + filter(array[1])
 })
 
 Vue.filter('toCoinIcon', (type) => {

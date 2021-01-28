@@ -16,7 +16,7 @@
         <tbody>
         <tr v-for="(item,idx) in offers" :key="idx">
           <td :class="item|toColor">{{ item|toFarsi }}</td>
-          <td>{{ item|cryptoPair }}</td>
+          <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
           <td>{{ item|price }}</td>
           <td>{{ item|amount }}</td>
           <td>{{ item|total }}</td>

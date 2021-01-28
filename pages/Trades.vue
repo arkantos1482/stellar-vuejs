@@ -15,7 +15,7 @@
       <tbody>
       <tr v-for="item in trades" :key="item.id">
         <td :class="item|toColor">{{ item|toFarsiSellOrBuy }}</td>
-        <td>{{ item|cryptoPair }}</td>
+        <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
         <td>{{ item|total }}</td>
