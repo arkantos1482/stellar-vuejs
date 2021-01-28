@@ -59,9 +59,13 @@
           <v-list-item class="text-h6" @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
-      <v-btn text small>
-        <v-icon color="grey darken-2">mdi-bell-outline</v-icon>
-      </v-btn>
+      <v-menu>
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="grey--text text--darken-2" text>{{ accessLevel }}
+            <v-icon>mdi-bell-outline</v-icon>
+          </v-btn>
+        </template>
+      </v-menu>
     </v-app-bar>
     <v-main>
       <v-container fluid class="pa-4">
@@ -143,6 +147,9 @@ export default {
     title() {
       return this.user.name
       // return this.user.name + '  ' + this.user.access_level
+    },
+    accessLevel() {
+      return this.user.access_level
     }
   },
   methods: {

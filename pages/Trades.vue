@@ -19,7 +19,7 @@
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
         <td>{{ item|total }}</td>
-        <td>{{ item|fee }}</td>
+        <td>{{ item|fee }} <span>{{ item|feeCoin|toFarsiCoin }}</span></td>
         <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
       </tr>
       </tbody>
@@ -61,6 +61,11 @@ export default {
           ? toSeparated(safeDecimal(item.counter_amount).times(0.002))
           : toSeparated(safeDecimal(item.base_amount).times(0.002))
     },
+    feeCoin(item) {
+      return item.op_type === 'buy'
+          ? item.counter_asset_code
+          : item.base_asset_code
+    }
   },
 
   data() {
