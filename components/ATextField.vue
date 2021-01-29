@@ -17,7 +17,7 @@
              :class="{'red-border':shouldValidate ,'py-2':eng, eng:eng, ef1:eng,ef2:eng}"
              :disabled="disabled" :type="type"
              :placeholder="hint"
-             :value="value" @input="$emit('input', $event.target.value)"
+             :value="myText" @input="emit"
              v-mask="mask">
       <slot></slot>
     </div>
@@ -26,12 +26,28 @@
 </template>
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
+import {remSeparated, toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: 'a-text-field',
   extends: VTextField,
-  props: {mask: String, eng: Boolean}
-  // props: ['value', 'label', 'type', 'filled', 'readonly', 'hint', 'rules'],
+  props: {mask: String, eng: Boolean, separated: Boolean},
+  data() {
+    return {
+      myText: ''
+    }
+  },
+  watch: {
+    value(newValue, oldValue) {
+      this.myText = this.separated ? toSeparated(newValue) : newValue
+    }
+  },
+  methods: {
+    emit(event) {
+      const value = this.separated ? remSeparated(event.target.value) : event.target.value
+      this.$emit('input', value)
+    }
+  },
 }
 </script>
 

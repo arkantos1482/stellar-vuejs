@@ -10,7 +10,7 @@
       </p>
 
       <v-form @submit.prevent="withdraw" v-model="form" ref="form">
-        <a-text-field :rules="[rules.required]" :mask="mask" v-model="amount" label="مبلغ"/>
+        <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مبلغ"/>
         <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
         <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد شد.</p>
         <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>

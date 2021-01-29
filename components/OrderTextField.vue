@@ -14,6 +14,7 @@
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
 import {getDp} from "@/models/cryptoPrecision";
+import {decimalRegex, remSeparated, toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: 'order-text-field',
@@ -26,27 +27,17 @@ export default {
   },
   watch: {
     value(newValue, oldValue) {
-      this.myText = newValue
-      const regex = this.decimalRegex(getDp(this.type));
+      this.myText = toSeparated(newValue)
+      const regex = decimalRegex(getDp(this.type));
       if (!regex.test(newValue)) {
         this.$emit('input', oldValue)
       }
     }
   },
   methods: {
-    decimalRegex(dp) {
-      let pattern
-      if (dp > 0) {
-        pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
-      } else {
-        pattern = '^$|^(\\d+)$'
-      }
-
-      let regex = new RegExp(pattern)
-      return regex
-    },
     emit(event) {
-      this.$emit('input', event.target.value)
+      const remSepValue = remSeparated(event.target.value);
+      this.$emit('input', remSepValue)
     }
   },
 }

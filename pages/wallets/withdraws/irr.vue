@@ -11,7 +11,7 @@
       </p>
 
       <v-form @submit.prevent="onWithdraw" v-model="form" ref="form">
-        <a-text-field :rules="[rules.required]"
+        <a-text-field separated :rules="[rules.required]"
                       mask="####################" v-model="amount" label="مبلغ"/>
         <v-btn type="submit" :loading="l.withdraw"
                block color="primary" class="mt-4">برداشت

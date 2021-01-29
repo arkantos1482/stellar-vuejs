@@ -1,6 +1,8 @@
 import Decimal from "decimal.js-light";
 
-export const toSeparated = (val) => val.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+export const toSeparated = (val) => val.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
+
+export const remSeparated = (val) => val.toString().replaceAll(',', '')
 
 export const safeDecimal = (val) => {
     try {
@@ -8,4 +10,16 @@ export const safeDecimal = (val) => {
     } catch (e) {
         return new Decimal(0)
     }
+}
+
+export const decimalRegex = (dp) => {
+    let pattern
+    if (dp > 0) {
+        pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
+    } else {
+        pattern = '^$|^(\\d+)$'
+    }
+
+    let regex = new RegExp(pattern)
+    return regex
 }
