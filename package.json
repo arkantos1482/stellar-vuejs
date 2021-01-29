@@ -20,7 +20,7 @@
     "nuxt": "^2.14.5",
     "persian-rex": "^2.3.3",
     "qrcode": "^1.4.4",
-    "trading-vue-js": "^1.0.0-rc.1",
+    "trading-vue-js": "^1.0.1",
     "v-mask": "^2.2.3",
     "vue-cookies": "^1.7.4",
     "vue-json-viewer": "^2.2.14",

@@ -821,7 +821,14 @@
     "@babel/types" "^7.4.4"
     esutils "^2.0.2"
 
-"@babel/runtime@^7.11.2", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.11.2":
+  version "7.12.5"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
+  integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@babel/runtime@^7.8.4":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
   integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
@@ -8823,9 +8830,9 @@ toidentifier@1.0.0:
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
 trading-vue-js@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/trading-vue-js/-/trading-vue-js-1.0.0-rc.1.tgz#9f3fc5bd1cbf6782d68d3e878e3e85a2687c3f35"
-  integrity sha512-4/cozes7rEb+BNQ5+zgBRaHZmXy46LG+Ehl3yZ9Jnxo6UnLaNYswlsC7CzTPB+rYHNHcVMRf4H8dJkPjDGfGhA==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/trading-vue-js/-/trading-vue-js-1.0.1.tgz#9c2b3e21588d244bbf6cdb745e5be1a2be5f3bda"
+  integrity sha512-SGYH9mhXC/DfMn0zHhUs8UpGbOh5WYieT3k3lct4ZFMKaU7osJfN4GlO3eETtypnqxhs/9KdfNKP6xtwl1Xc+g==
   dependencies:
     "@babel/runtime" "^7.11.2"
     arrayslicer "^1.2.3"
