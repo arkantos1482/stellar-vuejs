@@ -101,6 +101,10 @@ a, p {
     cursor: pointer;
 }
 
+.dz-remove {
+    z-index: 1001 !important;
+}
+
 /*@font-face {*/
 /*    font-family: 'IranSans';*/
 /*    font-display: swap;*/

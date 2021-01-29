@@ -45,10 +45,13 @@
                   </div>
                   <div class="mt-8">
                     <p class="text-h6 mb-2">تصویر کارت ملی</p>
-                    <vue2-dropzone id="ssn_id" :options="dropzoneOptions.ssn" :useCustomSlot=true>
+                    <vue2-dropzone id="ssn_id"
+                                   :options="dropzoneOptions.ssn" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
+                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                          <br>
+                          حداکثر حجم ۵۰۰ کیلوبایت</div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -85,10 +88,13 @@
                       تصویر تایید هویت
                       <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
                     </p>
-                    <vue2-dropzone id="bank_card_id" :options="dropzoneOptions.bankCard" :useCustomSlot=true>
+                    <vue2-dropzone id="bank_card_id"
+                                   :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
+                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                          <br>
+                          حداکثر حجم ۵۰۰ کیلوبایت</div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -160,10 +166,13 @@
 
                   <div class="mt-4">
                     <p class="text-h6 mb-1">تصویر قبض تلفن یا قبوض خدماتی</p>
-                    <vue2-dropzone id="bill_id" :options="dropzoneOptions.bill" :useCustomSlot=true>
+                    <vue2-dropzone id="bill_id"
+                                   :options="dropzoneOptions.bill" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2">فرمت فایل png jpg باشد و حداکثر حجم ۵۰۰ کیلوبایت</div>
+                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                          <br>
+                          حداکثر حجم ۵۰۰ کیلوبایت</div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -226,6 +235,22 @@ export default {
     provinceList() {
       return collect(plist).pluck('province').all()
     },
+    dropzoneOptions() {
+      return {
+        ssn: {
+          ...this.baseDropZoneConfig,
+          paramName: 'ssn',
+        },
+        bill: {
+          ...this.baseDropZoneConfig,
+          paramName: 'bill',
+        },
+        bankCard: {
+          ...this.baseDropZoneConfig,
+          paramName: 'bank-card',
+        }
+      }
+    }
   },
   data() {
     return {
@@ -245,37 +270,21 @@ export default {
       bankCard: '',
       mobile: {otp: ''},
       phone: {otp: ''},
-      dropzoneOptions: {
-        ssn: {
-          paramName: 'ssn',
-          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
-          withCredentials: true,
-          headers: {'X-XSRF-TOKEN': this.$cookies.get('XSRF-TOKEN')},
-          maxFiles: 1,
-          thumbnailWidth: 48,
-          thumbnailHeight: 48,
-          maxFilesize: 0.5,
-        },
-        bill: {
-          paramName: 'bill',
-          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
-          withCredentials: true,
-          headers: {'X-XSRF-TOKEN': this.$cookies.get('XSRF-TOKEN')},
-          maxFiles: 1,
-          thumbnailWidth: 48,
-          thumbnailHeight: 48,
-          maxFilesize: 0.5,
-        },
-        bankCard: {
-          paramName: 'bank-card',
-          url: this.$axios.defaults.baseURL + '/profiles/me/docs',
-          withCredentials: true,
-          headers: {'X-XSRF-TOKEN': this.$cookies.get('XSRF-TOKEN')},
-          maxFiles: 1,
-          thumbnailWidth: 48,
-          thumbnailHeight: 48,
-          maxFilesize: 0.5,
-        }
+      baseDropZoneConfig: {
+        url: this.$axios.defaults.baseURL + '/profiles/me/docs',
+        withCredentials: true,
+        headers: {'X-XSRF-TOKEN': this.$cookies.get('XSRF-TOKEN')},
+        // acceptedFiles: 'image/jpeg,image/png',
+        maxFiles: 1,
+        addRemoveLinks: true,
+        thumbnailWidth: 128,
+        thumbnailHeight: 128,
+        maxFilesize: 0.5,
+        dictRemoveFile: 'لغو ارسال',
+        dictMaxFilesExceeded: 'تنها یک تصویر',
+        dictFileTooBig: 'حجم غیرمجاز',
+        dictInvalidFileType: 'نوع فایل غیرمجاز',
+        dictResponseError: 'پذیرفته نشد'
       },
       l: {
         mobileSubmit: false, mobileRequest: false,
