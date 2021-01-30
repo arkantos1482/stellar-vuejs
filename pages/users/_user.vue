@@ -23,7 +23,7 @@
 
       <v-col cols="9">
         <v-window vertical reverse v-model="stepNum" style="padding: 2px 96px ">
-          <v-window-item>
+          <v-window-item eager>
             <v-form v-model="valid.step0" ref="stepOneForm">
               <v-row>
                 <v-col cols="6">
@@ -102,7 +102,7 @@
               </v-row>
             </v-form>
           </v-window-item>
-          <v-window-item>
+          <v-window-item eager>
             <v-form v-model="valid.step1" ref="stepTwoForm">
               <v-row justify="center">
                 <v-col cols="6" dir="ltr">
@@ -122,7 +122,7 @@
               </v-row>
             </v-form>
           </v-window-item>
-          <v-window-item>
+          <v-window-item eager>
             <v-form v-model="valid.step2" ref="stepThreeForm">
               <v-row class="mt-4">
                 <v-col cols="6">
