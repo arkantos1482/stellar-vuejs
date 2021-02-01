@@ -97,7 +97,7 @@ export default {
         type: item.type,
         sell: item.selling_asset_code,
         buy: item.buying_asset_code,
-        price: item.price
+        price: safeDecimal(item.price_r.n).div(item.price_r.d).toNumber()
       })
       await new Promise(r => setTimeout(r, 2000))
       await this.$store.dispatch("offers/refresh")
