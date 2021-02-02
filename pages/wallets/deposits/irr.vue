@@ -2,7 +2,7 @@
   <div class="mt-0">
     <v-alert color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
       <ul>
-        <li>جهت افزایش اعتبار کیف پول ریالی خود با استفاده از کارت‌های بانکی عضو شبکه شتاب و از
+        <li>جهت افزایش اعتبار کیف پول تومانی خود با استفاده از کارت‌های بانکی عضو شبکه شتاب و از
           طریق درگاه پرداخت
           اینترنتی اقدام نمایید.
         </li>
@@ -28,7 +28,7 @@
         <v-form class="mt-12" @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
           <a-text-field mask="####################"
                         :rules="[rules.required,rules.moreThanBillion]"
-                        hint="حداقل میزان واریز ۱میلیون ریال می باشد." v-model="amount" filled label="مقدار ریال"/>
+                        hint="حداقل میزان واریز ۱۰۰هزار تومان می باشد." v-model="amount" filled label="مقدار تومان"/>
           <v-btn type="submit" :loading="l.deposit"
                  block color="primary" class="mt-4">واریز
           </v-btn>
@@ -60,7 +60,7 @@ export default {
       v: {deposit: false},
       rules: {
         required: value => !!value || 'الزامی است',
-        moreThanBillion: value => !!value && parseFloat(value) >= 1000 * 1000 || 'حداقل باید بیشتر از ۱ میلیون ریال باشد'
+        moreThanBillion: value => !!value && parseFloat(value) >= 100 * 1000 || 'حداقل باید بیشتر از ۱۰۰ هزار تومان باشد'
       },
       type: 'IRR',
       amount: '',
@@ -73,8 +73,8 @@ export default {
     this.$store.dispatch('addresses/refresh')
     this.$axios.$post('/access/limits/remained', {resource: 'irr', action: 'deposit'})
         .then(res => {
-          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'ریال' : 'نامحدود'
-          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'ریال' : 'نامحدود'
+          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
+          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
   },
   methods: {

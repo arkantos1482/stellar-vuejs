@@ -23,7 +23,7 @@ const toFarsiCoin = (type) => {
     if (typeUp === 'EBG') value = 'برگ'
     if (typeUp === 'ETH') value = 'اتریوم'
     if (typeUp === 'USDT') value = 'تتر'
-    if (typeUp === 'IRR') value = 'ریال'
+    if (typeUp === 'IRR') value = 'تومان'
     return value
 }
 

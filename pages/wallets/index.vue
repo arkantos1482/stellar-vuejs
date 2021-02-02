@@ -13,7 +13,7 @@
                          :balance="balances.AMN"/>
       <crypto-address-tr namad="برگ" type="ebg"
                          :balance="balances.EBG"/>
-      <crypto-address-tr namad="ریال" type="irr"
+      <crypto-address-tr namad="تومان" type="irr"
                          :balance="balances.IRR"/>
       <crypto-address-tr namad="بیت کوین" type="btc"
                          :balance="balances.BTC"/>

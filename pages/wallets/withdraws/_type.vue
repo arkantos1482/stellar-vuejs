@@ -71,8 +71,8 @@ export default {
         .then(res => this.withdrawFee = res);
     this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
         .then(res => {
-          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'ریال' : 'نامحدود'
-          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'ریال' : 'نامحدود'
+          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
+          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
   },
   methods: {

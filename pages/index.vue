@@ -27,7 +27,7 @@
       <v-card class="mx-4 pa-2" width="46%" ref="card">
         <div class="d-flex justify-space-between mb-n8 mt-n2">
           <v-tabs v-model="tabIndex">
-            <v-tab>ریال</v-tab>
+            <v-tab>تومان</v-tab>
             <v-tab>تتر</v-tab>
             <v-tab>رمزارز به رمزارز</v-tab>
           </v-tabs>
