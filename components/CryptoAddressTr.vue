@@ -40,7 +40,7 @@ export default {
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
-      return 'USDT' === type || 'ETH' === type
+      return 'USDT' === type || 'ETH' === type || 'IRR' === type
       // return false
     },
     withdrawLabel() {
