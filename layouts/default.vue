@@ -124,6 +124,10 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'مدیریت کاربران',
           to: '/Users'
+        },{
+          icon: 'mdi-chart-bubble',
+          title: 'مدیریت حساب ها',
+          to: '/admin/accounts'
         },
         {
           icon: 'mdi-chart-bubble',
