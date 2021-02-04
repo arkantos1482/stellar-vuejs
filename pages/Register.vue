@@ -46,10 +46,9 @@ import captcha from "@/mixins/captcha";
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
 import LoginRegCard from "@/components/LoginRegCard";
-import Terms from "@/pages/Terms";
 
 export default {
-  components: {ATextField, LoginRegCard, Terms},
+  components: {ATextField, LoginRegCard},
   mixins: [captcha, pstopper],
   layout: 'noToolbar',
   computed: {
