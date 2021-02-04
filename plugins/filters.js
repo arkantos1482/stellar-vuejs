@@ -12,6 +12,10 @@ Vue.filter('toFarsiDate', (val) => {
     return date.toLocaleTimeString('fa-IR') + ' ' + date.toLocaleDateString('fa-IR')
 })
 
+Vue.filter('irtFix', (asset) => {
+    return (asset === 'IRR') ? 'IRT' : asset
+})
+
 const toFarsiCoin = (type) => {
     let typeUp = type.toUpperCase()
 

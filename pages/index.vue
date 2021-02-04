@@ -51,7 +51,7 @@
                        color-title="black"
                        :height="240"
                        :width="windowWidth*42/100"
-                       :title-txt="this.baseAsset+this.counterAsset"
+                       :title-txt="tradingVueLabel"
                        :data="tradeData"></trading-vue>
         </div>
 
@@ -59,7 +59,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between px-2">
               <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="buyPercent=100" class="pointer ma-0 primary--text"><span>{{ counterAsset }}</span>
+              <p @click="buyPercent=100" class="pointer ma-0 primary--text"><span>{{ counterAsset|irtFix }}</span>
                 {{ balances[counterAsset]|toFloat|separated }}
                 <v-icon color="primary">mdi-wallet-outline</v-icon>
               </p>
@@ -68,7 +68,7 @@
             <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3">
               <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت"/>
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
-                                v-model="buy.amount" prepend="مقدار" :append="baseAsset"/>
+                                v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
@@ -76,7 +76,7 @@
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
               <order-text-field :type="counterAsset" :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
-                                :append="counterAsset"/>
+                                :append="counterAsset|irtFix"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="success"
                      type="submit" :loading="l.buy">خرید
               </v-btn>
@@ -86,7 +86,7 @@
           <v-col cols="6" class="px-2 py-0">
             <div class="d-flex justify-space-between px-2">
               <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>
-              <p @click="sellPercent=100" class="pointer ma-0 primary--text"><span>{{ baseAsset }}</span>
+              <p @click="sellPercent=100" class="pointer ma-0 primary--text"><span>{{ baseAsset|irtFix }}</span>
                 {{ balances[baseAsset]|toFloat|separated }}
                 <v-icon color="primary">mdi-wallet-outline</v-icon>
               </p>
@@ -96,14 +96,14 @@
               <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist]"
                                 v-model="sell.price" prepend="قیمت"/>
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.sellSufficient]"
-                                v-model="sell.amount" prepend="مقدار" :append="baseAsset"/>
+                                v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
               <order-text-field :type="counterAsset" class="mt-0" readonly :value="sellTotal" prepend="مجموع"
-                                :append="counterAsset"/>
+                                :append="counterAsset|irtFix"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="error"
                      type="submit" :loading="l.sell">فروش
               </v-btn>
@@ -187,13 +187,17 @@ export default {
       return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset])}`
     },
     priceLabel() {
-      return 'قیمت (' + this.counterAsset + ')'
+      return 'قیمت (' + this.$options.filters.irtFix(this.counterAsset) + ')'
     },
     unitNumberLabel() {
-      return 'مقدار (' + this.baseAsset + ')'
+      return 'مقدار (' + this.$options.filters.irtFix(this.baseAsset) + ')'
     },
     amountLabel() {
-      return 'مجموع (' + this.counterAsset + ')'
+      return 'مجموع (' + this.$options.filters.irtFix(this.counterAsset) + ')'
+    },
+    tradingVueLabel() {
+      return this.$options.filters.irtFix(this.baseAsset)
+          + '/' + this.$options.filters.irtFix(this.counterAsset)
     },
     buyOffers() {
       return collect(this.offers.bids)
@@ -296,7 +300,7 @@ export default {
         sellSufficient: value => this.balances[this.baseAsset]?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
         sellWalletExist: value => !!this.balances[this.counterAsset] || 'کیف پول ساخته نشده است',
       },
-      chartConfig:{
+      chartConfig: {
         SBMIN: 60,       // Minimal sidebar px
         SBMAX: Infinity, // Max sidebar, px
         TOOLBAR: 57,     // Toolbar width px

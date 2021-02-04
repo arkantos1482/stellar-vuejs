@@ -13,7 +13,7 @@
       </thead>
       <tbody>
       <tr v-for="item in deposits" :key="item.id">
-        <td>{{ item.coin }}</td>
+        <td>{{ item.coin|toFarsiCoin }}</td>
         <td>{{ item.amount|toFloat|separated }}</td>
         <td>{{ item.updated_at|toFarsiDate }}</td>
         <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
