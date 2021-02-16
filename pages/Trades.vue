@@ -53,10 +53,10 @@ export default {
       return toSeparated(safeDecimal(item.base_amount).todp(getDp(item.base_asset_code)))
     },
     fee(item) {
-      if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
-          || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
-        return 0
-      }
+      // if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
+      //     || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
+      //   return 0
+      // }
       return item.op_type === 'buy'
           ? toSeparated(safeDecimal(item.counter_amount).times(0.002))
           : toSeparated(safeDecimal(item.base_amount).times(0.002))
