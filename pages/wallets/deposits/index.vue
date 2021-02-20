@@ -47,7 +47,7 @@ export default {
     }
   },
   async mounted() {
-    let list1 = (await this.$axios.$get('/reports/deposits'))
+    let list1 = (await this.$axios.$get('/payments/deposits'))
     let list2 = collect(list1)
     if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.coin)
     this.deposits = list2.all()

@@ -11,7 +11,7 @@ export const mutations = {
 
 export const actions = {
     async refresh(context) {
-        let balances = (await this.$axios.$get('/profiles/me/stellar')).balances
+        let balances = (await this.$axios.$get('/profiles/me/balances')).balances
         let result = collect(balances)
             .map(item => ({[item.asset_code]: new Decimal(item.balance).minus(item.selling_liabilities)}))
             .reduce((_acc, item) => ({..._acc, ...item})) ?? []

@@ -128,6 +128,14 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'مدیریت حساب ها',
           to: '/admin/accounts'
+        },{
+          icon: 'mdi-chart-bubble',
+          title: 'پرداخت های رمزارزی',
+          to: '/admin/payment/CryptoReport'
+        },{
+          icon: 'mdi-chart-bubble',
+          title: 'پرداخت های تومانی',
+          to: '/admin/payment/TomanReport'
         },
         {
           icon: 'mdi-chart-bubble',

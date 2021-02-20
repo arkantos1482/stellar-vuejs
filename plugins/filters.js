@@ -81,3 +81,15 @@ Vue.filter('verifyToFarsi', (key) => {
     }
     return dic[key]
 })
+
+Vue.filter('toFa', (key) => {
+    let dic = {
+        withdraw: 'برداشت',
+        deposit: 'واریز',
+        pending: 'درجریان',
+        failed: 'ناموفق',
+        done: 'موفق',
+        successful: 'موفق'
+    }
+    return dic[key.toLowerCase()] || key
+})

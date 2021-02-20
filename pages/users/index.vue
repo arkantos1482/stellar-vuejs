@@ -5,7 +5,7 @@
           @click:row="goto"
           :headers="headers"
           :items="profileList"
-          items-per-page="50"
+          :items-per-page="50"
           hide-default-footer/>
       <v-pagination class="mt-4"
           v-model="pagination.current"
