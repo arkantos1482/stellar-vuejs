@@ -6,7 +6,9 @@
           :headers="headers"
           :items="profileList"
           :items-per-page="50"
-          hide-default-footer/>
+          hide-default-footer>
+        <template v-slot:item.created_at="{value}">{{value|toFarsiJustDate}}</template>
+      </v-data-table>
       <v-pagination class="mt-4"
           v-model="pagination.current"
           :length="pagination.total"
@@ -26,7 +28,9 @@ export default {
         {text: 'نام', value: 'name'},
         {text: 'نام خانوادگی', value: 'last_name'},
         {text: 'سطح دسترسی', value: 'access_level'},
-        {text: 'موبایل', value: 'cell_phone'}],
+        {text: 'موبایل', value: 'cell_phone'},
+        {text: 'زمان ثبت نام', value: 'created_at'}
+        ],
       profileList: [],
       pagination: {
         current: 1,

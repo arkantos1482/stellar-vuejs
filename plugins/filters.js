@@ -12,6 +12,13 @@ Vue.filter('toFarsiDate', (val) => {
     return date.toLocaleTimeString('fa-IR') + ' ' + date.toLocaleDateString('fa-IR')
 })
 
+Vue.filter('toFarsiJustDate', (val) => {
+    if (!val) return
+    const utcDate = val.endsWith('Z') ? val : val + 'Z'
+    const date = new Date(utcDate);
+    return date.toLocaleDateString('fa-IR')
+})
+
 Vue.filter('irtFix', (asset) => {
     return (asset === 'IRR') ? 'IRT' : asset
 })
