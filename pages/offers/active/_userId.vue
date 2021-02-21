@@ -81,13 +81,18 @@ export default {
       //     : total + item.selling_asset_code
     }
   },
+  data() {
+    return {
+      userId: this.$route.params.userId
+    }
+  },
   computed: {
     offers() {
       return this.$store.state.offers.activeOffers
     }
   },
   async mounted() {
-    await this.$store.dispatch("offers/refresh")
+    await this.$store.dispatch("offers/refresh", this.userId)
   },
   methods: {
     async cancel(item, index) {
@@ -100,11 +105,11 @@ export default {
         price: safeDecimal(item.price_r.n).div(item.price_r.d).toNumber()
       })
       await new Promise(r => setTimeout(r, 2000))
-      await this.$store.dispatch("offers/refresh")
+      await this.$store.dispatch("offers/refresh", this.userId)
       await new Promise(r => setTimeout(r, 2000))
-      await this.$store.dispatch("offers/refresh")
+      await this.$store.dispatch("offers/refresh", this.userId)
       await new Promise(r => setTimeout(r, 2000))
-      await this.$store.dispatch("offers/refresh")
+      await this.$store.dispatch("offers/refresh", this.userId)
     }
   }
 }

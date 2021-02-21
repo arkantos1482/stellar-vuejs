@@ -39,11 +39,11 @@
             <v-tab v-bind="attrs" v-on="on"> سفارشات</v-tab>
           </template>
           <v-list>
-            <v-list-item to="/Offers"> سفارشات</v-list-item>
-            <v-list-item to="/ActiveOffers"> سفارشات در جریان</v-list-item>
+            <v-list-item to="/offers/me"> سفارشات</v-list-item>
+            <v-list-item to="/offers/active/me"> سفارشات در جریان</v-list-item>
           </v-list>
         </v-menu>
-        <v-tab to="/Trades">معاملات</v-tab>
+        <v-tab to="/trades/me">معاملات</v-tab>
         <v-tab to="/Referral">دعوت از دوستان</v-tab>
       </v-tabs>
       <!--      <v-spacer/>-->
@@ -54,7 +54,7 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item to="/Users/me">پروفایل</v-list-item>
+          <v-list-item to="/users/me">پروفایل</v-list-item>
           <v-list-item to="/Security">امنیت</v-list-item>
           <v-list-item class="text-h6" @click="logout">خروج</v-list-item>
         </v-list>
@@ -122,22 +122,25 @@ export default {
       items: [
         {
           icon: 'mdi-chart-bubble',
-          title: 'مدیریت کاربران',
+          title: 'مدیریت پروفایل کاربران',
           to: '/Users'
-        },{
+        }, {
           icon: 'mdi-chart-bubble',
-          title: 'مدیریت حساب ها',
+          title: 'مدیریت مالی کاربران',
+          to: '/admin/transactions'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'گزارش موجودی ها',
           to: '/admin/accounts'
-        },{
+        }, {
           icon: 'mdi-chart-bubble',
           title: 'پرداخت های رمزارزی',
           to: '/admin/payment/CryptoReport'
-        },{
+        }, {
           icon: 'mdi-chart-bubble',
           title: 'پرداخت های تومانی',
           to: '/admin/payment/TomanReport'
-        },
-        {
+        }, {
           icon: 'mdi-chart-bubble',
           title: 'کارمزد برداشت ها',
           to: '/admin/withdraw-fee'

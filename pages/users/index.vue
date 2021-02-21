@@ -7,18 +7,19 @@
           :items="profileList"
           :items-per-page="50"
           hide-default-footer>
-        <template v-slot:item.created_at="{value}">{{value|toFarsiJustDate}}</template>
+        <template v-slot:item.created_at="{value}">{{ value|toFarsiJustDate }}</template>
       </v-data-table>
       <v-pagination class="mt-4"
-          v-model="pagination.current"
-          :length="pagination.total"
-          @input="onPageChange"
-      ></v-pagination>
+                    v-model="pagination.current"
+                    :length="pagination.total"
+                    @input="onPageChange"/>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import {toIndexedList} from "@/models/utils";
+
 export default {
   data() {
     return {
@@ -30,7 +31,7 @@ export default {
         {text: 'سطح دسترسی', value: 'access_level'},
         {text: 'موبایل', value: 'cell_phone'},
         {text: 'زمان ثبت نام', value: 'created_at'}
-        ],
+      ],
       profileList: [],
       pagination: {
         current: 1,
@@ -49,7 +50,7 @@ export default {
       let listWithMeta = await this.$axios.$get('/profiles?page=' + this.pagination.current)
       this.pagination.current = listWithMeta.current_page
       this.pagination.total = listWithMeta.last_page
-      this.profileList = listWithMeta.data.map((item, index) => ({...item, index: index + 1}))
+      this.profileList = toIndexedList(listWithMeta.data)
     },
     goto($item) {
       this.$router.push('/Users/' + $item.user_id)

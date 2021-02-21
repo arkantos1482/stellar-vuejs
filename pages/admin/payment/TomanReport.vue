@@ -1,15 +1,16 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="list" :items-per-page="200" dense hide-default-footer>
-      <template v-slot:item.type="{value}">{{value|toFa}}</template>
-      <template v-slot:item.status="{value}">{{value|toFa}}</template>
-      <template v-slot:item.verify_status="{value}">{{value|toFa}}</template>
-      <template v-slot:item.pay_system_status="{value}">{{value|toFa}}</template>
-      <template v-slot:item.stellar_status="{value}">{{value|toFa}}</template>
+    <v-data-table :headers="headers" :items="list" :items-per-page="200"
+                  hide-default-footer>
+      <template v-slot:item.type="{value}">{{ value|toFa }}</template>
+      <template v-slot:item.status="{value}">{{ value|toFa }}</template>
+      <template v-slot:item.verify_status="{value}">{{ value|toFa }}</template>
+      <template v-slot:item.pay_system_status="{value}">{{ value|toFa }}</template>
+      <template v-slot:item.stellar_status="{value}">{{ value|toFa }}</template>
 
-      <template v-slot:item.verify_updated_at="{value}">{{value|toFarsiDate}}</template>
-      <template v-slot:item.stellar_updated_at="{value}">{{value|toFarsiDate}}</template>
-      <template v-slot:item.created_at="{value}">{{value|toFarsiDate}}</template>
+      <template v-slot:item.verify_updated_at="{value}">{{ value|toFarsiDate }}</template>
+      <template v-slot:item.stellar_updated_at="{value}">{{ value|toFarsiDate }}</template>
+      <template v-slot:item.created_at="{value}">{{ value|toFarsiDate }}</template>
     </v-data-table>
   </div>
 </template>
@@ -26,17 +27,17 @@ export default {
         {value: 'type', text: 'نوع'},
         {value: 'amount', text: 'مقدار'},
         // {value: 'pay_system_amount', text: 'مقدار جیبیت'},
-        {value: 'status', text: 'وضعیت'},
+        // {value: 'status', text: 'وضعیت'},
         {value: 'pay_system_status', text: 'وضعیت جیبیت'},
         {value: 'verify_status', text: 'وضعیت وریفای'},
-        {value: 'verify_updated_at', text: 'تاریخ وریفای'},
         // {value: 'stellar_id', text: 'شناسه استلار'},
         {value: 'stellar_status', text: 'وضعیت استلار'},
-        {value: 'stellar_updated_at', text: 'تاریخ استلار'},
         // {value: 'desc', text: 'توضیحات'},
         // {value: 'error_desc', text: 'توضیح خطا'},
         // {value: 'additional_data', text: 'داده اضافی'},
         {value: 'created_at', text: 'تاریخ ایجاد'},
+        {value: 'verify_updated_at', text: 'تاریخ وریفای'},
+        {value: 'stellar_updated_at', text: 'تاریخ استلار'},
         // {value: 'updated_at', text: 'تاریخ بروزشده'},
       ],
       list: []

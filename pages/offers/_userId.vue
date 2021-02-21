@@ -81,10 +81,13 @@ export default {
     }
   },
   data() {
-    return {offers: []}
+    return {
+      userId: this.$route.params.userId,
+      offers: []
+    }
   },
   async mounted() {
-    this.offers = await this.$axios.$get('/offers')
+    this.offers = await this.$axios.$get('/offers/'+this.userId)
   }
 }
 </script>

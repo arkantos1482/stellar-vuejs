@@ -1,13 +1,27 @@
 <template>
-  <div>
+  <div class="text-center">
+    <v-btn v-show="stellar.link" class="mb-2" color="primary"
+           target="_blank" :href="stellar.link">رهگیری در استلار
+    </v-btn>
+
     <v-data-table :headers="headers" :items="list" :items-per-page="50" hide-default-footer>
       <template v-slot:item.address="{value}"><span class="text-body-2">{{ value }}</span></template>
-      <template v-slot:item.link="{value}"><a target="_blank" :href="value">لینک</a></template>
+      <template v-slot:item.link="{value}">
+        <v-btn x-small color="primary" target="_blank" :href="value">ریزتراکنش</v-btn>
+      </template>
       <template v-slot:item.action="{item}">
         <v-btn x-small color="success" @click="prepareDialog('deposit',item.type,item)">واریز</v-btn>
         <v-btn x-small color="error" @click="prepareDialog('withdraw',item.type,item)">برداشت</v-btn>
       </template>
     </v-data-table>
+
+    <div class="mt-8 ">
+      <v-btn :to="`/wallets/withdraws/all/${payload.user_id}`">برداشت ها</v-btn>
+      <v-btn :to="`/wallets/deposits/all/${payload.user_id}`">واریزها</v-btn>
+      <v-btn :to="`/offers/active/${payload.user_id}`">سفارشات فعال</v-btn>
+      <v-btn :to="`/offers/${payload.user_id}`">سفارشات</v-btn>
+      <v-btn :to="`/trades/${payload.user_id}`">معاملات</v-btn>
+    </div>
 
     <v-dialog width="400" v-model="d.ops">
       <v-card class="pa-6 text-center">
@@ -23,7 +37,8 @@
 </template>
 
 <script>
-import pstopper from "@/mixins/pstopper";
+import pstopper from "@/mixins/pstopper"
+import collect from "collect.js"
 
 export default {
   name: "AccountDetail",
@@ -33,12 +48,12 @@ export default {
       headers: [
         {value: 'type', text: 'نوع'},
         {value: 'balance', text: 'موجودی'},
-        {value: 'address', text: 'آدرس'},
+        {value: 'address', text: 'آدرس', align: 'center'},
         {value: 'link', text: 'ریز تراکنش ها'},
         {value: 'action', text: 'تصحیح', sortable: false}
       ],
       list: [],
-
+      stellar: {address: '', link: ''},
       d: {ops: false},
       l: {payment: false},
 
@@ -51,7 +66,9 @@ export default {
     }
   },
   async mounted() {
-    this.list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
+    let list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
+    this.stellar = collect(list).filter(item => item.type === 'MAIN').first()
+    this.list = collect(list).reject((item => item.type === 'MAIN')).all()
   },
   methods: {
     prepareDialog(action, coin) {

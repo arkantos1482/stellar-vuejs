@@ -327,7 +327,6 @@ export default {
     }
   },
   async mounted() {
-    window.rex = persianRex
     this.$refs.stepOneForm.resetValidation()
     this.user = await this.$axios.$get('/profiles/' + this.userId);
     let id = this.isAdmin ? this.userId : 'me'

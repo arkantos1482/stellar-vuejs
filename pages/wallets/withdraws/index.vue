@@ -36,7 +36,11 @@ import collect from 'collect.js'
 
 export default {
   name: "Withdraws",
-  props: {title: {type: String, default: 'لیست برداشت ها'}, type: String},
+  props: {
+    title: {type: String, default: 'لیست برداشت ها'},
+    userId: {type: String, default: 'me'},
+    type: String
+  },
   filters: {
     toFarsiTitle(val) {
       return (val === 'success') ? 'موفقیت آمیز' : 'ناموفق'
@@ -48,11 +52,10 @@ export default {
   data() {
     return {
       withdraws: [],
-      type: this.$route.params.type,
     }
   },
   async mounted() {
-    let list1 = (await this.$axios.$get('/payments/withdraws'))
+    let list1 = (await this.$axios.$get('/payments/withdraws/' + this.userId))
     let list2 = collect(list1)
     if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.coin)
     this.withdraws = list2.all()

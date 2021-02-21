@@ -1,7 +1,6 @@
 <template>
   <div>
-    <v-data-table dense
-                  :headers="headers"
+    <v-data-table :headers="headers"
                   :items-per-page="200"
                   :items="list"
                   hide-default-footer
@@ -38,7 +37,7 @@ export default {
   },
   methods: {
     async goto(item, etc) {
-      await this.$router.push('/admin/accounts/' + item.user_id)
+      await this.$router.push(`/admin/transactions/${item.user_id}`)
     }
   },
 }

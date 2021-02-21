@@ -142,7 +142,7 @@
 
 <script>
 import collect from "collect.js";
-import ActiveOffers from "@/pages/ActiveOffers";
+import ActiveOffers from "@/pages/offers/active/_userId";
 import {TradingVue, DataCube} from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/components/OrderTextField";

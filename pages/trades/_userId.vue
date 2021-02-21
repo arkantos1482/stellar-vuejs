@@ -70,11 +70,12 @@ export default {
 
   data() {
     return {
+      userId: this.$route.params.userId,
       trades: []
     }
   },
   async mounted() {
-    this.trades = (await this.$axios.$get('/trades'))
+    this.trades = (await this.$axios.$get('/trades/' + this.userId))
     // let list = (await this.$axios.$get('/effects'))._embedded.records;
     // this.trades = collect(list)
     //     .filter(item => item.type === 'trade')
