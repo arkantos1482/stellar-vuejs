@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <v-data-table :headers="headers" :items="list" :items-per-page="200"
                   hide-default-footer>
       <template v-slot:item.type="{value}">{{ value|toFa }}</template>
@@ -50,5 +50,8 @@ export default {
 </script>
 
 <style scoped>
-
+.container >>> td{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 </style>

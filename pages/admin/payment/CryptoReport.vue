@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <v-data-table :headers="headers"
                   :items="list"
                   hide-default-footer :items-per-page="200">
@@ -47,5 +47,8 @@ export default {
 </script>
 
 <style scoped>
-
+.container >>> td{
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 </style>
