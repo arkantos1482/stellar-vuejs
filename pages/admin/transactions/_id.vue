@@ -1,5 +1,6 @@
 <template>
   <div class="text-center">
+    <p class="text-h3 text-right"> {{user.email}}</p>
     <v-btn v-show="stellar.link" class="mb-2" color="primary"
            target="_blank" :href="stellar.link">رهگیری در استلار
     </v-btn>
@@ -56,7 +57,7 @@ export default {
       stellar: {address: '', link: ''},
       d: {ops: false},
       l: {payment: false},
-
+      user: '',
       action: '',
       payload: {
         user_id: this.$route.params.id,
@@ -69,6 +70,8 @@ export default {
     let list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
     this.stellar = collect(list).filter(item => item.type === 'MAIN').first()
     this.list = collect(list).reject((item => item.type === 'MAIN')).all()
+
+    this.user = await this.$axios.$get('/profiles/' + this.payload.user_id);
   },
   methods: {
     prepareDialog(action, coin) {
