@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-data-table :headers="headers"
-                  :items="list"
+                  :items="list" sort-by="created_at" sort-desc
                   hide-default-footer :items-per-page="200">
       <template v-slot:item.type="{value}">{{ value|toFa }}</template>
       <template v-slot:item.crypto_status="{value}">{{ value|toFa }}</template>
