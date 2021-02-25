@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <p class="text-h3 text-right"> {{user.email}}</p>
+    <p class="text-h3 text-right"> {{ user.email }}</p>
     <v-btn v-show="stellar.link" class="mb-2" color="primary"
            target="_blank" :href="stellar.link">رهگیری در استلار
     </v-btn>
@@ -67,13 +67,15 @@ export default {
     }
   },
   async mounted() {
-    let list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
-    this.stellar = collect(list).filter(item => item.type === 'MAIN').first()
-    this.list = collect(list).reject((item => item.type === 'MAIN')).all()
-
+    await this.getBalances()
     this.user = await this.$axios.$get('/profiles/' + this.payload.user_id);
   },
   methods: {
+    async getBalances() {
+      let list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
+      this.stellar = collect(list).filter(item => item.type === 'MAIN').first()
+      this.list = collect(list).reject((item => item.type === 'MAIN')).all()
+    },
     prepareDialog(action, coin) {
       this.d.ops = true
       this.action = action
@@ -85,6 +87,7 @@ export default {
       this.l.payment = false
       this.d.ops = false
       this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
+      await this.getBalances()
     },
   },
 }
