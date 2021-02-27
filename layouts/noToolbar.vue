@@ -6,13 +6,7 @@
     </v-app-bar>
     <v-main>
       <v-container>
-        <v-alert
-            color="primary" class="px-12 py-6 text-center" colored-border border="left" elevation="2">
-          <v-icon color="primary" large>mdi-cloud-alert</v-icon>
-          <p class="text-h3">سایت در حال بروزرسانی است.</p>
-        </v-alert>
-
-        <!--              <nuxt/>-->
+        <nuxt/>
       </v-container>
       <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
       <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
