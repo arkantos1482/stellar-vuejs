@@ -28,6 +28,7 @@ import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 
 export default {
+  name: 'PairAssetTrades',
   props: ['base', 'counter'],
   filters: {
     toColor(item) {
