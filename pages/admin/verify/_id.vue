@@ -45,6 +45,26 @@
         </tr>
 
         <tr>
+          <td><h2>کارت بانکی۲</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_card_2.firstName + ' ' + kyc.bank_card_2.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_card_2.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_card_2.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_card_2.accountNumber }}</td>
+        </tr>
+
+        <tr>
           <td><h2>شبا</h2></td>
         </tr>
         <tr>
@@ -62,6 +82,26 @@
         <tr>
           <td>شماره حساب</td>
           <td>{{ kyc.bank_shaba.accountNumber }}</td>
+        </tr>
+
+        <tr>
+          <td><h2>شبا۲</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_shaba_2.firstName + ' ' + kyc.bank_shaba_2.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_shaba_2.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_shaba_2.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_shaba_2.accountNumber }}</td>
         </tr>
 
         <tr>
