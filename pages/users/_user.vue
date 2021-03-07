@@ -51,7 +51,8 @@
                         <v-icon color="primary">mdi-camera</v-icon>
                         <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
-                          حداکثر حجم ۵۰۰ کیلوبایت</div>
+                          حداکثر حجم ۵۰۰ کیلوبایت
+                        </div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -94,7 +95,8 @@
                         <v-icon color="primary">mdi-camera</v-icon>
                         <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
-                          حداکثر حجم ۵۰۰ کیلوبایت</div>
+                          حداکثر حجم ۵۰۰ کیلوبایت
+                        </div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -113,11 +115,21 @@
                       v-model="user.bank_card" label="شماره کارت"
                       :disabled="verifyState.bank_card"/>
                   <a-text-field
+                      mask="################"
+                      hint="6037991234567890"
+                      v-model="user.bank_card_2" label="شماره کارت۲"
+                      :disabled="verifyState.bank_card_2"/>
+                  <a-text-field
                       :rules="[rules.required]"
                       mask="AA########################"
                       hint="IR123456789012345678901234"
                       v-model="user.bank_shaba" label="شماره شبا"
                       :disabled="verifyState.bank_shaba"/>
+                  <a-text-field
+                      mask="AA########################"
+                      hint="IR123456789012345678901234"
+                      v-model="user.bank_shaba_2" label="شماره شبا۲"
+                      :disabled="verifyState.bank_shaba_2"/>
                 </v-col>
               </v-row>
             </v-form>
@@ -172,7 +184,8 @@
                         <v-icon color="primary">mdi-camera</v-icon>
                         <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
-                          حداکثر حجم ۵۰۰ کیلوبایت</div>
+                          حداکثر حجم ۵۰۰ کیلوبایت
+                        </div>
                       </v-row>
                     </vue2-dropzone>
                   </div>
@@ -225,7 +238,6 @@ import ACard from "@/components/ACard";
 import Otp from "@/components/Otp";
 import plist from '@/models/provinceList'
 import collect from 'collect.js'
-import persianRex from 'persian-rex'
 
 export default {
   mixins: [pstopper],
@@ -311,7 +323,9 @@ export default {
         postal_code: '',
         phone: '',
         bank_card: '',
+        bank_card_2: '',
         bank_shaba: '',
+        bank_shaba_2: '',
         bank_account: ''
       },
       verifyState: {
@@ -321,7 +335,9 @@ export default {
         ssn: false,
         address: false,
         bank_card: false,
+        bank_card_2: false,
         bank_shaba: false,
+        bank_shaba_2: false,
         bank_account: false
       },
     }

@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-col cols="9">
-      <v-carousel >
+      <v-carousel>
         <v-carousel-item contain :src="docs.ssn"/>
         <v-carousel-item contain :src="docs.bill"/>
         <v-carousel-item contain :src="docs.bank_card"/>
@@ -45,6 +45,26 @@
         </tr>
 
         <tr>
+          <td><h2>کارت بانکی۲</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_card_2.firstName + ' ' + kyc.bank_card_2.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_card_2.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_card_2.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_card_2.accountNumber }}</td>
+        </tr>
+
+        <tr>
           <td><h2>شبا</h2></td>
         </tr>
         <tr>
@@ -62,6 +82,26 @@
         <tr>
           <td>شماره حساب</td>
           <td>{{ kyc.bank_shaba.accountNumber }}</td>
+        </tr>
+
+        <tr>
+          <td><h2>شبا۲</h2></td>
+        </tr>
+        <tr>
+          <td>نام و نام خانوادگی</td>
+          <td>{{ kyc.bank_shaba_2.firstName + ' ' + kyc.bank_shaba_2.lastName }}</td>
+        </tr>
+        <tr>
+          <td>نام بانک</td>
+          <td>{{ kyc.bank_shaba_2.bank }}</td>
+        </tr>
+        <tr>
+          <td>شبا</td>
+          <td>{{ kyc.bank_shaba_2.iban }}</td>
+        </tr>
+        <tr>
+          <td>شماره حساب</td>
+          <td>{{ kyc.bank_shaba_2.accountNumber }}</td>
         </tr>
 
         <tr>
@@ -93,7 +133,9 @@
         <v-col cols="4">
           <h3>اطلاعات مالی</h3>
           <v-switch label="شماره کارت" v-model="state.bank_card"/>
+          <v-switch label="شماره کارت ۲" v-model="state.bank_card_2"/>
           <v-switch label="شبا" v-model="state.bank_shaba"/>
+          <v-switch label="شبا ۲" v-model="state.bank_shaba_2"/>
         </v-col>
       </v-row>
 
@@ -115,7 +157,9 @@ export default {
       l: {apply: false},
       kyc: {
         bank_card: '',
+        bank_card_2: '',
         bank_shaba: '',
+        bank_shaba_2: '',
         postal_code: '',
         match_ssn_mobile: '',
       },
@@ -126,7 +170,9 @@ export default {
         ssn: false,
         address: false,
         bank_card: false,
+        bank_card_2: false,
         bank_shaba: false,
+        bank_shaba_2: false,
         bank_account: false
       },
       userId: this.$route.params.id,
@@ -142,8 +188,12 @@ export default {
         .then(res => this.kyc.postal_code = res)
     this.$axios.$get('/kyc/' + this.userId + '/bank-card')
         .then(res => this.kyc.bank_card = res)
+    this.$axios.$get('/kyc/' + this.userId + '/bank-card-2')
+        .then(res => this.kyc.bank_card_2 = res)
     this.$axios.$get('/kyc/' + this.userId + '/bank-shaba')
         .then(res => this.kyc.bank_shaba = res)
+    this.$axios.$get('/kyc/' + this.userId + '/bank-shaba-2')
+        .then(res => this.kyc.bank_shaba_2 = res)
     this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
         .then(res => this.kyc.match_ssn_mobile = res)
 

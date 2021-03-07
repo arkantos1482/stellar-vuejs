@@ -137,6 +137,8 @@
     </div>
 
     <active-offers class="mt-4"/>
+
+    <pair-asset-trades :base="baseAsset" :counter="counterAsset"/>
   </div>
 </template>
 
@@ -148,9 +150,10 @@ import {mapActions} from "vuex";
 import OrderTextField from "@/components/OrderTextField";
 import {safeDecimal} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
+import PairAssetTrades from "@/pages/trades/index";
 
 export default {
-  components: {OrderTextField, ActiveOffers, TradingVue},
+  components: {PairAssetTrades, OrderTextField, ActiveOffers, TradingVue},
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false

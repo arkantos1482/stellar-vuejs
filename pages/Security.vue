@@ -12,6 +12,44 @@
         </v-btn>
       </div>
     </a-card>
+
+    <a-card divider class="mt-4" title="تغییر رمز عبور">
+      <v-row justify="center">
+      <v-col cols="4">
+        <v-form @submit.prevent="changePass" v-model="form" ref="form">
+          <a-text-field eng :type="showPass ? 'text' : 'password'"
+                        label="رمز عبور فعلی" v-model="dto.old_password">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </a-text-field>
+
+          <a-text-field eng :type="showPass ? 'text' : 'password'"
+                        :rules="[rules.required, rules.password, rules.counter]"
+                        label="رمز عبور جدید"
+                        v-model="dto.new_password">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+
+          </a-text-field>
+          <a-text-field eng :type="showPass ? 'text' : 'password'"
+                        label="تکرار رمز عبور جدید"
+                        v-model="repeatNewPass">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </a-text-field>
+
+          <div class="text-center mt-8">
+            <v-btn type="submit" :loading="l.changePass"
+                   color="error" depressed> تغییر رمز عبور
+            </v-btn>
+          </div>
+        </v-form>
+      </v-col>
+      </v-row>
+    </a-card>
   </div>
 
 </template>
@@ -19,9 +57,11 @@
 <script>
 import ACard from "@/components/ACard";
 import pstopper from "@/mixins/pstopper";
+import ATextField from "@/components/ATextField";
+import {error, success} from "@/models/snackBus";
 
 export default {
-  components: {ACard},
+  components: {ATextField, ACard},
   mixins: [pstopper],
   computed: {
     mfaIsEnabled() {
@@ -49,7 +89,27 @@ export default {
   data() {
     return {
       mfa_method: '',
-      l: {toggle: false}
+      dto: {
+        old_password: '',
+        new_password: '',
+      },
+      repeatNewPass: '',
+      showPass: false,
+      form: false,
+      rules: {
+        required: value => !!value || 'الزامی است',
+        counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
+        email: value => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'ایمیل درست نیست'
+        },
+        password: value => {
+          // at least number - small - capital
+          const pattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).+$/
+          return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد'
+        },
+      },
+      l: {toggle: false, changePass: false}
     }
   },
   async mounted() {
@@ -62,6 +122,19 @@ export default {
         mfa_method: this.getInverted
       })
       this.l.toggle = false
+    },
+    async changePass() {
+      this.$refs.form.validate()
+      if (this.form) {
+        if (this.dto.new_password === this.repeatNewPass) {
+          this.l.changePass = true
+          await this.$axios.$post('/change-pass', this.dto)
+          this.l.changePass = false
+          success('رمز عبور با موفقیت تغییر داده شد.')
+        } else {
+          error('رمز عبور با تکرار تطابق ندارد.')
+        }
+      }
     }
   }
 }
