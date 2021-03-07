@@ -55,7 +55,7 @@ export default {
     ],
 
     router: {
-        base: '/',
+        base: '/app/',
         middleware: ['auth']
     },
 
