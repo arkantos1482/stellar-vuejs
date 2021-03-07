@@ -1,28 +1,10 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-img max-width="128" max-height="48"
-             :src="require('../assets/images/logo.png')"/>
-    </v-app-bar>
-    <v-main>
-      <v-container>
-        <v-alert
-            color="primary" class="px-12 py-6 text-center" colored-border border="left" elevation="2">
-          <v-icon color="primary" large>mdi-cloud-alert</v-icon>
-          <p class="text-h3">سایت در حال بروزرسانی است.</p>
-        </v-alert>
-
-        <!--              <nuxt/>-->
-      </v-container>
-      <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
-      <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
-      <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
-    </v-main>
-
-    <v-footer class="text-h6 grey--text d-flex justify-center" style="z-index: 0" app>
-      <p class="mb-1"> کلیه حقوق برای بیترا محفوظ است.</p>
-    </v-footer>
-  </v-app>
+  <div style="  background-color: #eaeaea; height: 100vh">
+    <v-img style="display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;" :src="require('../assets/images/underconstructionF.jpg')"/>
+  </div>
 </template>
 
 <script>
