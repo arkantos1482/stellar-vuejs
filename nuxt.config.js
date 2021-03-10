@@ -55,7 +55,7 @@ export default {
     ],
 
     router: {
-        base: '/app/',
+        // base: '/app/',
         middleware: ['auth']
     },
 
@@ -102,9 +102,10 @@ export default {
         }
     },
 
-    generate: {
-        dir: 'dist/app'
-    },
+    // generate: {
+    //     dir: 'dist/app'
+    // },
+
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
         // extend(config, {isDev}) {
