@@ -136,8 +136,10 @@
 
     </div>
 
-    <active-offers class="mt-4"/>
+    <div class="text-h4 mb-2 mt-4 text-right">سفارشات در جریان</div>
+    <active-offers />
 
+    <div class="text-h4 mb-2 mt-4 text-right">معاملات اخیر</div>
     <pair-asset-trades :base="baseAsset" :counter="counterAsset"/>
   </div>
 </template>
