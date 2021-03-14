@@ -26,7 +26,7 @@
         </p>
 
         <v-form class="mt-12" @submit.prevent="onDeposit" v-model="v.deposit" ref="form">
-          <a-text-field mask="####################"
+          <a-text-field separated mask="####################"
                         :rules="[rules.required,rules.moreThanBillion]"
                         hint="حداقل میزان واریز ۱۰۰هزار تومان می باشد." v-model="amount" filled label="مقدار تومان"/>
           <v-btn type="submit" :loading="l.deposit"

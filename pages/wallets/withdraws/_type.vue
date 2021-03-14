@@ -10,10 +10,12 @@
       </p>
 
       <v-form @submit.prevent="withdraw" v-model="form" ref="form">
-        <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مبلغ"/>
+        <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
+        <p class="mt-1 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> می باشد.</p>
+        <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="black--text">{{ actualAmount }}</span> می باشد.</p>
         <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
-        <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد شد.</p>
-        <p class="mt-4 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> است.</p>
+        <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
+          شد.</p>
         <v-btn type="submit" :loading="l.withdraw"
                block color="primary" class="mt-4">{{ actionTitle }}
         </v-btn>
@@ -47,6 +49,10 @@ export default {
     },
     mask() {
       return ('AMN' === this.type || 'EBG' === this.type) ? '###############' : ''
+    },
+    actualAmount() {
+      let amount = this.amount - this.withdrawFee;
+      return amount > 0 ? amount : 0
     }
   },
   data() {
