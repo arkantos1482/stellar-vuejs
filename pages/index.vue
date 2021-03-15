@@ -39,21 +39,22 @@
           </v-col>
         </div>
 
-        <div class="d-flex justify-center px-4">
-          <trading-vue dir="ltr"
-                       toolbar
-                       :chart-config="chartConfig"
-                       ref="tradingVue"
-                       style="z-index: 0"
-                       color-back="white"
-                       color-grid="grey"
-                       color-text="grey"
-                       color-title="black"
-                       :height="240"
-                       :width="windowWidth*42/100"
-                       :title-txt="tradingVueLabel"
-                       :data="tradeData"></trading-vue>
-        </div>
+
+        <t-v-chart-container class="py-4" :symbol="pairAsset|removeSlash"/>
+        <!--          <trading-vue dir="ltr"-->
+        <!--                       toolbar-->
+        <!--                       :chart-config="chartConfig"-->
+        <!--                       ref="tradingVue"-->
+        <!--                       style="z-index: 0"-->
+        <!--                       color-back="white"-->
+        <!--                       color-grid="grey"-->
+        <!--                       color-text="grey"-->
+        <!--                       color-title="black"-->
+        <!--                       :height="240"-->
+        <!--                       :width="windowWidth*42/100"-->
+        <!--                       :title-txt="tradingVueLabel"-->
+        <!--                       :data="tradeData"></trading-vue>-->
+
 
         <div class="d-flex justify-center text-display-1">
           <v-col cols="6" class="px-2 py-0">
@@ -137,7 +138,7 @@
     </div>
 
     <div class="text-h4 mb-2 mt-4 text-right">سفارشات در جریان</div>
-    <active-offers />
+    <active-offers/>
 
     <div class="text-h4 mb-2 mt-4 text-right">معاملات اخیر</div>
     <pair-asset-trades :base="baseAsset" :counter="counterAsset"/>
@@ -153,12 +154,18 @@ import OrderTextField from "@/components/OrderTextField";
 import {safeDecimal} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 import PairAssetTrades from "@/pages/trades/index";
+import TVChartContainer from "@/components/TVChartContainer";
 
 export default {
-  components: {PairAssetTrades, OrderTextField, ActiveOffers, TradingVue},
+  components: {TVChartContainer, PairAssetTrades, OrderTextField, ActiveOffers, TradingVue},
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
+  },
+  filters:{
+    removeSlash(val){
+      return val.replace('/','').replace('IRR','IRT')
+    }
   },
   watch: {
     pairAsset(val) {
