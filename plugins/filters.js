@@ -20,7 +20,7 @@ Vue.filter('toFarsiJustDate', (val) => {
 })
 
 Vue.filter('irtFix', (asset) => {
-    return (asset === 'IRR') ? 'IRT' : asset
+    return asset.replace('IRR', 'IRT').replace('EBG', 'ART')
 })
 
 const toFarsiCoin = (type) => {
@@ -31,7 +31,7 @@ const toFarsiCoin = (type) => {
     if (typeUp === 'LTC') value = 'لایت کوین'
     if (typeUp === 'BCH') value = 'بیت کوین کش'
     if (typeUp === 'AMN') value = 'امین'
-    if (typeUp === 'EBG') value = 'برگ'
+    if (typeUp === 'EBG') value = 'آرت کوین'
     if (typeUp === 'ETH') value = 'اتریوم'
     if (typeUp === 'USDT') value = 'تتر'
     if (typeUp === 'IRR') value = 'تومان'
@@ -54,7 +54,7 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'LTC') value = require('@/assets/images/LTC.svg')
     if (typeUp === 'BCH') value = require('@/assets/images/Bch.svg')
     if (typeUp === 'AMN') value = require('@/assets/images/AminToken.svg')
-    if (typeUp === 'EBG') value = require('@/assets/images/Barg.jpeg')
+    if (typeUp === 'EBG') value = require('@/assets/images/art_coin.png')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')
     if (typeUp === 'IRR') value = require('@/assets/images/IRR.png')

@@ -27,7 +27,7 @@ export default {
         {text: 'بیت کش', value: 'BCH'},
         {text: 'لایت کوین', value: 'LTC'},
         {text: 'امین', value: 'AMN'},
-        {text: 'برگ', value: 'EBG'},
+        {text: 'آرت کوین', value: 'EBG'},
       ],
       list: [],
     }
