@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <div class="d-flex align-items-center">
+      <div class="d-flex align-center">
         <v-img class="ml-2" max-width="36" max-height="36"
                :src="type|toCoinIcon"/>
         {{ namad }}

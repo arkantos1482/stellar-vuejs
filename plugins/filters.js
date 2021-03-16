@@ -54,7 +54,7 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'LTC') value = require('@/assets/images/LTC.svg')
     if (typeUp === 'BCH') value = require('@/assets/images/Bch.svg')
     if (typeUp === 'AMN') value = require('@/assets/images/AminToken.svg')
-    if (typeUp === 'EBG') value = require('@/assets/images/art_coin.png')
+    if (typeUp === 'EBG') value = require('@/assets/images/art_coin.jpeg')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')
     if (typeUp === 'IRR') value = require('@/assets/images/IRR.png')
