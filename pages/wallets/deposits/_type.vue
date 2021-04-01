@@ -33,10 +33,10 @@ export default {
       return this.$store.state.balances.list[this.type]
     },
     actionTitle() {
-      return ('AMN' === this.type || 'EBG' === this.type) ? 'دریافت' : 'واریز'
+      return this.isInternal() ? 'دریافت' : 'واریز'
     },
     listTitle() {
-      return ('AMN' === this.type || 'EBG' === this.type) ? 'لیست دریافت ها' : 'لیست واریزها'
+      return this.isInternal() ? 'لیست دریافت ها' : 'لیست واریزها'
     }
   },
   data() {
@@ -57,6 +57,9 @@ export default {
       this.l.create = true
       this.address = await this.$axios.$post('/crypto/' + this.type.toLowerCase() + '/address/create')
       this.l.create = false
+    },
+    isInternal() {
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK'].includes(this.type.toUpperCase())
     }
   }
 }

@@ -20,22 +20,25 @@ Vue.filter('toFarsiJustDate', (val) => {
 })
 
 Vue.filter('irtFix', (asset) => {
-    return asset.replace('IRR', 'IRT').replace('EBG', 'ART')
+    return asset.replace('IRR', 'IRT')
 })
 
 const toFarsiCoin = (type) => {
     let typeUp = type.toUpperCase()
-
-    let value = typeUp
-    if (typeUp === 'BTC') value = 'بیت کوین'
-    if (typeUp === 'LTC') value = 'لایت کوین'
-    if (typeUp === 'BCH') value = 'بیت کوین کش'
-    if (typeUp === 'AMN') value = 'امین'
-    if (typeUp === 'EBG') value = 'آرت کوین'
-    if (typeUp === 'ETH') value = 'اتریوم'
-    if (typeUp === 'USDT') value = 'تتر'
-    if (typeUp === 'IRR') value = 'تومان'
-    return value
+    const coins = {
+        BTC: 'بیت کوین',
+        LTC: 'لایت کوین',
+        BCH: 'بیت کوین کش',
+        AMN: 'امین',
+        EBG: 'برگ',
+        ETH: 'اتریوم',
+        USDT: 'تتر',
+        IRR: 'تومان',
+        ZRK: 'زریک',
+        ART: 'آرت کوین',
+        SHA: 'شکوفه آلو'
+    }
+    return coins[typeUp]
 }
 
 Vue.filter('toFarsiCoin', toFarsiCoin)
@@ -55,6 +58,9 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'BCH') value = require('@/assets/images/Bch.svg')
     if (typeUp === 'AMN') value = require('@/assets/images/AminToken.svg')
     if (typeUp === 'EBG') value = require('@/assets/images/art_coin.jpeg')
+    if (typeUp === 'ART') value = require('@/assets/images/art_coin.jpeg')
+    if (typeUp === 'ZRK') value = require('@/assets/images/art_coin.jpeg')
+    if (typeUp === 'SHA') value = require('@/assets/images/art_coin.jpeg')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')
     if (typeUp === 'IRR') value = require('@/assets/images/IRR.png')

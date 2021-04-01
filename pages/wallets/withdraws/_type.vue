@@ -42,13 +42,13 @@ export default {
       return this.$store.state.balances.list[this.type]
     },
     actionTitle() {
-      return ('AMN' === this.type || 'EBG' === this.type) ? 'ارسال' : 'برداشت'
+      return this.isInternal() ? 'ارسال' : 'برداشت'
     },
     listTitle() {
-      return ('AMN' === this.type || 'EBG' === this.type) ? 'لیست ارسال ها' : 'لیست برداشت ها'
+      return this.isInternal() ? 'لیست ارسال ها' : 'لیست برداشت ها'
     },
     mask() {
-      return ('AMN' === this.type || 'EBG' === this.type) ? '###############' : ''
+      return this.isInternal() ? '###############' : ''
     },
     actualAmount() {
       let amount = this.amount - this.withdrawFee;
@@ -107,6 +107,9 @@ export default {
     },
     onBalanceClicked(event) {
       this.amount = event
+    },
+    isInternal() {
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK'].includes(this.type)
     }
   }
 }

@@ -22,7 +22,7 @@
 export default {
   data() {
     return {
-      items: ['BTC', 'ETH', 'USDT', 'LTC', 'BCH', 'AMN', 'EBG']
+      items: ['BTC', 'ETH', 'USDT', 'LTC', 'BCH', 'AMN', 'EBG','ART','ZRK','SHA']
     }
   },
   methods: {

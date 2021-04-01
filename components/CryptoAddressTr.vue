@@ -31,11 +31,9 @@ export default {
   computed: {
     isRefreshDisabled() {
       const type = this.type.toUpperCase();
-      return 'AMN' === type || 'EBG' === type || 'IRR' === type
+      return 'IRR' === type || this.isInternal()
     },
     isDepositDisabled() {
-      const type = this.type.toUpperCase();
-      // return 'AMN' === type || 'EBG' === type
       return false
     },
     isWithdrawDisabled() {
@@ -44,12 +42,10 @@ export default {
       // return false
     },
     withdrawLabel() {
-      const type = this.type.toUpperCase();
-      return ('AMN' === type || 'EBG' === type) ? 'ارسال' : 'برداشت'
+      return this.isInternal() ? 'ارسال' : 'برداشت'
     },
     depositLabel() {
-      const type = this.type.toUpperCase();
-      return ('AMN' === type || 'EBG' === type) ? 'دریافت' : 'واریز'
+      return this.isInternal() ? 'دریافت' : 'واریز'
     }
   },
   data() {
@@ -70,6 +66,9 @@ export default {
       this.syncResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
       await this.$store.dispatch('balances/refresh')
       this.l.sync = false
+    },
+    isInternal() {
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK'].includes(this.type.toUpperCase())
     }
   }
 }
