@@ -15,11 +15,12 @@
       <crypto-address-tr namad="زریک" type="zrk" :balance="balances.ZRK"/>
 <!--      <crypto-address-tr namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>-->
       <crypto-address-tr namad="تومان" type="irr" :balance="balances.IRR"/>
-      <crypto-address-tr namad="بیت کوین" type="btc" :balance="balances.BTC"/>
-      <crypto-address-tr namad="اتریوم" type="eth" :balance="balances.ETH"/>
-      <crypto-address-tr namad="لایت کوین" type="ltc" :balance="balances.LTC"/>
-      <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>
-      <crypto-address-tr namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>
+
+<!--      <crypto-address-tr namad="بیت کوین" type="btc" :balance="balances.BTC"/>-->
+<!--      <crypto-address-tr namad="اتریوم" type="eth" :balance="balances.ETH"/>-->
+<!--      <crypto-address-tr namad="لایت کوین" type="ltc" :balance="balances.LTC"/>-->
+<!--      <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>-->
+<!--      <crypto-address-tr namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>-->
       </tbody>
     </v-simple-table>
   </v-card>
