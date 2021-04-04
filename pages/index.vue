@@ -29,7 +29,7 @@
           <v-tabs v-model="tabIndex">
             <v-tab>تومان</v-tab>
             <v-tab>تتر</v-tab>
-            <v-tab>رمزارز به رمزارز</v-tab>
+            <!--            <v-tab>رمزارز به رمزارز</v-tab>-->
           </v-tabs>
 
           <v-col cols="4">
@@ -162,9 +162,9 @@ export default {
     this.l.buy = false
     this.l.sell = false
   },
-  filters:{
-    removeSlash(val){
-      return val.replace('/','').replace('IRR','IRT')
+  filters: {
+    removeSlash(val) {
+      return val.replace('/', '').replace('IRR', 'IRT')
     }
   },
   watch: {
@@ -284,13 +284,17 @@ export default {
   data() {
     return {
       list: [
-        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR'],
-        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT'],
+        // ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR'],
+        ['ART/IRR', 'ZRK/IRR'],
+        // ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT'],
+        ['ART/USDT', 'ZRK/USDT',],
         ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,
-      pairAsset: 'BTC/IRR',
-      baseAsset: 'BTC',
+      // pairAsset: 'BTC/IRR',
+      pairAsset: 'ART/IRR',
+      // baseAsset: 'BTC',
+      baseAsset: 'ART',
       counterAsset: 'IRR',
       interval: {offers: null, trades: null},
       windowWidth: window.innerWidth,
