@@ -1,12 +1,17 @@
 <template>
   <div class="fullscreen d-flex justify-center align-center">
     <v-card width="85vw" height="85vh" light>
-      <a-row>
-        <v-col cols="6" class="theback">
-          <v-img width="100%" height="100%" :src="require('../assets/images/logo.png')"/>
+      <a-row class="align-stretch" style="height:100%">
+        <v-col cols="6" class="theback d-flex align-center justify-center">
+          <slot name="pic"></slot>
         </v-col>
         <v-col cols="6">
-          <slot></slot>
+          <div class="text-center py-12 px-16">
+            <div class="px-8">
+              <div class="text-h4">{{ title }}</div>
+              <slot></slot>
+            </div>
+          </div>
         </v-col>
       </a-row>
     </v-card>
@@ -17,6 +22,7 @@
 <script>
 export default {
   name: "TwoSidedPanel",
+  props: ['title']
 }
 </script>
 

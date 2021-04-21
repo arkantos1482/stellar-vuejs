@@ -1,6 +1,10 @@
 <template>
-  <two-sided-panel>
-    <login-reg-card dir="ltr" title="ایجاد رمز عبور جدید">
+  <two-sided-panel title="ایجاد رمز عبور جدید">
+    <template v-slot:pic>
+      <v-img max-width="280px" max-height="280px"
+             :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
+    </template>
+    <div dir="ltr">
       <v-form v-model="form" @submit.prevent="onSend" ref="form">
         <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
                       :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
@@ -18,7 +22,7 @@
                block color="primary" class="mt-8">تایید
         </v-btn>
       </v-form>
-    </login-reg-card>
+    </div>
   </two-sided-panel>
 </template>
 

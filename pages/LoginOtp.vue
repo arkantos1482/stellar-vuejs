@@ -1,9 +1,12 @@
 <template>
-  <two-sided-panel>
-    <login-reg-card title="تایید کد دو عاملی"
-                    subtitle="کد تایید ۶رقمی ارسال شده به شماره موبایل خود را وارد کنید.">
+  <two-sided-panel title="تایید کد دو عاملی">
+    <template v-slot:pic>
+      <v-img max-width="280px" max-height="280px"
+             :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
+    </template>
+    <div>
       <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
-    </login-reg-card>
+    </div>
   </two-sided-panel>
 </template>
 

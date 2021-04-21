@@ -11,16 +11,16 @@
   <!--  />-->
 
   <div class="text-right">
-    <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
+    <p class="mb-n2 mt-4">{{ label }}</p><br>
     <div class="d-flex gray-border">
-      <input class="text-field input-border text-h6"
-             :class="{'red-border':shouldValidate ,'py-2':eng, eng:eng, ef1:eng,ef2:eng,
+      <slot> </slot>
+      <input class="text-field input-border py-2"
+             :class="{'red-border':shouldValidate , eng:eng, ef1:eng,ef2:eng,
              'dark-theme-text':isDark,'white-theme-text':!isDark}"
              :disabled="disabled" :type="type"
              :placeholder="hint"
              :value="myText" @input="emit"
              v-mask="mask">
-      <slot></slot>
     </div>
     <p v-show="shouldValidate" class="red--text text-body-2 mt-2">{{ errorBucket[0] }}</p>
   </div>

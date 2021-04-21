@@ -1,6 +1,10 @@
 <template>
-  <two-sided-panel>
-    <login-reg-card dir="ltr" title="بازیابی رمز عبور">
+  <two-sided-panel title="بازیابی رمز عبور">
+    <template v-slot:pic>
+      <v-img max-width="280px" max-height="280px"
+             :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
+    </template>
+    <div dir="ltr">
       <v-form v-model="form" @submit.prevent="onSubmit" ref="form">
         <a-text-field eng :rules="[rules.required, rules.email]"
                       v-model="email" label="ایمیل"
@@ -10,10 +14,10 @@
         </v-btn>
       </v-form>
       <div>
-        <span class="text-h6">رمزتان را به خاطر دارید؟</span>
-        <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
+        <span class="">رمزتان را به خاطر دارید؟</span>
+        <nuxt-link class="" to="/Login">ورود</nuxt-link>
       </div>
-    </login-reg-card>
+    </div>
   </two-sided-panel>
 </template>
 

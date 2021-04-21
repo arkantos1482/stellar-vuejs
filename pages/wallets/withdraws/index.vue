@@ -5,7 +5,7 @@
       <v-row>
         <v-select label="نوع" v-model="coin" :items="coinList"></v-select>
         <div class="mt-4">
-          <p class="text-h6 mb-1">تاریخ برداشت از</p>
+          <p class=" mb-1">تاریخ برداشت از</p>
           <custom-date-picker v-model="date.from">
             <template slot="label">
               test label template
@@ -13,7 +13,7 @@
           </custom-date-picker>
         </div>
         <div class="mt-4">
-          <p class="text-h6 mb-1">تاریخ برداشت تا</p>
+          <p class=" mb-1">تاریخ برداشت تا</p>
           <custom-date-picker v-model="date.to">
             <template slot="label">
             </template>

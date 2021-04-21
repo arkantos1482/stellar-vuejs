@@ -8,12 +8,12 @@
         </p>
         <v-row>
           <v-col class="text-center">
-            <p class="text-h6">درصد شما</p>
+            <p class="">درصد شما</p>
             <p class="text-h5">{{ myPercent + "درصد" }}</p>
           </v-col>
           <v-divider vertical/>
           <v-col class="text-center">
-            <p class="text-h6">درصد دوستان</p>
+            <p class="">درصد دوستان</p>
             <p class="text-h5">{{ guestPercent + "درصد" }}</p>
           </v-col>
         </v-row>

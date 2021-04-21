@@ -37,19 +37,19 @@
                                 :disabled="verifyState.ssn"/>
 
                   <div class="mt-4">
-                    <p class="text-h6 mb-1">تاریخ تولد</p>
+                    <p class=" mb-1">تاریخ تولد</p>
                     <custom-date-picker v-model="user.birth_date" :disabled="verifyState.ssn">
                       <template slot="label">
                       </template>
                     </custom-date-picker>
                   </div>
                   <div class="mt-8">
-                    <p class="text-h6 mb-2">تصویر کارت ملی</p>
+                    <p class=" mb-2">تصویر کارت ملی</p>
                     <vue2-dropzone id="ssn_id"
                                    :options="dropzoneOptions.ssn" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                        <div class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
                           حداکثر حجم ۵۰۰ کیلوبایت
                         </div>
@@ -78,14 +78,14 @@
                   </a-text-field>
 
                   <div class="mt-3">
-                    <p class="text-h6 mb-1">جنسیت</p>
+                    <p class=" mb-1">جنسیت</p>
                     <v-select dense outlined flat
                               :items="genderList" v-model="user.gender"
                               :disabled="verifyState.ssn"/>
                   </div>
 
                   <div class="mt-n2">
-                    <p class="text-h6 mb-2">
+                    <p class=" mb-2">
                       تصویر تایید هویت
                       <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
                     </p>
@@ -93,7 +93,7 @@
                                    :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                        <div class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
                           حداکثر حجم ۵۰۰ کیلوبایت
                         </div>
@@ -139,7 +139,7 @@
               <v-row class="mt-4">
                 <v-col cols="6">
                   <div class="mb-n6">
-                    <p class="text-h6 mb-1">استان</p>
+                    <p class=" mb-1">استان</p>
                     <v-select dense outlined flat :rules="[rules.required]"
                               :items="provinceList" v-model="user.province"
                               :disabled="verifyState.address"/>
@@ -163,7 +163,7 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="mb-n6">
-                    <p class="text-h6 mb-1">شهر</p>
+                    <p class=" mb-1">شهر</p>
                     <v-select dense outlined flat :rules="[rules.required]"
                               :items="cityList(user.province)" v-model="user.city"
                               :disabled="verifyState.address"/>
@@ -177,12 +177,12 @@
                       :disabled="verifyState.address"/>
 
                   <div class="mt-4">
-                    <p class="text-h6 mb-1">تصویر قبض تلفن یا قبوض خدماتی</p>
+                    <p class=" mb-1">تصویر قبض تلفن یا قبوض خدماتی</p>
                     <vue2-dropzone id="bill_id"
                                    :options="dropzoneOptions.bill" :useCustomSlot=true>
                       <v-row align="center">
                         <v-icon color="primary">mdi-camera</v-icon>
-                        <div class="text-h6 mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
+                        <div class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
                           <br>
                           حداکثر حجم ۵۰۰ کیلوبایت
                         </div>

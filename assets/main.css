@@ -32,7 +32,7 @@ th {
     font-weight: 400;
 }
 
-a, p {
+a, p, span, input.text-field {
     font-size: 1.4rem;
 }
 
