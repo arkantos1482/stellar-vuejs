@@ -1,44 +1,46 @@
 <template>
-  <login-reg-card title="ایجاد حساب کاربری"
-                  subtitle="به بیترا خوش آمدید">
-    <v-card-text>
-      <!--      <v-tabs>-->
-      <!--        <v-tab>حقیقی</v-tab>-->
-      <!--        <v-tab>حقوقی</v-tab>-->
-      <!--      </v-tabs>-->
-      <!--      <v-divider/>-->
-      <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
-        <a-text-field eng :rules="[rules.required, rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
-        <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
-                      :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
-          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-          </v-icon>
-        </a-text-field>
-        <a-text-field eng :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور"
-                      v-model="passwordConfirm">
-          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-          </v-icon>
-        </a-text-field>
-        <a-text-field :disabled="hasReferral"
-                      eng filled label="کد معرف(اختیاری)" v-model="referral_code"/>
-        <div dir="rtl">
-          <v-checkbox v-model="terms" :rules="[rules.required]">
-            <template v-slot:label>
-              <a class="text-h6" @click="gotoTerms">قوانین و شرایط</a>
-              <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
-            </template>
-          </v-checkbox>
-        </div>
-        <v-btn type="submit" :loading="l.reg"
-               class="mb-8 mt-4" color="primary" block> تایید
-        </v-btn>
-      </v-form>
-      <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
-      <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
-    </v-card-text>
-  </login-reg-card>
+  <two-sided-panel>
+    <login-reg-card title="ایجاد حساب کاربری"
+                    subtitle="به بیترا خوش آمدید">
+      <v-card-text>
+        <!--      <v-tabs>-->
+        <!--        <v-tab>حقیقی</v-tab>-->
+        <!--        <v-tab>حقوقی</v-tab>-->
+        <!--      </v-tabs>-->
+        <!--      <v-divider/>-->
+        <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
+          <a-text-field eng :rules="[rules.required, rules.email]" class="mt-4" label="ایمیل" v-model="email"/>
+          <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
+                        :type="showPass ? 'text' : 'password'" label="رمز عبور" v-model="password">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </a-text-field>
+          <a-text-field eng :type="showPass ? 'text' : 'password'" label="تکرار رمز عبور"
+                        v-model="passwordConfirm">
+            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+            </v-icon>
+          </a-text-field>
+          <a-text-field :disabled="hasReferral"
+                        eng filled label="کد معرف(اختیاری)" v-model="referral_code"/>
+          <div dir="rtl">
+            <v-checkbox v-model="terms" :rules="[rules.required]">
+              <template v-slot:label>
+                <a class="text-h6" @click="gotoTerms">قوانین و شرایط</a>
+                <span class="text-h6">&nbsp;بیترا را می پذیرم.</span>
+              </template>
+            </v-checkbox>
+          </div>
+          <v-btn type="submit" :loading="l.reg"
+                 class="mb-8 mt-4" color="primary" block> تایید
+          </v-btn>
+        </v-form>
+        <span class="text-h6">قبلا ثبت نام کرده اید؟</span>
+        <nuxt-link class="text-h6" to="/Login">ورود</nuxt-link>
+      </v-card-text>
+    </login-reg-card>
+  </two-sided-panel>
 </template>
 
 <script>

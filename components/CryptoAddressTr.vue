@@ -8,11 +8,14 @@
       </div>
     </td>
     <td>{{ balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td></td>
+    <td></td>
+    <td></td>
     <td>
-      <v-btn :disabled="isDepositDisabled" small depressed color="#02c0761E" class="success--text" @click="onDeposit">
+      <v-btn :disabled="isDepositDisabled" small text color="primary" @click="onDeposit">
         {{ depositLabel }}
       </v-btn>
-      <v-btn :disabled="isWithdrawDisabled" small depressed color="#F849601E" class="error--text" @click="onWithdraw">
+      <v-btn :disabled="isWithdrawDisabled" small text color="primary" class="mx-8" @click="onWithdraw">
         {{ withdrawLabel }}
       </v-btn>
       <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">

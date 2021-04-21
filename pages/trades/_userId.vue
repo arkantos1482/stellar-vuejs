@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%" class="text-center">
     <v-simple-table>
-      <thead class="grey lighten-3">
+      <thead >
       <tr>
         <th class="text-center">نوع</th>
         <th class="text-center">رمزارزها</th>
@@ -34,7 +34,7 @@ import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 
 export default {
-  name: "Trades",
+  name: "myTrades",
   filters: {
     toFarsiSellOrBuy: (val) => val.op_type === 'buy' ? 'خرید' : 'فروش',
     toColor(val) {
@@ -70,7 +70,7 @@ export default {
 
   data() {
     return {
-      userId: this.$route.params.userId,
+      userId: this.$route.params.userId || 'me',
       trades: []
     }
   },

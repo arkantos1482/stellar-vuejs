@@ -14,7 +14,8 @@
     <p class="text-h6 mb-n2 mt-4">{{ label }}</p><br>
     <div class="d-flex gray-border">
       <input class="text-field input-border text-h6"
-             :class="{'red-border':shouldValidate ,'py-2':eng, eng:eng, ef1:eng,ef2:eng}"
+             :class="{'red-border':shouldValidate ,'py-2':eng, eng:eng, ef1:eng,ef2:eng,
+             'dark-theme-text':isDark,'white-theme-text':!isDark}"
              :disabled="disabled" :type="type"
              :placeholder="hint"
              :value="myText" @input="emit"
@@ -57,6 +58,14 @@ export default {
   padding: 6px 12px;
 }
 
+.dark-theme-text {
+  color: white;
+}
+
+.white-theme-text {
+  color: black;
+}
+
 .gray-border {
   border-radius: 4px;
   border: 1px solid #ccc;
@@ -64,8 +73,8 @@ export default {
 
 .input-border:focus {
   outline: none !important;
-  border: 1px solid dodgerblue;
-  box-shadow: 0 0 4px lightblue;
+  border: 1px solid #ffbb00;
+  //box-shadow: 0 0 2px #c4bca9;
 }
 
 .red-border {

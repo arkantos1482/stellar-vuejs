@@ -1,8 +1,10 @@
 <template>
-  <login-reg-card title="کد تایید ایمیل"
-                  subtitle="کد تایید ۶رقمی ارسال شده به ایمیل خود را وارد کنید.">
-    <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
-  </login-reg-card>
+  <two-sided-panel>
+    <login-reg-card title="کد تایید ایمیل"
+                    subtitle="کد تایید ۶رقمی ارسال شده به ایمیل خود را وارد کنید.">
+      <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
+    </login-reg-card>
+  </two-sided-panel>
 </template>
 
 <script>

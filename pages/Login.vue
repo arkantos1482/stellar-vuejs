@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <two-sided-panel>
     <login-reg-card title="ورود به حساب کاربری">
       <v-card-text dir="ltr">
         <v-form @submit.prevent="login" v-model="form" ref="form">
@@ -30,7 +30,7 @@
         <v-btn text small class="mt-16" @click="notDesktopAlert = !notDesktopAlert">متوجه شدم</v-btn>
       </v-card>
     </v-dialog>
-  </div>
+  </two-sided-panel>
 </template>
 
 <script>

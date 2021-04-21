@@ -2,7 +2,7 @@
   <v-card width="100%" class="text-center pa-4">
     <div class="text-h4 mb-4 text-right">{{ title }}</div>
     <v-simple-table>
-      <thead class="grey lighten-3">
+      <thead >
       <tr>
         <th class="text-center">رمزارز</th>
         <th class="text-center">مقدار</th>

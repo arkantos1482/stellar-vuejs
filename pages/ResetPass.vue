@@ -1,23 +1,25 @@
 <template>
-  <login-reg-card dir="ltr" title="ایجاد رمز عبور جدید">
-    <v-form v-model="form" @submit.prevent="onSend" ref="form">
-      <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
-                    :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
-                    class="mt-16">
-        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-        </v-icon>
-      </a-text-field>
-      <a-text-field eng :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
-        <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-          {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-        </v-icon>
-      </a-text-field>
-      <v-btn :loading="l.send" type="submit"
-             block color="primary" class="mt-8">تایید
-      </v-btn>
-    </v-form>
-  </login-reg-card>
+  <two-sided-panel>
+    <login-reg-card dir="ltr" title="ایجاد رمز عبور جدید">
+      <v-form v-model="form" @submit.prevent="onSend" ref="form">
+        <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
+                      :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
+                      class="mt-16">
+          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+          </v-icon>
+        </a-text-field>
+        <a-text-field eng :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
+          <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+            {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+          </v-icon>
+        </a-text-field>
+        <v-btn :loading="l.send" type="submit"
+               block color="primary" class="mt-8">تایید
+        </v-btn>
+      </v-form>
+    </login-reg-card>
+  </two-sided-panel>
 </template>
 
 <script>

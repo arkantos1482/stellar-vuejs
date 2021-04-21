@@ -1,52 +1,88 @@
 <template>
   <v-app class="text-right">
-    <v-navigation-drawer v-show="isAdmin" v-model="drawer" fixed right app>
-      <v-list>
-        <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            :to="item.to"
-            router
-            exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title"/>
-          </v-list-item-content>
+    <v-navigation-drawer v-model="drawer" fixed right app>
+      <v-list-item to="/">
+        <v-icon>mdi-chart-bubble</v-icon>
+        <v-list-item-title>داشبورد</v-list-item-title>
+      </v-list-item>
+
+      <v-list-group prepend-icon="mdi-chart-bubble" append-icon="" no-action sub-group>
+        <template v-slot:activator>
+          <v-list-item>
+            <v-list-item-title>حسابداری مالی</v-list-item-title>
+          </v-list-item>
+        </template>
+
+        <v-list-item to="/wallets/withdraws">
+          <v-list-item-title>گزارش برداشت</v-list-item-title>
         </v-list-item>
-      </v-list>
+        <v-list-item to="/wallets/deposits">
+          <v-list-item-title>گزارش واریز</v-list-item-title>
+        </v-list-item>
+      </v-list-group>
+
+      <v-list-item to="/Security">
+        <v-icon>mdi-chart-bubble</v-icon>
+        <v-list-item-title>امنیت</v-list-item-title>
+      </v-list-item>
+
+      <v-list-item to="/coming-soon">
+        <v-icon>mdi-chart-bubble</v-icon>
+        <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>
+      </v-list-item>
+
+      <v-list-item to="/Referral">
+        <v-icon>mdi-chart-bubble</v-icon>
+        <v-list-item-title>دعوت از دوستان</v-list-item-title>
+      </v-list-item>
+
     </v-navigation-drawer>
+
     <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-img max-width="128" max-height="48"
              :src="require('../assets/images/logo.png')"/>
-      <v-app-bar-nav-icon v-show="isAdmin" @click.stop="drawer = !drawer"/>
       <v-tabs v-show="!isAdmin">
-        <v-tab to="/">ثبت سفارش</v-tab>
+        <v-tab to="/">بازار</v-tab>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab v-bind="attrs" v-on="on"> کیف پول</v-tab>
+            <v-tab v-bind="attrs" v-on="on"> سرمایه گذاری</v-tab>
           </template>
           <v-list>
-            <v-list-item to="/wallets">کیف پول</v-list-item>
-            <v-list-item to="/wallets/deposits"> واریزها</v-list-item>
-            <v-list-item to="/wallets/withdraws"> برداشت ها</v-list-item>
+            <v-list-item to="/coming-soon">سرمایه ۱</v-list-item>
+            <v-list-item to="/coming-soon">سرمایه ۲</v-list-item>
           </v-list>
         </v-menu>
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-tab v-bind="attrs" v-on="on"> سفارشات</v-tab>
-          </template>
-          <v-list>
-            <v-list-item to="/offers/me"> سفارشات</v-list-item>
-            <v-list-item to="/offers/active/me"> سفارشات در جریان</v-list-item>
-          </v-list>
-        </v-menu>
-        <v-tab to="/trades/me">معاملات</v-tab>
-        <v-tab to="/Referral">دعوت از دوستان</v-tab>
+        <v-tab>جامعه توکن داران</v-tab>
+        <v-tab>اخبار</v-tab>
+        <v-tab>پشتیبانی</v-tab>
+        <v-tab>درباره ما</v-tab>
+        <v-tab>تماس با ما</v-tab>
       </v-tabs>
       <!--      <v-spacer/>-->
+      <!--      WALLETS-->
+      <v-menu>
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="grey--text text--darken-2"
+                 text v-bind="attrs" v-on="on"
+                 to="/wallets">کیف پول
+          </v-btn>
+        </template>
+      </v-menu>
+      <!--      OFFERS-->
+      <v-menu>
+        <template v-slot:activator="{on,attrs}">
+          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">سفارشات
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
+          <v-list-item to="/offers/active/me">سفارشات در جریان</v-list-item>
+          <v-list-item to="/offers/me">تاریخچه سفارشات</v-list-item>
+          <v-list-item to="/trades/me">معاملات</v-list-item>
+        </v-list>
+      </v-menu>
+      <!--      PROFILE-->
       <v-menu>
         <template v-slot:activator="{on,attrs}">
           <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ title }}
@@ -59,6 +95,7 @@
           <v-list-item class="text-h6" @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
+      <!--      NOTIFICATION-->
       <v-menu nudge-width="96">
         <template v-slot:activator="{on,attrs}">
           <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ accessLevel }}
@@ -73,6 +110,8 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+
+
     <v-main>
       <v-container fluid class="pa-4">
         <nuxt/>
@@ -81,6 +120,14 @@
       <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
       <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
     </v-main>
+
+    <v-footer style="z-index: 0">
+      <div>
+        <BitraBottomBar/>
+        <v-divider class="my-4"/>
+        <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
+      </div>
+    </v-footer>
   </v-app>
 </template>
 
@@ -119,7 +166,81 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      user_drawer_items: [
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'داشبورد',
+        //   to: '/',
+        //   items: [],
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'حسابداری مالی',
+        //   items: [{
+        //     title: 'گزارش برداشت',
+        //     to: '/wallets/withdraws'
+        //   }, {
+        //     title: 'گزارش واریز',
+        //     to: '/wallets/deposits'
+        //   }, {
+        //     title: 'گزارش تراکنش ها',
+        //     to: ''
+        //   }],
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'امنیت',
+        //   to: '/Security',
+        //   items: [],
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'جوایز و تخفیف ها',
+        //   to: '/coming-soon',
+        //   items: [],
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'تنظیمات',
+        //   items: [{
+        //     title: 'مدیریت API',
+        //     to: '/coming-soon'
+        //   }, {
+        //     title: 'مدیریت اعلان ها',
+        //     to: '/coming-soon'
+        //   }],
+        // },
+        // {
+        //   icon: 'mdi-chart-bubble',
+        //   title: 'دعوت از دوستان',
+        //   to: '/Referral',
+        //   items: [],
+        // },
+        /*  {
+            icon: 'mdi-chart-bubble',
+            title: 'کیف پول',
+            to: '/wallets',
+            items: [],
+          },
+          {
+            icon: 'mdi-chart-bubble',
+            title: 'سفارشات',
+            items: [{
+              title: 'ثبت سفارش',
+              to: '/offers/reg'
+            }, {
+              title: 'سفارشات در جریان',
+              to: '/offers/active/me'
+            }, {
+              title: 'تاریخچه سفارشات',
+              to: '/offers/me'
+            }, {
+              title: 'معاملات',
+              to: '/trades/me'
+            }],
+          }*/
+      ],
+      admin_drawer_items: [
         {
           icon: 'mdi-chart-bubble',
           title: 'مدیریت پروفایل کاربران',

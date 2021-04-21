@@ -2,7 +2,7 @@
   <v-card width="100%" class="text-center">
     <v-simple-table>
       <template>
-        <thead class="grey lighten-3">
+        <thead >
         <tr>
           <th class="text-center">نوع</th>
           <th class="text-center">رمزارزها</th>

@@ -1,7 +1,8 @@
 <template>
-  <v-card width="100%" class="text-center">
+  <v-card width="100%" height="100%" class="text-center pa-6">
+    <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات"/>
     <v-simple-table>
-      <thead class="grey lighten-3">
+      <thead >
       <tr>
         <th class="text-center">تاریخ</th>
         <th class="text-center">قیمت</th>

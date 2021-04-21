@@ -1,10 +1,13 @@
 <template>
   <v-card width="100%" class="text-center">
     <v-simple-table>
-      <thead class="grey lighten-3">
+      <thead>
       <tr>
-        <th>رمزارز</th>
+        <th>ارز</th>
         <th class="text-center">موجودی</th>
+        <th class="text-center">موجودی در دسترس</th>
+        <th class="text-center">سفارش در جریان</th>
+        <th class="text-center">ارزش BTC</th>
         <th class="text-center">عملیات</th>
       </tr>
       </thead>
