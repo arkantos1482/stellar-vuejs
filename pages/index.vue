@@ -1,7 +1,10 @@
 <template>
   <div>
-    <!--    <CryptoMinMaxCard v-for="item in [1,2,3,4,5,6,7,8]"/>-->
-
+    <a-row>
+      <v-col v-for="item in [1,2,3,4,5,6,7,8]" cols="3">
+        <CryptoMinMaxCard/>
+      </v-col>
+    </a-row>
 
     <a-row class="align-stretch">
       <!--      ACCOUNT-->
