@@ -285,9 +285,9 @@ export default {
     return {
       list: [
         // ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR'],
-        ['ART/IRR', 'ZRK/IRR'],
+        ['ART/IRR', 'ZRK/IRR', 'SHA/IRR'],
         // ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT'],
-        ['ART/USDT', 'ZRK/USDT',],
+        ['ART/USDT', 'ZRK/USDT', 'SHA/USDT'],
         ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,
