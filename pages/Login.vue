@@ -5,7 +5,7 @@
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
     </template>
 
-    <div dir="ltr">
+    <div dir="ltr" style="padding-top: 96px">
       <v-form @submit.prevent="login" v-model="form" ref="form">
         <a-text-field :rules="[rules.required]" eng class="a-field" v-model="email" label="ایمیل"/>
         <a-text-field :rules="[rules.required]" eng v-model="password" label="رمز عبور"
@@ -14,14 +14,20 @@
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
+        <div class="text-left mt-4">
+          <nuxt-link class="pa-0 text-body-2 "
+                 to="/ForgetPass">رمز عبور خود را فراموش کرده ام
+          </nuxt-link>
+        </div>
+
         <v-btn type="submit" :loading="l.login"
-               block color="primary" class="mt-12">تایید
+               block color="primary" class="mt-12 ">ورود
         </v-btn>
       </v-form>
-      <v-row justify="space-between" dense class="mt-2">
-        <v-btn small text color="grey" to="/ForgetPass">بازیابی رمز عبور</v-btn>
-        <v-btn small text color="primary" to="/Register">ایجاد حساب کاربری</v-btn>
-      </v-row>
+      <a-row class="justify-center align-center mt-4">
+        <nuxt-link to="/Register" class="pa-0 text-body-2 ">ثبت نام کنید</nuxt-link>
+        <p class="mb-0 text-body-2">&nbsp کاربر جدید هستید؟ </p>
+      </a-row>
     </div>
 
     <!--    <v-dialog v-model="notDesktopAlert">-->

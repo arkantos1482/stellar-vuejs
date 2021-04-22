@@ -1,10 +1,11 @@
 <template>
-  <two-sided-panel title="تایید کد دو عاملی">
+  <two-sided-panel title="کد تایید">
     <template v-slot:pic>
       <v-img max-width="280px" max-height="280px"
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
     </template>
-    <div>
+    <div class="pt-16">
+      <p class="mb-4">کد تایید ارسال شده به ایمیل خود را در کادر زیر وارد نمایید.</p>
       <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
     </div>
   </two-sided-panel>

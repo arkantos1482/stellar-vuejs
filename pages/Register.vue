@@ -30,17 +30,17 @@
         <div dir="rtl">
           <v-checkbox v-model="terms" :rules="[rules.required]">
             <template v-slot:label>
-              <a class="" @click="gotoTerms">قوانین و شرایط</a>
-              <span class="">&nbsp;بیترا را می پذیرم.</span>
+              <a class=" text-body-2" @click="gotoTerms">قوانین و شرایط</a>
+              <span class="text-body-2">&nbsp;بیترا را می پذیرم.</span>
             </template>
           </v-checkbox>
         </div>
         <v-btn type="submit" :loading="l.reg"
-               class="mb-8 mt-4" color="primary" block> تایید
+               class="mb-8 mt-4" color="primary " block> ادامه
         </v-btn>
       </v-form>
-      <span class="">قبلا ثبت نام کرده اید؟</span>
-      <nuxt-link class="" to="/Login">ورود</nuxt-link>
+      <span class="text-body-2">قبلا ثبت نام کرده اید؟</span>
+      <nuxt-link class="text-body-2 " to="/Login">وارد شوید</nuxt-link>
     </div>
   </two-sided-panel>
 </template>

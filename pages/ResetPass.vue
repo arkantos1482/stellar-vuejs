@@ -4,22 +4,22 @@
       <v-img max-width="280px" max-height="280px"
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
     </template>
-    <div dir="ltr">
+    <div dir="ltr" style="padding-top: 96px">
       <v-form v-model="form" @submit.prevent="onSend" ref="form">
         <a-text-field eng :rules="[rules.required, rules.password, rules.counter]"
-                      :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور"
+                      :type="showPass ? 'text' : 'password'" v-model="password" label="رمز عبور جدید"
                       class="mt-16">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
-        <a-text-field eng :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور">
+        <a-text-field eng :type="showPass ? 'text' : 'password'" v-model="passwordConfirm" label="تکرار رمز عبور جدید">
           <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
             {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
           </v-icon>
         </a-text-field>
         <v-btn :loading="l.send" type="submit"
-               block color="primary" class="mt-8">تایید
+               block color="primary" class="mt-16 ">تایید
         </v-btn>
       </v-form>
     </div>

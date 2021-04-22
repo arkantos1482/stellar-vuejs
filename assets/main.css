@@ -37,6 +37,10 @@ a, p, span, input.text-field {
     font-weight: 600;
 }
 
+a {
+    text-decoration: none;
+}
+
 /*selector collapse font size*/
 .v-input.v-select {
     font-size: 14px !important;

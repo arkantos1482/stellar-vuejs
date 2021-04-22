@@ -88,7 +88,8 @@ export default {
             themes: {
                 dark: {
                     primary: '#ffbb00',
-                    secondary: colors.blue,
+                    secondary: '#0074ff',
+                    anchor: '#0074ff',
                     accent: colors.red,
                     theback: '#141633',
                     text: '#FFFFFFcc',
@@ -99,6 +100,7 @@ export default {
                 light: {
                     primary: '#0074ff',
                     secondary: '#001254',
+                    anchor: '#0074ff',
                     accent: colors.grey.darken3,
                     theback: '#FAFAFA',
                     text: '#000000cc',

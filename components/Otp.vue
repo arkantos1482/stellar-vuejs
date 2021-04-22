@@ -12,13 +12,12 @@
           length=6
       />
     </div>
-    <div class=" text-center mt-4"> {{ counterToString }}</div>
+    <p class="text-center mt-12 secondary--text text-body-2"> {{ counterToString }}</p>
     <div v-show="codeFailure" class="mt-8  text-center">
-      <span class="grey--text">کد تایید دریافت نشد؟</span>
-      <a @click="onResend">ارسال مجدد</a>
+      <a @click="onResend">ارسال مجدد کد تایید</a>
     </div>
     <v-btn @click="onSend" :loading="loading"
-           block color="primary" class="mt-8">تایید
+           block color="primary" class="mt-16">تایید
     </v-btn>
   </div>
 </template>
