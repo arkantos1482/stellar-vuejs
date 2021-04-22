@@ -1,21 +1,26 @@
 <template>
-  <div class="d-flex align-items-stretch">
-    <a-card class="ml-4 py-8" width="45%" :title="actionTitle">
-      <div v-show="address !== 'not_loaded'">
-        <crypto-upper :balance="balance" :type="type"/>
+  <a-row class="align-stretch">
+    <v-col cols="4" class="pa-4 d-flex flex-column">
+      <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
+      <v-card class="px-16 py-12 flex-grow-1" height="100%">
+        <div v-show="address !== 'not_loaded'">
+          <crypto-upper :balance="balance" :type="type"/>
 
-        <div v-if="address !== 'no_address'" class="mt-12 text-center">
-          <vue-qrcode :value="address"/>
-          <p style="font-family: serif; font-size: 1.6rem">{{ address }}</p>
+          <div v-if="address !== 'no_address'" class="mt-12 text-center">
+            <vue-qrcode :value="address"/>
+            <p style="font-family: serif; font-size: 1.6rem">{{ address }}</p>
+          </div>
+          <v-btn v-else @click="createCrypto" :loading="l.create"
+                 class="mt-16 mb-8" block color="primary">ایجاد
+          </v-btn>
         </div>
-        <v-btn v-else @click="createCrypto" :loading="l.create"
-               class="mt-16 mb-8" block color="primary">ایجاد
-        </v-btn>
-      </div>
-    </a-card>
+      </v-card>
+    </v-col>
 
-    <deposits :type="type" :title="listTitle"/>
-  </div>
+    <v-col cols="8" class="pa-0">
+      <deposits :type="type" :title="listTitle"/>
+    </v-col>
+  </a-row>
 </template>
 
 <script>

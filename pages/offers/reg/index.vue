@@ -6,10 +6,10 @@
       <v-col cols=3>
         <v-card class="pa-6" width=100% height="100%">
           <card-title-with-chevron simple title="ثبت سفارش" icon="mdi-basket" class="mb-6"/>
-          <v-btn-toggle v-model="exchangeAction" rounded dense
+          <v-btn-toggle mandatory v-model="exchangeAction" rounded dense
                         :color="exchangeAction === 'buy' ? 'success':'error'">
-            <v-btn value="buy" class="px-12">خرید</v-btn>
-            <v-btn value="sell" class="px-12">فروش</v-btn>
+            <v-btn rounded value="buy" class="px-12">خرید</v-btn>
+            <v-btn rounded value="sell" class="px-12">فروش</v-btn>
           </v-btn-toggle>
           <v-divider class="my-4"/>
           <!--          <v-tabs class="mb-6">-->

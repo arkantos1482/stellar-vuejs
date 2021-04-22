@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center" style="flex-wrap: wrap">
+  <div class="d-flex" style="flex-wrap: wrap">
     <slot></slot>
   </div>
 </template>

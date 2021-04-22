@@ -1,26 +1,30 @@
 <template>
-  <div class="d-flex align-items-stretch mt-12">
+  <a-row class="align-stretch mt-12">
+    <v-col cols="4" class="pa-4 d-flex flex-column">
+      <div class="text-h4 mb-6 text-right">برداشت</div>
+      <v-card class="px-16 py-12 flex-grow-1" width="100%">
+        <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
+        <p class="text-display-2 ma-0">
+          باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+        </p>
+        <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+          <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+        </p>
 
-    <a-card class="ml-4 py-8" width="45%" title="برداشت">
-      <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
-      <p class="text-display-2 ma-0">
-        باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
-      </p>
-      <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
-        <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
-      </p>
+        <v-form @submit.prevent="onWithdraw" v-model="form" ref="form">
+          <a-text-field separated :rules="[rules.required]"
+                        mask="####################" v-model="amount" label="مبلغ"/>
+          <v-btn type="submit" :loading="l.withdraw"
+                 block color="primary" class="mt-4">برداشت
+          </v-btn>
+        </v-form>
+      </v-card>
+    </v-col>
 
-      <v-form @submit.prevent="onWithdraw" v-model="form" ref="form">
-        <a-text-field separated :rules="[rules.required]"
-                      mask="####################" v-model="amount" label="مبلغ"/>
-        <v-btn type="submit" :loading="l.withdraw"
-               block color="primary" class="mt-4">برداشت
-        </v-btn>
-      </v-form>
-    </a-card>
-
-    <withdraws :type="type"/>
-  </div>
+    <v-col cols="8" class="pa-0">
+      <withdraws :type="type"/>
+    </v-col>
+  </a-row>
 </template>
 
 <script>

@@ -1,47 +1,50 @@
 <template>
   <v-app class="text-right">
     <v-navigation-drawer v-model="drawer" fixed right app>
-      <v-list-item to="/">
-        <v-icon>mdi-chart-bubble</v-icon>
-        <v-list-item-title>داشبورد</v-list-item-title>
-      </v-list-item>
+      <v-list nav dense flat>
+        <v-list-item-group color="primary">
+          <v-list-group prepend-icon="mdi-chart-bubble" append-icon="" no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>حسابداری مالی</v-list-item-title>
+              </v-list-item-content>
+            </template>
 
-      <v-list-group prepend-icon="mdi-chart-bubble" append-icon="" no-action sub-group>
-        <template v-slot:activator>
-          <v-list-item>
-            <v-list-item-title>حسابداری مالی</v-list-item-title>
+            <v-list-item to="/wallets/withdraws">
+              <v-list-item-title>گزارش برداشت</v-list-item-title>
+            </v-list-item>
+            <v-list-item to="/wallets/deposits">
+              <v-list-item-title>گزارش واریز</v-list-item-title>
+            </v-list-item>
+          </v-list-group>
+
+          <v-list-item to="/Security">
+            <v-icon>mdi-chart-bubble</v-icon>
+            <v-list-item-title>امنیت</v-list-item-title>
           </v-list-item>
-        </template>
 
-        <v-list-item to="/wallets/withdraws">
-          <v-list-item-title>گزارش برداشت</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="/wallets/deposits">
-          <v-list-item-title>گزارش واریز</v-list-item-title>
-        </v-list-item>
-      </v-list-group>
+          <v-list-item to="/coming-soon">
+            <v-icon>mdi-chart-bubble</v-icon>
+            <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>
+          </v-list-item>
 
-      <v-list-item to="/Security">
-        <v-icon>mdi-chart-bubble</v-icon>
-        <v-list-item-title>امنیت</v-list-item-title>
-      </v-list-item>
+          <v-list-item to="/Referral">
+            <v-icon>mdi-chart-bubble</v-icon>
+            <v-list-item-title>دعوت از دوستان</v-list-item-title>
+          </v-list-item>
 
-      <v-list-item to="/coming-soon">
-        <v-icon>mdi-chart-bubble</v-icon>
-        <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>
-      </v-list-item>
-
-      <v-list-item to="/Referral">
-        <v-icon>mdi-chart-bubble</v-icon>
-        <v-list-item-title>دعوت از دوستان</v-list-item-title>
-      </v-list-item>
-
+          <v-list-item to="/">
+            <v-icon>mdi-chart-bubble</v-icon>
+            <v-list-item-title>داشبورد</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-img max-width="128" max-height="48"
-             :src="require('../assets/images/logo.png')"/>
+             :src="require('../assets/images/Bitra_Logo_Final_Edition-18@2x.png')"/>
       <v-tabs v-show="!isAdmin">
         <v-tab to="/">بازار</v-tab>
         <v-menu offset-y>

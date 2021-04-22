@@ -1,15 +1,15 @@
 <template>
-  <v-simple-table>
+  <v-simple-table class="text-center">
     <template>
       <thead>
       <tr>
-        <th class="text-center">نوع</th>
-        <th class="text-center">رمزارزها</th>
-        <th class="text-center">قیمت</th>
-        <th class="text-center">مقدار</th>
-        <th class="text-center">مجموع</th>
-        <th class="text-center">تاریخ</th>
-        <th class="text-center">لغو</th>
+        <th>نوع</th>
+        <th>رمزارزها</th>
+        <th>قیمت</th>
+        <th>مقدار</th>
+        <th>مجموع</th>
+        <th>تاریخ</th>
+        <th>لغو</th>
       </tr>
       </thead>
       <tbody>

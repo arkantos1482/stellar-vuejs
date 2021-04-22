@@ -62,7 +62,7 @@
         <v-card width="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-clipboard-text" title="معاملات اخیر"/>
           <v-divider class="mt-6"/>
-          <my-trades/>
+          <my-trades-table/>
         </v-card>
       </v-col>
     </a-row>

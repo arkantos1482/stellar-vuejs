@@ -1,32 +1,37 @@
 <template>
-  <v-card width="100%" class="text-center">
-    <v-simple-table>
-      <template>
-        <thead >
-        <tr>
-          <th class="text-center">نوع</th>
-          <th class="text-center">رمزارزها</th>
-          <th class="text-center">قیمت</th>
-          <th class="text-center">مقدار</th>
-          <th class="text-center">مجموع</th>
-          <th class="text-center">تاریخ</th>
-          <th class="text-center">وضعیت</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(item,idx) in offers" :key="idx">
-          <td :class="item|toColor">{{ item|toFarsi }}</td>
-          <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
-          <td>{{ item|price }}</td>
-          <td>{{ item|amount }}</td>
-          <td>{{ item|total }}</td>
-          <td>{{ item.created_at|toFarsiDate }}</td>
-          <td :class="item|cancelColor">{{ item|cancelText }}</td>
-        </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
-  </v-card>
+  <div class="pa-4">
+    <div class="text-h4 mb-6 text-right">تاریخچه سفارشات</div>
+    <v-card width="100%" class="pa-6">
+      <a-table-header :list="['همه','IRT', 'BCH', 'BTC']"
+                      list_name="نوع" from_name="تاریخ از" to_name="تاریخ تا"/>
+      <v-simple-table class="text-center">
+        <template>
+          <thead>
+          <tr>
+            <th class="text-center">نوع</th>
+            <th class="text-center">رمزارزها</th>
+            <th class="text-center">قیمت</th>
+            <th class="text-center">مقدار</th>
+            <th class="text-center">مجموع</th>
+            <th class="text-center">تاریخ</th>
+            <th class="text-center">وضعیت</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(item,idx) in offers" :key="idx">
+            <td :class="item|toColor">{{ item|toFarsi }}</td>
+            <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
+            <td>{{ item|price }}</td>
+            <td>{{ item|amount }}</td>
+            <td>{{ item|total }}</td>
+            <td>{{ item.created_at|toFarsiDate }}</td>
+            <td :class="item|cancelColor">{{ item|cancelText }}</td>
+          </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -87,7 +92,7 @@ export default {
     }
   },
   async mounted() {
-    this.offers = await this.$axios.$get('/offers/'+this.userId)
+    this.offers = await this.$axios.$get('/offers/' + this.userId)
   }
 }
 </script>

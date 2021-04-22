@@ -1,29 +1,36 @@
 <template>
-  <div class="d-flex align-items-stretch">
-    <a-card class="ml-4" width="45%" :title="actionTitle">
-      <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
-      <p class="text-display-2 ma-0">
-        باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
-      </p>
-      <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
-        <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
-      </p>
+  <a-row class="align-stretch">
+    <v-col cols="4" class="pa-4 d-flex flex-column">
+      <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
+      <v-card class="px-16 py-12 flex-grow-1" width="100%">
+        <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
+        <p class="text-display-2 ma-0">
+          باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+        </p>
+        <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+          <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+        </p>
 
-      <v-form @submit.prevent="withdraw" v-model="form" ref="form">
-        <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
-        <p class="mt-1 grey--text"> کارمزد تراکنش <span class="black--text">{{ withdrawFee }}</span> می باشد.</p>
-        <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="black--text">{{ actualAmount }}</span> می باشد.</p>
-        <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
-        <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
-          شد.</p>
-        <v-btn type="submit" :loading="l.withdraw"
-               block color="primary" class="mt-4">{{ actionTitle }}
-        </v-btn>
-      </v-form>
-    </a-card>
+        <v-form @submit.prevent="withdraw" v-model="form" ref="form">
+          <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
+          <p class="mt-1 grey--text"> کارمزد تراکنش <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
+          <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="white--text">{{ actualAmount }}</span> می باشد.
+          </p>
+          <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
+          <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
+            شد.</p>
+          <v-btn type="submit" :loading="l.withdraw"
+                 block color="primary" class="mt-4">{{ actionTitle }}
+          </v-btn>
+        </v-form>
+      </v-card>
+    </v-col>
 
-    <withdraws :type="type" :title="listTitle"/>
-  </div>
+
+    <v-col cols="8" class="pa-0">
+      <withdraws :type="type" :title="listTitle"/>
+    </v-col>
+  </a-row>
 </template>
 
 <script>

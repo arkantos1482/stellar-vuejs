@@ -34,6 +34,7 @@ th {
 
 a, p, span, input.text-field {
     font-size: 1.4rem;
+    font-weight: 600;
 }
 
 /*selector collapse font size*/
@@ -66,14 +67,14 @@ a, p, span, input.text-field {
 }
 
 .vue-dropzone {
-    border: 1px solid #ccc !important;
+    border: 1px solid #a7a9cf !important;
     font-family: IranSans, sans-serif !important;
     letter-spacing: 0 !important;
     border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /*color: black !important;*/
+    color: black !important;
     /*transition: .2s linear;*/
 }
 
@@ -84,8 +85,8 @@ a, p, span, input.text-field {
 .persian-date-picker {
     font-size: 1.4rem;
     width: 100%;
-    border: 1px solid #ccc !important;
-    border-radius: 4px;
+    border: 1px solid #a7a9cf !important;
+    border-radius: 4px !important;
     padding: 4px 12px !important;
 }
 
@@ -94,7 +95,7 @@ a, p, span, input.text-field {
 }
 
 .v-text-field fieldset {
-    border: 1px solid #ccc !important;
+    border: 1px solid #a7a9cf !important;
 }
 
 .pointer {

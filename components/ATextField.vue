@@ -11,9 +11,9 @@
   <!--  />-->
 
   <div class="text-right">
-    <p class="mb-n2 mt-4">{{ label }}</p><br>
-    <div class="d-flex gray-border">
-      <slot> </slot>
+    <p class="mb-n2 mt-4 grey--text">{{ label }}</p><br>
+    <div class="d-flex grey-border">
+      <slot></slot>
       <input class="text-field input-border py-2"
              :class="{'red-border':shouldValidate , eng:eng, ef1:eng,ef2:eng,
              'dark-theme-text':isDark,'white-theme-text':!isDark}"
@@ -21,6 +21,11 @@
              :placeholder="hint"
              :value="myText" @input="emit"
              v-mask="mask">
+      <div class="v-text-field__details">
+        <!--        <div class="v-messages primary&#45;&#45;text">-->
+        <!--          <div class="v-messages__wrapper"></div>-->
+        <!--        </div>-->
+      </div>
     </div>
     <p v-show="shouldValidate" class="red--text text-body-2 mt-2">{{ errorBucket[0] }}</p>
   </div>
@@ -66,15 +71,15 @@ export default {
   color: black;
 }
 
-.gray-border {
+.grey-border {
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #a7a9cf;
 }
 
 .input-border:focus {
   outline: none !important;
   border: 1px solid #ffbb00;
-  //box-shadow: 0 0 2px #c4bca9;
+  /*box-shadow: 0 0 2px #c4bca9;*/
 }
 
 .red-border {
