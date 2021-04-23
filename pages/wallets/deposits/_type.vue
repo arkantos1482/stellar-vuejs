@@ -35,7 +35,7 @@ export default {
   components: {CryptoUpper, Deposits, VueQrcode, ACard},
   computed: {
     balance() {
-      return this.$store.state.balances.list[this.type]
+      return this.$store.state.balances.list[this.type].actual_balance
     },
     actionTitle() {
       return this.isInternal() ? 'دریافت' : 'واریز'

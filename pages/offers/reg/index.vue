@@ -23,7 +23,7 @@
               <!--              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>-->
               <p @click="buyPercent=100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
-                {{ balances[counterAsset]|toFloat|separated }}
+                {{ balances[counterAsset].actual_balance|toFloat|separated }}
                 <span>{{ counterAsset|irtFix }}</span>
               </p>
             </div>
@@ -51,7 +51,7 @@
               <!--              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>-->
               <p @click="sellPercent=100" class="pointer mb-0 primary--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
-                {{ balances[baseAsset]|toFloat|separated }}
+                {{ balances[baseAsset].actual_balance|toFloat|separated }}
                 <span>{{ baseAsset|irtFix }}</span>
               </p>
             </div>
@@ -226,10 +226,10 @@ export default {
       return this.$store.state.balances.list
     },
     baseBalance() {
-      return `موجودی (${this.baseAsset}) : ${parseFloat(this.balances[this.baseAsset])}`
+      return `موجودی (${this.baseAsset}) : ${parseFloat(this.balances[this.baseAsset].actual_balance)}`
     },
     counterBalance() {
-      return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset])}`
+      return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset].actual_balance)}`
     },
     priceLabel() {
       return 'قیمت (' + this.$options.filters.irtFix(this.counterAsset) + ')'
@@ -275,7 +275,7 @@ export default {
       get() {
         let percent
         try {
-          percent = safeDecimal(this.buyTotal).times(100).div(this.balances[this.counterAsset])
+          percent = safeDecimal(this.buyTotal).times(100).div(this.balances[this.counterAsset].actual_balance)
         } catch (e) {
           percent = 0
         }
@@ -284,7 +284,7 @@ export default {
       },
       set(val) {
         try {
-          this.buy.amount = safeDecimal(this.balances[this.counterAsset])
+          this.buy.amount = safeDecimal(this.balances[this.counterAsset].actual_balance)
               .times(val).div(100).div(this.buy.price)
               .todp(getDp(this.baseAsset))
         } catch (e) {
@@ -295,7 +295,7 @@ export default {
       get() {
         let percent
         try {
-          percent = safeDecimal(this.sell.amount).times(100).div(this.balances[this.baseAsset])
+          percent = safeDecimal(this.sell.amount).times(100).div(this.balances[this.baseAsset].actual_balance)
         } catch (e) {
           percent = 0
         }
@@ -304,7 +304,7 @@ export default {
       },
       set(val) {
         try {
-          this.sell.amount = safeDecimal(this.balances[this.baseAsset]).times(val).div(100)
+          this.sell.amount = safeDecimal(this.balances[this.baseAsset].actual_balance).times(val).div(100)
               .todp(getDp(this.baseAsset))
         } catch (e) {
         }
@@ -345,10 +345,10 @@ export default {
       buyForm: false,
       rules: {
         required: value => !!value || 'الزامی است',
-        buySufficient: value => this.balances[this.counterAsset]?.gte(safeDecimal(this.buyTotal)) || 'اعتبار ناکافی',
-        buyWalletExist: value => !!this.balances[this.baseAsset] || 'کیف پول ساخته نشده است',
-        sellSufficient: value => this.balances[this.baseAsset]?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
-        sellWalletExist: value => !!this.balances[this.counterAsset] || 'کیف پول ساخته نشده است',
+        buySufficient: value => this.balances[this.counterAsset]?.actual_balance?.gte(safeDecimal(this.buyTotal)) || 'اعتبار ناکافی',
+        buyWalletExist: value => !!this.balances[this.baseAsset]?.actual_balance || 'کیف پول ساخته نشده است',
+        sellSufficient: value => this.balances[this.baseAsset]?.actual_balance?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
+        sellWalletExist: value => !!this.balances[this.counterAsset]?.actual_balance || 'کیف پول ساخته نشده است',
       },
       chartConfig: {
         SBMIN: 60,       // Minimal sidebar px

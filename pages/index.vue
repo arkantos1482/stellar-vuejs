@@ -13,12 +13,11 @@
           <card-title-with-chevron icon="mdi-account" title="وضعیت حساب کاربری"/>
           <v-divider class="my-6"/>
           <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
+          <RowItem title="برداشت روزانه رمزارز" value="۰از۰تومان"/>
+          <RowItem title="مجموع برداشت روزانه" value="۰از۰تومان"/>
+          <RowItem title="مجموع برداشت ماهانه" value="۰از۰تومان"/>
+          <RowItem title="کارمزد" value="۰از۰تومان"/>
+          <RowItem title="ارزش معاملات سی روز" value="۰از۰تومان"/>
           <v-divider class="my-6"/>
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
@@ -34,13 +33,16 @@
         <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-wallet" title="کیف پول های شما"/>
           <v-divider class="my-6"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
-          <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
+          <dash-wallet-row :balance="balances.AMN"/>
+          <dash-wallet-row :balance="balances.EBG"/>
+          <dash-wallet-row :balance="balances.ART"/>
+          <dash-wallet-row :balance="balances.ZRK"/>
+          <dash-wallet-row :balance="balances.IRR"/>
+          <dash-wallet-row :balance="balances.BTC"/>
+          <dash-wallet-row :balance="balances.ETH"/>
+          <dash-wallet-row :balance="balances.LTC"/>
+          <dash-wallet-row :balance="balances.USDT"/>
+          <dash-wallet-row :balance="balances.BCH"/>
           <v-divider class="my-6"/>
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
           <RowItem title="پیشنهادهای خرید" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>
@@ -52,14 +54,14 @@
 
     <a-row class="align-stretch">
       <v-col cols="6">
-        <v-card width="100%" class="pa-6">
+        <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-clipboard-text-play" title="سفارشات در جریان"/>
           <v-divider class="mt-6"/>
           <my-active-offers-table/>
         </v-card>
       </v-col>
       <v-col cols="6">
-        <v-card width="100%" class="pa-6">
+        <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-clipboard-text" title="معاملات اخیر"/>
           <v-divider class="mt-6"/>
           <my-trades-table/>
@@ -76,6 +78,11 @@ import MyTrades from "@/pages/trades/_userId";
 
 export default {
   name: "index",
-  components: {MyTrades, DashboardCardTitle, RowItem}
+  components: {MyTrades, DashboardCardTitle, RowItem},
+  computed: {
+    balances() {
+      return this.$store.state.balances.list
+    }
+  },
 }
 </script>

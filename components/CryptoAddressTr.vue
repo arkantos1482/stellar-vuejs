@@ -7,9 +7,12 @@
         {{ namad }}
       </div>
     </td>
-    <td>{{ balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
-    <td></td>
-    <td></td>
+    <td v-if="balance">{{ balance.balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-else></td>
+    <td v-if="balance">{{ balance.actual_balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-else></td>
+    <td v-if="balance">{{ balance.selling_liabilities|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-else></td>
     <td></td>
     <td>
       <v-btn :disabled="isDepositDisabled" small text color="primary" @click="onDeposit">

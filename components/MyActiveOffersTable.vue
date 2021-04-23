@@ -12,7 +12,7 @@
         <th>لغو</th>
       </tr>
       </thead>
-      <tbody>
+      <tbody v-if="offers.length">
       <tr v-for="(item,idx) in offers" :key="idx">
         <td :class="item|toColor">{{ item|toFarsi }}</td>
         <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
@@ -28,6 +28,7 @@
         </td>
       </tr>
       </tbody>
+      <no-data v-else cols="7" title="سفارشی ثبت نشده است."/>
     </template>
   </v-simple-table>
 

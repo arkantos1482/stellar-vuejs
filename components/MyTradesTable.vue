@@ -11,7 +11,7 @@
       <th>تاریخ</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody v-if="trades.length">
     <tr v-for="item in trades" :key="item.id">
       <td :class="item|toColor">{{ item|toFarsiSellOrBuy }}</td>
       <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
@@ -22,6 +22,7 @@
       <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
     </tr>
     </tbody>
+    <no-data v-else cols="7" title="معامله ای ثبت نشده است."/>
   </v-simple-table>
 </template>
 
