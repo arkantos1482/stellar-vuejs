@@ -17,7 +17,7 @@
             <th class="text-center">وضعیت</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody v-if="offers.length">
           <tr v-for="(item,idx) in offers" :key="idx">
             <td :class="item|toColor">{{ item|toFarsi }}</td>
             <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
@@ -28,6 +28,7 @@
             <td :class="item|cancelColor">{{ item|cancelText }}</td>
           </tr>
           </tbody>
+          <no-data v-else cols="7" title="برداشتی انجام نشده است."/>
         </template>
       </v-simple-table>
     </v-card>

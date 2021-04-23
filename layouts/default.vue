@@ -127,7 +127,9 @@
     <v-footer class="d-block">
       <BitraBottomBar/>
       <v-divider class="my-4"/>
-      <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
+      <div class="text-center">
+        <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
+      </div>
     </v-footer>
   </v-app>
 </template>

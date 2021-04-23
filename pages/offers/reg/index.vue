@@ -21,7 +21,7 @@
           <div v-if="exchangeAction === 'buy'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>-->
-              <p @click="buyPercent=100" class="pointer mb-0 grey--text">
+              <p v-if="balances[counterAsset]" @click="buyPercent=100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
                 {{ balances[counterAsset].actual_balance|toFloat|separated }}
                 <span>{{ counterAsset|irtFix }}</span>
@@ -49,7 +49,7 @@
           <div v-else-if="exchangeAction === 'sell'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>-->
-              <p @click="sellPercent=100" class="pointer mb-0 primary--text">
+              <p v-if="balances[baseAsset]" @click="sellPercent=100" class="pointer mb-0 primary--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
                 {{ balances[baseAsset].actual_balance|toFloat|separated }}
                 <span>{{ baseAsset|irtFix }}</span>
@@ -78,23 +78,27 @@
       </v-col>
 
       <!--      SELL/BUY + CHART-BAR-->
-      <v-col cols="9">
+      <v-col cols="9" class="pa-0">
         <!--        TITLE-->
-        <v-card width="100%">
-          <a-row class="justify-start">
-            <v-col cols="4">
-              <v-tabs v-model="tabIndex">
-                <v-tab>تومان</v-tab>
-                <v-tab>تتر</v-tab>
-                <!--            <v-tab>رمزارز به رمزارز</v-tab>-->
-              </v-tabs>
-            </v-col>
-            <v-divider vertical/>
-            <v-select v-model="pairAsset" :items="pairAssetList" item-text="text" item-value="value"
-                      dense filled solo flat/>
-          </a-row>
-        </v-card>
+        <v-col>
+          <v-card width="100%">
+            <a-row class="justify-start align-center">
 
+              <v-btn-toggle v-model="tabIndex" mandatory color="primary" dense borderless tile class="pa-4">
+                <v-btn text value="0">تومان</v-btn>
+                <v-btn text value="1">تتر</v-btn>
+                <v-btn text value="2">رمزارز به رمزارز</v-btn>
+              </v-btn-toggle>
+
+              <v-divider vertical inset class="py-4"/>
+              <v-col cols="3">
+                <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
+                          item-value="value"
+                          dense filled solo flat/>
+              </v-col>
+            </a-row>
+          </v-card>
+        </v-col>
 
         <!--        BODY (SELL/BUY + CHART-BAR)-->
         <a-row class="align-stretch">
@@ -107,9 +111,9 @@
               <v-simple-table dense fixed-header>
                 <thead>
                 <tr>
-                  <th class="small-font text-body-1" style="font-family: serif">{{ priceLabel }}</th>
-                  <th class="small-font text-body-1">{{ unitNumberLabel }}</th>
-                  <th class="small-font text-body-1">{{ amountLabel }}</th>
+                  <th class="small-font text-body-2" style="font-family: serif">{{ priceLabel }}</th>
+                  <th class="small-font text-body-2">{{ unitNumberLabel }}</th>
+                  <th class="small-font text-body-2">{{ amountLabel }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -126,9 +130,9 @@
               <v-simple-table dense fixed-header>
                 <thead>
                 <tr>
-                  <th class="small-font text-body-1">{{ priceLabel }}</th>
-                  <th class="small-font text-body-1">{{ unitNumberLabel }}</th>
-                  <th class="small-font text-body-1">{{ amountLabel }}</th>
+                  <th class="small-font text-body-2">{{ priceLabel }}</th>
+                  <th class="small-font text-body-2">{{ unitNumberLabel }}</th>
+                  <th class="small-font text-body-2">{{ amountLabel }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -505,9 +509,13 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style>
 .v-text-field--rounded {
   border-radius: 4px
+}
+
+.compact .v-text-field__details {
+  display: none !important;
 }
 
 .small-font {
