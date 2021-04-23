@@ -22,7 +22,7 @@
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
-            <p class="mb-0 mx-4">سطح یک</p>
+            <p class="mb-0 mx-4">{{accessLevel}}</p>
             <v-btn color="primary" outlined small class="px-4">ارتقا</v-btn>
           </a-row>
         </v-card>
@@ -84,5 +84,14 @@ export default {
       return this.$store.state.balances.list
     }
   },
+  data() {
+    return {
+      accessLevel: ''
+    }
+  },
+  async mounted() {
+    let user = await this.$axios.$get('/profiles/me')
+    this.accessLevel = user.access_level
+  }
 }
 </script>
