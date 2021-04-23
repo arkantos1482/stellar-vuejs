@@ -41,7 +41,7 @@ a {
     text-decoration: none;
 }
 
-.v-label {
+.v-label, .v-stepper__label {
     font-size: 1.4rem !important;
     font-weight: 600;
 }

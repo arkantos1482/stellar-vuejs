@@ -11,7 +11,7 @@
   <!--  />-->
 
   <div class="text-right">
-    <p class="mb-n2 mt-4 grey--text">{{ label }}</p><br>
+    <p class="mb-n2 mt-2 grey--text">{{ label }}</p><br>
     <div class="d-flex grey-border">
       <slot></slot>
       <input class="text-field input-border py-2"
