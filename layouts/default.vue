@@ -124,12 +124,10 @@
       <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
     </v-main>
 
-    <v-footer style="z-index: 0">
-      <div>
-        <BitraBottomBar/>
-        <v-divider class="my-4"/>
-        <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
-      </div>
+    <v-footer class="d-block">
+      <BitraBottomBar/>
+      <v-divider class="my-4"/>
+      <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
     </v-footer>
   </v-app>
 </template>

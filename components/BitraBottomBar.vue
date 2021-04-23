@@ -1,23 +1,27 @@
 <template>
-  <a-row>
-    <v-col cols="6" class="my-4">
-      <a-row>
-        <v-icon color="primary">mdi-map-marker</v-icon>
+  <a-row class="my-6 mx-16 px-16">
+    <v-col cols="6">
+      <a-row class="mb-4">
+        <v-icon color="primary" class="mx-2">mdi-map-marker</v-icon>
         <p class="mb-0">تهران خیابان شریعتی خیابان گل نبی پلاک ۴۹ شرکت بیترا</p>
       </a-row>
-      <a-row>
-        <v-icon color="primary">mdi-phone</v-icon>
+      <a-row class="mb-4">
+        <v-icon color="primary" class="mx-2">mdi-phone</v-icon>
         <p class="mb-0">021-91092027 021-91010110</p>
       </a-row>
-      <a-row>
-        <v-icon color="primary">mdi-email</v-icon>
+      <a-row class="mb-4">
+        <v-icon color="primary" class="mx-2">mdi-email</v-icon>
         <p class="mb-0">Office@bitra.market</p>
       </a-row>
     </v-col>
+
     <v-col cols="6">
       <p>ما را در شبکه های اجتماعی دنبال کنید:</p>
       <a-row>
-        <v-icon v-for="item in socialList" color="primary">{{ item.icon }}</v-icon>
+        <div v-for="(item,idx) in socialList">
+          <v-icon color="primary">{{ item.icon }}</v-icon>
+          <v-divider v-if="idx !== socialList.length-1" vertical class="mx-2"/>
+        </div>
       </a-row>
     </v-col>
   </a-row>
