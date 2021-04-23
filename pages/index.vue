@@ -21,7 +21,7 @@
           <RowItem title="برداشت روزانه ریال" value="۰از۰تومان"/>
           <v-divider class="my-6"/>
           <p class="primary--text">سطح کاربری:</p>
-          <a-row class="justify-center">
+          <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
             <p class="mb-0 mx-4">سطح یک</p>
             <v-btn color="primary" outlined small class="px-4">ارتقا</v-btn>

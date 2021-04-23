@@ -1,55 +1,88 @@
 <template>
-  <div>
-    <p class="text-h4 primary--text">با فعال سازی شناسایی دوعاملی، امنیت تراکنش ها و دارایی های خود را افزایش دهید.</p>
-    <a-card divider title="شناسایی دو عاملی">
-      <p class="text-h5">شناسایی دوعاملی برای حساب کاربری شما
-        <span :class="statusClass">{{ statusText }}</span>
-        است.</p>
-      <div class="text-center mt-12">
-        <v-btn @click="onToggle" :loading="l.toggle"
-               :color="btnColor" depressed :class="btnClass">
+  <div class="pa-6">
+    <p class="text-h4 text-right">امنیت</p>
+    <v-card width="100%" class="py-8 px-12">
+      <a-row class="align-center">
+        <v-icon color="grey" large>mdi-google</v-icon>
+        <div class="mr-4" style="margin-left: 240px">
+          <p class="mb-2">کد دو عاملی</p>
+          <p class="mb-0 text-body-2 grey--text">برای برداشت و اصلاحات امنیتی استفاده می شود</p>
+        </div>
+        <v-btn :loading="l.toggleGmfa"
+               small outlined color="primary" class="px-6">
           {{ btnText }}
         </v-btn>
-      </div>
-    </a-card>
+      </a-row>
 
-    <a-card divider class="mt-4" title="تغییر رمز عبور">
-      <v-row justify="center">
-      <v-col cols="4">
-        <v-form @submit.prevent="changePass" v-model="form" ref="form">
-          <a-text-field eng :type="showPass ? 'text' : 'password'"
-                        label="رمز عبور فعلی" v-model="dto.old_password">
-            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-            </v-icon>
-          </a-text-field>
+      <v-divider class="my-6"/>
 
-          <a-text-field eng :type="showPass ? 'text' : 'password'"
-                        :rules="[rules.required, rules.password, rules.counter]"
-                        label="رمز عبور جدید"
-                        v-model="dto.new_password">
-            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-            </v-icon>
+      <a-row class="align-center">
+        <v-icon color="grey" large>mdi-google</v-icon>
+        <div class="mr-4" style="margin-left: 240px">
+          <p class="mb-2">احراز هویت از طریق پیامک</p>
+          <p class="mb-0 text-body-2 grey--text">برای برداشت و اصلاحات امنیتی استفاده می شود</p>
+        </div>
+        <v-btn @click="onToggle" :loading="l.toggle"
+               small outlined color="primary" class="px-6">
+          {{ btnText }}
+        </v-btn>
+      </a-row>
+    </v-card>
 
-          </a-text-field>
-          <a-text-field eng :type="showPass ? 'text' : 'password'"
-                        label="تکرار رمز عبور جدید"
-                        v-model="repeatNewPass">
-            <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
-              {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
-            </v-icon>
-          </a-text-field>
-
-          <div class="text-center mt-8">
-            <v-btn type="submit" :loading="l.changePass"
-                   color="error" depressed> تغییر رمز عبور
-            </v-btn>
-          </div>
-        </v-form>
+    <a-row class="pt-3">
+      <v-col cols="6" class="pr-0">
+        <v-card width="100%" class="pa-6">
+          <card-title-with-chevron title="مدیریت دستگاه ها" icon="mdi-cellphone"/>
+        </v-card>
       </v-col>
-      </v-row>
-    </a-card>
+
+      <v-col cols="6" class="pl-0">
+        <v-card width="100%" class="pa-6" @click="d.changePass = true">
+          <card-title-with-chevron title="تغییر رمز عبور" icon="mdi-lock"/>
+        </v-card>
+      </v-col>
+    </a-row>
+
+    <v-dialog v-model="d.changePass">
+      <a-card divider class="mt-4" title="تغییر رمز عبور">
+        <v-row justify="center">
+          <v-col cols="4">
+            <v-form @submit.prevent="changePass" v-model="form" ref="form">
+              <a-text-field eng :type="showPass ? 'text' : 'password'"
+                            label="رمز عبور فعلی" v-model="dto.old_password">
+                <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+                  {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+                </v-icon>
+              </a-text-field>
+
+              <a-text-field eng :type="showPass ? 'text' : 'password'"
+                            :rules="[rules.required, rules.password, rules.counter]"
+                            label="رمز عبور جدید"
+                            v-model="dto.new_password">
+                <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+                  {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+                </v-icon>
+
+              </a-text-field>
+              <a-text-field eng :type="showPass ? 'text' : 'password'"
+                            label="تکرار رمز عبور جدید"
+                            v-model="repeatNewPass">
+                <v-icon class="px-2 py-1" size="20px" @click="showPass = !showPass">
+                  {{ showPass ? 'mdi-eye' : 'mdi-eye-off' }}
+                </v-icon>
+              </a-text-field>
+
+              <div class="text-center mt-8">
+                <v-btn type="submit" :loading="l.changePass"
+                       color="error" depressed> تغییر رمز عبور
+                </v-btn>
+              </div>
+            </v-form>
+          </v-col>
+        </v-row>
+      </a-card>
+    </v-dialog>
+
   </div>
 
 </template>
@@ -71,19 +104,19 @@ export default {
       return this.mfaIsEnabled ? 'none' : 'sms'
     },
     btnText() {
-      return this.mfaIsEnabled ? 'لغو شناسایی دو عاملی' : 'فعال سازی شناسایی دو عاملی'
+      return this.mfaIsEnabled ? 'غیرفعال سازی' : 'فعال سازی'
     },
-    btnColor() {
-      return this.mfaIsEnabled ? 'F849601E' : '#02c0761E'
-    },
+    // btnColor() {
+    //   return this.mfaIsEnabled ? 'F849601E' : '#02c0761E'
+    // },
+    // btnClass() {
+    //   return this.mfaIsEnabled ? 'error--text' : 'success--text'
+    // },
     statusText() {
       return this.mfaIsEnabled ? 'فعال' : 'غیرفعال'
     },
     statusClass() {
       return this.mfaIsEnabled ? 'success--text' : 'error--text'
-    },
-    btnClass() {
-      return this.mfaIsEnabled ? 'error--text' : 'success--text'
     }
   },
   data() {
@@ -96,6 +129,8 @@ export default {
       repeatNewPass: '',
       showPass: false,
       form: false,
+      l: {toggle: false, changePass: false, toggleGmfa: false},
+      d: {changePass: false},
       rules: {
         required: value => !!value || 'الزامی است',
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
@@ -109,7 +144,6 @@ export default {
           return pattern.test(value) || 'شامل حداقل یک حرف کوچک، یک حرف بزرگ، و یک عدد باشد'
         },
       },
-      l: {toggle: false, changePass: false}
     }
   },
   async mounted() {
@@ -135,7 +169,7 @@ export default {
           error('رمز عبور با تکرار تطابق ندارد.')
         }
       }
-    }
+    },
   }
 }
 </script>
