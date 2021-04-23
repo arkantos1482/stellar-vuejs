@@ -45,37 +45,37 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-img max-width="128" max-height="48"
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@2x.png')"/>
-      <v-tabs v-show="!isAdmin">
-        <v-tab to="/">بازار</v-tab>
+      <div v-show="!isAdmin">
+        <!--        <v-btn text href="https://app.bitra.market/login">بازار</v-btn>-->
+        <v-btn text target="_blank" href="https://bitra.market/tokenAmin"> سرمایه گذاری</v-btn>
+        <v-btn text target="_blank" href="https://bitra.market/investorsClub">جامعه توکن داران</v-btn>
+        <v-btn text target="_blank" href="https://bitra.market/news">اخبار</v-btn>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab v-bind="attrs" v-on="on"> سرمایه گذاری</v-tab>
+            <v-btn v-bind="attrs" v-on="on" text>پشتیبانی</v-btn>
           </template>
           <v-list>
-            <v-list-item to="/coming-soon">سرمایه ۱</v-list-item>
-            <v-list-item to="/coming-soon">سرمایه ۲</v-list-item>
+            <v-list-item target="_blank" href="https://bitra.market/terms/">قوانین</v-list-item>
+            <v-list-item target="_blank" href="https://bitra.market/faq/">سوالات متداول</v-list-item>
+            <v-list-item target="_blank" href="https://bitra.market/registerGuide/">راهنمای ثبت نام</v-list-item>
           </v-list>
         </v-menu>
-        <v-tab>جامعه توکن داران</v-tab>
-        <v-tab>اخبار</v-tab>
-        <v-tab>پشتیبانی</v-tab>
-        <v-tab>درباره ما</v-tab>
-        <v-tab>تماس با ما</v-tab>
-      </v-tabs>
-      <!--      <v-spacer/>-->
+        <v-btn text target="_blank" href="https://bitra.market/about">درباره ما</v-btn>
+        <v-btn text target="_blank" href="https://bitra.market/contact">تماس با ما</v-btn>
+      </div>
+      <v-spacer/>
       <!--      WALLETS-->
       <v-menu>
         <template v-slot:activator="{on,attrs}">
-          <v-btn class="grey--text text--darken-2"
-                 text v-bind="attrs" v-on="on"
+          <v-btn text v-bind="attrs" v-on="on"
                  to="/wallets">کیف پول
           </v-btn>
         </template>
       </v-menu>
       <!--      OFFERS-->
-      <v-menu>
+      <v-menu offset-y>
         <template v-slot:activator="{on,attrs}">
-          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">سفارشات
+          <v-btn text v-bind="attrs" v-on="on">سفارشات
           </v-btn>
         </template>
         <v-list>
@@ -86,22 +86,34 @@
         </v-list>
       </v-menu>
       <!--      PROFILE-->
-      <v-menu>
+      <v-menu offset-y>
         <template v-slot:activator="{on,attrs}">
-          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ title }}
+          <v-btn text v-bind="attrs" v-on="on">
             <v-icon>mdi-account-outline</v-icon>
           </v-btn>
         </template>
         <v-list>
-          <v-list-item to="/users/me">پروفایل</v-list-item>
-          <v-list-item to="/Security">امنیت</v-list-item>
-          <v-list-item class="" @click="logout">خروج</v-list-item>
+          <v-list-item to="/users/me">
+            <a-row class="align-center">
+              <p class="mb-0 ml-8 primary--text">{{ user.email }}</p>
+              <v-icon color="primary">mdi-chevron-left</v-icon>
+            </a-row>
+          </v-list-item>
+          <v-divider/>
+          <v-list-item>حسابداری مالی</v-list-item>
+          <v-list-item>اطلاعات</v-list-item>
+          <v-list-item>جوایز و تخفیف ها</v-list-item>
+          <v-list-item>تنظیمات</v-list-item>
+          <v-list-item>دعوت از دوستان</v-list-item>
+          <v-list-item>پروفایل</v-list-item>
+          <v-divider/>
+          <v-list-item @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
       <!--      NOTIFICATION-->
-      <v-menu nudge-width="96">
+      <v-menu nudge-width="128" offset-y>
         <template v-slot:activator="{on,attrs}">
-          <v-btn class="grey--text text--darken-2" text v-bind="attrs" v-on="on">{{ accessLevel }}
+          <v-btn text v-bind="attrs" v-on="on">
             <v-icon>mdi-bell-outline</v-icon>
           </v-btn>
         </template>
