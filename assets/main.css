@@ -41,6 +41,11 @@ a {
     text-decoration: none;
 }
 
+.v-label {
+    font-size: 1.4rem !important;
+    font-weight: 600;
+}
+
 /*selector collapse font size*/
 .v-input.v-select {
     font-size: 14px !important;

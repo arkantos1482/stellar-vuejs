@@ -32,7 +32,7 @@
     <a-row class="pt-3">
       <v-col cols="6" class="pr-0">
         <v-card width="100%" class="pa-6">
-          <card-title-with-chevron title="مدیریت دستگاه ها" icon="mdi-cellphone"/>
+          <card-title-with-chevron title="مدیریت دستگاه ها" icon="mdi-monitor-cellphone"/>
         </v-card>
       </v-col>
 

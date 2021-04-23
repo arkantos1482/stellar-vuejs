@@ -1,61 +1,92 @@
 <template>
-  <div>
-    <p class="text-h4 primary--text">با دعوت از دوستان خود سود بیشتری کسب کنید.</p>
-    <div class="d-flex align-items-stretch">
-      <a-card class="ml-4" width="40%" divider title="ایجاد کد دعوت">
-        <p class="text-h5 grey--text text--darken-1">
-          نرخ کارمزد ۲۰درصد به شما تعلق گرفته است، سهم دوستان خود را مشخص کنید.
-        </p>
-        <v-row>
-          <v-col class="text-center">
-            <p class="">درصد شما</p>
-            <p class="text-h5">{{ myPercent + "درصد" }}</p>
-          </v-col>
-          <v-divider vertical/>
-          <v-col class="text-center">
-            <p class="">درصد دوستان</p>
-            <p class="text-h5">{{ guestPercent + "درصد" }}</p>
-          </v-col>
-        </v-row>
-        <v-slider v-model="myPercent"
-                  min="0" max="20" step="5" track-color="accent"
-                  ticks thumb-label/>
-        <div class="text-center">
+  <div class="px-16">
+    <a-row class="align-center">
+      <v-col cols="6">
+        <p class="text-h4">با دعوت از دوستان خود
+          <br>
+          سود بیشتری برای یکدیگر کسب کنید.</p>
+        <p class="bluegrey--text my-12">با هر معامله ای که دوستان شما در بیترا انجام دهند
+          <span>۲۰٪ کارمزد</span>
+          به شما تعلق می گیرد</p>
+        <v-btn color="primary" class="px-4">دعوت از دوستان</v-btn>
+      </v-col>
+
+      <v-col cols="6">
+        <v-card width="100%" class="px-12 py-6">
+          <a-row class="justify-space-between align-center">
+            <p class="bluegrey--text mb-0">کد دعوت</p>
+            <v-btn @click="d.create = true" text color="primary">
+              <v-icon small color="primary">mdi-plus-thick</v-icon>
+              ایجاد لینک دعوت اختصاصی
+            </v-btn>
+          </a-row>
+
+          <div v-if="myLink">
+            <a-row class="align-center">
+              <p class="text-h4 mb-0">{{ myCode }}</p>
+              <v-btn icon @click="copy(myCode)">
+                <v-icon small color="primary">mdi-clipboard-text-multiple-outline</v-icon>
+              </v-btn>
+            </a-row>
+            <p class="bluegrey--text mt-8 mb-0">لینک دعوت</p>
+            <a-row class="align-center">
+              <p class="mb-0" style="font-family: sans-serif !important;">{{ myLink }}</p>
+              <v-btn icon @click="copy(myLink)">
+                <v-icon small color="primary">mdi-clipboard-text-multiple-outline</v-icon>
+              </v-btn>
+            </a-row>
+          </div>
+
+          <v-sheet class="text-center mt-6 pa-6" color="#141633">
+            <a-row>
+              <v-col>
+                <p class="bluegrey--text">درصد دریافتی شما</p>
+                <p class="mb-0">{{ myPercent + "درصد" }}</p>
+              </v-col>
+              <v-divider vertical/>
+              <v-col class="text-center">
+                <p class="bluegrey--text">درصد دریافتی دوستان</p>
+                <p class="mb-0">{{ guestPercent + "درصد" }}</p>
+              </v-col>
+            </a-row>
+          </v-sheet>
+        </v-card>
+      </v-col>
+    </a-row>
+
+    <v-dialog v-model="d.create" width="520px">
+      <v-card class="px-12 py-6 text-center">
+        <p class="primary--text text-right">ایجاد لینک دعوت</p>
+        <v-btn-toggle v-model="myPercent" color="primary" class="mt-10">
+          <v-btn value="0">0%</v-btn>
+          <v-btn value="5">5%</v-btn>
+          <v-btn value="10">10%</v-btn>
+          <v-btn value="15">15%</v-btn>
+          <v-btn disabled>20%</v-btn>
+          <v-btn disabled>50%</v-btn>
+        </v-btn-toggle>
+        <v-sheet class="mt-6 pa-6" color="#141633">
+          <a-row>
+            <v-col>
+              <p class="bluegrey--text">درصد دریافتی شما</p>
+              <p class="mb-0">{{ myPercent + "درصد" }}</p>
+            </v-col>
+            <v-divider vertical/>
+            <v-col class="text-center">
+              <p class="bluegrey--text">درصد دریافتی دوستان</p>
+              <p class="mb-0">{{ guestPercent + "درصد" }}</p>
+            </v-col>
+          </a-row>
+        </v-sheet>
+        <a-text-field class="mt-6" v-model="tokenText" label="متن"/>
+        <v-checkbox class="mt-6" v-model="defaultToken" label="انتخاب به عنوان کد دعوت پیش فرض"/>
+        <div class="text-left">
           <v-btn @click="submitMyPercent" :loading="l.percent"
-                 small depressed class="primary--text px-12 py-4"
-                 color="primary lighten-4">اعمال
+                 depressed color="primary">ایجاد لینک دعوت
           </v-btn>
         </div>
-      </a-card>
-
-      <a-card width="60%" divider title="کد دعوت شما">
-        <p class="text-h5 grey--text text--darken-1">
-          برای پیوستن دوستان خود به بیترا، کد زیر را با آنها به اشتراک بگذارید.
-        </p>
-        <div v-if="myLink">
-          <div class="d-flex justify-space-between align-center">
-            <p class="text-h5 ma-0">لینک دعوت</p>
-            <p style="font-family: sans-serif !important;"
-               class="d-flex align-center text-h5 ma-0">
-              <v-btn icon @click="copy(myLink)">
-                <v-icon color="primary">mdi-clipboard-text-multiple-outline</v-icon>
-              </v-btn>
-              {{ myLink }}
-            </p>
-          </div>
-          <div class="d-flex justify-space-between align-center">
-            <p class="text-h5 ma-0">کد دعوت</p>
-            <p style="font-family: sans-serif !important;"
-               class="d-flex align-center text-h5 ma-0">
-              <v-btn icon @click="copy(myCode)">
-                <v-icon color="primary">mdi-clipboard-text-multiple-outline</v-icon>
-              </v-btn>
-              {{ myCode }}
-            </p>
-          </div>
-        </div>
-      </a-card>
-    </div>
+      </v-card>
+    </v-dialog>
 
     <a-card class="mt-4" divider title="کد دعوت کننده شما">
       <p class="text-h5 grey--text text--darken-1">
@@ -93,7 +124,10 @@ export default {
       myLink: '',
       myPercent: 15,
       myHostCode: '',
-      l: {percent: false, hostCode: false}
+      l: {percent: false, hostCode: false},
+      d: {create: false},
+      defaultToken: true,
+      tokenText: 'کد پیش فرض'
     }
   },
   async mounted() {
