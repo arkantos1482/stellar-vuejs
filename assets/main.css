@@ -28,8 +28,9 @@
     font-family: sans-serif !important;
 }
 
-th {
-    font-weight: 400;
+th, td {
+    text-align: center;
+    font-size: 1.4rem !important;
 }
 
 a, p, span, input.text-field {
