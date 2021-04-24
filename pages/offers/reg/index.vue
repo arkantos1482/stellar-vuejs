@@ -106,9 +106,13 @@
           <!--   SELL/BUY-->
           <v-col cols="4">
             <v-card class="pa-6" height="100%" width="100%">
-              <card-title-with-chevron simple icon="mdi-chart-bar" title="لیست قیمت ها"/>
+              <a-row class="align-center">
+                <v-icon color="primary">mdi-chart-bar</v-icon>
+                <p class="primary--text mb-0 mx-2">لیست قیمت ها</p>
+                <v-spacer/>
+              </a-row>
               <!--    SELL-->
-              <v-simple-table dense fixed-header>
+              <v-simple-table dense fixed-header class="mt-4">
                 <thead>
                 <tr>
                   <th class="small-font text-body-2" style="font-family: serif">{{ priceLabel }}</th>
@@ -127,7 +131,7 @@
               </v-simple-table>
 
               <!--    BUY-->
-              <v-simple-table dense fixed-header>
+              <v-simple-table dense fixed-header class="mt-4">
                 <thead>
                 <tr>
                   <th class="small-font text-body-2">{{ priceLabel }}</th>
@@ -236,13 +240,16 @@ export default {
       return `موجودی (${this.counterAsset}) : ${parseFloat(this.balances[this.counterAsset].actual_balance)}`
     },
     priceLabel() {
-      return 'قیمت (' + this.$options.filters.irtFix(this.counterAsset) + ')'
+      // return 'قیمت (' + this.$options.filters.irtFix(this.counterAsset) + ')'
+      return 'قیمت'
     },
     unitNumberLabel() {
-      return 'مقدار (' + this.$options.filters.irtFix(this.baseAsset) + ')'
+      // return 'مقدار (' + this.$options.filters.irtFix(this.baseAsset) + ')'
+      return 'مقدار'
     },
     amountLabel() {
-      return 'مجموع (' + this.$options.filters.irtFix(this.counterAsset) + ')'
+      // return 'مجموع (' + this.$options.filters.irtFix(this.counterAsset) + ')'
+      return 'مجموع'
     },
     tradingVueLabel() {
       return this.$options.filters.irtFix(this.baseAsset)
