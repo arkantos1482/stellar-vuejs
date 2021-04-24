@@ -6,10 +6,10 @@
       <CryptoMinMaxCard coin="LTC" :stat="stats['ltc-rls']"/>
       <CryptoMinMaxCard coin="USDT" :stat="stats['usdt-rls']"/>
       <!--      <CryptoMinMaxCard coin="BCH" :stat="stats['bch-rls']"/>-->
-      <CryptoMinMaxCard coin="AMN"/>
-      <CryptoMinMaxCard coin="ART"/>
-      <CryptoMinMaxCard coin="SHA"/>
-      <CryptoMinMaxCard coin="ZRK"/>
+      <CryptoMinMaxCard coin="AMN" :stat="preMadeStat.AMN"/>
+      <CryptoMinMaxCard coin="ART" :stat="preMadeStat.ART"/>
+      <CryptoMinMaxCard coin="SHA" :stat="preMadeStat.SHA"/>
+      <CryptoMinMaxCard coin="ZRK" :stat="preMadeStat.ZRK"/>
     </a-row>
 
     <a-row class="align-stretch">
@@ -88,6 +88,34 @@ export default {
   computed: {
     balances() {
       return this.$store.state.balances.list
+    },
+    preMadeStat() {
+      return {
+        AMN: {
+          dayLow: '108000',
+          dayHigh: '144000',
+          dayLatest: '',
+          dayChange: '',
+        },
+        ART: {
+          dayLow: '82600',
+          dayHigh: '110110',
+          dayLatest: '',
+          dayChange: '',
+        },
+        SHA: {
+          dayLow: '336000',
+          dayHigh: '448000',
+          dayLatest: '',
+          dayChange: '',
+        },
+        ZRK: {
+          dayLow: '135000',
+          dayHigh: '250000',
+          dayLatest: '',
+          dayChange: '',
+        },
+      }
     }
   },
   data() {
