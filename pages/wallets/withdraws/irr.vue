@@ -40,7 +40,7 @@ export default {
   components: {CryptoUpper, Withdraws, ACard, ATextField},
   computed: {
     balance() {
-      return this.$store.state.balances.list[this.type].actual_balance
+      return this.$store.state.balances.list[this.type]?.actual_balance
     }
   },
   data() {
