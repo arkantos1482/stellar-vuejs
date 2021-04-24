@@ -1,7 +1,14 @@
 <template>
   <v-app class="text-right">
     <v-navigation-drawer v-model="drawer" fixed right app>
-      <v-list nav dense flat>
+      <v-list v-if="isAdmin">
+        <v-list-item v-for="item in admin_drawer_items" :to="item.to">
+          <v-icon>{{ item.icon }}</v-icon>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+      <v-list v-else nav dense flat>
         <v-list-item-group color="primary">
 
           <v-list-item to="/">
@@ -200,80 +207,6 @@ export default {
       clipped: false,
       drawer: false,
       fixed: false,
-      user_drawer_items: [
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'داشبورد',
-        //   to: '/',
-        //   items: [],
-        // },
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'حسابداری مالی',
-        //   items: [{
-        //     title: 'گزارش برداشت',
-        //     to: '/wallets/withdraws'
-        //   }, {
-        //     title: 'گزارش واریز',
-        //     to: '/wallets/deposits'
-        //   }, {
-        //     title: 'گزارش تراکنش ها',
-        //     to: ''
-        //   }],
-        // },
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'امنیت',
-        //   to: '/Security',
-        //   items: [],
-        // },
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'جوایز و تخفیف ها',
-        //   to: '/coming-soon',
-        //   items: [],
-        // },
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'تنظیمات',
-        //   items: [{
-        //     title: 'مدیریت API',
-        //     to: '/coming-soon'
-        //   }, {
-        //     title: 'مدیریت اعلان ها',
-        //     to: '/coming-soon'
-        //   }],
-        // },
-        // {
-        //   icon: 'mdi-chart-bubble',
-        //   title: 'دعوت از دوستان',
-        //   to: '/Referral',
-        //   items: [],
-        // },
-        /*  {
-            icon: 'mdi-chart-bubble',
-            title: 'کیف پول',
-            to: '/wallets',
-            items: [],
-          },
-          {
-            icon: 'mdi-chart-bubble',
-            title: 'سفارشات',
-            items: [{
-              title: 'ثبت سفارش',
-              to: '/offers/reg'
-            }, {
-              title: 'سفارشات در جریان',
-              to: '/offers/active/me'
-            }, {
-              title: 'تاریخچه سفارشات',
-              to: '/offers/me'
-            }, {
-              title: 'معاملات',
-              to: '/trades/me'
-            }],
-          }*/
-      ],
       admin_drawer_items: [
         {
           icon: 'mdi-chart-bubble',
