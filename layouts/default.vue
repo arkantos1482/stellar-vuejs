@@ -3,20 +3,44 @@
     <v-navigation-drawer v-model="drawer" fixed right app>
       <v-list nav dense flat>
         <v-list-item-group color="primary">
-          <v-list-group prepend-icon="mdi-chart-bubble" append-icon="" no-action sub-group>
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title>حسابداری مالی</v-list-item-title>
-              </v-list-item-content>
-            </template>
 
-            <v-list-item to="/wallets/withdraws">
-              <v-list-item-title>گزارش برداشت</v-list-item-title>
-            </v-list-item>
-            <v-list-item to="/wallets/deposits">
-              <v-list-item-title>گزارش واریز</v-list-item-title>
-            </v-list-item>
-          </v-list-group>
+          <v-list-item to="/">
+            <v-icon>mdi-chart-bubble</v-icon>
+            <v-list-item-title>داشبورد</v-list-item-title>
+          </v-list-item>
+
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon>mdi-chart-bubble</v-icon>
+                  <v-list-item-title>حسابداری مالی</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/wallets/withdraws">
+                  <v-list-item-title>گزارش برداشت</v-list-item-title>
+                </v-list-item>
+                <v-list-item to="/wallets/deposits">
+                  <v-list-item-title>گزارش واریز</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+          <!--                    <v-list-group no-action sub-group >-->
+          <!--                      <template v-slot:activator>-->
+          <!--                        <v-list-item-content>-->
+          <!--                          <v-list-item-title>حسابداری مالی</v-list-item-title>-->
+          <!--                        </v-list-item-content>-->
+          <!--                      </template>-->
+
+          <!--                      <v-list-item to="/wallets/withdraws">-->
+          <!--                        <v-list-item-title>گزارش برداشت</v-list-item-title>-->
+          <!--                      </v-list-item>-->
+          <!--                      <v-list-item to="/wallets/deposits">-->
+          <!--                        <v-list-item-title>گزارش واریز</v-list-item-title>-->
+          <!--                      </v-list-item>-->
+          <!--                    </v-list-group>-->
 
           <v-list-item to="/Security">
             <v-icon>mdi-chart-bubble</v-icon>
@@ -31,11 +55,6 @@
           <v-list-item to="/Referral">
             <v-icon>mdi-chart-bubble</v-icon>
             <v-list-item-title>دعوت از دوستان</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item to="/">
-            <v-icon>mdi-chart-bubble</v-icon>
-            <v-list-item-title>داشبورد</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
