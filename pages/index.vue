@@ -1,9 +1,15 @@
 <template>
   <div>
     <a-row>
-      <v-col v-for="item in [1,2,3,4,5,6,7,8]" cols="3">
-        <CryptoMinMaxCard/>
-      </v-col>
+      <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']"/>
+      <CryptoMinMaxCard coin="ETH" :stat="stats['eth-rls']"/>
+      <CryptoMinMaxCard coin="LTC" :stat="stats['ltc-rls']"/>
+      <CryptoMinMaxCard coin="USDT" :stat="stats['usdt-rls']"/>
+      <!--      <CryptoMinMaxCard coin="BCH" :stat="stats['bch-rls']"/>-->
+      <CryptoMinMaxCard coin="AMN"/>
+      <CryptoMinMaxCard coin="ART"/>
+      <CryptoMinMaxCard coin="SHA"/>
+      <CryptoMinMaxCard coin="ZRK"/>
     </a-row>
 
     <a-row class="align-stretch">
@@ -22,7 +28,7 @@
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
-            <p class="mb-0 mx-4">{{accessLevel}}</p>
+            <p class="mb-0 mx-4">{{ accessLevel }}</p>
             <v-btn color="primary" outlined small class="px-4">ارتقا</v-btn>
           </a-row>
         </v-card>
@@ -86,12 +92,17 @@ export default {
   },
   data() {
     return {
-      accessLevel: ''
+      accessLevel: '',
+      stats: ''
     }
   },
   async mounted() {
     let user = await this.$axios.$get('/profiles/me')
     this.accessLevel = user.access_level
+
+    let res = await this.$axios.$get('https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,ltc,usdt,bch,bnb,eos,xlm,etc,trx,pmn,doge&dstCurrency=rls,usdt')
+    this.stats = res.stats
+    console.log(this.stats)
   }
 }
 </script>
