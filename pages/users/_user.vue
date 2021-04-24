@@ -355,7 +355,7 @@ export default {
     },
     async send() {
       this.l.send = true
-      // await this.$axios.$put('/profiles/' + this.userId, this.user)
+      await this.$axios.$put('/profiles/' + this.userId, this.user)
       this.l.send = false
       this.$bus.$emit('snack', 'با موفقیت ثبت شد.', 'success')
     },
