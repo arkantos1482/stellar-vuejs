@@ -101,6 +101,12 @@ a {
     font-size: 2rem !important;
 }
 
+.dark .vue-pincode-input{
+    border: 1px solid #a7a9cf !important;
+    border-radius: 4px !important;
+    color: white;
+}
+
 .persian-date-picker {
     font-size: 1.4rem;
     width: 100%;

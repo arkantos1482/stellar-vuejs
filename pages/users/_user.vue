@@ -212,14 +212,14 @@
       <v-dialog v-model="dialog.mobileOtp" max-width="400">
         <a-card title="احراز اصالت موبایل"
                 subtitle="کد تایید ۶رقمی ارسال شده به شماره موبایل خود را وارد کنید.">
-          <otp :loading="l.mobileSubmit" class="mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event"
+          <otp :loading="l.mobileSubmit" class="dark mt-8" @send="submitMobileOtp" @otp="mobile.otp=$event"
                label="کد تایید"/>
         </a-card>
       </v-dialog>
       <v-dialog v-model="dialog.phoneOtp" max-width="400">
         <a-card title="احراز اصالت تلفن ثابت"
                 subtitle="کد تایید ۶رقمی ارسال شده به شماره تلفن ثابت خود را وارد کنید.">
-          <otp :loading="l.phoneSubmit" class="mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
+          <otp :loading="l.phoneSubmit" class="dark mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
         </a-card>
       </v-dialog>
     </div>
