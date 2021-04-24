@@ -72,7 +72,13 @@
       <v-img max-width="128" max-height="48"
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@2x.png')"/>
       <div v-show="!isAdmin">
-        <!--        <v-btn text href="https://app.bitra.market/login">بازار</v-btn>-->
+        <v-menu>
+          <template v-slot:activator="{on,attrs}">
+            <v-btn text v-bind="attrs" v-on="on"
+                   to="/offers/reg">بازار
+            </v-btn>
+          </template>
+        </v-menu>
         <v-btn text target="_blank" href="https://bitra.market/tokenAmin"> سرمایه گذاری</v-btn>
         <v-btn text target="_blank" href="https://bitra.market/investorsClub">جامعه توکن داران</v-btn>
         <v-btn text target="_blank" href="https://bitra.market/news">اخبار</v-btn>
@@ -126,12 +132,12 @@
             </a-row>
           </v-list-item>
           <v-divider/>
-          <v-list-item>حسابداری مالی</v-list-item>
-          <v-list-item>اطلاعات</v-list-item>
-          <v-list-item>جوایز و تخفیف ها</v-list-item>
-          <v-list-item>تنظیمات</v-list-item>
-          <v-list-item>دعوت از دوستان</v-list-item>
-          <v-list-item>پروفایل</v-list-item>
+          <!--          <v-list-item>حسابداری مالی</v-list-item>-->
+          <!--          <v-list-item>اطلاعات</v-list-item>-->
+          <!--          <v-list-item>جوایز و تخفیف ها</v-list-item>-->
+          <!--          <v-list-item>تنظیمات</v-list-item>-->
+          <!--          <v-list-item>دعوت از دوستان</v-list-item>-->
+          <v-list-item to="/users/me">پروفایل</v-list-item>
           <v-divider/>
           <v-list-item @click="logout">خروج</v-list-item>
         </v-list>
