@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-card class="d-flex flex-column align-center">
-      <v-stepper v-model="stepNum" style="width: 50%;background: #00061a">
+      <v-stepper v-model="stepNum" style="width: 50%;background: #00061a" non-linear>
         <v-stepper-header>
-          <v-stepper-step step="0">اطلاعات شخصی</v-stepper-step>
+          <v-stepper-step step="0" editable>اطلاعات شخصی</v-stepper-step>
           <v-divider/>
-          <v-stepper-step step="1">اطلاعات بانکی</v-stepper-step>
+          <v-stepper-step step="1" editable>اطلاعات بانکی</v-stepper-step>
           <v-divider/>
-          <v-stepper-step step="2">تایید هویت</v-stepper-step>
+          <v-stepper-step step="2" editable>تایید هویت</v-stepper-step>
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content step="0" class="pt-0">
