@@ -12,7 +12,7 @@ Vue.use(VuePersianDatetimePicker, {
         placeholder: '',
         // clearable: true,
         // altFormat: 'YYYY-MM-DD HH:mm',
-        color: '#0074ff',
+        color: '#ffbb00',
         autoSubmit: false,
         //...
         //... And whatever you want to set as default

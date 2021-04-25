@@ -37,7 +37,7 @@
                                 hint="09121234567"
                                 :disabled="verifyState.cell_phone">
                     <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                           outlined tile depressed small class="primary--text inside-btn" color="primary lighten-4">
+                           tile depressed small class="inside-btn" color="primary">
                       دریافت
                       کد
                       تایید
@@ -154,7 +154,7 @@
                                 :rules="[rules.required]"
                                 v-model="user.phone" label="تلفن ثابت"
                                 :disabled="verifyState.phone">
-                    <v-btn outlined tile depressed small class="primary--text inside-btn" color="primary lighten-4"
+                    <v-btn tile depressed small class="inside-btn" color="primary"
                            @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
                     </v-btn>
                   </a-text-field>
@@ -219,7 +219,8 @@
       <v-dialog v-model="dialog.phoneOtp" max-width="400">
         <a-card title="احراز اصالت تلفن ثابت"
                 subtitle="کد تایید ۶رقمی ارسال شده به شماره تلفن ثابت خود را وارد کنید.">
-          <otp :loading="l.phoneSubmit" class="dark mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event" label="کد تایید"/>
+          <otp :loading="l.phoneSubmit" class="dark mt-8" @send="submitPhoneOtp" @otp="phone.otp=$event"
+               label="کد تایید"/>
         </a-card>
       </v-dialog>
     </div>

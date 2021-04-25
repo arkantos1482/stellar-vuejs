@@ -88,7 +88,8 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black !important;
+    color: white !important;
+    background-color: #00061a !important;;
     /*transition: .2s linear;*/
 }
 
@@ -108,10 +109,20 @@ a {
     border: 1px solid #a7a9cf !important;
     border-radius: 4px !important;
     padding: 4px 12px !important;
+    color: white;
 }
-
 .vpd-icon-btn {
     display: none !important;
+}
+.vpd-body {
+    background: #00061a;
+}
+div.vpd-header {
+    color: black;
+}
+.vpd-actions button:hover {
+    background-color: transparent !important;
+    border: 1px solid #ffbb00 !important;
 }
 
 .v-text-field fieldset {

@@ -32,7 +32,7 @@
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"/>
-              <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
+              <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
@@ -61,7 +61,7 @@
                                 v-model="sell.price" prepend="قیمت"/>
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.sellSufficient]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
-              <v-slider class="mt-n4" color="accent" track-color="accent lighten-4"
+              <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
