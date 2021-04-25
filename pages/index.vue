@@ -92,26 +92,26 @@ export default {
     preMadeStat() {
       return {
         AMN: {
-          dayLow: '108000',
-          dayHigh: '144000',
+          dayLow: '1080000',
+          dayHigh: '1440000',
           dayLatest: '',
           dayChange: '',
         },
         ART: {
-          dayLow: '82600',
-          dayHigh: '110110',
+          dayLow: '826000',
+          dayHigh: '1101100',
           dayLatest: '',
           dayChange: '',
         },
         SHA: {
-          dayLow: '336000',
-          dayHigh: '448000',
+          dayLow: '3360000',
+          dayHigh: '4480000',
           dayLatest: '',
           dayChange: '',
         },
         ZRK: {
-          dayLow: '135000',
-          dayHigh: '250000',
+          dayLow: '1350000',
+          dayHigh: '2500000',
           dayLatest: '',
           dayChange: '',
         },

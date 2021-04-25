@@ -12,7 +12,7 @@
         <v-list-item-group color="primary">
 
           <v-list-item to="/">
-            <v-icon>mdi-chart-bubble</v-icon>
+            <v-icon class="ml-2">mdi-monitor-dashboard</v-icon>
             <v-list-item-title>داشبورد</v-list-item-title>
           </v-list-item>
 
@@ -20,7 +20,7 @@
             <v-expansion-panel>
               <v-expansion-panel-header>
                 <v-list-item>
-                  <v-icon>mdi-chart-bubble</v-icon>
+                  <v-icon class="ml-2">mdi-badge-account-horizontal-outline</v-icon>
                   <v-list-item-title>حسابداری مالی</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-header>
@@ -34,33 +34,19 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
-          <!--                    <v-list-group no-action sub-group >-->
-          <!--                      <template v-slot:activator>-->
-          <!--                        <v-list-item-content>-->
-          <!--                          <v-list-item-title>حسابداری مالی</v-list-item-title>-->
-          <!--                        </v-list-item-content>-->
-          <!--                      </template>-->
-
-          <!--                      <v-list-item to="/wallets/withdraws">-->
-          <!--                        <v-list-item-title>گزارش برداشت</v-list-item-title>-->
-          <!--                      </v-list-item>-->
-          <!--                      <v-list-item to="/wallets/deposits">-->
-          <!--                        <v-list-item-title>گزارش واریز</v-list-item-title>-->
-          <!--                      </v-list-item>-->
-          <!--                    </v-list-group>-->
 
           <v-list-item to="/Security">
-            <v-icon>mdi-chart-bubble</v-icon>
+            <v-icon class="ml-2">mdi-security</v-icon>
             <v-list-item-title>امنیت</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/coming-soon">
-            <v-icon>mdi-chart-bubble</v-icon>
+            <v-icon class="ml-2">mdi-account-cash</v-icon>
             <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>
           </v-list-item>
 
           <v-list-item to="/Referral">
-            <v-icon>mdi-chart-bubble</v-icon>
+            <v-icon class="ml-2">mdi-account-plus</v-icon>
             <v-list-item-title>دعوت از دوستان</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
@@ -125,7 +111,7 @@
           </v-btn>
         </template>
         <v-list>
-          <v-list-item to="/users/me">
+          <v-list-item>
             <a-row class="align-center">
               <p class="mb-0 ml-8 primary--text">{{ user.email }}</p>
               <v-icon color="primary">mdi-chevron-left</v-icon>
@@ -138,6 +124,7 @@
           <!--          <v-list-item>تنظیمات</v-list-item>-->
           <!--          <v-list-item>دعوت از دوستان</v-list-item>-->
           <v-list-item to="/users/me">پروفایل</v-list-item>
+          <v-list-item to="/Security">امنیت</v-list-item>
           <v-divider/>
           <v-list-item @click="logout">خروج</v-list-item>
         </v-list>

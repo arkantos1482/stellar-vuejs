@@ -1,5 +1,5 @@
 <template>
-  <a-row class="my-6 mx-16 px-16">
+  <a-row class="my-6" style="padding-left: 256px;padding-right: 256px">
     <v-col cols="6">
       <a-row class="mb-4">
         <v-icon color="primary" class="mx-2">mdi-map-marker</v-icon>
@@ -7,7 +7,7 @@
       </a-row>
       <a-row class="mb-4">
         <v-icon color="primary" class="mx-2">mdi-phone</v-icon>
-        <p class="mb-0">021-91092027 021-91010110</p>
+        <p class="mb-0">021-91092027</p>
       </a-row>
       <a-row class="mb-4">
         <v-icon color="primary" class="mx-2">mdi-email</v-icon>
