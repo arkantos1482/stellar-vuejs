@@ -91,11 +91,11 @@
               </v-btn-toggle>
 
               <v-divider vertical inset class="py-4"/>
-              <v-col cols="3">
+              <div style="width: 120px">
                 <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
                           item-value="value"
                           dense filled solo flat/>
-              </v-col>
+              </div>
             </a-row>
           </v-card>
         </v-col>
@@ -226,7 +226,8 @@ export default {
       const list1 = this.list[this.tabIndex];
       return collect(list1)
           .map(item => ({
-            text: this.$options.filters.toFarsiCoinPair(item),
+            // text: this.$options.filters.toFarsiCoinPair(item),
+            text: item,
             value: item
           })).all()
     },
