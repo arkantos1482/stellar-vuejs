@@ -17,9 +17,11 @@
 
     <v-col cols="6">
       <p>ما را در شبکه های اجتماعی دنبال کنید:</p>
-      <a-row>
+      <a-row class="align-center">
         <div v-for="(item,idx) in socialList">
-          <v-icon color="primary">{{ item.icon }}</v-icon>
+          <v-btn :href="item.link" icon target="_blank">
+            <v-icon color="primary">{{ item.icon }}</v-icon>
+          </v-btn>
           <v-divider v-if="idx !== socialList.length-1" vertical class="mx-2"/>
         </div>
       </a-row>
@@ -33,11 +35,12 @@ export default {
   data() {
     return {
       socialList: [
-        {icon: 'mdi-youtube', link: ''},
-        {icon: 'mdi-linkedin', link: ''},
-        {icon: 'mdi-instagram', link: ''},
-        {icon: 'mdi-twitter', link: ''},
-        {icon: 'mdi-whatsapp', link: ''},
+        {icon: 'mdi-youtube', link: 'https://www.youtube.com/channel/UCzAT72C57JzqdQkSI9Wi0dg'},
+        // {icon: 'mdi-linkedin', link: ''},
+        {icon: 'mdi-instagram', link: 'https://instagram.com/bitra.official?igshid=4v10cf0yogqo'},
+        {icon: 'mdi-twitter', link: 'https://twitter.com/BitraOfficial?s=08'},
+        // {icon: 'mdi-whatsapp', link: ''},
+        {icon: 'mdi-telegram', link: 'https://t.me/bitra_support'},
       ]
     }
   },

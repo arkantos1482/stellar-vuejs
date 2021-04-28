@@ -50,9 +50,9 @@
           <dash-wallet-row :balance="balances.USDT"/>
           <dash-wallet-row :balance="balances.BCH"/>
           <v-divider class="my-6"/>
-          <p class="primary--text">ارزش تخمینی دارایی ها:</p>
-          <RowItem title="پیشنهادهای خرید" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>
-          <RowItem title="پیشنهادهای فروش" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>
+<!--          <p class="primary&#45;&#45;text">ارزش تخمینی دارایی ها:</p>-->
+<!--          <RowItem title="پیشنهادهای خرید" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>-->
+<!--          <RowItem title="پیشنهادهای فروش" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>-->
         </v-card>
       </v-col>
     </a-row>

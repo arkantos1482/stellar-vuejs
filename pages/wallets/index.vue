@@ -5,7 +5,7 @@
       <v-simple-table>
         <thead>
         <tr>
-          <th class="text-center">ارز</th>
+          <th class="pr-16">ارز</th>
           <th class="text-center">موجودی</th>
           <th class="text-center">موجودی در دسترس</th>
           <th class="text-center">سفارش در جریان</th>
