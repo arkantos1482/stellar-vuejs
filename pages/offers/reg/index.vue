@@ -91,7 +91,7 @@
               </v-btn-toggle>
 
               <v-divider vertical inset class="py-4"/>
-              <div style="width: 120px">
+              <div style="width: 128px">
                 <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
                           item-value="value"
                           dense filled solo flat/>
@@ -215,7 +215,6 @@ export default {
       this.counterAsset = array[1]
       this.clear()
       this.refreshOffers()
-      this.refreshTrades()
     },
     tabIndex(val) {
       this.pairAsset = this.list[val][0]
@@ -226,8 +225,8 @@ export default {
       const list1 = this.list[this.tabIndex];
       return collect(list1)
           .map(item => ({
-            // text: this.$options.filters.toFarsiCoinPair(item),
-            text: item,
+            text: this.$options.filters.irtFix(item),
+            // text: item,
             value: item
           })).all()
     },
@@ -322,9 +321,6 @@ export default {
         }
       }
     },
-    tradeData() {
-      return new DataCube(this.tradeData2)
-    }
   },
   data() {
     return {
@@ -336,9 +332,7 @@ export default {
       offers: [],
       tabIndex: 0,
       pairAsset: 'BTC/IRR',
-      // pairAsset: 'ART/IRR',
       baseAsset: 'BTC',
-      // baseAsset: 'ART',
       counterAsset: 'IRR',
       interval: {offers: null, trades: null},
       windowWidth: window.innerWidth,
@@ -359,41 +353,6 @@ export default {
         buyWalletExist: value => !!this.balances[this.baseAsset]?.actual_balance || 'کیف پول ساخته نشده است',
         sellSufficient: value => this.balances[this.baseAsset]?.actual_balance?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
         sellWalletExist: value => !!this.balances[this.counterAsset]?.actual_balance || 'کیف پول ساخته نشده است',
-      },
-      chartConfig: {
-        SBMIN: 60,       // Minimal sidebar px
-        SBMAX: Infinity, // Max sidebar, px
-        TOOLBAR: 57,     // Toolbar width px
-        TB_ICON: 25,     // Toolbar icon size px
-        TB_ITEM_M: 6,    // Toolbar item margin px
-        TB_ICON_BRI: 1,  // Toolbar icon brightness
-        TB_ICON_HOLD: 420, // ms, wait to expand
-        TB_BORDER: 1,    // Toolbar border px
-        TB_B_STYLE: 'dotted', // Toolbar border style
-        TOOL_COLL: 7,    // Tool collision threshold
-        EXPAND: 0.15,    // %/100 of range
-        CANDLEW: 0.6,    // %/100 of step
-        GRIDX: 100,      // px
-        GRIDY: 47,       // px
-        BOTBAR: 28,      // px
-        PANHEIGHT: 22,   // px
-        DEFAULT_LEN: 50, // candles
-        MINIMUM_LEN: 2,  // candles,
-        MIN_ZOOM: 5,    // candles
-        MAX_ZOOM: 1000,  // candles,
-        VOLSCALE: 0.15,  // %/100 of height
-        UX_OPACITY: 0.9, // Ux background opacity
-        ZOOM_MODE: 'tl', // 'tv' or 'tl'
-        L_BTN_SIZE: 21,  // Legend Button size, px
-        L_BTN_MARGIN: '-6px 0 -6px 0', // css margin
-        SCROLL_WHEEL: 'prevent', // 'pass', 'click'
-      },
-      tradeData2: {
-        chart: {
-          data: [],
-          settings: {},
-          grid: {}
-        }
       },
     }
   },
@@ -456,24 +415,6 @@ export default {
         }
       }))
     },
-    async refreshTrades() {
-      let result = await this.$axios.$get('/trade-aggregates', {
-        params: {
-          base: this.baseAsset,
-          counter: this.counterAsset
-        }
-      })
-      this.tradeData2.chart.data = collect(result)
-          .map(item => [
-            parseFloat(item.timestamp),
-            parseFloat(item.open),
-            parseFloat(item.high),
-            parseFloat(item.low),
-            parseFloat(item.close),
-            parseFloat(item.base_volume)])
-          .all()
-      this.$refs.tradingVue.resetChart()
-    },
     sellRecordTotal(item) {
       return safeDecimal(item.amount).times(this.offersPrice(item))
           .todp(getDp(this.counterAsset))
@@ -498,10 +439,11 @@ export default {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
+    this.$bus.$emit('drawer', false)
+
     this.refreshBalances()
 
     this.refreshOffers()
-    this.refreshTrades()
     this.interval.offers = setInterval(() => {
       this.refreshOffers()
     }, 20 * 1000);

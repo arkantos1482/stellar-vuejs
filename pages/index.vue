@@ -130,7 +130,6 @@ export default {
 
     let res = await this.$axios.$get('https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,ltc,usdt,bch,bnb,eos,xlm,etc,trx,pmn,doge&dstCurrency=rls,usdt')
     this.stats = res.stats
-    console.log(this.stats)
   }
 }
 </script>

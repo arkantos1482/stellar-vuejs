@@ -40,10 +40,10 @@
             <v-list-item-title>امنیت</v-list-item-title>
           </v-list-item>
 
-<!--          <v-list-item to="/coming-soon">-->
-<!--            <v-icon class="ml-2">mdi-account-cash</v-icon>-->
-<!--            <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>-->
-<!--          </v-list-item>-->
+          <!--          <v-list-item to="/coming-soon">-->
+          <!--            <v-icon class="ml-2">mdi-account-cash</v-icon>-->
+          <!--            <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>-->
+          <!--          </v-list-item>-->
 
           <v-list-item to="/Referral">
             <v-icon class="ml-2">mdi-account-plus</v-icon>
@@ -239,6 +239,10 @@ export default {
   async mounted() {
     this.$bus.$on('snack', (msg, level) => {
       this.showErrorSnack(msg, level)
+    })
+
+    this.$bus.$on('drawer', (show) => {
+      this.drawer = show
     })
 
     try {

@@ -2,7 +2,7 @@
   <v-card width="100%" height="100%" class="text-center pa-6">
     <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات"/>
     <v-simple-table>
-      <thead >
+      <thead>
       <tr>
         <th class="text-center">تاریخ</th>
         <th class="text-center">قیمت</th>
@@ -15,7 +15,7 @@
         <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
-        <td>{{ item|total }}</td>
+        <td>{{ total(item) }}</td>
       </tr>
       </tbody>
     </v-simple-table>
@@ -40,21 +40,34 @@ export default {
     },
     amount(item) {
       return toSeparated(parseFloat(item.counter_amount))
+    }
+  },
+  watch: {
+    base() {
+      this.refresh()
     },
-    total(item) {
-      return toSeparated(safeDecimal(item.base_amount).todp(getDp(this.base)))
-    },
+    counter() {
+      this.refresh()
+    }
   },
   data() {
     return {
       trades: []
     }
   },
-  async mounted() {
-    this.trades = await this.$axios.$get('/trades-pair-asset', {
-      params: {base: this.base, counter: this.counter}
-    })
-  }
+  mounted() {
+    this.refresh()
+  },
+  methods: {
+    async refresh() {
+      this.trades = await this.$axios.$get('/trades-pair-asset', {
+        params: {base: this.base, counter: this.counter}
+      })
+    },
+    total(item) {
+      return toSeparated(safeDecimal(item.base_amount).todp(getDp(this.base)))
+    },
+  },
 }
 </script>
 
