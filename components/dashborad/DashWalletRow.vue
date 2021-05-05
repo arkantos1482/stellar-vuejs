@@ -4,7 +4,7 @@
     <p class="grey--text">{{ balance.symbol|toFarsiCoin }}</p>
     <v-spacer/>
     <p>{{ balance.actual_balance|toFloat|separated }}</p>
-    <p class="grey--text">&nbsp&nbsp{{ balance.symbol }}</p>
+    <p class="grey--text">&nbsp&nbsp{{ balance.symbol|irtFix }}</p>
   </div>
 </template>
 <script>
