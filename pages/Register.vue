@@ -60,14 +60,18 @@ export default {
       return !!this.$route.query.referral_code
     }
   },
+  mounted() {
+    if (this.$route.query.email) this.email = this.$route.query.email
+    if (this.$route.query.referral_code) this.referral_code = this.$route.query.referral_code
+  },
   data() {
     return {
       form: false,
       showPass: false,
-      email: this.$route.query.email,
+      email: '',
       password: '',
       passwordConfirm: '',
-      referral_code: this.$route.query.referral_code,
+      referral_code: '',
       terms: false,
       l: {reg: false},
       rules: {
