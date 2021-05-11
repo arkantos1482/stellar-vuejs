@@ -36,7 +36,8 @@ const toFarsiCoin = (type) => {
         IRR: 'تومان',
         ZRK: 'زریک',
         ART: 'آرت کوین',
-        SHA: 'شکوفه آلو'
+        SHA: 'شکوفه آلو',
+        WIT: 'وی توکن',
     }
     return coins[typeUp]
 }
@@ -60,6 +61,7 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'EBG') value = require('@/assets/images/Barg.jpeg')
     if (typeUp === 'ART') value = require('@/assets/images/art_coin.jpeg')
     if (typeUp === 'ZRK') value = require('@/assets/images/zarik.png')
+    if (typeUp === 'WIT') value = require('@/assets/images/we_token_3.png')
     if (typeUp === 'SHA') value = require('@/assets/images/shokofe_aloo_36.png')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')

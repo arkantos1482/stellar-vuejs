@@ -31,6 +31,7 @@ export default {
         {text: 'آرت کوین', value: 'ART'},
         {text: 'زریک', value: 'ZRK'},
         {text: 'شکوفه آلو', value: 'SHA'},
+        {text: 'وی توکن', value: 'WIT'},
       ],
       list: [],
     }

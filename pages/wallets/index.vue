@@ -19,6 +19,7 @@
         <crypto-address-tr namad="آرت کوین" type="art" :balance="balances.ART"/>
         <crypto-address-tr namad="زریک" type="zrk" :balance="balances.ZRK"/>
         <crypto-address-tr namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
+        <crypto-address-tr namad="وی توکن" type="sha" :balance="balances.WIT"/>
         <crypto-address-tr namad="تومان" type="irr" :balance="balances.IRR"/>
 
         <crypto-address-tr namad="بیت کوین" type="btc" :balance="balances.BTC"/>

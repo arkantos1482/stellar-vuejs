@@ -74,7 +74,7 @@ export default {
       this.l.sync = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK'].includes(this.type.toUpperCase())
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
     }
   }
 }

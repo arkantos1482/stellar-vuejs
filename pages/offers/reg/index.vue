@@ -326,8 +326,8 @@ export default {
     return {
       exchangeAction: 'buy',
       list: [
-        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'ART/IRR', 'ZRK/IRR', 'SHA/IRR'],
-        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT', 'ART/USDT', 'ZRK/USDT', 'SHA/USDT'],
+        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'ART/IRR', 'ZRK/IRR', 'SHA/IRR', 'WIT/IRR'],
+        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT', 'ART/USDT', 'ZRK/USDT', 'SHA/USDT','WIT/USDT'],
         ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,

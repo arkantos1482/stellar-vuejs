@@ -116,7 +116,7 @@ export default {
       this.amount = event
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK'].includes(this.type)
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','WIT'].includes(this.type)
     }
   }
 }
