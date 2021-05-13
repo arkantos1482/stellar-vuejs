@@ -53,18 +53,22 @@ export default {
   },
   async mounted() {
     await this.$store.dispatch('addresses/refresh')
-    const address = this.$store.state.addresses.list[this.type];
+    const address = this.$store.state.addresses.list[this.usdtTronFix(this.type)];
     this.address = address ? address : 'no_address';
     await this.$store.dispatch('balances/refresh')
   },
   methods: {
     async createCrypto() {
       this.l.create = true
-      this.address = await this.$axios.$post('/crypto/' + this.type.toLowerCase() + '/address/create')
+      this.address = await this.$axios.$post('/crypto/' +
+          this.usdtTronFix(this.type).toLowerCase() + '/address/create')
       this.l.create = false
     },
     isInternal() {
       return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
+    },
+    usdtTronFix(type) {
+      return type === 'USDT' ? 'TRX' : type
     }
   }
 }

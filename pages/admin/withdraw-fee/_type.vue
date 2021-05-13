@@ -3,13 +3,13 @@
     <v-row justify="center" align="end">
       <v-col cols="6" class="text-center">
         <h3>{{ coin }}</h3>
-        <p v-show="isEthOrUsdt" class="red--text">enter in WEI unit<br/>not Gwei or Ether</p>
+        <p v-show="isEthOrUsdt" class="red--text">enter in WEI unit<br/>not Gwei or Ether (for tron in trx)</p>
         <a-text-field filled v-model="withdrawFee" label="کارمزد برداشت"/>
         <v-btn color="red" @click="setFee" :loading="l.setFee">اعمال</v-btn>
       </v-col>
 
       <v-col v-show="isEthOrUsdt" cols="6" class="text-center">
-        <h3>Gas Limit</h3>
+        <h3>Gas Limit (Fee Limit for tron in trx)</h3>
         <a-text-field filled v-model="gasLimit" label="gas limit"/>
         <v-btn color="red" @click="setGasLimit" :loading="l.gasLimit">اعمال</v-btn>
       </v-col>
@@ -40,7 +40,7 @@ export default {
   components: {ATextField},
   computed: {
     isEthOrUsdt() {
-      return ('ETH' === this.coin.toUpperCase() || 'USDT' === this.coin.toUpperCase())
+      return ['ETH', 'USDT', 'USDT_TRON'].includes(this.coin.toUpperCase())
     }
   },
   data() {

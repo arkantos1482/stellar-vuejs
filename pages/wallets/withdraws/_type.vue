@@ -80,7 +80,7 @@ export default {
   mounted() {
     this.$store.dispatch('balances/refresh')
     this.$store.dispatch('addresses/refresh')
-    this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
+    this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
         .then(res => this.withdrawFee = res);
     this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
         .then(res => {
@@ -95,7 +95,7 @@ export default {
         if (this.balance >= parseFloat(this.amount) + parseFloat(this.withdrawFee)) {
           try {
             this.l.withdraw = true
-            await this.$axios.$post(`/crypto/${this.type.toLowerCase()}/withdraw`, {
+            await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw`, {
               to: this.destAddress,
               amount: this.amount
             })
@@ -116,7 +116,10 @@ export default {
       this.amount = event
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','WIT'].includes(this.type)
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type)
+    },
+    usdtTronFix(type) {
+      return type === 'USDT' ? 'USDT_TRON' : type
     }
   }
 }

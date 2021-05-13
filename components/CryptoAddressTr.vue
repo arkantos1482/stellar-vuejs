@@ -44,7 +44,7 @@ export default {
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
-      return 'USDT' === type || 'ETH' === type || 'IRR' === type
+      return ['ETH', 'IRR'].includes(type)
       // return false
     },
     withdrawLabel() {
@@ -69,12 +69,16 @@ export default {
     },
     async onSync() {
       this.l.sync = true
-      this.syncResult = await this.$axios.$get(`/crypto/${this.type}/sync`)
+      let type = this.usdtTronFix(this.type.toUpperCase()).toLowerCase()
+      this.syncResult = await this.$axios.$get(`/crypto/${type}/sync`)
       await this.$store.dispatch('balances/refresh')
       this.l.sync = false
     },
     isInternal() {
       return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
+    },
+    usdtTronFix(type) {
+      return type === 'USDT' ? 'USDT_TRON' : type
     }
   }
 }
