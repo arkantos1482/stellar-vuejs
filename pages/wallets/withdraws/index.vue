@@ -13,7 +13,7 @@
           <th class="text-center">انتقال به</th>
           <th class="text-center">شماره حساب</th>
           <th class="text-center">کارمزد</th>
-          <!--          <th class="text-center">وضعیت</th>-->
+          <th class="text-center">وضعیت</th>
         </tr>
         </thead>
         <tbody v-if="withdraws.length">
@@ -28,8 +28,8 @@
               <a v-else :href="item.track_code" target="_blank">لینک پیگیری</a>
             </div>
           </td>
-          <td></td>
-          <!--          <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>-->
+          <td>{{ item.crypto_fee }}</td>
+          <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
         </tr>
         </tbody>
         <no-data v-else cols="5" title="برداشتی انجام نشده است."/>
