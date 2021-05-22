@@ -26,7 +26,7 @@
         <crypto-address-tr namad="اتریوم" type="eth" :balance="balances.ETH"/>
         <crypto-address-tr namad="لایت کوین" type="ltc" :balance="balances.LTC"/>
         <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>
-        <crypto-address-tr namad="ترون" type="usdt" :balance="balances.TRX"/>
+        <crypto-address-tr namad="ترون" type="trx" :balance="balances.TRX"/>
         <crypto-address-tr namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>
         </tbody>
       </v-simple-table>
