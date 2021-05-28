@@ -3,6 +3,12 @@
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
       <v-card class="px-16 py-12 flex-grow-1" height="100%">
+        <div class="text-center mb-8">
+          <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
+            <v-btn value="TRON">ترون</v-btn>
+            <v-btn value="ETHER">اتریوم</v-btn>
+          </v-btn-toggle>
+        </div>
         <div v-show="address !== 'not_loaded'">
           <crypto-upper :balance="balance" :type="type"/>
 
@@ -44,20 +50,30 @@ export default {
       return this.isInternal() ? 'لیست دریافت ها' : 'لیست واریزها'
     }
   },
+  watch: {
+    usdtSelector(val) {
+      this.initAddress()
+    }
+  },
   data() {
     return {
+      usdtSelector: 'TRON',
       type: this.$route.params.type.toUpperCase(),
       address: 'not_loaded',
       l: {create: false}
     }
   },
-  async mounted() {
-    await this.$store.dispatch('addresses/refresh')
-    const address = this.$store.state.addresses.list[this.usdtTronFix(this.type)];
-    this.address = address ? address : 'no_address';
-    await this.$store.dispatch('balances/refresh')
+  mounted() {
+    this.initAddress()
   },
   methods: {
+    async initAddress() {
+      this.address = 'not_loaded'
+      await this.$store.dispatch('addresses/refresh')
+      const address = this.$store.state.addresses.list[this.usdtTronFix(this.type)];
+      this.address = address ? address : 'no_address';
+      await this.$store.dispatch('balances/refresh')
+    },
     async createCrypto() {
       this.l.create = true
       this.address = await this.$axios.$post('/crypto/' +
@@ -68,7 +84,7 @@ export default {
       return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
     },
     usdtTronFix(type) {
-      return type === 'USDT' ? 'TRX' : type
+      return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'TRX' : type
     }
   }
 }

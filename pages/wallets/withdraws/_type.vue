@@ -3,6 +3,12 @@
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
       <v-card class="px-16 py-12 flex-grow-1" width="100%">
+        <div class="text-center mb-8">
+          <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
+            <v-btn value="TRON">ترون</v-btn>
+            <v-btn value="ETHER">اتریوم</v-btn>
+          </v-btn-toggle>
+        </div>
         <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
         <p class="text-display-2 ma-0">
           باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
@@ -62,9 +68,15 @@ export default {
       return amount > 0 ? amount : 0
     }
   },
+  watch: {
+    usdtSelector(val) {
+      this.getFee()
+    }
+  },
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
+      usdtSelector: 'TRON',
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
       destAddress: '',
@@ -80,8 +92,7 @@ export default {
   mounted() {
     this.$store.dispatch('balances/refresh')
     this.$store.dispatch('addresses/refresh')
-    this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
-        .then(res => this.withdrawFee = res);
+    this.getFee()
     this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
         .then(res => {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
@@ -89,6 +100,10 @@ export default {
         })
   },
   methods: {
+    getFee() {
+      this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
+          .then(res => this.withdrawFee = res);
+    },
     async withdraw() {
       this.$refs.form.validate()
       if (this.form) {
@@ -119,7 +134,7 @@ export default {
       return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type)
     },
     usdtTronFix(type) {
-      return type === 'USDT' ? 'USDT_TRON' : type
+      return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'USDT_TRON' : type
     }
   }
 }
