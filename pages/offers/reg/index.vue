@@ -87,11 +87,12 @@
               <v-btn-toggle v-model="tabIndex" mandatory color="primary" dense borderless tile class="pa-4">
                 <v-btn text value="0">تومان</v-btn>
                 <v-btn text value="1">تتر</v-btn>
-                <v-btn text value="2">رمزارز به رمزارز</v-btn>
+                <v-btn text value="2">ترون</v-btn>
+                <v-btn text value="3">رمزارز به رمزارز</v-btn>
               </v-btn-toggle>
 
               <v-divider vertical inset class="py-4"/>
-              <div style="width: 128px">
+              <div style="width: 144px">
                 <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
                           item-value="value"
                           dense filled solo flat/>
@@ -326,8 +327,9 @@ export default {
     return {
       exchangeAction: 'buy',
       list: [
-        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR', 'ART/IRR', 'ZRK/IRR', 'SHA/IRR', 'WIT/IRR'],
-        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT', 'ART/USDT', 'ZRK/USDT', 'SHA/USDT', 'WIT/USDT'],
+        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'ART/IRR', 'ZRK/IRR', 'SHA/IRR', 'WIT/IRR'],
+        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT', 'ART/USDT', 'ZRK/USDT', 'SHA/USDT', 'WIT/USDT'],
+        ['TRX/BTC', 'TRX/USDT', 'TRX/IRR', 'TRX/ETH'],
         ['ETH/BTC', 'BCH/BTC', 'LTC/BTC', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,
