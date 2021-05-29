@@ -3,12 +3,14 @@
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
       <v-card class="px-16 py-12 flex-grow-1" width="100%">
-        <div class="text-center mb-8">
+
+        <div v-if="type === 'USDT'" class="text-center mb-8">
           <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
             <v-btn value="TRON">ترون</v-btn>
             <v-btn value="ETHER">اتریوم</v-btn>
           </v-btn-toggle>
         </div>
+
         <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
         <p class="text-display-2 ma-0">
           باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>

@@ -3,12 +3,14 @@
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
       <v-card class="px-16 py-12 flex-grow-1" height="100%">
-        <div class="text-center mb-8">
+
+        <div v-if="type === 'USDT'" class="text-center mb-8">
           <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
             <v-btn value="TRON">ترون</v-btn>
             <v-btn value="ETHER">اتریوم</v-btn>
           </v-btn-toggle>
         </div>
+
         <div v-show="address !== 'not_loaded'">
           <crypto-upper :balance="balance" :type="type"/>
 
