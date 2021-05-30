@@ -11,7 +11,7 @@
   <!--  />-->
 
   <div class="text-right">
-    <p class="mb-n2 mt-2 grey--text">{{ label }}</p><br>
+    <p class="mb-n2 mt-2 grey--text text-body-2">{{ label }}</p><br>
     <div class="d-flex grey-border">
       <slot></slot>
       <input class="text-field input-border py-2"
@@ -73,7 +73,7 @@ export default {
 
 .grey-border {
   border-radius: 4px;
-  border: 1px solid #a7a9cf;
+  border: 1px solid #a7a9cf66;
 }
 
 .input-border:focus {

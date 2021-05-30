@@ -81,7 +81,7 @@ a {
 }
 
 .vue-dropzone {
-    border: 1px solid #a7a9cf !important;
+    border: 1px solid #a7a9cf66 !important;
     font-family: IranSans, sans-serif !important;
     letter-spacing: 0 !important;
     border-radius: 4px;
@@ -91,6 +91,14 @@ a {
     color: white !important;
     background-color: #00061a !important;;
     /*transition: .2s linear;*/
+}
+
+.dz-message {
+    margin: 0 !important;
+}
+
+.dz-remove {
+    z-index: 1001 !important;
 }
 
 .vue-pincode-input {
@@ -106,35 +114,35 @@ a {
 .persian-date-picker {
     font-size: 1.4rem;
     width: 100%;
-    border: 1px solid #a7a9cf !important;
+    border: 1px solid #a7a9cf66 !important;
     border-radius: 4px !important;
     padding: 4px 12px !important;
     color: white;
 }
+
 .vpd-icon-btn {
     display: none !important;
 }
+
 .vpd-body {
     background: #00061a;
 }
+
 div.vpd-header {
     color: black;
 }
+
 .vpd-actions button:hover {
     background-color: transparent !important;
     border: 1px solid #ffbb00 !important;
 }
 
 .v-text-field fieldset {
-    border: 1px solid #a7a9cf !important;
+    border: 1px solid #a7a9cf66 !important;
 }
 
 .pointer {
     cursor: pointer;
-}
-
-.dz-remove {
-    z-index: 1001 !important;
 }
 
 /*@font-face {*/

@@ -1,211 +1,210 @@
 <template>
   <div>
-    <v-card class="d-flex flex-column align-center">
-      <v-stepper v-model="stepNum" style="width: 50%;background: #00061a" non-linear>
-        <v-stepper-header>
-          <v-stepper-step step="0" editable>اطلاعات شخصی</v-stepper-step>
-          <v-divider/>
-          <v-stepper-step step="1" editable>اطلاعات بانکی</v-stepper-step>
-          <v-divider/>
-          <v-stepper-step step="2" editable>تایید هویت</v-stepper-step>
-        </v-stepper-header>
-        <v-stepper-items>
-          <v-stepper-content step="0" class="pt-0">
-            <v-form v-model="valid.step0" ref="stepOneForm">
-              <!--              1-ROW-->
-              <a-row>
-                <v-col cols="6" class="py-0">
-                  <a-text-field :rules="[rules.required,rules.persian]"
-                                v-model="user.name" label="نام"
-                                hint="احمد"
-                                :disabled="verifyState.ssn"/>
-                </v-col>
-                <v-col cols="6" class="py-0">
-                  <a-text-field :rules="[rules.required,rules.persian]"
-                                v-model="user.last_name" label="نام خانوادگی"
-                                hint="برزین"
-                                :disabled="verifyState.ssn"/>
-                </v-col>
-              </a-row>
+    <v-card>
+      <v-row justify="center">
+        <v-col cols="7">
+          <v-form v-model="form" ref="form">
+            <p class="mt-6 mb-2 primary--text">اطلاعات شخصی</p>
+            <v-divider class="mb-4"/>
 
-              <!--              2-ROW-->
-              <a-row>
-                <v-col cols="6" class="py-0">
-                  <a-text-field :rules="[rules.required,rules.elevenDigit]"
-                                mask="###########"
-                                v-model="user.cell_phone" label="شماره موبایل"
-                                hint="09121234567"
-                                :disabled="verifyState.cell_phone">
-                    <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
-                           tile depressed small class="inside-btn" color="primary">
-                      دریافت
-                      کد
-                      تایید
-                    </v-btn>
-                  </a-text-field>
-                </v-col>
-                <v-col cols="6" class="py-0">
-                  <a-text-field :rules="[rules.required,rules.tenDigit]"
-                                mask="##########"
-                                hint="1234567890"
-                                v-model="user.ssn" label="کد ملی"
-                                :disabled="verifyState.ssn"/>
-                </v-col>
-              </a-row>
+            <!--1st-->
+            <two-column-row>
+              <template v-slot:right>
+                <a-text-field :rules="[rules.required,rules.persian]"
+                              v-model="user.name" label="نام"
+                              hint="احمد"
+                              :disabled="verifyState.ssn"/>
+              </template>
+              <template v-slot:left>
+                <a-text-field :rules="[rules.required,rules.persian]"
+                              v-model="user.last_name" label="نام خانوادگی"
+                              hint="برزین"
+                              :disabled="verifyState.ssn"/>
+              </template>
+            </two-column-row>
 
-              <!--              3-ROW-->
-              <a-row>
-                <v-col cols="6" class="py-0">
-                  <p class=" mb-1">جنسیت</p>
-                  <v-select dense outlined flat
-                            :items="genderList" v-model="user.gender"
-                            :disabled="verifyState.ssn"/>
-                </v-col>
-                <v-col cols="6" class="py-0">
-                  <p class=" mb-1">تاریخ تولد</p>
-                  <custom-date-picker v-model="user.birth_date" :disabled="verifyState.ssn">
-                    <template slot="label">
-                    </template>
-                  </custom-date-picker>
-                </v-col>
-              </a-row>
+            <!--2nd-->
+            <two-column-row>
+              <template v-slot:right>
+                <a-text-field :rules="[rules.required,rules.elevenDigit]"
+                              mask="###########"
+                              v-model="user.cell_phone" label="شماره موبایل"
+                              hint="09121234567"
+                              :disabled="verifyState.cell_phone">
+                  <v-btn @click="requestMobileOtp" :loading="l.mobileRequest"
+                         tile depressed small class="inside-btn" color="primary">
+                    دریافت کد تایید
+                  </v-btn>
+                </a-text-field>
+              </template>
+              <template v-slot:left>
+                <a-text-field :rules="[rules.required,rules.tenDigit]"
+                              mask="##########"
+                              hint="1234567890"
+                              v-model="user.ssn" label="کد ملی"
+                              :disabled="verifyState.ssn"/>
+              </template>
+            </two-column-row>
 
-              <!--              4-ROW-->
-              <a-row>
-                <v-col cols="6" class="py-0">
-                  <p class=" mb-3">تصویر کارت ملی</p>
-                  <vue2-dropzone id="ssn_id"
-                                 :options="dropzoneOptions.ssn" :useCustomSlot=true>
-                    <v-row align="center">
-                      <v-icon color="primary">mdi-camera</v-icon>
-                      <p class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
-                        <br>حداکثر حجم ۵۰۰ کیلوبایت
-                      </p>
-                    </v-row>
-                  </vue2-dropzone>
-                </v-col>
+            <!--3rd-->
+            <two-column-row class="mt-4">
+              <template v-slot:right>
+                <p class="grey--text mb-1 text-body-2">جنسیت</p>
+                <v-select dense outlined flat
+                          :items="genderList" v-model="user.gender"
+                          :disabled="verifyState.ssn"/>
+              </template>
+              <template v-slot:left>
+                <p class="grey--text mb-1 text-body-2">تاریخ تولد</p>
+                <custom-date-picker v-model="user.birth_date" :disabled="verifyState.ssn">
+                  <template slot="label">
+                  </template>
+                </custom-date-picker>
+              </template>
+            </two-column-row>
 
-                <v-col cols="6" class="py-0">
-                  <p class=" mb-2">
-                    تصویر تایید هویت
-                    <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
-                  </p>
-                  <vue2-dropzone id="bank_card_id"
-                                 :options="dropzoneOptions.bankCard" :useCustomSlot=true>
-                    <v-row align="center">
-                      <v-icon color="primary">mdi-camera</v-icon>
-                      <p class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
-                        <br>حداکثر حجم ۵۰۰ کیلوبایت
-                      </p>
-                    </v-row>
-                  </vue2-dropzone>
-                </v-col>
-              </a-row>
-            </v-form>
-          </v-stepper-content>
-          <v-stepper-content step="1" class="pt-0">
-            <v-form v-model="valid.step1" ref="stepTwoForm">
-              <v-row justify="center">
-                <v-col cols="6" class="py-0" dir="ltr">
-                  <a-text-field
-                      :rules="[rules.required]"
-                      mask="################"
-                      hint="6037991234567890"
-                      v-model="user.bank_card" label="شماره کارت"
-                      :disabled="verifyState.bank_card"/>
-                  <a-text-field
-                      mask="################"
-                      hint="6037991234567890"
-                      v-model="user.bank_card_2" label="شماره کارت۲"
-                      :disabled="verifyState.bank_card_2"/>
-                  <a-text-field
-                      :rules="[rules.required]"
-                      mask="AA########################"
-                      hint="IR123456789012345678901234"
-                      v-model="user.bank_shaba" label="شماره شبا"
-                      :disabled="verifyState.bank_shaba"/>
-                  <a-text-field
-                      mask="AA########################"
-                      hint="IR123456789012345678901234"
-                      v-model="user.bank_shaba_2" label="شماره شبا۲"
-                      :disabled="verifyState.bank_shaba_2"/>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-stepper-content>
-          <v-stepper-content step="2" class="pt-0">
-            <v-form v-model="valid.step2" ref="stepThreeForm">
-              <v-row class="mt-4">
-                <v-col cols="6" class="py-0">
+            <!--4th-->
+            <two-column-row class="mt-n4">
+              <template v-slot:right>
+                <p class="grey--text mb-3 text-body-2">تصویر کارت ملی</p>
+                <vue2-dropzone id="ssn_id"
+                               :options="dropzoneOptions.ssn" :useCustomSlot=true>
                   <div>
-                    <p class=" mb-1">استان</p>
-                    <v-select dense outlined flat :rules="[rules.required]"
-                              :items="provinceList" v-model="user.province"
-                              :disabled="verifyState.address"/>
+                    <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
+                    <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
                   </div>
-
-                  <a-text-field
-                      :rules="[rules.required]"
-                      v-model="user.address" label="آدرس"
-                      :disabled="verifyState.address"/>
-
-                  <a-text-field hint="02112345678"
-                                mask="###############"
-                                :rules="[rules.required]"
-                                v-model="user.phone" label="تلفن ثابت"
-                                :disabled="verifyState.phone">
-                    <v-btn tile depressed small class="inside-btn" color="primary"
-                           @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
-                    </v-btn>
-                  </a-text-field>
-
-                </v-col>
-                <v-col cols="6" class="py-0">
+                </vue2-dropzone>
+              </template>
+              <template v-slot:left>
+                <p class="grey--text mb-2 text-body-2">
+                  تصویر تایید هویت
+                  <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
+                </p>
+                <vue2-dropzone id="bank_card_id"
+                               :options="dropzoneOptions.bankCard" :useCustomSlot=true>
                   <div>
-                    <p class=" mb-1">شهر</p>
-                    <v-select dense outlined flat :rules="[rules.required]"
-                              :items="cityList(user.province)" v-model="user.city"
-                              :disabled="verifyState.address"/>
+                    <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
+                    <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
                   </div>
+                </vue2-dropzone>
+              </template>
+            </two-column-row>
 
-                  <a-text-field
-                      :rules="[rules.required, rules.tenDigit ]"
-                      mask="##########"
-                      hint="1234567890"
-                      v-model="user.postal_code" label="کدپستی"
-                      :disabled="verifyState.address"/>
+            <!--                        <two-column-row>-->
+            <!--                          <template v-slot:right>-->
 
-                  <div class="mt-4">
-                    <p class=" mb-1">تصویر قبض تلفن یا قبوض خدماتی</p>
-                    <vue2-dropzone id="bill_id"
-                                   :options="dropzoneOptions.bill" :useCustomSlot=true>
-                      <v-row align="center">
-                        <v-icon color="primary">mdi-camera</v-icon>
-                        <p class=" mr-2" style="line-height: 1.4">فرمت فایل png jpg باشد و
-                          <br>حداکثر حجم ۵۰۰ کیلوبایت
-                        </p>
-                      </v-row>
-                    </vue2-dropzone>
-                  </div>
+            <!--                          </template>-->
+            <!--                          <template v-slot:left>-->
 
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
+            <!--                          </template>-->
+            <!--                        </two-column-row>-->
 
-      <!--      <div style=" position: absolute; bottom: 0; width: 100%">-->
-      <div>
-        <v-divider class="my-0 ml-6"/>
-        <div class="d-flex py-4">
-          <v-btn style="border: 1px solid #0074ff" class="px-16 ml-2" outlined color="primary" @click=prev text>
-            {{ prevLabel }}
-          </v-btn>
-          <v-btn class="px-16" @click=next :loading="l.send" color="primary"> {{ nextLabel }}</v-btn>
-          <v-btn class="mr-4" v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
-        </div>
-      </div>
+
+            <p class="mt-12 mb-2 primary--text">اطلاعات بانکی</p>
+            <v-divider class="mb-4"/>
+            <v-row justify="center">
+              <v-col cols="6" class="py-0" dir="ltr">
+                <a-text-field
+                    :rules="[rules.required]"
+                    mask="################"
+                    hint="6037991234567890"
+                    v-model="user.bank_card" label="شماره کارت"
+                    :disabled="verifyState.bank_card"/>
+                <a-text-field
+                    mask="################"
+                    hint="6037991234567890"
+                    v-model="user.bank_card_2" label="شماره کارت۲"
+                    :disabled="verifyState.bank_card_2"/>
+                <a-text-field
+                    :rules="[rules.required]"
+                    mask="AA########################"
+                    hint="IR123456789012345678901234"
+                    v-model="user.bank_shaba" label="شماره شبا"
+                    :disabled="verifyState.bank_shaba"/>
+                <a-text-field
+                    mask="AA########################"
+                    hint="IR123456789012345678901234"
+                    v-model="user.bank_shaba_2" label="شماره شبا۲"
+                    :disabled="verifyState.bank_shaba_2"/>
+              </v-col>
+            </v-row>
+
+
+            <p class="mt-12 mb-2 primary--text">تایید هویت</p>
+            <v-divider class="mb-4"/>
+            <!--            1st-->
+            <two-column-row class="mb-0">
+              <template v-slot:right>
+                <p class="grey--text mb-1 text-body-2">استان</p>
+                <v-select dense outlined flat :rules="[rules.required]"
+                          :items="provinceList" v-model="user.province"
+                          :disabled="verifyState.address"/>
+              </template>
+              <template v-slot:left>
+                <p class="grey--text mb-1 text-body-2">شهر</p>
+                <v-select dense outlined flat :rules="[rules.required]"
+                          :items="cityList(user.province)" v-model="user.city"
+                          :disabled="verifyState.address"/>
+              </template>
+            </two-column-row>
+
+            <!--            2nd-->
+            <two-column-row class="mt-n6">
+              <template v-slot:right>
+                <a-text-field
+                    :rules="[rules.required]"
+                    v-model="user.address" label="آدرس"
+                    :disabled="verifyState.address"/>
+              </template>
+              <template v-slot:left>
+                <a-text-field
+                    :rules="[rules.required, rules.tenDigit ]"
+                    mask="##########"
+                    hint="1234567890"
+                    v-model="user.postal_code" label="کدپستی"
+                    :disabled="verifyState.address"/>
+              </template>
+            </two-column-row>
+
+            <!--            3rd-->
+            <two-column-row>
+              <template v-slot:right>
+                <div class="mt-4">
+                  <p class="grey--text mb-1 text-body-2">تصویر قبض تلفن یا قبوض خدماتی</p>
+                  <vue2-dropzone id="bill_id"
+                                 :options="dropzoneOptions.bill" :useCustomSlot=true>
+                    <div>
+                      <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
+                      <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
+                    </div>
+                  </vue2-dropzone>
+                </div>
+              </template>
+              <template v-slot:left>
+                <a-text-field hint="02112345678"
+                              mask="###############"
+                              :rules="[rules.required]"
+                              v-model="user.phone" label="تلفن ثابت"
+                              :disabled="verifyState.phone">
+                  <v-btn tile depressed small class="inside-btn" color="primary"
+                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
+                  </v-btn>
+                </a-text-field>
+              </template>
+            </two-column-row>
+          </v-form>
+
+          <!--BTNS-->
+          <div class="d-flex py-4 justify-end">
+            <v-btn class="px-16 ml-2" outlined color="primary" @click=prev text>
+              انصراف
+            </v-btn>
+            <v-btn class="px-16" @click=next :loading="l.send" color="primary"> ثبت</v-btn>
+            <v-btn class="mr-4" v-show="isAdmin" :to="`/admin/verify/`+userId" color="red">تایید مدارک (ادمین)</v-btn>
+          </div>
+
+        </v-col>
+      </v-row>
     </v-card>
 
     <div>
@@ -242,7 +241,6 @@ export default {
   mixins: [pstopper],
   components: {vue2Dropzone, Otp, ACard, ATextField},
   computed: {
-    totalSteps: () => 3,
     provinceList() {
       return collect(plist).pluck('province').all()
     },
@@ -274,7 +272,7 @@ export default {
         tenDigit: value => !!value && value.length === 10 || 'میبایست ۱۰ رقم باشد',
         elevenDigit: value => !!value && value.length === 11 || 'میبایست ۱۱ رقم باشد',
       },
-      valid: {step0: false, step1: false, step2: false},
+      form: false,
       genderList: ['خانم', 'آقا'],
       ssn: '',
       bill: '',
@@ -305,10 +303,7 @@ export default {
 
       userId: this.$route.params.user,
       isAdmin: this.$store.state.auth.profile?.role === 'admin',
-      stepNum: 0,
       dialog: {send: false, mobileOtp: false, phoneOtp: false},
-      nextLabel: 'ارسال',
-      prevLabel: 'بازگشت',
       user: {
         name: '',
         last_name: '',
@@ -342,8 +337,9 @@ export default {
     }
   },
   async mounted() {
-    this.$refs.stepOneForm.resetValidation()
     this.user = await this.$axios.$get('/profiles/' + this.userId);
+    this.$refs.form.resetValidation()
+
     let id = this.isAdmin ? this.userId : 'me'
     this.verifyState = await this.$axios.$get('/profiles/' + id + '/verifies');
   },
@@ -360,46 +356,14 @@ export default {
       this.l.send = false
       this.$bus.$emit('snack', 'با موفقیت ثبت شد.', 'success')
     },
-    navigate(step) {
-      this.stepNum = step
-      this.setBtnState()
-    },
     async next() {
-      if (this.stepNum === 0) this.$refs.stepOneForm.validate()
-      if (this.stepNum === 1) this.$refs.stepTwoForm.validate()
-      if (this.stepNum === 2) this.$refs.stepThreeForm.validate()
-
-      if ((this.stepNum === 0 && this.valid.step0) ||
-          (this.stepNum === 1 && this.valid.step1) ||
-          (this.stepNum === 2 && this.valid.step2)) {
+      this.$refs.form.validate()
+      if (this.form) {
         await this.send()
-        this.stepNum++
-        if (this.stepNum === this.totalSteps) {
-          await this.$router.push('/')
-        } else {
-          this.setBtnState()
-        }
       }
     },
     async prev() {
-      if (this.stepNum === 0) {
-        await this.$router.push('/')
-      } else {
-        this.stepNum--
-        this.setBtnState()
-      }
-    },
-    setBtnState() {
-      if (this.stepNum === this.totalSteps - 1) {
-        this.nextLabel = 'ثبت و ادامه'
-        this.prevLabel = 'انصراف'
-      } else if (this.stepNum === 0) {
-        this.nextLabel = 'ثبت و ادامه'
-        this.prevLabel = 'انصراف'
-      } else {
-        this.nextLabel = 'ثبت و ادامه'
-        this.prevLabel = 'انصراف'
-      }
+      await this.$router.push('/')
     },
     async requestMobileOtp() {
       if (!!this.user.cell_phone && this.user.cell_phone.length === 11) {
