@@ -44,7 +44,7 @@ export default {
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
-      return ['ETH', 'IRR'].includes(type)
+      return ['ETH'].includes(type)
       // return false
     },
     withdrawLabel() {

@@ -1,17 +1,17 @@
 <template>
-  <a-row class="align-stretch mt-12">
+  <a-row class="align-stretch">
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">برداشت</div>
       <v-card class="px-16 py-12 flex-grow-1" width="100%">
         <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
-        <p class="text-display-2 ma-0">
+        <p class="text-display-2 mt-8 mb-0">
           باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
         </p>
-        <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+        <p class="text-display-2 mb-0">باقی مانده برداشت ماهیانه:
           <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
         </p>
 
-        <v-form @submit.prevent="onWithdraw" v-model="form" ref="form">
+        <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
           <a-text-field separated :rules="[rules.required]"
                         mask="####################" v-model="amount" label="مبلغ"/>
           <v-btn type="submit" :loading="l.withdraw"
