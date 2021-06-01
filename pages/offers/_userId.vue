@@ -28,7 +28,7 @@
             <td :class="item|cancelColor">{{ item|cancelText }}</td>
           </tr>
           </tbody>
-          <no-data v-else cols="7" title="برداشتی انجام نشده است."/>
+          <no-data v-else cols="7" title="تاریخچه ای وجود ندارد."/>
         </template>
       </v-simple-table>
     </v-card>

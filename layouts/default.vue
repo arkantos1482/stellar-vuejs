@@ -16,6 +16,35 @@
             <v-list-item-title>داشبورد</v-list-item-title>
           </v-list-item>
 
+          <v-list-item to="/wallets">
+            <v-icon class="ml-2">mdi-wallet-outline</v-icon>
+            <v-list-item-title>کیف پول</v-list-item-title>
+          </v-list-item>
+
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon class="ml-2">mdi-card-account-details-star-outline</v-icon>
+                  <v-list-item-title>سفارشات</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
+                <v-list-item to="/offers/active/me">سفارشات در جریان</v-list-item>
+                <v-list-item to="/offers/me">تاریخچه سفارشات</v-list-item>
+                <v-list-item to="/trades/me">معاملات</v-list-item>
+
+                <!--                <v-list-item to="/wallets/withdraws">-->
+                <!--                  <v-list-item-title>گزارش برداشت</v-list-item-title>-->
+                <!--                </v-list-item>-->
+                <!--                <v-list-item to="/wallets/deposits">-->
+                <!--                  <v-list-item-title>گزارش واریز</v-list-item-title>-->
+                <!--                </v-list-item>-->
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
           <v-expansion-panels>
             <v-expansion-panel>
               <v-expansion-panel-header>
@@ -25,15 +54,16 @@
                 </v-list-item>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <v-list-item to="/wallets/withdraws">
-                  <v-list-item-title>گزارش برداشت</v-list-item-title>
-                </v-list-item>
-                <v-list-item to="/wallets/deposits">
-                  <v-list-item-title>گزارش واریز</v-list-item-title>
-                </v-list-item>
+                <v-list-item to="/wallets/withdraws">گزارش برداشت</v-list-item>
+                <v-list-item to="/wallets/deposits">گزارش واریز</v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
+
+          <v-list-item to="/users/me">
+            <v-icon class="ml-2">mdi-card-account-details-outline</v-icon>
+            <v-list-item-title>پروفایل</v-list-item-title>
+          </v-list-item>
 
           <v-list-item to="/Security">
             <v-icon class="ml-2">mdi-security</v-icon>
@@ -198,7 +228,7 @@ export default {
         fail: {show: false, msg: ''}
       },
       clipped: false,
-      drawer: true,
+      drawer: false,
       fixed: false,
       admin_drawer_items: [
         {
