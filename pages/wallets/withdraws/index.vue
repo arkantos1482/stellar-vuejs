@@ -50,10 +50,18 @@ export default {
   },
   filters: {
     toFarsiTitle(val) {
-      return (val === 'success') ? 'موفقیت آمیز' : 'ناموفق'
+      const statusList = {
+        success: 'موفقیت آمیز',
+        SUBMITTED: 'در حال انجام'
+      }
+      return statusList[val] ?? 'ناموفق'
     },
     toFarsiColor(val) {
-      return (val === 'success') ? 'success--text' : 'error--text'
+      const statusList = {
+        success: 'success--text',
+        SUBMITTED: 'yellow--text'
+      }
+      return statusList[val] ?? 'error--text'
     }
   },
   data() {
