@@ -79,6 +79,12 @@
             <v-icon class="ml-2">mdi-account-plus</v-icon>
             <v-list-item-title>دعوت از دوستان</v-list-item-title>
           </v-list-item>
+
+          <v-list-item v-if="this.user.email === 'bitrabtc@gmail.com'"
+                       to="/offers/reg/bulk">
+            <v-icon class="ml-2">mdi-account-plus</v-icon>
+            <v-list-item-title>ثبت دسته ای سفارش</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
