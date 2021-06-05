@@ -31,7 +31,7 @@
               </p>
             </div>
 
-            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3">
+            <v-form v-model="buyForm" @submit.prevent="bulkBuy" class="mt-3">
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"/>
