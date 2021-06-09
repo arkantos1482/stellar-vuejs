@@ -4,14 +4,14 @@
       <div class="d-flex align-center">
         <v-img class="ml-2" max-width="36" max-height="36"
                :src="type|toCoinIcon"/>
-        {{ namad }}
+        {{ namad }}&nbsp({{ type.toUpperCase()|irtFix }})
       </div>
     </td>
-    <td v-if="balance">{{ balance.balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-if="balance">{{ balance.balance|toFloat|separated }}</td>
     <td v-else></td>
-    <td v-if="balance">{{ balance.actual_balance|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-if="balance">{{ balance.actual_balance|toFloat|separated }}</td>
     <td v-else></td>
-    <td v-if="balance">{{ balance.selling_liabilities|toFloat|separated }}&nbsp{{ type.toUpperCase()|irtFix }}</td>
+    <td v-if="balance">{{ balance.selling_liabilities|toFloat|separated }}</td>
     <td v-else></td>
     <td></td>
     <td>
@@ -56,7 +56,6 @@ export default {
   },
   data() {
     return {
-      syncResult: '',
       l: {create: false, sync: false}
     }
   },
@@ -69,16 +68,15 @@ export default {
     },
     async onSync() {
       this.l.sync = true
-      let type = this.usdtTronFix(this.type.toUpperCase()).toLowerCase()
-      this.syncResult = await this.$axios.$get(`/crypto/${type}/sync`)
+      if (this.type === 'usdt') {
+        await this.$axios.$get(`/crypto/usdt_tron/sync`)
+      }
+      await this.$axios.$get(`/crypto/${this.type}/sync`)
       await this.$store.dispatch('balances/refresh')
       this.l.sync = false
     },
     isInternal() {
       return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
-    },
-    usdtTronFix(type) {
-      return type === 'USDT' ? 'USDT_TRON' : type
     }
   }
 }

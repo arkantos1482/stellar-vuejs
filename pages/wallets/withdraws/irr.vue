@@ -12,6 +12,9 @@
         </p>
 
         <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
+          <div class="text-left">
+            <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
+          </div>
           <a-text-field separated :rules="[rules.required]"
                         mask="####################" v-model="amount" label="مبلغ"/>
           <v-btn type="submit" :loading="l.withdraw"

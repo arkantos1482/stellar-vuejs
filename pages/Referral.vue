@@ -6,7 +6,7 @@
           <br>
           سود بیشتری برای یکدیگر کسب کنید.</p>
         <p class="bluegrey--text my-12">با هر معامله ای که دوستان شما در بیترا انجام دهند
-          <span>۲۰٪ کارمزد</span>
+          <span>{{ myPercent }}٪ کارمزد</span>
           به شما تعلق می گیرد</p>
         <v-btn color="primary" class="px-4">دعوت از دوستان</v-btn>
       </v-col>

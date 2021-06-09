@@ -1872,7 +1872,7 @@ export default [
         "city": "قم"
     },
     {
-        "province": "کاشان",
+        "province": "اصفهان",
         "city": "کاشان"
     },
     {
