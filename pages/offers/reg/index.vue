@@ -28,7 +28,7 @@
               </p>
             </div>
 
-            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3">
+            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_from_ref">
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"/>
@@ -56,7 +56,7 @@
               </p>
             </div>
 
-            <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3">
+            <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
               <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist]"
                                 v-model="sell.price" prepend="قیمت"/>
               <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.sellSufficient]"
@@ -366,6 +366,7 @@ export default {
       this.sell.price = ''
     },
     async doSell() {
+      this.$refs.sell_form_ref.validate()
       if (!this.sellForm) return
       this.l.sell = true
       await this.$axios.$post('/offers/sell', {
@@ -387,6 +388,7 @@ export default {
 
     },
     async doBuy() {
+      this.$refs.buy_from_ref.validate()
       if (!this.buyForm) return
       this.l.buy = true
       await this.$axios.$post('/offers/buy', {
