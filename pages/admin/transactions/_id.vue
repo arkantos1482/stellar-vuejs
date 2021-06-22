@@ -6,7 +6,11 @@
     </v-btn>
 
     <v-data-table :headers="headers" :items="list" :items-per-page="50" hide-default-footer>
-      <template v-slot:item.address="{value}"><span class="text-body-2">{{ value }}</span></template>
+      <template v-slot:item.address="{value}"><span style="font-family: serif !important"
+                                                    class="text-body1">{{ value }}</span></template>
+      <template v-slot:item.private_key="{value}">
+        <v-btn x-small @click="revealKey(value)">نمایش رمز</v-btn>
+      </template>
       <template v-slot:item.link="{value}">
         <v-btn x-small color="primary" target="_blank" :href="value">ریزتراکنش</v-btn>
       </template>
@@ -34,6 +38,12 @@
         </v-btn>
       </v-card>
     </v-dialog>
+
+    <v-dialog width="600" v-model="d.reveal">
+      <v-card>
+        <p style="font-family: serif !important" class="text-h4 text-center py-8 px-12">{{ privateKey }}</p>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -50,15 +60,17 @@ export default {
         {value: 'type', text: 'نوع'},
         {value: 'balance', text: 'موجودی'},
         {value: 'address', text: 'آدرس', align: 'center'},
+        {value: 'private_key', text: 'کلید', sortable: false, align: 'center'},
         {value: 'link', text: 'ریز تراکنش ها'},
         {value: 'action', text: 'تصحیح', sortable: false}
       ],
       list: [],
       stellar: {address: '', link: ''},
-      d: {ops: false},
+      d: {ops: false, reveal: false},
       l: {payment: false},
       user: '',
       action: '',
+      privateKey: '',
       payload: {
         user_id: this.$route.params.id,
         asset: '',
@@ -80,6 +92,10 @@ export default {
       this.d.ops = true
       this.action = action
       this.payload.asset = coin.toUpperCase()
+    },
+    revealKey(value) {
+      this.d.reveal = true
+      this.privateKey = value
     },
     async applyPayment() {
       this.l.payment = true
