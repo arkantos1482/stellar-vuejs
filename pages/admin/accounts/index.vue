@@ -31,6 +31,7 @@ export default {
         {text: 'برگ', value: 'EBG'},
         {text: 'آرت کوین', value: 'ART'},
         {text: 'زریک', value: 'ZRK'},
+        {text: 'تلاش', value: 'TLS'},
         {text: 'شکوفه آلو', value: 'SHA'},
         {text: 'وی توکن', value: 'WIT'},
       ],

@@ -828,6 +828,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.13.10":
+  version "7.14.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
+  integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/runtime@^7.8.4":
   version "7.11.2"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
@@ -6158,7 +6165,7 @@ moment-timezone@^0.5.21:
   dependencies:
     moment ">= 2.9.0"
 
-"moment@>= 2.9.0", moment@^2.22.2, moment@^2.27.0:
+"moment@>= 2.9.0", moment@^2.22.2, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
@@ -8829,18 +8836,18 @@ toidentifier@1.0.0:
   resolved "https://registry.yarnpkg.com/toidentifier/-/toidentifier-1.0.0.tgz#7e1be3470f1e77948bc43d94a3c8f4d7752ba553"
   integrity sha512-yaOH/Pk/VEhBWWTlhI+qXxDFXlejDGcQipMlyxda9nthulaxLZUNcUqFxokp0vcYnvteJln5FNQDRrxj3YcbVw==
 
-trading-vue-js@^1.0.0-rc.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/trading-vue-js/-/trading-vue-js-1.0.1.tgz#9c2b3e21588d244bbf6cdb745e5be1a2be5f3bda"
-  integrity sha512-SGYH9mhXC/DfMn0zHhUs8UpGbOh5WYieT3k3lct4ZFMKaU7osJfN4GlO3eETtypnqxhs/9KdfNKP6xtwl1Xc+g==
+trading-vue-js@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/trading-vue-js/-/trading-vue-js-1.0.2.tgz#cdc29dda457a72db13123c0b21514ee8eae51c24"
+  integrity sha512-RObZR4OF5rtdgh/CyyRv0soPxlVlwHudlpAziOeQeOeId4j/2RcGUSp4/lKwzYo8b51tnAiRnMtDS+ZSmg208g==
   dependencies:
-    "@babel/runtime" "^7.11.2"
+    "@babel/runtime" "^7.13.10"
     arrayslicer "^1.2.3"
     hammerjs "^2.0.8"
     hamsterjs "^1.1.3"
     lz-string "^1.4.4"
-    moment "^2.27.0"
-    vue "^2.6.11"
+    moment "^2.29.1"
+    vue "^2.6.12"
 
 tryer@^1.0.1:
   version "1.0.1"
@@ -9308,7 +9315,7 @@ vue2-dropzone@^3.6.0:
   dependencies:
     dropzone "^5.5.1"
 
-vue@^2.6.11, vue@^2.6.12, vue@^2.6.9:
+vue@^2.6.12, vue@^2.6.9:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.12.tgz#f5ebd4fa6bd2869403e29a896aed4904456c9123"
   integrity sha512-uhmLFETqPPNyuLLbsKz6ioJ4q7AZHzD8ZVFNATNyICSZouqP2Sz0rotWQC8UNBF6VGSCs5abnKJoStA6JbCbfg==

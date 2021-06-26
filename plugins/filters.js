@@ -36,6 +36,7 @@ const toFarsiCoin = (type) => {
         TRX: 'ترون',
         IRR: 'تومان',
         ZRK: 'زریک',
+        TLS: 'تلاش',
         ART: 'آرت کوین',
         SHA: 'شکوفه آلو',
         WIT: 'وی توکن',
@@ -62,6 +63,7 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'EBG') value = require('@/assets/images/Barg.jpeg')
     if (typeUp === 'ART') value = require('@/assets/images/art_coin.jpeg')
     if (typeUp === 'ZRK') value = require('@/assets/images/zarik.png')
+    if (typeUp === 'TLS') value = require('@/assets/images/TalashToken_end.png')
     if (typeUp === 'WIT') value = require('@/assets/images/we_token_3.png')
     if (typeUp === 'SHA') value = require('@/assets/images/shokofe_aloo_36.png')
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')

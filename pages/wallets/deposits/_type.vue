@@ -83,7 +83,7 @@ export default {
       this.l.create = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type.toUpperCase())
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','TLS', 'WIT'].includes(this.type.toUpperCase())
     },
     usdtTronFix(type) {
       return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'TRX' : type

@@ -43,6 +43,7 @@
           <dash-wallet-row :balance="balances.EBG"/>
           <dash-wallet-row :balance="balances.ART"/>
           <dash-wallet-row :balance="balances.ZRK"/>
+          <dash-wallet-row :balance="balances.TLS"/>
           <dash-wallet-row :balance="balances.WIT"/>
           <dash-wallet-row :balance="balances.IRR"/>
           <dash-wallet-row :balance="balances.BTC"/>

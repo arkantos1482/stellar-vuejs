@@ -136,7 +136,7 @@ export default {
       this.amount = event
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'WIT'].includes(this.type)
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','TLS', 'WIT'].includes(this.type)
     },
     usdtTronFix(type) {
       return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'USDT_TRON' : type
