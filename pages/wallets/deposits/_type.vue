@@ -15,8 +15,8 @@
           <crypto-upper :balance="balance" :type="type"/>
 
           <div v-if="address !== 'no_address'" class="mt-12 text-center">
-            <vue-qrcode :value="address"/>
-            <p style="font-family: serif; font-size: 1.6rem">{{ address }}</p>
+            <vue-qrcode :value="address|bchFix"/>
+            <p style="font-family: serif; font-size: 1.6rem">{{ address|bchFix }}</p>
           </div>
           <v-btn v-else @click="createCrypto" :loading="l.create"
                  class="mt-16 mb-8" block color="primary">ایجاد
@@ -41,6 +41,9 @@ import CryptoUpper from "@/components/CryptoUpper";
 export default {
   mixins: [pstopper],
   components: {CryptoUpper, Deposits, VueQrcode, ACard},
+  filters: {
+    bchFix: (address) => address.replace('bitcoincash:', '')
+  },
   computed: {
     balance() {
       return this.$store.state.balances.list[this.type]?.actual_balance
@@ -83,7 +86,7 @@ export default {
       this.l.create = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','TLS', 'WIT'].includes(this.type.toUpperCase())
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type.toUpperCase())
     },
     usdtTronFix(type) {
       return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'TRX' : type
