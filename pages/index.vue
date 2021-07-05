@@ -55,10 +55,11 @@
           <dash-wallet-row :balance="balances.LTC"/>
           <dash-wallet-row :balance="balances.USDT"/>
           <dash-wallet-row :balance="balances.BCH"/>
+
           <v-divider class="my-6"/>
-          <!--          <p class="primary&#45;&#45;text">ارزش تخمینی دارایی ها:</p>-->
-          <!--          <RowItem title="پیشنهادهای خرید" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>-->
-          <!--          <RowItem title="پیشنهادهای فروش" value="۱۲۳.۱۲۳.۱۲۳ تومان"/>-->
+          <p class="primary--text">ارزش تخمینی دارایی ها:</p>
+          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>
+          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>
         </v-card>
       </v-col>
     </a-row>
@@ -91,6 +92,9 @@ import MyTrades from "@/pages/trades/_userId";
 export default {
   name: "index",
   components: {MyTrades, DashboardCardTitle, RowItem},
+  filters: {
+    tomanSuffix: (val) => val + " تومان"
+  },
   computed: {
     balances() {
       return this.$store.state.balances.list
@@ -129,7 +133,8 @@ export default {
       accessLevel: '',
       stats: '',
       rialLimits: {},
-      cryptoLimits: {}
+      cryptoLimits: {},
+      totalBalance: ''
     }
   },
   mounted() {
@@ -141,6 +146,9 @@ export default {
     this.$axios.$post('/access/limits/remained', {resource: 'irr'})
         .then(res => this.rialLimits = res)
 
+    this.$axios.$get('/balances/toToman/me')
+        .then(res => this.totalBalance = res)
+
     this.$axios.$get('https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,ltc,usdt,bch,bnb,eos,xlm,etc,trx,pmn,doge&dstCurrency=rls,usdt')
         .then(res => this.stats = res.stats)
   },
@@ -148,7 +156,7 @@ export default {
     azMaker(first, second) {
       if (first === undefined || second === undefined) return ''
       return first + ' از ' + second
-    }
+    },
   }
 }
 </script>
