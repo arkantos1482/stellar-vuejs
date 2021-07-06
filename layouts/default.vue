@@ -60,6 +60,23 @@
             </v-expansion-panel>
           </v-expansion-panels>
 
+          <v-expansion-panels>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon class="ml-2">mdi-badge-account-horizontal-outline</v-icon>
+                  <v-list-item-title>پیام ها</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/messages">همه پیام ها</v-list-item>
+                <v-list-item to="/messages/news">اخبار و رویدادها</v-list-item>
+                <v-list-item to="/messages/events">فعالیت ها</v-list-item>
+                <v-list-item to="/messages/settings">مدیریت اعلان ها</v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
           <v-list-item to="/users/me">
             <v-icon class="ml-2">mdi-card-account-details-outline</v-icon>
             <v-list-item-title>پروفایل</v-list-item-title>
@@ -270,6 +287,10 @@ export default {
           icon: 'mdi-chart-bubble',
           title: ' سطوح بهره برداری',
           to: '/admin/access'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'مدیریت پیام ها',
+          to: '/admin/messages/broadcast'
         },
       ],
       miniVariant: false,
