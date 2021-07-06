@@ -34,7 +34,7 @@
             <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
           </p>
 
-          <v-form @submit.prevent="withdraw" v-model="form" ref="form">
+          <v-form @submit.prevent="showWithdrawDialog" v-model="form" ref="form">
             <div class="text-left">
               <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
             </div>
@@ -59,6 +59,21 @@
         <withdraws :type="type" :title="listTitle"/>
       </v-col>
     </a-row>
+
+    <v-dialog v-model="d.withdraw" width="520px">
+      <v-card class="px-12 py-6 text-center">
+        <p class="primary--text text-h4">اطمینان دارید؟</p>
+        <p>با انجام این تراکنش مقدار</p>
+        <p class="primary--text">{{ actualAmount + ' ' + type }}</p>
+        <p>به شماره مقصد:</p>
+        <p class="primary--text">{{ destAddress }}</p>
+        <p>جا به جا خواهد شد. آیا از انجام این تراکنش اطمینان دارید؟</p>
+        <div class="mt-8">
+          <v-btn class="px-12 mx-2" color="primary" @click="withdraw">بله</v-btn>
+          <v-btn class="px-12 mx-2" outlined color="primary" @click="d.withdraw=false">خیر</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -107,6 +122,7 @@ export default {
       withdrawFee: '',
       form: false,
       l: {withdraw: false},
+      d: {withdraw: false},
       rules: {
         required: value => !!value || 'الزامی است',
       },
@@ -127,27 +143,32 @@ export default {
       this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
           .then(res => this.withdrawFee = res);
     },
-    async withdraw() {
+    showWithdrawDialog() {
       this.$refs.form.validate()
       if (this.form) {
         if (this.balance >= parseFloat(this.amount) + parseFloat(this.withdrawFee)) {
-          try {
-            this.l.withdraw = true
-            await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw`, {
-              to: this.destAddress,
-              amount: this.amount
-            })
-
-            this.$router.back()
-            this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
-          } catch (e) {
-            this.$bus.$emit('snack', e.response.data.error.msg, 'error')
-          } finally {
-            this.l.withdraw = false
-          }
+          this.d.withdraw = true
         } else {
           this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
         }
+      }
+    },
+    async withdraw() {
+      this.d.withdraw = false
+
+      try {
+        this.l.withdraw = true
+        await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw`, {
+          to: this.destAddress,
+          amount: this.amount
+        })
+
+        this.$router.back()
+        this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+      } catch (e) {
+        this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+      } finally {
+        this.l.withdraw = false
       }
     },
     onBalanceClicked(event) {
