@@ -95,7 +95,9 @@ Vue.filter('verifyToFarsi', (key) => {
         ssn: 'کارت ملی',
         address: 'آدرس',
         bank_card: 'کارت بانکی',
+        bank_card_2: 'کارت بانکی دوم',
         bank_shaba: 'شبا',
+        bank_shaba_2: 'شبای دوم',
         bank_account: 'اطلاعات هویتی'
     }
     return dic[key]
