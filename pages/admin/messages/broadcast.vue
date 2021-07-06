@@ -19,14 +19,14 @@
 <script>
 export default {
   computed: {
-    categories: () => ['news', 'activities']
+    categories: () => ['news']
   },
   data() {
     return {
       headers: [
         {value: 'title', text: 'تیتر'},
         {value: 'desc', text: 'متن'},
-        {value: 'category', text: 'نوع'},
+        {value: 'category', text: 'گروه'},
         {value: 'created_at', text: 'زمان'},
       ],
       items: [],
