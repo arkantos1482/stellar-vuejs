@@ -4,21 +4,23 @@
     <!--        @input="$emit('otp',$event)"-->
     <!--        :label="label"/>-->
 
-    <div class="text-center my-8">
-      <PincodeInput
-          dir="ltr"
-          v-model="code"
-          @input="$emit('otp',$event)"
-          length=6
-      />
-    </div>
-    <p class="text-center mt-12 secondary--text text-body-2"> {{ counterToString }}</p>
-    <div v-show="codeFailure" class="mt-8  text-center">
-      <a @click="onResend">ارسال مجدد کد تایید</a>
-    </div>
-    <v-btn @click="onSend" :loading="loading"
-           block color="primary" class="mt-16">تایید
-    </v-btn>
+    <v-form @submit.prevent="onSend">
+      <div class="text-center my-8">
+        <PincodeInput
+            dir="ltr"
+            v-model="code"
+            @input="$emit('otp',$event)"
+            length=6
+        />
+      </div>
+      <p class="text-center mt-12 secondary--text text-body-2"> {{ counterToString }}</p>
+      <div v-show="codeFailure" class="mt-8  text-center">
+        <a @click="onResend">ارسال مجدد کد تایید</a>
+      </div>
+      <v-btn type="submit" :loading="loading"
+             block color="primary" class="mt-16">تایید
+      </v-btn>
+    </v-form>
   </div>
 </template>
 
