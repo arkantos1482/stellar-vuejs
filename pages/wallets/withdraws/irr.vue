@@ -18,8 +18,9 @@
           <a-text-field separated :rules="[rules.required]"
                         mask="####################" v-model="amount" label="مبلغ"/>
           <v-btn type="submit" :loading="l.withdraw"
-                 block color="primary" class="mt-4">برداشت
+                 block color="primary" class="my-4">برداشت
           </v-btn>
+          <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
         </v-form>
       </v-card>
     </v-col>

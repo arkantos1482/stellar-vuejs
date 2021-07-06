@@ -1,47 +1,65 @@
 <template>
-  <a-row class="align-stretch">
-    <v-col cols="4" class="pa-4 d-flex flex-column">
-      <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
-      <v-card class="px-16 py-12 flex-grow-1" width="100%">
+  <div class="mt-0">
+    <v-alert v-if="type === 'USDT'"
+             color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
+      <ul>
+        <li>
+          برای برداشت تتر بر روی شبکه ترون، کافیست آدرس TRC20 خود را در کادر آدرس کیف پول مقصد ثبت نمایید تا انتقال بر
+          روی شبکه ترون انجام شود.
+        </li>
+        <li>
+          برای برداشت تتر بر روی شبکه اتریوم، کافیست آدرس ERC20 خود را در کادر آدرس کیف پول مقصد ثبت نمایید تا انتقال بر
+          روی شبکه اترویم انجام شود.
+        </li>
+      </ul>
+    </v-alert>
 
-        <div v-if="type === 'USDT'" class="text-center mb-8">
-          <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
-            <v-btn value="TRON">ترون</v-btn>
-            <v-btn value="ETHER">اتریوم</v-btn>
-          </v-btn-toggle>
-        </div>
+    <a-row class="align-stretch">
+      <v-col cols="4" class="pa-4 d-flex flex-column">
+        <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
+        <v-card class="px-16 py-12 flex-grow-1" width="100%">
 
-        <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
-        <p class="text-display-2 ma-0">
-          باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
-        </p>
-        <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
-          <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
-        </p>
-
-        <v-form @submit.prevent="withdraw" v-model="form" ref="form">
-          <div class="text-left">
-            <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
+          <div v-if="type === 'USDT'" class="text-center mb-8">
+            <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
+              <v-btn value="TRON">TRC20</v-btn>
+              <v-btn value="ETHER">ERC20</v-btn>
+            </v-btn-toggle>
           </div>
-          <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
-          <p class="mt-1 grey--text"> کارمزد تراکنش <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
-          <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="white--text">{{ actualAmount }}</span> می باشد.
+
+          <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
+          <p class="text-display-2 ma-0">
+            باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
           </p>
-          <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
-          <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
-            شد.</p>
-          <v-btn type="submit" :loading="l.withdraw"
-                 block color="primary" class="mt-4">{{ actionTitle }}
-          </v-btn>
-        </v-form>
-      </v-card>
-    </v-col>
+          <p class="text-display-2 ma-0">باقی مانده برداشت ماهیانه:
+            <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+          </p>
+
+          <v-form @submit.prevent="withdraw" v-model="form" ref="form">
+            <div class="text-left">
+              <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
+            </div>
+            <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
+            <p class="mt-1 grey--text"> کارمزد تراکنش <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
+            <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="white--text">{{ actualAmount }}</span> می باشد.
+            </p>
+            <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
+            <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
+              شد.</p>
+            <v-btn type="submit" :loading="l.withdraw"
+                   block color="primary" class="my-4">{{ actionTitle }}
+            </v-btn>
+            <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
+
+          </v-form>
+        </v-card>
+      </v-col>
 
 
-    <v-col cols="8" class="pa-0">
-      <withdraws :type="type" :title="listTitle"/>
-    </v-col>
-  </a-row>
+      <v-col cols="8" class="pa-0">
+        <withdraws :type="type" :title="listTitle"/>
+      </v-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
@@ -136,7 +154,7 @@ export default {
       this.amount = event
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','TLS', 'WIT'].includes(this.type)
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type)
     },
     usdtTronFix(type) {
       return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'USDT_TRON' : type

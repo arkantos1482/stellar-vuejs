@@ -33,8 +33,10 @@
                           :rules="[rules.required,rules.moreThanBillion]"
                           hint="حداقل میزان واریز ۱۰۰هزار تومان می باشد." v-model="amount" filled label="مقدار تومان"/>
             <v-btn type="submit" :loading="l.deposit"
-                   block color="primary" class="mt-4">واریز
+                   block color="primary" class="my-4">واریز
             </v-btn>
+            <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
+
           </v-form>
         </v-card>
       </v-col>

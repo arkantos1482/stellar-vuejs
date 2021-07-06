@@ -19,8 +19,10 @@
             <p style="font-family: serif; font-size: 1.6rem">{{ address|bchFix }}</p>
           </div>
           <v-btn v-else @click="createCrypto" :loading="l.create"
-                 class="mt-16 mb-8" block color="primary">ایجاد
+                 class="mt-16 mb-4" block color="primary">ایجاد
           </v-btn>
+          <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
+
         </div>
       </v-card>
     </v-col>
