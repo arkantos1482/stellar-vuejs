@@ -16,7 +16,12 @@
 
           <div v-if="address !== 'no_address'" class="mt-12 text-center">
             <vue-qrcode :value="address|bchFix"/>
-            <p style="font-family: serif; font-size: 1.6rem">{{ address|bchFix }}</p>
+            <v-row class="align-center my-4">
+              <v-btn icon @click="copy(fixBchMethod(address))">
+                <v-icon small color="primary">mdi-clipboard-text-multiple-outline</v-icon>
+              </v-btn>
+              <p class="mb-0" style="font-family: serif; font-size: 1.6rem">{{ address|bchFix }}</p>
+            </v-row>
           </div>
           <v-btn v-else @click="createCrypto" :loading="l.create"
                  class="mt-16 mb-4" block color="primary">ایجاد
@@ -92,6 +97,15 @@ export default {
     },
     usdtTronFix(type) {
       return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'TRX' : type
+    },
+    fixBchMethod: (address) => address.replace('bitcoincash:', ''),
+    copy(value) {
+      let tempInput = document.createElement("input");
+      tempInput.value = value;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
     }
   }
 }
