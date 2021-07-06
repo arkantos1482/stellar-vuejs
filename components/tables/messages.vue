@@ -4,7 +4,7 @@
     <v-card width="100%" class="pa-4">
       <v-data-table :items="items" :headers="headers" hide-default-footer items-per-page="200">
         <template v-slot:item.is_read="{item}">
-          <v-badge left dot :value="!item.is_read"/>
+          <v-badge left dot :value="item.is_read === false"/>
         </template>
         <template v-slot:item.msg="{item}">
           <div class="text-right">
@@ -32,7 +32,7 @@ export default {
   computed: {
     headers() {
       return [
-        {value: 'is_read', text: 'وضعیت', align: 'center', width: '64px',sortable:false},
+        {value: 'is_read', text: 'وضعیت', align: 'center', width: '64px', sortable: false},
         {value: 'msg', text: 'متن', align: 'center', width: '70%'},
         {value: 'created_at', text: 'تاریخ', align: 'center'},
       ];
@@ -47,6 +47,8 @@ export default {
     let link = '/messages/me'
     if (this.category) link += '/' + this.category
     this.items = await this.$axios.$get(link)
+
+    await this.$axios.$post(link + '/readAll')
   }
 }
 </script>

@@ -64,7 +64,7 @@
             <v-expansion-panel>
               <v-expansion-panel-header>
                 <v-list-item>
-                  <v-icon class="ml-2">mdi-badge-account-horizontal-outline</v-icon>
+                  <v-icon class="ml-2">mdi-inbox-full</v-icon>
                   <v-list-item-title>پیام ها</v-list-item-title>
                 </v-list-item>
               </v-expansion-panel-header>
