@@ -164,7 +164,7 @@
       <!--      PROFILE-->
       <v-menu offset-y>
         <template v-slot:activator="{on,attrs}">
-          <v-btn text v-bind="attrs" v-on="on">
+          <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>mdi-account-outline</v-icon>
           </v-btn>
         </template>
@@ -189,26 +189,27 @@
       </v-menu>
 
       <!--      MESSAGES-->
-<!--      <v-menu nudge-width="128" offset-y>-->
-<!--        <template v-slot:activator="{on,attrs}">-->
-<!--          <v-btn text v-bind="attrs" v-on="on">-->
-<!--            <v-badge>-->
-<!--              <v-icon>mdi-bell-outline</v-icon>-->
-<!--            </v-badge>-->
-<!--          </v-btn>-->
-<!--        </template>-->
-<!--        <v-list class="pa-4">-->
-<!--          <div v-for="(item,idx) in translateVerify" :key="idx" class="d-flex justify-space-between">-->
-<!--            <p>{{ item.name }}:</p>-->
-<!--            <p :class="item.value|farsiBoolClass">{{ item.value|toFarsiBool }}</p>-->
-<!--          </div>-->
-<!--        </v-list>-->
-<!--      </v-menu>-->
+      <v-menu nudge-width="128" offset-y>
+        <template v-slot:activator="{on,attrs}">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-badge overlap left :content="newMessages.length" :value="newMessages.length">
+              <v-icon>mdi-bell-outline</v-icon>
+            </v-badge>
+          </v-btn>
+        </template>
+        <v-list class="pa-4">
+          <div v-for="(item,idx) in newMessages" :key="idx" @click="gotoMessages()">
+            <p class="mt-4 mb-3">{{ item.title }}</p>
+            <p class="mb-4 grey--text text-body-2">{{ item.desc }}</p>
+            <v-divider/>
+          </div>
+        </v-list>
+      </v-menu>
 
       <!--      DOCUMENT CHECK-->
       <v-menu nudge-width="128" offset-y>
         <template v-slot:activator="{on,attrs}">
-          <v-btn text v-bind="attrs" v-on="on">
+          <v-btn icon v-bind="attrs" v-on="on">
             <v-icon>mdi-text-box-check-outline</v-icon>
           </v-btn>
         </template>
@@ -314,6 +315,8 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
+      newMessages: [],
+      interval: {msg: null}
     }
   },
   async mounted() {
@@ -334,6 +337,10 @@ export default {
       this.userVerify = await this.$axios.$get('/profiles/me/verifies')
     } catch (e) {
     }
+    await this.loadMessages()
+    this.startRecurrentJob()
+
+    document.addEventListener('visibilitychange', this.onVizChange, false)
   },
   computed: {
     isAdmin() {
@@ -360,6 +367,9 @@ export default {
       this.$store.commit('auth/logout')
       await this.$router.push('/login')
     },
+    gotoMessages() {
+      this.$router.push('/messages')
+    },
     showErrorSnack(msg, level) {
       if (level === 'success') {
         this.snackBar.success.show = true
@@ -372,6 +382,27 @@ export default {
         this.snackBar.normal.msg = msg
       }
     },
+    async loadMessages() {
+      this.newMessages = await this.$axios.$get('/messages/me/new-messages')
+    },
+    startRecurrentJob() {
+      this.interval.msg = setInterval(() => {
+        this.loadMessages()
+      }, 30 * 1000)
+    },
+    cleanUp() {
+      if (this.interval.msg) clearInterval(this.interval.msg)
+    },
+    onVizChange(e) {
+      if (document.hidden) {
+        this.cleanUp()
+      } else {
+        this.startRecurrentJob()
+      }
+    }
+  },
+  beforeDestroy() {
+    this.cleanUp()
   }
 }
 </script>

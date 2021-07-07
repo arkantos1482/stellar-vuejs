@@ -435,6 +435,25 @@ export default {
         this.buy.price = this.offersPrice(item)
         this.buy.amount = parseFloat(item.amount)
       }
+    },
+    startRecurrentJob() {
+      this.interval.offers = setInterval(() => {
+        this.refreshOffers()
+      }, 20 * 1000);
+      // this.interval.offers = setInterval(() => {
+      //   this.refreshOffers()
+      // }, 5 * 60 * 1000);
+    },
+    cleanUp() {
+      if (this.interval.offers) clearInterval(this.interval.offers)
+      // clearInterval(this.interval.trades)
+    },
+    onVizChange(e) {
+      if (document.hidden){
+        this.cleanUp()
+      } else {
+        this.startRecurrentJob()
+      }
     }
   },
   mounted() {
@@ -446,16 +465,12 @@ export default {
     this.refreshBalances()
 
     this.refreshOffers()
-    this.interval.offers = setInterval(() => {
-      this.refreshOffers()
-    }, 20 * 1000);
-    // this.interval.offers = setInterval(() => {
-    //   this.refreshOffers()
-    // }, 5 * 60 * 1000);
+    this.startRecurrentJob()
+
+    document.addEventListener('visibilitychange', this.onVizChange, false)
   },
   beforeDestroy() {
-    clearInterval(this.interval.offers)
-    // clearInterval(this.interval.trades)
+    this.cleanUp()
   }
 }
 </script>
