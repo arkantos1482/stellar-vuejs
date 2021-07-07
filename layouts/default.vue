@@ -187,11 +187,29 @@
           <v-list-item @click="logout">خروج</v-list-item>
         </v-list>
       </v-menu>
-      <!--      NOTIFICATION-->
+
+      <!--      MESSAGES-->
+<!--      <v-menu nudge-width="128" offset-y>-->
+<!--        <template v-slot:activator="{on,attrs}">-->
+<!--          <v-btn text v-bind="attrs" v-on="on">-->
+<!--            <v-badge>-->
+<!--              <v-icon>mdi-bell-outline</v-icon>-->
+<!--            </v-badge>-->
+<!--          </v-btn>-->
+<!--        </template>-->
+<!--        <v-list class="pa-4">-->
+<!--          <div v-for="(item,idx) in translateVerify" :key="idx" class="d-flex justify-space-between">-->
+<!--            <p>{{ item.name }}:</p>-->
+<!--            <p :class="item.value|farsiBoolClass">{{ item.value|toFarsiBool }}</p>-->
+<!--          </div>-->
+<!--        </v-list>-->
+<!--      </v-menu>-->
+
+      <!--      DOCUMENT CHECK-->
       <v-menu nudge-width="128" offset-y>
         <template v-slot:activator="{on,attrs}">
           <v-btn text v-bind="attrs" v-on="on">
-            <v-icon>mdi-bell-outline</v-icon>
+            <v-icon>mdi-text-box-check-outline</v-icon>
           </v-btn>
         </template>
         <v-list class="pa-4">

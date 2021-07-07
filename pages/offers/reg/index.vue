@@ -266,7 +266,7 @@ export default {
     },
     sellOffers() {
       return collect(this.offers.asks)
-          .sortBy('price_r.n')
+          .sortByDesc('price_r.n')
     },
     buyBestPrice() {
       if (this.buyOffers.isNotEmpty())

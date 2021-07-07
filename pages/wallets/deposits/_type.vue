@@ -2,7 +2,7 @@
   <a-row class="align-stretch">
     <v-col cols="4" class="pa-4 d-flex flex-column">
       <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
-      <v-card class="px-16 py-12 flex-grow-1" height="100%">
+      <v-card class="py-12 flex-grow-1" height="100%">
 
         <div v-if="type === 'USDT'" class="text-center mb-8">
           <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
@@ -12,11 +12,11 @@
         </div>
 
         <div v-show="address !== 'not_loaded'">
-          <crypto-upper :balance="balance" :type="type"/>
+          <crypto-upper class="mx-16" :balance="balance" :type="type"/>
 
           <div v-if="address !== 'no_address'" class="mt-12 text-center">
             <vue-qrcode :value="address|bchFix"/>
-            <v-row class="align-center my-4">
+            <v-row class="my-4" justify="center" align="center">
               <v-btn icon @click="copy(fixBchMethod(address))">
                 <v-icon small color="primary">mdi-clipboard-text-multiple-outline</v-icon>
               </v-btn>
@@ -24,10 +24,11 @@
             </v-row>
           </div>
           <v-btn v-else @click="createCrypto" :loading="l.create"
-                 class="mt-16 mb-4" block color="primary">ایجاد
+                 class="mt-16 mb-4 mx-16" block color="primary">ایجاد
           </v-btn>
-          <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
-
+          <div class="px-16" >
+            <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
+          </div>
         </div>
       </v-card>
     </v-col>

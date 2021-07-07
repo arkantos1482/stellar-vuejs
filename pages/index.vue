@@ -33,7 +33,7 @@
           <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
             <p class="mb-0 mx-4">{{ accessLevel }}</p>
-            <v-btn color="primary" outlined small class="px-4">ارتقا</v-btn>
+            <v-btn color="primary" outlined small class="px-4" to="/users/me">ارتقا</v-btn>
           </a-row>
         </v-card>
       </v-col>
@@ -58,8 +58,9 @@
 
           <v-divider class="my-6"/>
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
-          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>
-          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>
+          <RowItem title="ارزش تخمینی به تومان" :value="totalBalance|tomanSuffix"/>
+          <!--          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>-->
+          <!--          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>-->
         </v-card>
       </v-col>
     </a-row>
