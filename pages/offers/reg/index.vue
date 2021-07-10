@@ -274,7 +274,7 @@ export default {
     },
     sellBestPrice() {
       if (this.sellOffers.isNotEmpty())
-        return this.offersPrice(this.sellOffers.first())
+        return this.offersPrice(this.sellOffers.last())
     },
     sellTotal() {
       return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price)).todp(getDp(this.counterAsset))

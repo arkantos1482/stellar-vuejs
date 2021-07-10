@@ -146,7 +146,7 @@ export default {
     showWithdrawDialog() {
       this.$refs.form.validate()
       if (this.form) {
-        if (this.balance >= parseFloat(this.amount) + parseFloat(this.withdrawFee)) {
+        if (this.balance >= parseFloat(this.amount) && this.amount > parseFloat(this.withdrawFee)) {
           this.d.withdraw = true
         } else {
           this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
