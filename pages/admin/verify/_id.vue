@@ -7,6 +7,12 @@
         <v-carousel-item contain :src="docs.bank_card"/>
       </v-carousel>
 
+      <div class="text-center mt-8">
+        <v-btn v-if="hasVideo" @click="downloadVideo"
+               :loading="l.downloadVideo" color="primary">دانلود ویدیو
+        </v-btn>
+      </div>
+
       <h2 class="mt-8">مشخصات استعلامی</h2>
       <v-simple-table>
         <thead>
@@ -154,7 +160,7 @@ export default {
   mixins: [ps],
   data() {
     return {
-      l: {apply: false},
+      l: {apply: false, downloadVideo: false},
       kyc: {
         bank_card: '',
         bank_card_2: '',
@@ -177,12 +183,16 @@ export default {
       },
       userId: this.$route.params.id,
       docs: {ssn: '', bill: '', bank_card: ''},
+      hasVideo: false,
       verifyList: []
     }
   },
   async mounted() {
     this.$axios.$get('/profiles/' + this.userId + '/verifies')
         .then(res => this.state = res)
+
+    this.$axios.$get('/profiles/' + this.userId + '/docs/has-video')
+        .then(res => this.hasVideo = res.has_video)
 
     this.$axios.$get('/kyc/' + this.userId + '/postal-code')
         .then(res => this.kyc.postal_code = res)
@@ -209,6 +219,22 @@ export default {
       this.l.apply = true
       await this.$axios.$put('/profiles/' + this.userId + '/verifies', this.state)
       this.l.apply = false
+    },
+    async downloadVideo() {
+      this.l.downloadVideo = true
+      let response = await this.$axios.get('/profiles/' + this.userId + '/docs/video', {
+        responseType: 'arraybuffer'
+      })
+      console.log(response)
+      let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+      let fileLink = document.createElement('a');
+
+      fileLink.href = fileURL;
+      fileLink.setAttribute('download', 'profile.mp4');
+      document.body.appendChild(fileLink);
+
+      fileLink.click();
+      this.l.downloadVideo = false
     }
   }
 }

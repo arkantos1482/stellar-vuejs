@@ -90,14 +90,25 @@
               </template>
             </two-column-row>
 
-            <!--                        <two-column-row>-->
-            <!--                          <template v-slot:right>-->
 
-            <!--                          </template>-->
-            <!--                          <template v-slot:left>-->
-
-            <!--                          </template>-->
-            <!--                        </two-column-row>-->
+            <!--            UPLOAD VIDEO-->
+            <p class="mt-12 mb-2 primary--text">بارگذاری ویدیو</p>
+            <v-divider class="mb-4"/>
+            <two-column-row class="align-center">
+              <template v-slot:right>
+<!--                <p class="grey&#45;&#45;text mb-3 text-body-2">بارگذاری ویدیو</p>-->
+                <vue2-dropzone id="video_id"
+                               :options="dropzoneOptions.video" :useCustomSlot=true>
+                  <div>
+                    <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
+                    <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
+                  </div>
+                </vue2-dropzone>
+              </template>
+              <template v-slot:left>
+                <p class="grey--text">حجم ویدیو حداکثر ۵۰۰ کیلوباید و مدت زمان آن ۱ دقیقه باشد.</p>
+              </template>
+            </two-column-row>
 
 
             <p class="mt-12 mb-2 primary--text">اطلاعات بانکی</p>
@@ -186,9 +197,9 @@
                               :rules="[rules.required]"
                               v-model="user.phone" label="تلفن ثابت"
                               :disabled="verifyState.phone">
-                  <v-btn tile depressed small class="inside-btn" color="primary"
-                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید
-                  </v-btn>
+<!--                  <v-btn tile depressed small class="inside-btn" color="primary"-->
+<!--                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید-->
+<!--                  </v-btn>-->
                 </a-text-field>
               </template>
             </two-column-row>
@@ -257,7 +268,11 @@ export default {
         bankCard: {
           ...this.baseDropZoneConfig,
           paramName: 'bank-card',
-        }
+        },
+        video: {
+          ...this.baseDropZoneConfig,
+          paramName: 'video',
+        },
       }
     }
   },
