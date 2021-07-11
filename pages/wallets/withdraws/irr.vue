@@ -17,6 +17,10 @@
           </div>
           <a-text-field separated :rules="[rules.required]"
                         mask="####################" v-model="amount" label="مبلغ"/>
+          <p class="grey--text mt-2 mb-1 text-body-2">شبا</p>
+          <v-select dense outlined flat :items="shabaList" v-model="shaba">
+            <template v-slot:no-data>شبا وارد نشده است.</template>
+          </v-select>
           <v-btn type="submit" :loading="l.withdraw"
                  block color="primary" class="my-4">برداشت
           </v-btn>
@@ -53,6 +57,8 @@ export default {
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
       amount: '',
+      shaba: '',
+      shabaList: [],
       form: false,
       l: {withdraw: false},
       rules: {
@@ -68,6 +74,14 @@ export default {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
+
+    // make shaba list
+    let shaba = this.$store.state.auth.profile.bank_shaba
+    if (shaba) this.shabaList.push(shaba)
+    let shaba2 = this.$store.state.auth.profile.bank_shaba_2
+    if (shaba2) this.shabaList.push(shaba2)
+
+    this.shaba = shaba
   },
   methods: {
     async onWithdraw() {
@@ -76,7 +90,7 @@ export default {
         if (this.balance >= parseFloat(this.amount)) {
           try {
             this.l.withdraw = true
-            await this.$axios.$post('/irr/withdraw', {amount: this.amount})
+            await this.$axios.$post('/irr/withdraw', {amount: this.amount, shaba: this.shaba})
 
             this.$router.back()
             this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
