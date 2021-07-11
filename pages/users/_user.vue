@@ -117,12 +117,12 @@
                     :disabled="verifyState.bank_card_2"/>
                 <a-text-field
                     :rules="[rules.required]"
-                    mask="AA########################"
+                    mask="IR########################"
                     hint="IR123456789012345678901234"
                     v-model="user.bank_shaba" label="شماره شبا"
                     :disabled="verifyState.bank_shaba"/>
                 <a-text-field
-                    mask="AA########################"
+                    mask="IR########################"
                     hint="IR123456789012345678901234"
                     v-model="user.bank_shaba_2" label="شماره شبا۲"
                     :disabled="verifyState.bank_shaba_2"/>
