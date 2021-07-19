@@ -326,8 +326,8 @@ export default {
     return {
       exchangeAction: 'buy',
       list: [
-        ['BTC/IRR', 'ETH/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR'],
-        ['BTC/USDT', 'ETH/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT'],
+        ['BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR'],
+        ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT'],
         ['ETH/BTC', 'TRX/BTC', 'BCH/BTC', 'LTC/BTC', 'TRX/ETH', 'BCH/ETH', 'LTC/ETH']],
       offers: [],
       tabIndex: 0,
@@ -449,7 +449,7 @@ export default {
       // clearInterval(this.interval.trades)
     },
     onVizChange(e) {
-      if (document.hidden){
+      if (document.hidden) {
         this.cleanUp()
       } else {
         this.startRecurrentJob()

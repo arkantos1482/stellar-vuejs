@@ -24,6 +24,8 @@
         <crypto-address-tr namad="تومان" type="irr" :balance="balances.IRR"/>
 
         <crypto-address-tr namad="بیت کوین" type="btc" :balance="balances.BTC"/>
+        <crypto-address-tr namad="بایننس" type="btc" :balance="balances.BNB"/>
+        <crypto-address-tr namad="دریک توکن" type="btc" :balance="balances.DRC"/>
         <crypto-address-tr namad="اتریوم" type="eth" :balance="balances.ETH"/>
         <crypto-address-tr namad="لایت کوین" type="ltc" :balance="balances.LTC"/>
         <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>

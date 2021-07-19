@@ -25,6 +25,8 @@ export default {
         {text: 'اتریوم', value: 'ETH'},
         {text: 'بیت کوین', value: 'BTC'},
         {text: 'ترون', value: 'TRX'},
+        {text: 'بایننس', value: 'BNB'},
+        {text: 'دریک توکن', value: 'DRC'},
         {text: 'بیت کش', value: 'BCH'},
         {text: 'لایت کوین', value: 'LTC'},
         {text: 'امین', value: 'AMN'},

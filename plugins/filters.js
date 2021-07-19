@@ -34,6 +34,8 @@ const toFarsiCoin = (type) => {
         ETH: 'اتریوم',
         USDT: 'تتر',
         TRX: 'ترون',
+        BNB: 'بایننس',
+        DRC: 'دریک توکن',
         IRR: 'تومان',
         ZRK: 'زریک',
         TLS: 'تلاش',
@@ -69,6 +71,8 @@ Vue.filter('toCoinIcon', (type) => {
     if (typeUp === 'ETH') value = require('@/assets/images/ETH.svg')
     if (typeUp === 'USDT') value = require('@/assets/images/USDT.svg')
     if (typeUp === 'TRX') value = require('@/assets/images/trx1.png')
+    if (typeUp === 'BNB') value = require('@/assets/images/bnb.svg')
+    if (typeUp === 'DRC') value = require('@/assets/images/daric.png')
     if (typeUp === 'IRR') value = require('@/assets/images/IRR.png')
     return value
 })
