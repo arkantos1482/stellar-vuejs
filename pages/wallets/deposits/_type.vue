@@ -23,8 +23,8 @@
               <p class="mb-0" style="font-family: serif; font-size: 1.6rem">{{ address|bchFix }}</p>
             </v-row>
           </div>
-          <div class="px-16">
-            <v-btn v-else @click="createCrypto" :loading="l.create"
+          <div v-else class="px-16">
+            <v-btn @click="createCrypto" :loading="l.create"
                    class="mt-16 mb-4" block color="primary">ایجاد
             </v-btn>
           </div>
