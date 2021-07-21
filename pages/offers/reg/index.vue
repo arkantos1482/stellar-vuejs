@@ -330,7 +330,7 @@ export default {
         ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'DRC/USDT', 'TRX/USDT'],
         ['ETH/BTC', 'TRX/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
           'TRX/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
-          'BNB/BCH', 'BNB/TRX', 'BNB/DRC']],
+          'BNB/BCH', 'TRX/BNB', 'DRC/BNB']],
       offers: [],
       tabIndex: 0,
       pairAsset: 'BTC/IRR',
