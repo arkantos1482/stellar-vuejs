@@ -121,7 +121,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in sellOffers" :key="OrderReg" class="pointer text-body-1"
+                <tr v-for="(item,index) in sellOffers" :key="index" class="pointer text-body-1"
                     @click="select('buy',item)">
                   <td class="error--text" style="font-size: 1.4rem">
                     {{ adjustDp(offersPrice(item), counterAsset)|separated }}
@@ -142,7 +142,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="(item,index) in buyOffers" :key="OrderReg"
+                <tr v-for="(item,index) in buyOffers" :key="index"
                     class="pointer text-body-1"
                     @click="select('sell',item)">
                   <td class="success--text" style="font-size: 1.4rem">

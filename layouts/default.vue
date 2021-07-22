@@ -2,7 +2,7 @@
   <v-app class="text-right">
     <v-navigation-drawer v-model="drawer" fixed right app>
       <v-list v-if="isAdmin">
-        <v-list-item v-for="item in admin_drawer_items" :to="item.to">
+        <v-list-item v-for="(item,index) in admin_drawer_items" :key="index" :to="item.to">
           <v-icon>{{ item.icon }}</v-icon>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item>
