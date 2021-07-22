@@ -7,11 +7,11 @@
         {{ namad }}&nbsp({{ type.toUpperCase()|irtFix }})
       </div>
     </td>
-    <td v-if="balance">{{ balance.balance|toFloat|separated }}</td>
+    <td v-if="balance">{{ adjustDp(balance.balance)|toFloat|separated }}</td>
     <td v-else></td>
-    <td v-if="balance">{{ balance.actual_balance|toFloat|separated }}</td>
+    <td v-if="balance">{{ adjustDp(balance.actual_balance)|toFloat|separated }}</td>
     <td v-else></td>
-    <td v-if="balance">{{ balance.selling_liabilities|toFloat|separated }}</td>
+    <td v-if="balance">{{ adjustDp(balance.selling_liabilities)|toFloat|separated }}</td>
     <td v-else></td>
     <td></td>
     <td>
@@ -29,6 +29,8 @@
 </template>
 <script>
 import ps from '@/mixins/pstopper'
+import {safeDecimal} from "@/models/NumberUtil"
+import {getDp} from "@/models/cryptoPrecision"
 
 export default {
   mixins: [ps],
@@ -76,7 +78,10 @@ export default {
       this.l.sync = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK','TLS', 'WIT'].includes(this.type.toUpperCase())
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type.toUpperCase())
+    },
+    adjustDp(val) {
+      return safeDecimal(val).todp(getDp(this.type))
     }
   }
 }

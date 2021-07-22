@@ -58,7 +58,7 @@
 
           <v-divider class="my-6"/>
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
-          <RowItem title="ارزش تخمینی به تومان" :value="totalBalance|tomanSuffix"/>
+          <RowItem title="ارزش تخمینی به تومان" :value="adjustDp(totalBalance,'IRR')|tomanSuffix"/>
           <!--          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>-->
           <!--          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>-->
         </v-card>
@@ -89,6 +89,8 @@
 import RowItem from "@/components/RowItem";
 import DashboardCardTitle from "@/components/CardTitleWithChevron";
 import MyTrades from "@/pages/trades/_userId";
+import {safeDecimal} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   name: "index",
@@ -158,6 +160,9 @@ export default {
       if (first === undefined || second === undefined) return ''
       return first + ' از ' + second
     },
+    adjustDp(val, type) {
+      return safeDecimal(val).todp(getDp(type))
+    }
   }
 }
 </script>

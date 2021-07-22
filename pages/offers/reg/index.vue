@@ -23,7 +23,7 @@
               <!--              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>-->
               <p v-if="balances[counterAsset]" @click="buyPercent=100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
-                {{ balances[counterAsset].actual_balance|toFloat|separated }}
+                {{ adjustDp(balances[counterAsset].actual_balance, counterAsset)|toFloat|separated }}
                 <span>{{ counterAsset|irtFix }}</span>
               </p>
             </div>
@@ -51,7 +51,7 @@
               <!--              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>-->
               <p v-if="balances[baseAsset]" @click="sellPercent=100" class="pointer mb-0 primary--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
-                {{ balances[baseAsset].actual_balance|toFloat|separated }}
+                {{ adjustDp(balances[baseAsset].actual_balance, baseAsset)|toFloat|separated }}
                 <span>{{ baseAsset|irtFix }}</span>
               </p>
             </div>
@@ -123,9 +123,11 @@
                 <tbody>
                 <tr v-for="(item,index) in sellOffers" :key="OrderReg" class="pointer text-body-1"
                     @click="select('buy',item)">
-                  <td class="error--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ sellRecordTotal(item)|separated }}</td>
+                  <td class="error--text" style="font-size: 1.4rem">
+                    {{ adjustDp(offersPrice(item), counterAsset)|separated }}
+                  </td>
+                  <td style="font-size: 1.4rem">{{ adjustDp(item.amount, baseAsset)|toFloat|separated }}</td>
+                  <td style="font-size: 1.4rem">{{ adjustDp(sellRecordTotal(item), counterAsset)|separated }}</td>
                 </tr>
                 </tbody>
               </v-simple-table>
@@ -143,9 +145,11 @@
                 <tr v-for="(item,index) in buyOffers" :key="OrderReg"
                     class="pointer text-body-1"
                     @click="select('sell',item)">
-                  <td class="success--text" style="font-size: 1.4rem">{{ offersPrice(item)|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ buyRecordAmount(item)|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ item.amount|toFloat|separated }}</td>
+                  <td class="success--text" style="font-size: 1.4rem">
+                    {{ adjustDp(offersPrice(item), counterAsset)|separated }}
+                  </td>
+                  <td style="font-size: 1.4rem">{{ adjustDp(buyRecordAmount(item), baseAsset)|separated }}</td>
+                  <td style="font-size: 1.4rem">{{ adjustDp(item.amount, counterAsset)|toFloat|separated }}</td>
                 </tr>
                 </tbody>
               </v-simple-table>
@@ -456,6 +460,9 @@ export default {
       } else {
         this.startRecurrentJob()
       }
+    },
+    adjustDp(val, type) {
+      return safeDecimal(val).todp(getDp(type))
     }
   },
   mounted() {

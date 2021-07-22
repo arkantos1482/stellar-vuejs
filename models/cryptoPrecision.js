@@ -4,8 +4,10 @@ const currencies = {
 }
 
 export function getDp(type) {
-    if (currencies[type] || currencies[type] === 0) {
-        return currencies[type]
+    let typeUp = type?.toUpperCase()
+
+    if (currencies[typeUp] || currencies[typeUp] === 0) {
+        return currencies[typeUp]
     } else {
         return 6
     }
