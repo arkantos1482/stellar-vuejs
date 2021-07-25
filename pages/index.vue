@@ -43,19 +43,16 @@
         <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-wallet" title="کیف پول های شما"/>
           <v-divider class="my-6"/>
-          <dash-wallet-row :balance="balances.AMN"/>
-          <dash-wallet-row :balance="balances.EBG"/>
-          <dash-wallet-row :balance="balances.ART"/>
-          <dash-wallet-row :balance="balances.ZRK"/>
-          <dash-wallet-row :balance="balances.TLS"/>
-          <dash-wallet-row :balance="balances.WIT"/>
-          <dash-wallet-row :balance="balances.IRR"/>
-          <dash-wallet-row :balance="balances.BTC"/>
-          <dash-wallet-row :balance="balances.ETH"/>
-          <dash-wallet-row :balance="balances.LTC"/>
-          <dash-wallet-row :balance="balances.USDT"/>
-          <dash-wallet-row :balance="balances.BCH"/>
 
+          <v-row>
+            <v-col cols="6">
+              <dash-wallet-row v-for="(item,index) in coinList" :balance="balances[item]" :key="index"/>
+            </v-col>
+
+            <v-col cols="6">
+              <wallet-doughnut :chartData="chartData" :options="options"/>
+            </v-col>
+          </v-row>
           <v-divider class="my-6"/>
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
           <RowItem title="ارزش تخمینی به تومان" :value="adjustDp(totalBalance,'IRR')|tomanSuffix"/>
@@ -99,6 +96,10 @@ export default {
     tomanSuffix: (val) => val + " تومان"
   },
   computed: {
+    coinList: () => ['AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'WIT', 'IRR', 'BTC', 'ETH', 'LTC', 'USDT', 'BCH'],
+    options() {
+      return {}
+    },
     balances() {
       return this.$store.state.balances.list
     },
@@ -133,6 +134,8 @@ export default {
   },
   data() {
     return {
+      toTomanList: [],
+      chartData: '',
       accessLevel: '',
       stats: '',
       rialLimits: {},
@@ -143,6 +146,45 @@ export default {
   mounted() {
     this.$axios.$get('/profiles/me')
         .then(res => this.accessLevel = res.access_level)
+
+    this.$axios.$get('/to-toman-list')
+        .then(res => {
+          let toTomanList = res;
+          let balances = this.$store.state.balances.list
+          let array = JSON.parse(JSON.stringify(balances))
+          let nonZeroKeys = Object.keys(array)?.filter(key => balances[key].balance != 0 && key != 'undefined')
+          let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance, key) * toTomanList[key])
+          // console.log(this.toTomanList)
+          // console.log(values)
+
+          this.chartData = {
+            // labels: [
+            //   'Red',
+            //   'Blue',
+            //   'Yellow'
+            // ],
+            labels: nonZeroKeys,
+            datasets: [{
+              label: 'My First Dataset',
+              // data: [300, 50, 100],
+              data: values,
+              backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)',
+                'rgb(255, 23, 86)',
+                'rgb(23, 205, 150)',
+                'rgb(88,64,5)',
+                'rgb(161,1,205)',
+                'rgb(111,102,81)',
+                'rgb(194,213,83)',
+                'rgb(175,136,40)'
+              ],
+              hoverOffset: 4
+            }]
+          }
+          console.log(this.chartData)
+        })
 
     this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
         .then(res => this.cryptoLimits = res)

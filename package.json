@@ -13,6 +13,7 @@
   "dependencies": {
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/axios": "^5.12.2",
+    "chart.js": "2.9.3",
     "collect.js": "^4.28.2",
     "core-js": "^3.6.5",
     "decimal.js-light": "^2.5.1",
@@ -22,6 +23,7 @@
     "qrcode": "^1.4.4",
     "trading-vue-js": "^1.0.1",
     "v-mask": "^2.2.3",
+    "vue-chartjs": "^3.5.1",
     "vue-cookies": "^1.7.4",
     "vue-json-viewer": "^2.2.14",
     "vue-persian-datetime-picker": "^2.4.1",
