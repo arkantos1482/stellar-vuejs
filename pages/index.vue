@@ -154,6 +154,7 @@ export default {
           let balances = this.$store.state.balances.list
           let array = JSON.parse(JSON.stringify(balances))
           let nonZeroKeys = Object.keys(array)?.filter(key => balances[key].balance != 0 && key != 'undefined')
+          let labels = nonZeroKeys.map(key => key.replace('IRR', 'IRT'))
           let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance, 'IRR') * toTomanList[key])
           // console.log(this.toTomanList)
           // console.log(values)
@@ -164,7 +165,7 @@ export default {
             //   'Blue',
             //   'Yellow'
             // ],
-            labels: nonZeroKeys,
+            labels: labels,
             datasets: [{
               label: 'My First Dataset',
               // data: [300, 50, 100],
@@ -201,7 +202,7 @@ export default {
   methods: {
     azMaker(first, second) {
       if (first === undefined || second === undefined) return ''
-      return first + ' از ' + second
+      return this.adjustDp(first, 'IRR') + ' از ' + this.adjustDp(second, 'IRR')
     },
     adjustDp(val, type) {
       return safeDecimal(val).todp(getDp(type))
