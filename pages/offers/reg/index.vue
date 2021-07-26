@@ -8,8 +8,8 @@
           <card-title-with-chevron simple title="ثبت سفارش" icon="mdi-basket" class="mb-6"/>
           <v-btn-toggle mandatory v-model="exchangeAction" rounded dense
                         :color="exchangeAction === 'buy' ? 'success':'error'">
-            <v-btn rounded value="buy" class="px-12">خرید</v-btn>
-            <v-btn rounded value="sell" class="px-12">فروش</v-btn>
+            <v-btn rounded value="buy" class="px-12" @click="resetValid">خرید</v-btn>
+            <v-btn rounded value="sell" class="px-12" @click="resetValid">فروش</v-btn>
           </v-btn-toggle>
           <v-divider class="my-4"/>
           <!--          <v-tabs class="mb-6">-->
@@ -28,10 +28,11 @@
               </p>
             </div>
 
-            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_from_ref">
-              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.buyWalletExist]"
+            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_form_ref">
+              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.required,rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
-              <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"/>
+              <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"
+                                :rules="[rules.required]"/>
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
@@ -49,7 +50,7 @@
           <div v-else-if="exchangeAction === 'sell'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>-->
-              <p v-if="balances[baseAsset]" @click="sellPercent=100" class="pointer mb-0 primary--text">
+              <p v-if="balances[baseAsset]" @click="sellPercent=100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
                 {{ adjustDp(balances[baseAsset].actual_balance, baseAsset)|toFloat|separated }}
                 <span>{{ baseAsset|irtFix }}</span>
@@ -57,9 +58,9 @@
             </div>
 
             <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
-              <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist]"
-                                v-model="sell.price" prepend="قیمت"/>
-              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.sellSufficient]"
+              <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist,rules.required]"
+                                v-model="sell.price" prepend="قیمت" class="mt-n4"/>
+              <order-text-field :type="baseAsset" :rules="[rules.sellSufficient,rules.required]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="sellPercent"
@@ -266,11 +267,11 @@ export default {
             price_r: item.price_r,
             amount: parseFloat(item.amount)
           }))
-          .sortByDesc('price_r.n')
+          .sortByDesc('price')
     },
     sellOffers() {
       return collect(this.offers.asks)
-          .sortByDesc('price_r.n')
+          .sortByDesc('price')
     },
     buyBestPrice() {
       if (this.buyOffers.isNotEmpty())
@@ -394,7 +395,7 @@ export default {
 
     },
     async doBuy() {
-      this.$refs.buy_from_ref.validate()
+      this.$refs.buy_form_ref.validate()
       if (!this.buyForm) return
       this.l.buy = true
       await this.$axios.$post('/offers/buy', {
@@ -460,6 +461,10 @@ export default {
       } else {
         this.startRecurrentJob()
       }
+    },
+    resetValid() {
+      this.$refs.sell_form_ref?.resetValidation()
+      this.$refs.buy_form_ref?.resetValidation()
     },
     adjustDp(val, type) {
       return safeDecimal(val).todp(getDp(type))
