@@ -156,9 +156,6 @@ export default {
           let nonZeroKeys = Object.keys(array)?.filter(key => this.adjustDp(balances[key].balance, key) > 0 && key != 'undefined')
           let labels = nonZeroKeys.map(key => key.replace('IRR', 'IRT'))
           let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance * toTomanList[key], 'IRR'))
-              .map(item => item + 'IRT')
-          // console.log(this.toTomanList)
-          // console.log(values)
 
           this.chartData = {
             // labels: [

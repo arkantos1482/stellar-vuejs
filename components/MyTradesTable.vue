@@ -56,8 +56,8 @@ export default {
       //   return 0
       // }
       return item.op_type === 'buy'
-          ? toSeparated(safeDecimal(item.counter_amount).times(0.002))
-          : toSeparated(safeDecimal(item.base_amount).times(0.002))
+          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002), item.counter_asset_code))
+          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002), item.base_asset_code))
     },
     feeCoin(item) {
       return item.op_type === 'buy'
@@ -78,6 +78,11 @@ export default {
     // this.trades = collect(list)
     //     .filter(item => item.type === 'trade')
     //     .all();
+  },
+  methods: {
+    adjustDp(val, type) {
+      return safeDecimal(val).todp(getDp(type))
+    }
   }
 }
 </script>
