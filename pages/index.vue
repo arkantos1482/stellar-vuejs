@@ -18,16 +18,16 @@
         <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-account" title="وضعیت حساب کاربری"/>
           <v-divider class="my-6"/>
-          <RowItem title="برداشت روزانه ریال"
+          <RowItem title="برداشت روزانه تومان"
                    :value="azMaker(rialLimits.daily_usage,rialLimits.daily_max_usage)"/>
           <RowItem title="برداشت روزانه رمزارز"
                    :value="azMaker(cryptoLimits.daily_usage,cryptoLimits.daily_max_usage)"/>
-          <RowItem title="برداشت ماهانه ریال"
+          <RowItem title="برداشت ماهانه تومان"
                    :value="azMaker(rialLimits.monthly_usage,rialLimits.monthly_max_usage)"/>
           <RowItem title="برداشت ماهانه رمزارز"
                    :value="azMaker(cryptoLimits.monthly_usage,cryptoLimits.monthly_max_usage)"/>
           <RowItem title="کارمزد" :value="cryptoLimits.fee_ratio"/>
-          <RowItem title="ارزش معاملات سی روز" :value="cryptoLimits.trade_volume_past_month"/>
+          <RowItem title="ارزش معاملات سی روز" :value="adjustDp(cryptoLimits.trade_volume_past_month,'IRR')"/>
           <v-divider class="my-6"/>
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
@@ -155,7 +155,7 @@ export default {
           let array = JSON.parse(JSON.stringify(balances))
           let nonZeroKeys = Object.keys(array)?.filter(key => balances[key].balance != 0 && key != 'undefined')
           let labels = nonZeroKeys.map(key => key.replace('IRR', 'IRT'))
-          let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance, 'IRR') * toTomanList[key])
+          let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance * toTomanList[key], 'IRR'))
           // console.log(this.toTomanList)
           // console.log(values)
 
