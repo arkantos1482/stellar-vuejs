@@ -7,18 +7,24 @@
       </template>
     </v-text-field>
     <div @click="emitBalance">
-      <v-text-field dense outlined readonly :suffix="balance|toFloat|separated" placeholder="موجودی"
+      <v-text-field dense outlined readonly :suffix="adjustDp(balance,type)|separated" placeholder="موجودی"
                     style="cursor: pointer"/>
     </div>
   </div>
 </template>
 <script>
+import {safeDecimal} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
+
 export default {
   name: 'crypto-upper',
   props: ['balance', 'type'],
   methods: {
     emitBalance() {
       this.$emit('balanceClick', this.balance)
+    },
+    adjustDp(val, type) {
+      return safeDecimal(val).todp(getDp(type))
     }
   }
 }
