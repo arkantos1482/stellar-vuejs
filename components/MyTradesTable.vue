@@ -18,7 +18,7 @@
       <td>{{ item|price }}</td>
       <td>{{ item|amount }}</td>
       <td>{{ item|total }}</td>
-      <td>{{ item|fee }} <span>{{ item|feeCoin|toFarsiCoin }}</span></td>
+      <td>{{ fee(item) }} <span>{{ item|feeCoin|toFarsiCoin }}</span></td>
       <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
     </tr>
     </tbody>
@@ -50,15 +50,6 @@ export default {
     total(item) {
       return toSeparated(safeDecimal(item.base_amount).todp(getDp(item.base_asset_code)))
     },
-    fee(item) {
-      // if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
-      //     || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
-      //   return 0
-      // }
-      return item.op_type === 'buy'
-          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002), item.counter_asset_code))
-          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002), item.base_asset_code))
-    },
     feeCoin(item) {
       return item.op_type === 'buy'
           ? item.counter_asset_code
@@ -80,6 +71,15 @@ export default {
     //     .all();
   },
   methods: {
+    fee(item) {
+      // if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
+      //     || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
+      //   return 0
+      // }
+      return item.op_type === 'buy'
+          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002), item.counter_asset_code))
+          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002), item.base_asset_code))
+    },
     adjustDp(val, type) {
       return safeDecimal(val).todp(getDp(type))
     }
