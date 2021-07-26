@@ -75,19 +75,19 @@
                   </div>
                 </vue2-dropzone>
               </template>
-              <template v-slot:left>
-                <p class="grey--text mb-2 text-body-2">
-                  تصویر تایید هویت
-                  <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>
-                </p>
-                <vue2-dropzone id="bank_card_id"
-                               :options="dropzoneOptions.bankCard" :useCustomSlot=true>
-                  <div>
-                    <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
-                    <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
-                  </div>
-                </vue2-dropzone>
-              </template>
+              <!--              <template v-slot:left>-->
+              <!--                <p class="grey&#45;&#45;text mb-2 text-body-2">-->
+              <!--                  تصویر تایید هویت-->
+              <!--                  <span>&nbsp<v-icon @click="onGuide" color="success">mdi-alert-circle-outline</v-icon></span>-->
+              <!--                </p>-->
+              <!--                <vue2-dropzone id="bank_card_id"-->
+              <!--                               :options="dropzoneOptions.bankCard" :useCustomSlot=true>-->
+              <!--                  <div>-->
+              <!--                    <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>-->
+              <!--                    <p class="grey&#45;&#45;text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>-->
+              <!--                  </div>-->
+              <!--                </vue2-dropzone>-->
+              <!--              </template>-->
             </two-column-row>
 
 
@@ -96,7 +96,7 @@
             <v-divider class="mb-4"/>
             <two-column-row class="align-center">
               <template v-slot:right>
-<!--                <p class="grey&#45;&#45;text mb-3 text-body-2">بارگذاری ویدیو</p>-->
+                <!--                <p class="grey&#45;&#45;text mb-3 text-body-2">بارگذاری ویدیو</p>-->
                 <vue2-dropzone id="video_id"
                                :options="dropzoneOptions.video" :useCustomSlot=true>
                   <div>
@@ -106,7 +106,10 @@
                 </vue2-dropzone>
               </template>
               <template v-slot:left>
-                <p class="grey--text">حجم ویدیو حداکثر ۵۰۰ کیلوباید و مدت زمان آن ۱ دقیقه باشد.</p>
+                <p>اینجانب "نام" و "نام خانوادگی" با اطلاع از قوانین و مقررات کارگزاری رمزارزی بیترا این ویدیو را
+                  جهت احراز
+                  هویت ارسال می‌کنم.</p>
+                <p class="grey--text">حجم ویدیو حداکثر ۵ مگابایت و مدت زمان آن حداکثر ۲۰ ثانیه باشد.</p>
               </template>
             </two-column-row>
 
@@ -197,9 +200,9 @@
                               :rules="[rules.required]"
                               v-model="user.phone" label="تلفن ثابت"
                               :disabled="verifyState.phone">
-<!--                  <v-btn tile depressed small class="inside-btn" color="primary"-->
-<!--                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید-->
-<!--                  </v-btn>-->
+                  <!--                  <v-btn tile depressed small class="inside-btn" color="primary"-->
+                  <!--                         @click="requestPhoneOtp" :loading="l.phoneRequest">دریافت کد تایید-->
+                  <!--                  </v-btn>-->
                 </a-text-field>
               </template>
             </two-column-row>
@@ -259,18 +262,23 @@ export default {
       return {
         ssn: {
           ...this.baseDropZoneConfig,
+          maxFilesize: 0.5,
           paramName: 'ssn',
         },
         bill: {
           ...this.baseDropZoneConfig,
+          maxFilesize: 0.5,
           paramName: 'bill',
         },
         bankCard: {
           ...this.baseDropZoneConfig,
+          maxFilesize: 0.5,
           paramName: 'bank-card',
         },
         video: {
           ...this.baseDropZoneConfig,
+          maxFilesize: 5,
+          acceptedFiles: '.mpg,.flv,.avi,.mp4,.3gp,.mkv',
           paramName: 'video',
         },
       }
@@ -303,7 +311,6 @@ export default {
         addRemoveLinks: true,
         thumbnailWidth: 128,
         thumbnailHeight: 128,
-        maxFilesize: 0.5,
         dictRemoveFile: 'لغو ارسال',
         dictMaxFilesExceeded: 'تنها یک تصویر',
         dictFileTooBig: 'حجم غیرمجاز',
