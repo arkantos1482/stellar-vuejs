@@ -96,7 +96,8 @@ export default {
     tomanSuffix: (val) => val + " تومان"
   },
   computed: {
-    coinList: () => ['AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'WIT', 'IRR', 'BTC', 'ETH', 'LTC', 'USDT', 'BCH'],
+    coinList: () => ['AMN', 'ART', 'SHA', 'ZRK', 'TLS', 'WIT', 'IRR', 'BTC',
+      'ETH', 'LTC', 'USDT', 'TRX', 'BCH', 'BNB', 'DRC'],
     options() {
       return {}
     },
@@ -153,7 +154,7 @@ export default {
           let balances = this.$store.state.balances.list
           let array = JSON.parse(JSON.stringify(balances))
           let nonZeroKeys = Object.keys(array)?.filter(key => balances[key].balance != 0 && key != 'undefined')
-          let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance, key) * toTomanList[key])
+          let values = nonZeroKeys?.map(key => this.adjustDp(balances[key].balance, 'IRR') * toTomanList[key])
           // console.log(this.toTomanList)
           // console.log(values)
 
