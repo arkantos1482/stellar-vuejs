@@ -280,6 +280,7 @@ export default {
         },
         video: {
           ...this.baseDropZoneConfig,
+          timeout: 90000,
           maxFilesize: 5,
           acceptedFiles: '.mpg,.flv,.avi,.mp4,.3gp,.mkv',
           paramName: 'video',
