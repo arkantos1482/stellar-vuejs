@@ -13,7 +13,7 @@
 
         <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
           <div class="text-left">
-            <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
+            <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
           </div>
           <a-text-field separated :rules="[rules.required]"
                         is-coin coin="IRR" v-model="amount" label="مبلغ"/>
@@ -41,7 +41,8 @@ import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import CryptoUpper from "@/components/CryptoUpper";
-import {toSeparated} from "@/models/NumberUtil";
+import {safeDecimal, toSeparated} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   mixins: [ps],
@@ -105,8 +106,11 @@ export default {
       }
     },
     onBalanceClicked(event) {
-      this.amount = event
-    }
+      this.amount = safeDecimal(event).todp(getDp(this.type))
+    },
+    onMaxClicked() {
+      this.amount = safeDecimal(this.balance).todp(getDp(this.type))
+    },
   }
 }
 </script>
