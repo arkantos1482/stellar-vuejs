@@ -38,7 +38,8 @@
             <div class="text-left">
               <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
             </div>
-            <a-text-field separated :rules="[rules.required]" :mask="mask" v-model="amount" label="مقدار"/>
+            <a-text-field separated :rules="[rules.required]"
+                          is-coin :coin="type" v-model="amount" label="مقدار"/>
             <p class="mt-1 grey--text"> کارمزد تراکنش <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
             <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="white--text">{{ actualAmount }}</span> می باشد.
             </p>
@@ -97,9 +98,6 @@ export default {
     },
     listTitle() {
       return this.isInternal() ? 'لیست ارسال ها' : 'لیست برداشت ها'
-    },
-    mask() {
-      return this.isInternal() ? '###############' : ''
     },
     actualAmount() {
       let amount = this.amount - this.withdrawFee;

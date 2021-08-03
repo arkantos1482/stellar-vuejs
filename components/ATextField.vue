@@ -32,12 +32,13 @@
 </template>
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
-import {remSeparated, toSeparated} from "@/models/NumberUtil";
+import {remSeparated, safeDecimal, toSeparated} from "@/models/NumberUtil";
+import {getDp} from "@/models/cryptoPrecision";
 
 export default {
   name: 'a-text-field',
   extends: VTextField,
-  props: {mask: String, eng: Boolean, separated: Boolean},
+  props: {mask: String, eng: Boolean, separated: Boolean, isCoin: Boolean, coin: String},
   data() {
     return {
       myText: ''
@@ -45,7 +46,11 @@ export default {
   },
   watch: {
     value(newValue, oldValue) {
-      this.myText = this.separated ? toSeparated(newValue) : newValue
+      let val = newValue
+      if (this.isCoin) {
+        val = safeDecimal(newValue).todp(getDp(this.coin))
+      }
+      this.myText = this.separated ? toSeparated(val) : val
     }
   },
   methods: {

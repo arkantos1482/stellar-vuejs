@@ -16,7 +16,7 @@
             <v-btn class="mb-n14" text color="primary" @click="amount = balance">Max</v-btn>
           </div>
           <a-text-field separated :rules="[rules.required]"
-                        mask="####################" v-model="amount" label="مبلغ"/>
+                        is-coin coin="IRR" v-model="amount" label="مبلغ"/>
           <p class="grey--text mt-2 mb-1 text-body-2">شبا</p>
           <v-select dense outlined flat :items="shabaList" v-model="shaba">
             <template v-slot:no-data>شبا وارد نشده است.</template>
