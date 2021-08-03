@@ -55,7 +55,10 @@ export default {
   },
   methods: {
     emit(event) {
-      const value = this.separated ? remSeparated(event.target.value) : event.target.value
+      let value = this.separated ? remSeparated(event.target.value) : event.target.value
+      if (this.isCoin) {
+        value = safeDecimal(value).todp(getDp(this.coin))
+      }
       this.$emit('input', value)
     }
   },
