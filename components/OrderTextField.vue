@@ -13,13 +13,13 @@
 </template>
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
-import {getDp} from "@/models/cryptoPrecision";
-import {decimalRegex, remSeparated, toSeparated} from "@/models/NumberUtil";
+import {getDp, getMarketDp} from "@/models/cryptoPrecision";
+import {remSeparated, safeDecimal, toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: 'order-text-field',
   extends: VTextField,
-  props: ['prepend', 'append', 'readonly', 'type'],
+  props: ['prepend', 'append', 'readonly', 'marketDp', 'base', 'ctr'],
   data() {
     return {
       myText: ''
@@ -27,11 +27,18 @@ export default {
   },
   watch: {
     value(newValue, oldValue) {
-      this.myText = toSeparated(newValue)
-      const regex = decimalRegex(getDp(this.type));
-      if (!regex.test(newValue)) {
-        this.$emit('input', oldValue)
+      let val = safeDecimal(newValue)
+      if (this.marketDp) {
+        val.todp(getMarketDp(this.base, this.ctr))
+      } else {
+        val.todp(getDp(this.base))
       }
+      this.myText = toSeparated(val)
+      // const regex = decimalRegex(getDp(this.type));
+      // if (!regex.test(newValue)) {
+      //   this.$emit('input', oldValue)
+      // }
+
     }
   },
   methods: {

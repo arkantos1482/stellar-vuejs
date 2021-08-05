@@ -26,7 +26,7 @@
 
 import Decimal from "decimal.js-light";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
-import {getDp} from "@/models/cryptoPrecision";
+import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 
 export default {
   name: 'PairAssetTrades',
@@ -65,7 +65,7 @@ export default {
       })
     },
     total(item) {
-      return toSeparated(safeDecimal(item.base_amount).todp(getDp(this.base)))
+      return toSeparated(safeDecimal(item.base_amount).todp(getMarketDp(this.base, this.counter)))
     },
   },
 }

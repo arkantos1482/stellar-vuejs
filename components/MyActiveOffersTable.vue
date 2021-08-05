@@ -37,7 +37,7 @@
 <script>
 import pstopper from "@/mixins/pstopper";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
-import {getDp} from "@/models/cryptoPrecision";
+import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 
 export default {
   mixins: [pstopper],
@@ -69,11 +69,14 @@ export default {
       //     : amount + item.selling_asset_code
     },
     total(item) {
-      let coin = item.type === 'buy' ? item.selling_asset_code : item.buying_asset_code
+      let baseAsset = item.type === 'buy' ? item.selling_asset_code : item.buying_asset_code
+      let counterAsset = item.type === 'buy' ? item.buying_asset_code : item.selling_asset_code
+
       let total = safeDecimal(item.amount)
           .times(safeDecimal(item.price_r?.n))
           .div(safeDecimal(item.price_r?.d))
-          .todp(getDp(coin))
+          .todp(getMarketDp(baseAsset, counterAsset))
+
       return toSeparated(total)
       // return item.type === 'buy'
       //     ? total + item.buying_asset_code

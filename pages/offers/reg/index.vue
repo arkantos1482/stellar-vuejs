@@ -29,16 +29,19 @@
             </div>
 
             <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_form_ref">
-              <order-text-field :type="baseAsset" class="mt-n4" :rules="[rules.required,rules.buyWalletExist]"
+              <order-text-field :base="baseAsset"
+                                class="mt-n4" :rules="[rules.required,rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
-              <order-text-field :type="counterAsset" v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"
+              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+                                v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"
                                 :rules="[rules.required]"/>
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
-              <order-text-field :type="counterAsset" :rules="[rules.buySufficient]"
+              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+                                :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset|irtFix"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="success"
@@ -58,16 +61,19 @@
             </div>
 
             <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
-              <order-text-field :type="counterAsset" :rules="[rules.sellWalletExist,rules.required]"
-                                v-model="sell.price" prepend="قیمت" class="mt-n4"/>
-              <order-text-field :type="baseAsset" :rules="[rules.sellSufficient,rules.required]"
+              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+                                :rules="[rules.sellWalletExist,rules.required]"
+                                v-model="sell.price" prepend="قیمت" :append="counterAsset|irtFix" class="mt-n4"/>
+              <order-text-field :base="baseAsset"
+                                :rules="[rules.sellSufficient,rules.required]"
                                 v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
-              <order-text-field :type="counterAsset" class="mt-0" readonly :value="sellTotal" prepend="مجموع"
+              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+                                class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset|irtFix"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="error"
                      type="submit" :loading="l.sell">فروش
@@ -125,10 +131,12 @@
                 <tr v-for="(item,index) in sellOffers" :key="index" class="pointer text-body-1"
                     @click="select('buy',item)">
                   <td class="error--text" style="font-size: 1.4rem">
-                    {{ adjustDp(offersPrice(item), counterAsset)|separated }}
+                    {{ adjustMarketDp(offersPrice(item), baseAsset, counterAsset)|separated }}
                   </td>
                   <td style="font-size: 1.4rem">{{ adjustDp(item.amount, baseAsset)|toFloat|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ adjustDp(sellRecordTotal(item), counterAsset)|separated }}</td>
+                  <td style="font-size: 1.4rem">
+                    {{ adjustDp(sellRecordTotal(item), baseAsset, counterAsset)|separated }}
+                  </td>
                 </tr>
                 </tbody>
               </v-simple-table>
@@ -147,10 +155,12 @@
                     class="pointer text-body-1"
                     @click="select('sell',item)">
                   <td class="success--text" style="font-size: 1.4rem">
-                    {{ adjustDp(offersPrice(item), counterAsset)|separated }}
+                    {{ adjustMarketDp(offersPrice(item), baseAsset, counterAsset)|separated }}
                   </td>
                   <td style="font-size: 1.4rem">{{ adjustDp(buyRecordAmount(item), baseAsset)|separated }}</td>
-                  <td style="font-size: 1.4rem">{{ adjustDp(item.amount, counterAsset)|toFloat|separated }}</td>
+                  <td style="font-size: 1.4rem">
+                    {{ adjustDp(item.amount, baseAsset, counterAsset)|toFloat|separated }}
+                  </td>
                 </tr>
                 </tbody>
               </v-simple-table>
@@ -198,7 +208,7 @@ import {TradingVue, DataCube} from 'trading-vue-js'
 import {mapActions} from "vuex";
 import OrderTextField from "@/components/OrderTextField";
 import {safeDecimal} from "@/models/NumberUtil";
-import {getDp} from "@/models/cryptoPrecision";
+import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 import PairAssetTrades from "@/pages/trades";
 import TVChartContainer from "@/components/TVChartContainer";
 
@@ -282,10 +292,12 @@ export default {
         return this.offersPrice(this.sellOffers.last())
     },
     sellTotal() {
-      return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price)).todp(getDp(this.counterAsset))
+      return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
+          // .todp(getDp(this.counterAsset))    order text field handle it
     },
     buyTotal() {
-      return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price)).todp(getDp(this.counterAsset))
+      return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
+          // .todp(getDp(this.counterAsset))
     },
     buyPercent: {
       get() {
@@ -302,7 +314,7 @@ export default {
         try {
           this.buy.amount = safeDecimal(this.balances[this.counterAsset].actual_balance)
               .times(val).div(100).div(this.buy.price)
-              .todp(getDp(this.baseAsset))
+              // .todp(getDp(this.baseAsset))   order text field handle it
         } catch (e) {
         }
       }
@@ -321,7 +333,7 @@ export default {
       set(val) {
         try {
           this.sell.amount = safeDecimal(this.balances[this.baseAsset].actual_balance).times(val).div(100)
-              .todp(getDp(this.baseAsset))
+              // .todp(getDp(this.baseAsset))   order text field handle it
         } catch (e) {
         }
       }
@@ -468,6 +480,9 @@ export default {
     },
     adjustDp(val, type) {
       return safeDecimal(val).todp(getDp(type))
+    },
+    adjustMarketDp(val, base, ctr) {
+      return safeDecimal(val).todp(getMarketDp(base, ctr))
     }
   },
   mounted() {

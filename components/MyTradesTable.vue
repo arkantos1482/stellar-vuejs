@@ -29,7 +29,7 @@
 <script>
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import Decimal from "decimal.js-light";
-import {getDp} from "@/models/cryptoPrecision";
+import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 
 export default {
   name: "MyTradesTable",
@@ -48,7 +48,9 @@ export default {
       return toSeparated(parseFloat(item.counter_amount))
     },
     total(item) {
-      return toSeparated(safeDecimal(item.base_amount).todp(getDp(item.base_asset_code)))
+      return toSeparated(
+          safeDecimal(item.base_amount)
+              .todp(getMarketDp(item.base_asset_code, item.counter_asset_code)))
     },
     feeCoin(item) {
       return item.op_type === 'buy'
@@ -77,11 +79,13 @@ export default {
       //   return 0
       // }
       return item.op_type === 'buy'
-          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002), item.counter_asset_code))
-          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002), item.base_asset_code))
+          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002),
+              item.counter_asset_code, item.base_asset_code))
+          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002),
+              item.base_asset_code, item.counter_asset_code))
     },
-    adjustDp(val, type) {
-      return safeDecimal(val).todp(getDp(type))
+    adjustDp(val, base, ctr) {
+      return safeDecimal(val).todp(getMarketDp(base, ctr))
     }
   }
 }
