@@ -83,7 +83,7 @@ import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import pstopper from "@/mixins/pstopper";
-import CryptoUpper from "@/components/CryptoUpper";
+import CryptoUpper from "@/components/wallet/CryptoUpper";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 

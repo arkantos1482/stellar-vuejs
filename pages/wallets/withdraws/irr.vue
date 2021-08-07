@@ -15,12 +15,19 @@
           <div class="text-left">
             <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
           </div>
+
           <a-text-field separated :rules="[rules.required]"
                         is-coin coin="IRR" v-model="amount" label="مبلغ"/>
+          <p class="mt-1 grey--text"> کارمزد تراکنش
+            <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
+          <p class="mt-n4 grey--text"> مقدار خالص برداشت
+            <span class="white--text">{{ actualAmount }}</span> می باشد.</p>
+
           <p class="grey--text mt-2 mb-1 text-body-2">شبا</p>
           <v-select dense outlined flat :items="shabaList" v-model="shaba">
             <template v-slot:no-data>شبا وارد نشده است.</template>
           </v-select>
+
           <v-btn type="submit" :loading="l.withdraw"
                  block color="primary" class="my-4">برداشت
           </v-btn>
@@ -40,7 +47,7 @@ import ps from '@/mixins/pstopper'
 import Withdraws from "@/pages/wallets/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
-import CryptoUpper from "@/components/CryptoUpper";
+import CryptoUpper from "@/components/wallet/CryptoUpper";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 
@@ -50,6 +57,10 @@ export default {
   computed: {
     balance() {
       return this.$store.state.balances.list[this.type]?.actual_balance
+    },
+    actualAmount() {
+      let amount = this.amount - this.withdrawFee;
+      return amount > 0 ? amount : 0
     }
   },
   data() {
@@ -58,6 +69,7 @@ export default {
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
       amount: '',
+      withdrawFee: '',
       shaba: '',
       shabaList: [],
       form: false,
@@ -70,6 +82,7 @@ export default {
   mounted() {
     this.$store.dispatch('balances/refresh')
     this.$store.dispatch('addresses/refresh')
+    this.getFee()
     this.$axios.$post('/access/limits/remained', {resource: 'irr'})
         .then(res => {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
@@ -104,6 +117,10 @@ export default {
           this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
         }
       }
+    },
+    getFee() {
+      this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
+          .then(res => this.withdrawFee = res);
     },
     onBalanceClicked(event) {
       this.amount = safeDecimal(event).todp(getDp(this.type))

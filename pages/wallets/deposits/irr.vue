@@ -53,7 +53,7 @@ import ps from '@/mixins/pstopper'
 import Deposits from "@/pages/wallets/deposits/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
-import CryptoUpper from "@/components/CryptoUpper";
+import CryptoUpper from "@/components/wallet/CryptoUpper";
 import {toSeparated} from "@/models/NumberUtil";
 
 export default {
