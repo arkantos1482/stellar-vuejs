@@ -19,10 +19,12 @@
 
 <script>
 
+import {coinList} from "@/models/coinList";
+
 export default {
-  data() {
-    return {
-      items: ['BTC', 'ETH', 'USDT', 'USDT_TRON', 'TRX', 'BNB', 'DRC', 'LTC', 'BCH', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
+  computed: {
+    items() {
+      return coinList
     }
   },
   methods: {

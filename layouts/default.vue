@@ -308,6 +308,14 @@ export default {
           to: '/admin/access'
         }, {
           icon: 'mdi-chart-bubble',
+          title: ' مینیمم برداشت ها',
+          to: '/admin/access/min-withdraws'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: ' مینیمم معاملات',
+          to: '/admin/access/min-trades'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'مدیریت پیام ها',
           to: '/admin/messages/broadcast'
         },

@@ -1,0 +1,40 @@
+export const coinList = ['BTC', 'ETH', 'USDT', 'USDT_TRON', 'TRX', 'BNB',
+    'DRC', 'LTC', 'BCH', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
+
+export const coinToFarsi = {
+    BTC: 'بیت کوین',
+    LTC: 'لایت کوین',
+    BCH: 'بیت کوین کش',
+    AMN: 'امین',
+    EBG: 'برگ',
+    ETH: 'اتریوم',
+    USDT: 'تتر',
+    TRX: 'ترون',
+    BNB: 'بایننس',
+    DRC: 'دریک توکن',
+    IRR: 'تومان',
+    ZRK: 'زریک',
+    TLS: 'تلاش',
+    ART: 'آرت کوین',
+    SHA: 'شکوفه آلو',
+    WIT: 'وی توکن',
+}
+
+export const coinToImageAddress = {
+    BTC: require('@/assets/images/BTC.svg'),
+    LTC: require('@/assets/images/LTC.svg'),
+    BCH: require('@/assets/images/Bch.svg'),
+    AMN: require('@/assets/images/AminToken.svg'),
+    EBG: require('@/assets/images/Barg.jpeg'),
+    ART: require('@/assets/images/art_coin.jpeg'),
+    ZRK: require('@/assets/images/zarik.png'),
+    TLS: require('@/assets/images/TalashToken_end.png'),
+    WIT: require('@/assets/images/we_token_3.png'),
+    SHA: require('@/assets/images/shokofe_aloo_36.png'),
+    ETH: require('@/assets/images/ETH.svg'),
+    USDT: require('@/assets/images/USDT.svg'),
+    TRX: require('@/assets/images/trx1.png'),
+    BNB: require('@/assets/images/bnb.svg'),
+    DRC: require('@/assets/images/daric.png'),
+    IRR: require('@/assets/images/IRR.png'),
+}
