@@ -88,6 +88,10 @@
               <!--                  </div>-->
               <!--                </vue2-dropzone>-->
               <!--              </template>-->
+              <template v-slot:left>
+                <p class="grey--text">حجم تصویر حداکثر ۵۰۰ کیلوبایت و با فرمت های jpg یا pdf ارسال شود.</p>
+                <a href="https://www.videosmaller.com/" target="_blank">لینک فشرده سازی ویدیو</a>
+              </template>
             </two-column-row>
 
 
@@ -106,6 +110,7 @@
                 </vue2-dropzone>
               </template>
               <template v-slot:left>
+                <p class="grey--text">متنی که در ویدیوی ارسالی باید گفته شود:</p>
                 <p class="grey--text">اینجانب "نام" و "نام خانوادگی" با اطلاع از قوانین و مقررات کارگزاری رمزارزی بیترا
                   این ویدیو را
                   جهت احراز
@@ -185,19 +190,19 @@
 
             <!--            3rd-->
             <two-column-row>
+              <!--              <template v-slot:right>-->
+              <!--                <div class="mt-4">-->
+              <!--                  <p class="grey&#45;&#45;text mb-1 text-body-2">تصویر قبض تلفن یا قبوض خدماتی</p>-->
+              <!--                  <vue2-dropzone id="bill_id"-->
+              <!--                                 :options="dropzoneOptions.bill" :useCustomSlot=true>-->
+              <!--                    <div>-->
+              <!--                      <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>-->
+              <!--                      <p class="grey&#45;&#45;text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>-->
+              <!--                    </div>-->
+              <!--                  </vue2-dropzone>-->
+              <!--                </div>-->
+              <!--              </template>-->
               <template v-slot:right>
-                <div class="mt-4">
-                  <p class="grey--text mb-1 text-body-2">تصویر قبض تلفن یا قبوض خدماتی</p>
-                  <vue2-dropzone id="bill_id"
-                                 :options="dropzoneOptions.bill" :useCustomSlot=true>
-                    <div>
-                      <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
-                      <p class="grey--text text-body-2 mb-0 mt-2">فایل مورد نظر را انتخاب و در این قسمت رها کنید</p>
-                    </div>
-                  </vue2-dropzone>
-                </div>
-              </template>
-              <template v-slot:left>
                 <a-text-field hint="02112345678"
                               mask="###############"
                               :rules="[rules.required]"
