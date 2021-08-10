@@ -89,8 +89,7 @@
               <!--                </vue2-dropzone>-->
               <!--              </template>-->
               <template v-slot:left>
-                <p class="grey--text">حجم تصویر حداکثر ۵۰۰ کیلوبایت و با فرمت های jpg یا pdf ارسال شود.</p>
-                <a href="https://www.videosmaller.com/" target="_blank">لینک فشرده سازی ویدیو</a>
+                <p class="grey--text mt-16">حجم تصویر حداکثر ۵۰۰ کیلوبایت و با فرمت های jpg یا pdf ارسال شود.</p>
               </template>
             </two-column-row>
 
@@ -111,7 +110,7 @@
               </template>
               <template v-slot:left>
                 <p class="grey--text">متنی که در ویدیوی ارسالی باید گفته شود:</p>
-                <p class="grey--text">اینجانب "نام" و "نام خانوادگی" با اطلاع از قوانین و مقررات کارگزاری رمزارزی بیترا
+                <p>اینجانب "نام" و "نام خانوادگی" با اطلاع از قوانین و مقررات کارگزاری رمزارزی بیترا
                   این ویدیو را
                   جهت احراز
                   هویت ارسال می‌کنم.</p>
