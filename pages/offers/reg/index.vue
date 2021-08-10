@@ -32,7 +32,7 @@
               <order-text-field :base="baseAsset"
                                 class="mt-n4" :rules="[rules.required,rules.buyWalletExist]"
                                 v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
-              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"
                                 :rules="[rules.required]"/>
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
@@ -40,7 +40,7 @@
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ sellBestPrice|toFloat|separated }}</span></p>
-              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
                                 :append="counterAsset|irtFix"/>
@@ -61,7 +61,7 @@
             </div>
 
             <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
-              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 :rules="[rules.sellWalletExist,rules.required]"
                                 v-model="sell.price" prepend="قیمت" :append="counterAsset|irtFix" class="mt-n4"/>
               <order-text-field :base="baseAsset"
@@ -72,7 +72,7 @@
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ buyBestPrice|toFloat|separated }}</span></p>
-              <order-text-field market-dp :base="baseAsset" :ctr="counterAsset"
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset|irtFix"/>
               <v-btn depressed small class="white--text py-4 mt-n3" block color="error"

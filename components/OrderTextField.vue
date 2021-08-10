@@ -14,12 +14,15 @@
 <script>
 import VTextField from 'vuetify/lib/components/VTextField/VTextField'
 import {getDp, getMarketDp} from "@/models/cryptoPrecision";
-import {remSeparated, safeDecimal, toSeparated} from "@/models/NumberUtil";
+import {decimalRegex, remSeparated, safeDecimal, toSeparated} from "@/models/NumberUtil";
 
 export default {
   name: 'order-text-field',
   extends: VTextField,
-  props: ['prepend', 'append', 'readonly', 'marketDp', 'base', 'ctr'],
+  props: {
+    prepend: String, append: String, readonly: Boolean,
+    marketdp: Boolean, base: String, ctr: String
+  },
   data() {
     return {
       myText: ''
@@ -27,18 +30,17 @@ export default {
   },
   watch: {
     value(newValue, oldValue) {
-      let val = safeDecimal(newValue)
-      if (this.marketDp) {
-        val.todp(getMarketDp(this.base, this.ctr))
-      } else {
-        val.todp(getDp(this.base))
-      }
-      this.myText = toSeparated(val)
-      // const regex = decimalRegex(getDp(this.type));
-      // if (!regex.test(newValue)) {
-      //   this.$emit('input', oldValue)
-      // }
+      this.myText = toSeparated(newValue)
+      let regex
 
+      if (this.marketdp) {
+        regex = decimalRegex(getMarketDp(this.base, this.ctr))
+      } else {
+        regex = decimalRegex(getDp(this.base))
+      }
+      if (!regex.test(newValue)) {
+        this.$emit('input', oldValue)
+      }
     }
   },
   methods: {

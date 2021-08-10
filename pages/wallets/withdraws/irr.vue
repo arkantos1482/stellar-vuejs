@@ -119,7 +119,7 @@ export default {
       }
     },
     getFee() {
-      this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
+      this.$axios.$get('/crypto/fees/' + this.type.toLowerCase())
           .then(res => this.withdrawFee = res);
     },
     onBalanceClicked(event) {
