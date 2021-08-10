@@ -59,7 +59,7 @@ export default {
       return this.$store.state.balances.list[this.type]?.actual_balance
     },
     actualAmount() {
-      let amount = this.amount - this.withdrawFee;
+      let amount = safeDecimal(this.amount - this.withdrawFee).todp(getDp(this.type))
       return amount > 0 ? amount : 0
     }
   },

@@ -101,7 +101,7 @@ export default {
       return this.isInternal() ? 'لیست ارسال ها' : 'لیست برداشت ها'
     },
     actualAmount() {
-      let amount = this.amount - this.withdrawFee;
+      let amount = safeDecimal(this.amount - this.withdrawFee).todp(getDp(this.type))
       return amount > 0 ? amount : 0
     }
   },
