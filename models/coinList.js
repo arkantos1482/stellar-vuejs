@@ -1,10 +1,11 @@
 export const coinList = ['BTC', 'ETH', 'USDT', 'USDT_TRON', 'TRX', 'BNB',
-    'DRC', 'LTC', 'BCH', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
+    'DRC', 'LTC', 'BCH', 'DOGE', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
 
 export const coinToFarsi = {
     BTC: 'بیت کوین',
     LTC: 'لایت کوین',
     BCH: 'بیت کوین کش',
+    DOGE: 'دوج کوین',
     AMN: 'امین',
     EBG: 'برگ',
     ETH: 'اتریوم',
@@ -24,6 +25,7 @@ export const coinToImageAddress = {
     BTC: require('@/assets/images/BTC.svg'),
     LTC: require('@/assets/images/LTC.svg'),
     BCH: require('@/assets/images/Bch.svg'),
+    DOGE: require('@/assets/images/Bch.svg'),
     AMN: require('@/assets/images/AminToken.svg'),
     EBG: require('@/assets/images/Barg.jpeg'),
     ART: require('@/assets/images/art_coin.jpeg'),

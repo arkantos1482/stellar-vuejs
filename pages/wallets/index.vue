@@ -17,7 +17,7 @@
         <crypto-address-tr namad="امین" type="amn" :balance="balances.AMN"/>
         <!--      <crypto-address-tr namad="برگ" type="ebg" :balance="balances.EBG"/>-->
         <crypto-address-tr namad="آرت کوین" type="art" :balance="balances.ART"/>
-<!--        <crypto-address-tr namad="زریک" type="zrk" :balance="balances.ZRK"/>-->
+        <!--        <crypto-address-tr namad="زریک" type="zrk" :balance="balances.ZRK"/>-->
         <crypto-address-tr namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
         <crypto-address-tr namad="تلاش" type="tls" :balance="balances.TLS"/>
         <crypto-address-tr namad="وی توکن" type="wit" :balance="balances.WIT"/>
@@ -31,6 +31,7 @@
         <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>
         <crypto-address-tr namad="ترون" type="trx" :balance="balances.TRX"/>
         <crypto-address-tr namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>
+<!--        <crypto-address-tr namad="دوج کوین" type="doge" :balance="balances.DOGE"/>-->
         </tbody>
       </v-simple-table>
     </v-card>

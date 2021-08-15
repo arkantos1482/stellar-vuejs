@@ -88,6 +88,7 @@ import DashboardCardTitle from "@/components/CardTitleWithChevron";
 import MyTrades from "@/pages/trades/_userId";
 import {safeDecimal} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
+import {coinList} from "../models/coinList";
 
 export default {
   name: "index",
@@ -96,8 +97,7 @@ export default {
     tomanSuffix: (val) => val + " تومان"
   },
   computed: {
-    coinList: () => ['AMN', 'ART', 'SHA', 'ZRK', 'TLS', 'WIT', 'IRR', 'BTC',
-      'ETH', 'LTC', 'USDT', 'TRX', 'BCH', 'BNB', 'DRC'],
+    coinList: () => coinList,
     options() {
       return {}
     },

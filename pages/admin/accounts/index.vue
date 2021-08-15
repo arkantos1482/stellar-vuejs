@@ -24,6 +24,7 @@ export default {
         {text: 'تتر', value: 'USDT'},
         {text: 'اتریوم', value: 'ETH'},
         {text: 'بیت کوین', value: 'BTC'},
+        {text: 'دوج کوین', value: 'DOGE'},
         {text: 'ترون', value: 'TRX'},
         {text: 'بایننس', value: 'BNB'},
         {text: 'دریک توکن', value: 'DRC'},
