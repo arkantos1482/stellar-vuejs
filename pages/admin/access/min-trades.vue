@@ -30,9 +30,9 @@ export default {
   data() {
     return {
       headers: [
-        {value: 'base_coin', text: 'رمزارز پایه', align: 'center'},
-        {value: 'counter_coin', text: 'رمزارز مقصد', align: 'center'},
         {value: 'min', text: 'مینیمم', align: 'center'},
+        {value: 'counter_coin', text: 'رمزارز مقابل', align: 'center'},
+        {value: 'base_coin', text: 'رمزارز پایه', align: 'center'},
       ],
       req: {base_coin: '', counter_coin: '', min: ''},
       items: [],
