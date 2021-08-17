@@ -116,7 +116,8 @@
                   هویت ارسال می‌کنم.</p>
                 <p class="grey--text">حجم ویدیو حداکثر ۵ مگابایت و مدت زمان آن حداکثر ۲۰ ثانیه باشد. از این لینک می
                   توانید برای فشرده سازی ویدیو استفاده نمایید:</p>
-                <a href="https://aparat.com/v/8Cm1v" target="_blank">لینک ویدیوی مثال مطلوب</a>
+                <a href="https://aparat.com/v/8Cm1v" target="_blank" class="primary--text">لینک ویدیوی مثال مطلوب</a>
+                <br>
                 <a href="https://www.videosmaller.com/" target="_blank">لینک فشرده سازی ویدیو</a>
               </template>
             </two-column-row>
