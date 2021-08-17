@@ -17,7 +17,7 @@ const currencies = {
 const markets = {
     TRX: {
         IRR: 2,
-        USDT: 2,
+        USDT: 6,
         BTC: 7, // expected 8
         ETH: 7, // expected 8
         BNB: 7
