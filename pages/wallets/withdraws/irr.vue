@@ -61,6 +61,9 @@ export default {
     actualAmount() {
       let amount = safeDecimal(this.amount - this.withdrawFee).todp(getDp(this.type))
       return amount > 0 ? amount : 0
+    },
+    shabaList() {
+      return this.$store.getters["auth/shabaList"]
     }
   },
   data() {
@@ -71,7 +74,6 @@ export default {
       amount: '',
       withdrawFee: '',
       shaba: '',
-      shabaList: [],
       form: false,
       l: {withdraw: false},
       rules: {
@@ -89,13 +91,7 @@ export default {
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
 
-    // make shaba list
-    let shaba = this.$store.state.auth.profile.bank_shaba
-    if (shaba) this.shabaList.push(shaba)
-    let shaba2 = this.$store.state.auth.profile.bank_shaba_2
-    if (shaba2) this.shabaList.push(shaba2)
-
-    this.shaba = shaba
+    this.shaba = this.shabaList[0]
   },
   methods: {
     async onWithdraw() {

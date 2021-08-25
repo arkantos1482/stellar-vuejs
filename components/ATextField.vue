@@ -41,7 +41,7 @@ export default {
   props: {mask: String, eng: Boolean, separated: Boolean, isCoin: Boolean, coin: String},
   data() {
     return {
-      myText: ''
+      myText: this.value
     }
   },
   watch: {

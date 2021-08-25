@@ -11,3 +11,17 @@ export const mutations = {
         state.profile = payload
     }
 }
+
+export const getters = {
+    shabaList(state) {
+        return ['', '_2', '_3', '_4', '_5']
+            .map(i => state.profile['bank_shaba' + i])
+            .filter(i => i)
+    },
+
+    cardList(state) {
+        return ['', '_2', '_3', '_4', '_5']
+            .map(i => state.profile['bank_card' + i])
+            .filter(i => i)
+    }
+}

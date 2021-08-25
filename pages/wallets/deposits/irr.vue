@@ -32,6 +32,12 @@
             <a-text-field separated mask="####################"
                           :rules="[rules.required,rules.moreThanBillion]"
                           hint="حداقل میزان واریز ۱۰۰هزار تومان می باشد." v-model="amount" filled label="مقدار تومان"/>
+
+            <p class="grey--text mt-2 mb-1 text-body-2">کارت بانکی</p>
+            <v-select dense outlined flat :items="cardList" v-model="bank_card">
+              <template v-slot:no-data>کارت بانکی وارد نشده است.</template>
+            </v-select>
+
             <v-btn type="submit" :loading="l.deposit"
                    block color="primary" class="my-4">واریز
             </v-btn>
@@ -62,6 +68,9 @@ export default {
   computed: {
     balance() {
       return this.$store.state.balances.list[this.type]?.actual_balance
+    },
+    cardList() {
+      return this.$store.getters["auth/cardList"]
     }
   },
   data() {
@@ -74,6 +83,7 @@ export default {
       type: 'IRR',
       amount: '',
       link: '',
+      bank_card: '',
       l: {deposit: false}
     }
   },
@@ -85,13 +95,15 @@ export default {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
+
+    this.bank_card = this.cardList[0]
   },
   methods: {
     async onDeposit() {
       this.$refs.form.validate()
       if (this.v.deposit) {
         this.l.deposit = true
-        this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount})
+        this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount, bank_card: this.bank_card})
         window.open(this.link, '_blank')
         this.l.deposit = false
       }

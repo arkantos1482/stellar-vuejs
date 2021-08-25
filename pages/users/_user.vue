@@ -125,8 +125,8 @@
 
             <p class="mt-12 mb-2 primary--text">اطلاعات بانکی</p>
             <v-divider class="mb-4"/>
-            <v-row justify="center">
-              <v-col cols="6" class="py-0" dir="ltr">
+            <two-column-row dir="ltr">
+              <template v-slot:right>
                 <a-text-field
                     :rules="[rules.required]"
                     mask="################"
@@ -139,6 +139,29 @@
                     v-model="user.bank_card_2" label="شماره کارت۲"
                     :disabled="verifyState.bank_card_2"/>
                 <a-text-field
+                    v-if="user.bank_card_3"
+                    mask="################"
+                    hint="6037991234567890"
+                    v-model="user.bank_card_3" label="شماره کارت3"
+                />
+                <a-text-field
+                    v-if="user.bank_card_4"
+                    mask="################"
+                    hint="6037991234567890"
+                    v-model="user.bank_card_4" label="شماره کارت4"
+                />
+                <a-text-field
+                    v-if="user.bank_card_5"
+                    mask="################"
+                    hint="6037991234567890"
+                    v-model="user.bank_card_5" label="شماره کارت5"
+                />
+                <div class="text-center mt-6">
+                  <v-btn color="primary" @click="dialog.addCard = true">افزودن کارت های بیشتر</v-btn>
+                </div>
+              </template>
+              <template v-slot:left>
+                <a-text-field
                     :rules="[rules.required]"
                     mask="IR########################"
                     hint="IR123456789012345678901234"
@@ -149,9 +172,29 @@
                     hint="IR123456789012345678901234"
                     v-model="user.bank_shaba_2" label="شماره شبا۲"
                     :disabled="verifyState.bank_shaba_2"/>
-              </v-col>
-            </v-row>
-
+                <a-text-field
+                    v-if="user.bank_shaba_3"
+                    mask="IR########################"
+                    hint="IR123456789012345678901234"
+                    v-model="user.bank_shaba_3"
+                    label="شماره شبا3"/>
+                <a-text-field
+                    v-if="user.bank_shaba_4"
+                    mask="IR########################"
+                    hint="IR123456789012345678901234"
+                    v-model="user.bank_shaba_4"
+                    label="شماره شبا4"/>
+                <a-text-field
+                    v-if="user.bank_shaba_5"
+                    mask="IR########################"
+                    hint="IR123456789012345678901234"
+                    v-model="user.bank_shaba_5"
+                    label="شماره شبا5"/>
+                <div class="text-center mt-6">
+                  <v-btn color="primary" @click="dialog.addShaba = true">افزودن حساب های بیشتر</v-btn>
+                </div>
+              </template>
+            </two-column-row>
 
             <p class="mt-12 mb-2 primary--text">تایید هویت</p>
             <v-divider class="mb-4"/>
@@ -231,6 +274,36 @@
     </v-card>
 
     <div>
+      <v-dialog v-model="dialog.addShaba" width="520px">
+        <v-card class="px-12 py-6 text-center">
+          <p class="primary--text text-h4">اضافه نمودن شبا</p>
+          <a-text-field
+              mask="IR########################"
+              hint="IR123456789012345678901234"
+              v-model="addShabaData"
+              label="شماره شبا"/>
+          <div class="mt-8">
+            <v-btn class="px-12 mx-2" color="primary" @click="addShaba">اضافه</v-btn>
+            <v-btn class="px-12 mx-2" outlined color="primary" @click="dialog.addShaba=false">انصراف</v-btn>
+          </div>
+        </v-card>
+      </v-dialog>
+
+      <v-dialog v-model="dialog.addCard" width="520px">
+        <v-card class="px-12 py-6 text-center">
+          <p class="primary--text text-h4">اضافه نمودن کارت بانکی</p>
+          <a-text-field
+              mask="################"
+              hint="6037991234567890"
+              label="شماره کارت"
+              v-model="addCardData"/>
+          <div class="mt-8">
+            <v-btn class="px-12 mx-2" color="primary" @click="addCard">اضافه</v-btn>
+            <v-btn class="px-12 mx-2" outlined color="primary" @click="dialog.addCard=false">انصراف</v-btn>
+          </div>
+        </v-card>
+      </v-dialog>
+
       <v-dialog v-model="dialog.mobileOtp" max-width="400">
         <a-card title="احراز اصالت موبایل"
                 subtitle="کد تایید ۶رقمی ارسال شده به شماره موبایل خود را وارد کنید.">
@@ -259,10 +332,11 @@ import ACard from "@/components/ACard";
 import Otp from "@/components/Otp";
 import plist from '@/models/provinceList'
 import collect from 'collect.js'
+import TwoColumnRow from "../../components/TwoColumnRow";
 
 export default {
   mixins: [pstopper],
-  components: {vue2Dropzone, Otp, ACard, ATextField},
+  components: {TwoColumnRow, vue2Dropzone, Otp, ACard, ATextField},
   computed: {
     provinceList() {
       return collect(plist).pluck('province').all()
@@ -330,12 +404,16 @@ export default {
       l: {
         mobileSubmit: false, mobileRequest: false,
         phoneSubmit: false, phoneRequest: false,
-        send: false
+        send: false,
+        addShaba: false,
+        addCard: false
       },
+      addShabaData: '',
+      addCardData: '',
 
       userId: this.$route.params.user,
       isAdmin: this.$store.state.auth.profile?.role === 'admin',
-      dialog: {send: false, mobileOtp: false, phoneOtp: false},
+      dialog: {send: false, mobileOtp: false, phoneOtp: false, addShaba: false, addCard: false},
       user: {
         name: '',
         last_name: '',
@@ -350,8 +428,14 @@ export default {
         phone: '',
         bank_card: '',
         bank_card_2: '',
+        bank_card_3: '',
+        bank_card_4: '',
+        bank_card_5: '',
         bank_shaba: '',
         bank_shaba_2: '',
+        bank_shaba_3: '',
+        bank_shaba_4: '',
+        bank_shaba_5: '',
         bank_account: ''
       },
       verifyState: {
@@ -429,7 +513,23 @@ export default {
     },
     onGuide() {
       window.open('https://bitra.market/registerGuide/', '_blank')
-    }
+    },
+    async addShaba() {
+      this.l.addShaba = true
+      let res = await this.$axios.$post('/profiles/add-shaba', {shaba: this.addShabaData})
+      this.user['bank_shaba_' + res.index] = res.shaba
+      this.l.addShaba = false
+      this.addShabaData = ''
+      this.dialog.addShaba = false
+    },
+    async addCard() {
+      this.l.addCard = true
+      let res = await this.$axios.$post('/profiles/add-card', {bank_card: this.addCardData})
+      this.user['bank_card_' + res.index] = res.bank_card
+      this.l.addCard = false
+      this.addCardData = ''
+      this.dialog.addCard = false
+    },
   }
 }
 </script>
