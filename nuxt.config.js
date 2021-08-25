@@ -104,7 +104,7 @@ export default {
                     anchor: '#0074ff',
                     accent: colors.grey.darken3,
                     theback: '#FAFAFA',
-                    bluegrey:'#a7a9cf',
+                    bluegrey: '#a7a9cf',
                     text: '#000000cc',
                     warning: colors.amber.base,
                     // error: colors.deepOrange.accent4,
@@ -124,10 +124,8 @@ export default {
 
     // Build Configuration (https://go.nuxtjs.dev/config-build)
     build: {
-        // extend(config, {isDev}) {
-        //     if (!isDev) {
-        //         config.output.publicPath = '/_nuxt/'
-        //     }
-        // }
+        extend(config, ctx) {
+            config.devtool = ctx.isClient ? 'eval-source-map' : 'inline-source-map'
+        }
     }
 }
