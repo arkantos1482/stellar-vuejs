@@ -249,8 +249,11 @@ export default {
     //todo resolve by status code (err.response.status)
     this.snackBar.fail.show = true
 
-    if (err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]) {
-      this.snackBar.fail.msg = err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]
+    // if (err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]) {
+    //   this.snackBar.fail.msg = err.response.data.error.msg?.my_node?.extras?.result_codes?.operations?.[1]
+    // }
+    if (err.response.data.error.msg?.my_node) {
+      this.snackBar.fail.msg = 'اشکالی رخ داده است.'
     } else {
       this.snackBar.fail.msg = err.response.data.error.msg
     }
