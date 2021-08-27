@@ -25,7 +25,7 @@ export const coinToImageAddress = {
     BTC: require('@/assets/images/BTC.svg'),
     LTC: require('@/assets/images/LTC.svg'),
     BCH: require('@/assets/images/Bch.svg'),
-    DOGE: require('@/assets/images/Bch.svg'),
+    DOGE: require('@/assets/images/doge.svg'),
     AMN: require('@/assets/images/AminToken.svg'),
     EBG: require('@/assets/images/Barg.jpeg'),
     ART: require('@/assets/images/art_coin.jpeg'),
