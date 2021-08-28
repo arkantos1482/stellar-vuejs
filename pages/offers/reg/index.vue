@@ -273,7 +273,7 @@ export default {
     buyOffers() {
       return collect(this.offers.bids)
           .map(item => ({
-            price: item.price,
+            price: parseFloat(item.price),
             price_r: item.price_r,
             amount: parseFloat(item.amount)
           }))
@@ -281,6 +281,11 @@ export default {
     },
     sellOffers() {
       return collect(this.offers.asks)
+          .map(item => ({
+            price: parseFloat(item.price),
+            price_r: item.price_r,
+            amount: parseFloat(item.amount)
+          }))
           .sortByDesc('price')
     },
     buyBestPrice() {
@@ -350,8 +355,8 @@ export default {
           'BNB/BCH', 'TRX/BNB',]],
       offers: [],
       tabIndex: 0,
-      pairAsset: 'BTC/IRR',
-      baseAsset: 'BTC',
+      pairAsset: 'DRC/IRR',
+      baseAsset: 'DRC',
       counterAsset: 'IRR',
       interval: {offers: null, trades: null},
       windowWidth: window.innerWidth,
