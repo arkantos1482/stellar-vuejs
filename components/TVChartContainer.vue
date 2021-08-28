@@ -11,7 +11,7 @@ export default {
   name: 'TVChartContainer',
   props: {
     symbol: {
-      default: 'BTCIRT',
+      default: 'DRC/IRT',
       type: String,
     },
     interval: {

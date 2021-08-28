@@ -170,7 +170,7 @@
           <!--    CHART-BAR-->
           <v-col cols="8">
             <!--            <v-card class="mx-4 pa-2" ref="card">-->
-            <t-v-chart-container :symbol="pairAsset|removeSlash"/>
+            <t-v-chart-container :symbol="pairAsset|irtFix"/>
             <!--            </v-card>-->
           </v-col>
         </a-row>
@@ -217,11 +217,6 @@ export default {
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
-  },
-  filters: {
-    removeSlash(val) {
-      return val.replace('/', '').replace('IRR', 'IRT')
-    }
   },
   watch: {
     pairAsset(val) {
