@@ -1,45 +1,52 @@
 <template>
-  <a-row class="align-stretch">
-    <v-col cols="4" class="pa-4 d-flex flex-column">
-      <div class="text-h4 mb-6 text-right">برداشت</div>
-      <v-card class="px-16 py-12 flex-grow-1" width="100%">
-        <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
-        <p class="text-display-2 mt-8 mb-0">
-          باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
-        </p>
-        <p class="text-display-2 mb-0">باقی مانده برداشت ماهیانه:
-          <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
-        </p>
+  <div class="mt-0">
+    <v-alert color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
+      <ul>کاربر گرامی، با تایید شما، برداشت با توجه به مقرات سیکل پرداخت بانکی انجام خواهد شد.
+      </ul>
+    </v-alert>
 
-        <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
-          <div class="text-left">
-            <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
-          </div>
+    <a-row class="align-stretch">
+      <v-col cols="4" class="pa-4 d-flex flex-column">
+        <div class="text-h4 mb-6 text-right">برداشت</div>
+        <v-card class="px-16 py-12 flex-grow-1" width="100%">
+          <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
+          <p class="text-display-2 mt-8 mb-0">
+            باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
+          </p>
+          <p class="text-display-2 mb-0">باقی مانده برداشت ماهیانه:
+            <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
+          </p>
 
-          <a-text-field separated :rules="[rules.required]"
-                        is-coin coin="IRR" v-model="amount" label="مبلغ"/>
-          <p class="mt-1 grey--text"> کارمزد تراکنش
-            <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
-          <p class="mt-n4 grey--text"> مقدار خالص برداشت
-            <span class="white--text">{{ actualAmount }}</span> می باشد.</p>
+          <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
+            <div class="text-left">
+              <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
+            </div>
 
-          <p class="grey--text mt-2 mb-1 text-body-2">شبا</p>
-          <v-select dense outlined flat :items="shabaList" v-model="shaba">
-            <template v-slot:no-data>شبا وارد نشده است.</template>
-          </v-select>
+            <a-text-field separated :rules="[rules.required]"
+                          is-coin coin="IRR" v-model="amount" label="مبلغ"/>
+            <p class="mt-1 grey--text"> کارمزد تراکنش
+              <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
+            <p class="mt-n4 grey--text"> مقدار خالص برداشت
+              <span class="white--text">{{ actualAmount }}</span> می باشد.</p>
 
-          <v-btn type="submit" :loading="l.withdraw"
-                 block color="primary" class="my-4">برداشت
-          </v-btn>
-          <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
-        </v-form>
-      </v-card>
-    </v-col>
+            <p class="grey--text mt-2 mb-1 text-body-2">شبا</p>
+            <v-select dense outlined flat :items="shabaList" v-model="shaba">
+              <template v-slot:no-data>شبا وارد نشده است.</template>
+            </v-select>
 
-    <v-col cols="8" class="pa-0">
-      <withdraws :type="type"/>
-    </v-col>
-  </a-row>
+            <v-btn type="submit" :loading="l.withdraw"
+                   block color="primary" class="my-4">برداشت
+            </v-btn>
+            <v-btn block color="primary" outlined @click="$router.back()">بازگشت</v-btn>
+          </v-form>
+        </v-card>
+      </v-col>
+
+      <v-col cols="8" class="pa-0">
+        <withdraws :type="type"/>
+      </v-col>
+    </a-row>
+  </div>
 </template>
 
 <script>
