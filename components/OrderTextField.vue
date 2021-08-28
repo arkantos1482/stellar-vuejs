@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      myText: ''
+      myText: this.value
     }
   },
   watch: {

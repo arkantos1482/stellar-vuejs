@@ -293,11 +293,11 @@ export default {
     },
     sellTotal() {
       return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
-          // .todp(getDp(this.counterAsset))    order text field handle it
+          .todp(getMarketDp(this.baseAsset, this.counterAsset))
     },
     buyTotal() {
       return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
-          // .todp(getDp(this.counterAsset))
+          .todp(getMarketDp(this.baseAsset, this.counterAsset))
     },
     buyPercent: {
       get() {
@@ -314,7 +314,7 @@ export default {
         try {
           this.buy.amount = safeDecimal(this.balances[this.counterAsset].actual_balance)
               .times(val).div(100).div(this.buy.price)
-              // .todp(getDp(this.baseAsset))   order text field handle it
+              .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
@@ -333,7 +333,7 @@ export default {
       set(val) {
         try {
           this.sell.amount = safeDecimal(this.balances[this.baseAsset].actual_balance).times(val).div(100)
-              // .todp(getDp(this.baseAsset))   order text field handle it
+              .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
