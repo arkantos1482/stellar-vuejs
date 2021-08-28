@@ -17,7 +17,7 @@
             <span class="font-weight-medium">&nbsp{{ monthly_rem_usage }}</span>
           </p>
 
-          <v-form class="mt-8" @submit.prevent="onWithdraw" v-model="form" ref="form">
+          <v-form class="mt-8" @submit.prevent="withdrawDialog" v-model="form" ref="form">
             <div class="text-left">
               <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
             </div>
@@ -46,6 +46,21 @@
         <withdraws :type="type"/>
       </v-col>
     </a-row>
+
+    <v-dialog v-model="d.withdraw" width="520px">
+      <v-card class="px-12 py-6 text-center">
+        <p class="primary--text text-h4">اطمینان دارید؟</p>
+        <p>با انجام این تراکنش مقدار</p>
+        <p class="primary--text">{{ actualAmount + ' تومان' }}</p>
+        <p>به شماره:</p>
+        <p class="primary--text">{{ shaba }}</p>
+        <p>جا به جا خواهد شد. آیا از انجام این تراکنش اطمینان دارید؟</p>
+        <div class="mt-8">
+          <v-btn class="px-12 mx-2" color="primary" @click="withdraw">بله</v-btn>
+          <v-btn class="px-12 mx-2" outlined color="primary" @click="d.withdraw=false">خیر</v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -86,6 +101,7 @@ export default {
       rules: {
         required: value => !!value || 'الزامی است',
       },
+      d: {withdraw: false}
     }
   },
   mounted() {
@@ -101,24 +117,28 @@ export default {
     this.shaba = this.shabaList[0]
   },
   methods: {
-    async onWithdraw() {
+    async withdrawDialog() {
       this.$refs.form.validate()
       if (this.form) {
         if (this.balance >= parseFloat(this.amount)) {
-          try {
-            this.l.withdraw = true
-            await this.$axios.$post('/irr/withdraw', {amount: this.amount, shaba: this.shaba})
-
-            this.$router.back()
-            this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
-          } catch (e) {
-            this.$bus.$emit('snack', e.response.data.error.msg, 'error')
-          } finally {
-            this.l.withdraw = false
-          }
+          this.d.withdraw = true
         } else {
           this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
         }
+      }
+    },
+    async withdraw() {
+      try {
+        this.d.withdraw = false
+        this.l.withdraw = true
+        await this.$axios.$post('/irr/withdraw', {amount: this.amount, shaba: this.shaba})
+
+        this.$router.back()
+        this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+      } catch (e) {
+        this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+      } finally {
+        this.l.withdraw = false
       }
     },
     getFee() {
