@@ -27,6 +27,7 @@
 import Decimal from "decimal.js-light";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp, getMarketDp} from "@/models/cryptoPrecision";
+import collect from "collect.js";
 
 export default {
   name: 'PairAssetTrades',
@@ -36,10 +37,10 @@ export default {
       return item.operation.type === 12 ? 'success--text' : 'error--text'
     },
     price(item) {
-      return toSeparated(new Decimal(item.price_d).div(item.price_n))
+      return toSeparated(safeDecimal(item.operation.details.price))
     },
     amount(item) {
-      return toSeparated(parseFloat(item.counter_amount))
+      return toSeparated(safeDecimal(item.operation.details.amount))
     }
   },
   watch: {
@@ -60,12 +61,14 @@ export default {
   },
   methods: {
     async refresh() {
-      this.trades = await this.$axios.$get('/trades-pair-asset', {
+      let res = await this.$axios.$get('/trades-pair-asset', {
         params: {base: this.base, counter: this.counter}
       })
+      this.trades = collect(res).unique('history_operation_id').all()
     },
     total(item) {
-      return toSeparated(safeDecimal(item.base_amount).todp(getMarketDp(this.base, this.counter)))
+      let result = safeDecimal(item.operation.details.price * item.operation.details.amount)
+      return toSeparated(result.todp(getMarketDp(this.base, this.counter)))
     },
   },
 }
