@@ -6,6 +6,7 @@
 
 import {widget} from 'static/libs/charting_library';
 import {UDFCompatibleDatafeed} from 'static/libs/datafeeds/udf/lib/udf-compatible-datafeed'
+import datafeed from "../models/datafeed";
 
 export default {
   name: 'TVChartContainer',
@@ -41,8 +42,7 @@ export default {
       // debug: true,
       symbol: this.symbol,
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: new UDFCompatibleDatafeed(this.$axios.defaults.baseURL + '/market/udf',
-          60 * 1000),
+      datafeed: datafeed(this.$axios),
       interval: this.interval,
       container_id: this.containerId,
       library_path: '/libs/charting_library/',
