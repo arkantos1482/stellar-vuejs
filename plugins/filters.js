@@ -60,7 +60,7 @@ Vue.filter('verifyToFarsi', (key) => {
         bank_card_2: 'کارت بانکی دوم',
         bank_shaba: 'شبا',
         bank_shaba_2: 'شبای دوم',
-        bank_account: 'اطلاعات هویتی'
+        bank_account: 'هویت تصویری'
     }
     return dic[key]
 })
