@@ -2,14 +2,15 @@
   <v-simple-table class="text-center">
     <template>
       <thead>
-      <tr>
-        <th>نوع</th>
-        <th>رمزارزها</th>
-        <th>قیمت</th>
-        <th>مقدار</th>
-        <th>مجموع</th>
-        <th>تاریخ</th>
-        <th>لغو</th>
+      <tr >
+        <th class="text-center">نوع</th>
+        <th class="text-center">رمزارزها</th>
+        <th class="text-center">قیمت</th>
+        <th class="text-center">مقدار</th>
+        <th class="text-center">مجموع</th>
+        <th class="text-center">پرشده</th>
+        <th class="text-center">تاریخ</th>
+        <th class="text-center">لغو</th>
       </tr>
       </thead>
       <tbody v-if="offers.length">
@@ -19,6 +20,7 @@
         <td>{{ item|price }}</td>
         <td>{{ item|amount }}</td>
         <td>{{ item|total }}</td>
+        <td>{{ item.percent + '%' }}</td>
         <td>{{ item.created_at|toFarsiDate }}</td>
         <td>
           <v-btn ref="deleteBtn"
