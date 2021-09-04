@@ -79,9 +79,9 @@ export default {
       //   return 0
       // }
       return item.op_type === 'buy'
-          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.002),
+          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(0.005),
               item.base_asset_code, item.counter_asset_code))
-          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.002),
+          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(0.005),
               item.counter_asset_code, item.base_asset_code))
     },
     adjustDp(val, base, ctr) {
