@@ -2,7 +2,7 @@
   <v-simple-table class="text-center">
     <template>
       <thead>
-      <tr >
+      <tr>
         <th class="text-center">نوع</th>
         <th class="text-center">رمزارزها</th>
         <th class="text-center">قیمت</th>
@@ -101,6 +101,9 @@ export default {
   methods: {
     async cancel(item, index) {
       this.$refs.deleteBtn[index].loading = true
+      this.$refs.deleteBtn
+          .filter(i => i !== index)
+          .every(i => i.disabled = true)
       await this.$store.dispatch("offers/delete", {
         id: item.offer_id,
         type: item.type,
@@ -108,6 +111,7 @@ export default {
         buy: item.buying_asset_code,
         price: safeDecimal(item.price_r.n).div(item.price_r.d).toNumber()
       })
+      this.$refs.deleteBtn.every(i => i.disabled = false)
       // await new Promise(r => setTimeout(r, 2000))
       // await this.$store.dispatch("offers/refresh", this.userId)
       // await new Promise(r => setTimeout(r, 2000))
