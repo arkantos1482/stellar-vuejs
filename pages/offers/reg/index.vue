@@ -343,11 +343,11 @@ export default {
     return {
       exchangeAction: 'buy',
       list: [
-        ['DRC/IRR', 'BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR'],
-        ['DRC/USDT', 'BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT'],
-        ['DRC/BNB', 'ETH/BTC', 'TRX/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
-          'TRX/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
-          'BNB/BCH', 'TRX/BNB',]],
+        ['DRC/IRR', 'BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR', 'DOGE/IRR'],
+        ['DRC/USDT', 'BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT', 'DOGE/USDT'],
+        ['DRC/BNB', 'ETH/BTC', 'TRX/BTC', 'DOGE/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
+          'TRX/ETH', 'DOGE/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
+          'BNB/BCH', 'TRX/BNB', 'DOGE/BNB']],
       offers: [],
       tabIndex: 0,
       pairAsset: 'DRC/IRR',

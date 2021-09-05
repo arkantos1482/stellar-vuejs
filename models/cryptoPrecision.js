@@ -21,6 +21,13 @@ const markets = {
         BTC: 7, // expected 8
         ETH: 7, // expected 8
         BNB: 7
+    },
+    DOGE: {
+        IRR: 2,
+        USDT: 6,
+        BTC: 7, // expected 8
+        ETH: 7, // expected 8
+        BNB: 7
     }
 }
 
