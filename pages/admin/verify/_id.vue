@@ -13,112 +13,12 @@
         </v-btn>
       </div>
 
-      <h2 class="mt-8">مشخصات استعلامی</h2>
-      <v-simple-table>
-        <thead>
-        <tr>
-          <th>موضوع</th>
-          <th>پاسخ</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td><h2>کدپستی</h2></td>
-        </tr>
-        <tr>
-          <td>آدرس</td>
-          <td>{{ kyc.postal_code.address }}</td>
-        </tr>
-
-        <tr>
-          <td><h2>کارت بانکی</h2></td>
-        </tr>
-        <tr>
-          <td>نام و نام خانوادگی</td>
-          <td>{{ kyc.bank_card.firstName + ' ' + kyc.bank_card.lastName }}</td>
-        </tr>
-        <tr>
-          <td>نام بانک</td>
-          <td>{{ kyc.bank_card.bank }}</td>
-        </tr>
-        <tr>
-          <td>شبا</td>
-          <td>{{ kyc.bank_card.iban }}</td>
-        </tr>
-        <tr>
-          <td>شماره حساب</td>
-          <td>{{ kyc.bank_card.accountNumber }}</td>
-        </tr>
-
-        <tr>
-          <td><h2>کارت بانکی۲</h2></td>
-        </tr>
-        <tr>
-          <td>نام و نام خانوادگی</td>
-          <td>{{ kyc.bank_card_2.firstName + ' ' + kyc.bank_card_2.lastName }}</td>
-        </tr>
-        <tr>
-          <td>نام بانک</td>
-          <td>{{ kyc.bank_card_2.bank }}</td>
-        </tr>
-        <tr>
-          <td>شبا</td>
-          <td>{{ kyc.bank_card_2.iban }}</td>
-        </tr>
-        <tr>
-          <td>شماره حساب</td>
-          <td>{{ kyc.bank_card_2.accountNumber }}</td>
-        </tr>
-
-        <tr>
-          <td><h2>شبا</h2></td>
-        </tr>
-        <tr>
-          <td>نام و نام خانوادگی</td>
-          <td>{{ kyc.bank_shaba.firstName + ' ' + kyc.bank_shaba.lastName }}</td>
-        </tr>
-        <tr>
-          <td>نام بانک</td>
-          <td>{{ kyc.bank_shaba.bank }}</td>
-        </tr>
-        <tr>
-          <td>شبا</td>
-          <td>{{ kyc.bank_shaba.iban }}</td>
-        </tr>
-        <tr>
-          <td>شماره حساب</td>
-          <td>{{ kyc.bank_shaba.accountNumber }}</td>
-        </tr>
-
-        <tr>
-          <td><h2>شبا۲</h2></td>
-        </tr>
-        <tr>
-          <td>نام و نام خانوادگی</td>
-          <td>{{ kyc.bank_shaba_2.firstName + ' ' + kyc.bank_shaba_2.lastName }}</td>
-        </tr>
-        <tr>
-          <td>نام بانک</td>
-          <td>{{ kyc.bank_shaba_2.bank }}</td>
-        </tr>
-        <tr>
-          <td>شبا</td>
-          <td>{{ kyc.bank_shaba_2.iban }}</td>
-        </tr>
-        <tr>
-          <td>شماره حساب</td>
-          <td>{{ kyc.bank_shaba_2.accountNumber }}</td>
-        </tr>
-
-        <tr>
-          <td><h2>سایر</h2></td>
-        </tr>
-        <tr>
-          <td>تطابق موبایل و کدملی</td>
-          <td>{{ kyc.match_ssn_mobile.matched }}</td>
-        </tr>
-        </tbody>
-      </v-simple-table>
+      <h1 class="mt-8 mb-2">مشخصات استعلامی</h1>
+      <v-row>
+        <v-col v-for="(item,idx) in kycList" :key="idx" cols="6">
+          <kyc-item :user-id="userId" :title="item.name" :link-suffix="item.ls"/>
+        </v-col>
+      </v-row>
 
       <h1 class="mt-16">تایید مدارک</h1>
       <v-row>
@@ -155,20 +55,36 @@
 
 <script>
 import ps from '@/mixins/pstopper'
+import KycItem from "../../../components/KycItem";
+import ARow from "../../../components/ARow";
 
 export default {
+  components: {ARow, KycItem},
   mixins: [ps],
+  computed: {
+    kycList() {
+      return [
+        {name: 'آدرس پستی', ls: '/postal-code'},
+        {name: 'کارت بانکی ۱', ls: '/bank-card'},
+        {name: 'کارت بانکی ۲', ls: '/bank-card-2'},
+        {name: 'شبا ۱', ls: '/bank-shaba'},
+        {name: 'شبا ۲', ls: '/bank-shaba-2'},
+        {name: 'شبای متصل به کارت ۱', ls: '/shaba-by-card-1'},
+        {name: 'شبای متصل به کارت ۲', ls: '/shaba-by-card-2'},
+        {name: 'تطبیق کد ملی و موبایل', ls: '/match-ssn-mobile'},
+        {name: 'تطبیق کد ملی و شبا و تاریخ تولد', ls: '/match-shaba-ssn-birthdate'},
+        {name: 'تطبیق کد ملی و کارت بانکی و تاریخ تولد', ls: '/match-card-ssn-birthdate'},
+        {name: 'تطبیق نام و شبا', ls: '/match-shaba-name'},
+        {name: 'تطبیق نام و کارت بانکی', ls: '/match-card-name'},
+        {name: 'اطلاعات هویتی بر حسب کد ملی و تاریخ تولد', ls: '/identity-by-ssn-birthdate'},
+        {name: 'شباهت کد ملی و نام و نام خانوادگی و تاریخ تولد', ls: '/identity-similarity'},
+      ]
+    }
+
+  },
   data() {
     return {
       l: {apply: false, downloadVideo: false},
-      kyc: {
-        bank_card: '',
-        bank_card_2: '',
-        bank_shaba: '',
-        bank_shaba_2: '',
-        postal_code: '',
-        match_ssn_mobile: '',
-      },
       state: {
         email: false,
         cell_phone: false,
@@ -194,19 +110,6 @@ export default {
     this.$axios.$get('/profiles/' + this.userId + '/docs/has-video')
         .then(res => this.hasVideo = res.has_video)
 
-    this.$axios.$get('/kyc/' + this.userId + '/postal-code')
-        .then(res => this.kyc.postal_code = res)
-    this.$axios.$get('/kyc/' + this.userId + '/bank-card')
-        .then(res => this.kyc.bank_card = res)
-    this.$axios.$get('/kyc/' + this.userId + '/bank-card-2')
-        .then(res => this.kyc.bank_card_2 = res)
-    this.$axios.$get('/kyc/' + this.userId + '/bank-shaba')
-        .then(res => this.kyc.bank_shaba = res)
-    this.$axios.$get('/kyc/' + this.userId + '/bank-shaba-2')
-        .then(res => this.kyc.bank_shaba_2 = res)
-    this.$axios.$get('/kyc/' + this.userId + '/match-ssn-mobile')
-        .then(res => this.kyc.match_ssn_mobile = res)
-
     this.$axios.$get('/profiles/' + this.userId + '/docs/ssn')
         .then(res => this.docs.ssn = res)
     this.$axios.$get('/profiles/' + this.userId + '/docs/bill')
@@ -225,7 +128,6 @@ export default {
       let response = await this.$axios.get('/profiles/' + this.userId + '/docs/video', {
         responseType: 'arraybuffer'
       })
-      console.log(response)
       let fileURL = window.URL.createObjectURL(new Blob([response.data]));
       let fileLink = document.createElement('a');
 
