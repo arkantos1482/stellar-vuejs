@@ -34,13 +34,14 @@ export default {
   props: ['base', 'counter'],
   filters: {
     toColor(item) {
-      return item.operation.type === 12 ? 'success--text' : 'error--text'
+      return item.base_is_seller ? 'error--text' : 'success--text'
     },
     price(item) {
-      return toSeparated(safeDecimal(item.operation.details.price))
+      let price = item.price_d/item.price_n;
+      return toSeparated(safeDecimal(price))
     },
     amount(item) {
-      return toSeparated(safeDecimal(item.operation.details.amount))
+      return toSeparated(safeDecimal(item.counter_amount))
     }
   },
   watch: {
@@ -61,13 +62,13 @@ export default {
   },
   methods: {
     async refresh() {
-      let res = await this.$axios.$get('/trades-pair-asset', {
+      this.trades = await this.$axios.$get('/trades-pair-asset', {
         params: {base: this.base, counter: this.counter}
       })
-      this.trades = collect(res).unique('history_operation_id').all()
     },
     total(item) {
-      let result = safeDecimal(item.operation.details.price * item.operation.details.amount)
+      let price = item.price_d/item.price_n;
+      let result = safeDecimal(price * item.counter_amount)
       return toSeparated(result.todp(getMarketDp(this.base, this.counter)))
     },
   },
