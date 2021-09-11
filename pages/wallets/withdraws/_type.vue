@@ -14,6 +14,15 @@
       </ul>
     </v-alert>
 
+    <v-alert v-if="type === 'BNB'"
+             color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
+      <ul>
+        <li>
+          کاربران گرامی توجه فرمایید تنها  به آدرس مقصد شبکه بایننس چین عملیات را برداشت را انجام دهید . توجه فرمایید در حال حاضر امکان برداشت به مقصد شبکه اسمارت چین وجود ندارد و در صورت عدم توجه بیترا مسئولیتی در قبال این موضوع ندارد.
+        </li>
+      </ul>
+    </v-alert>
+
     <a-row class="align-stretch">
       <v-col cols="4" class="pa-4 d-flex flex-column">
         <div class="text-h4 mb-6 text-right">{{ actionTitle }}</div>
