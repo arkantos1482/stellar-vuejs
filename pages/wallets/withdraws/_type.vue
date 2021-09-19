@@ -18,7 +18,9 @@
              color="primary" class="text-display-2 px-12" colored-border border="left" elevation="2">
       <ul>
         <li>
-          کاربران گرامی توجه فرمایید تنها  به آدرس مقصد شبکه بایننس چین عملیات را برداشت را انجام دهید . توجه فرمایید در حال حاضر امکان برداشت به مقصد شبکه اسمارت چین وجود ندارد و در صورت عدم توجه بیترا مسئولیتی در قبال این موضوع ندارد.
+          کاربران گرامی توجه فرمایید تنها به آدرس مقصد شبکه بایننس چین عملیات را برداشت را انجام دهید . توجه فرمایید در
+          حال حاضر امکان برداشت به مقصد شبکه اسمارت چین وجود ندارد و در صورت عدم توجه بیترا مسئولیتی در قبال این موضوع
+          ندارد.
         </li>
       </ul>
     </v-alert>
@@ -152,6 +154,10 @@ export default {
           .then(res => this.withdrawFee = res);
     },
     showWithdrawDialog() {
+      if (this.usdtSelector === 'TRON' && !this.destAddress.startsWith('T')) {
+        this.$bus.$emit('snack', 'آدرس شبکه ترون معتبر نیست.', 'normal')
+        return
+      }
       this.$refs.form.validate()
       if (this.form) {
         if (this.balance >= parseFloat(this.amount) && this.amount > parseFloat(this.withdrawFee)) {
