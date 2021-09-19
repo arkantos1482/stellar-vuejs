@@ -154,7 +154,7 @@ export default {
           .then(res => this.withdrawFee = res);
     },
     showWithdrawDialog() {
-      if (this.usdtSelector === 'TRON' && !this.destAddress.startsWith('T')) {
+      if (this.type === 'USDT' && this.usdtSelector === 'TRON' && !this.destAddress.startsWith('T')) {
         this.$bus.$emit('snack', 'آدرس شبکه ترون معتبر نیست.', 'normal')
         return
       }
