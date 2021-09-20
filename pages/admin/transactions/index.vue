@@ -1,25 +1,34 @@
 <template>
   <div>
-    <v-data-table
-        @click:row="goto"
-        :headers="headers"
-        :items="profileList"
-        :items-per-page="50"
-        hide-default-footer>
+
+    <a-row class="align-end mb-6 mt-n6">
+      <a-table-filter-field type="text" name="ایمیل" v-model="filterQuery['users.email']"/>
+      <a-table-filter-field type="text" name="نام" v-model="filterQuery.name"/>
+      <a-table-filter-field type="text" name="نام خانوادگی" v-model="filterQuery.last_name"/>
+      <a-table-filter-field type="text" name="موبایل" v-model="filterQuery.cell_phone"/>
+
+      <v-btn @click="$refs.table.refresh()"
+             outlined class="py-5 px-8 mx-2" color="primary">اعمال
+      </v-btn>
+    </a-row>
+    <a-paged-table ref="table"
+                   :headers="headers"
+                   :filter-query="filterQuery"
+                   url="/profiles"
+                   @click:row="goto">
       <template v-slot:item.created_at="{value}">{{ value|toFarsiJustDate }}</template>
-    </v-data-table>
-    <v-pagination class="mt-4"
-                  v-model="pagination.current"
-                  :length="pagination.total"
-                  @input="onPageChange"/>
+    </a-paged-table>
   </div>
 </template>
 
 <script>
-import {toIndexedList} from "@/models/utils";
+import ARow from "../../../components/ARow";
+import ATableFilterField from "../../../components/ATableFilterField";
+import APagedTable from "../../../components/APagedTable";
 
 export default {
   name: "payment",
+  components: {APagedTable, ATableFilterField, ARow},
   data() {
     return {
       headers: [
@@ -30,26 +39,16 @@ export default {
         {value: 'cell_phone', text: 'موبایل'},
         // {value: 'action', text: 'اقدامات', sortable: false}
       ],
-      profileList: [],
-      pagination: {
-        current: 1,
-        total: 0
-      }
+      filterQuery: {
+        'users.email': '',
+        name: '',
+        last_name: '',
+        cell_phone: '',
+      },
     }
   },
-  async mounted() {
-    await this.getUsers()
-  },
+
   methods: {
-    async onPageChange() {
-      await this.getUsers()
-    },
-    async getUsers() {
-      let listWithMeta = await this.$axios.$get('/profiles?page=' + this.pagination.current)
-      this.pagination.current = listWithMeta.current_page
-      this.pagination.total = listWithMeta.last_page
-      this.profileList = toIndexedList(listWithMeta.data)
-    },
     async goto(item) {
       await this.$router.push(`/admin/transactions/${item.user_id}`)
     },
