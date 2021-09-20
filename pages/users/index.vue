@@ -2,21 +2,28 @@
   <div>
     <v-row>
       <v-col>
-        <v-data-table
-            @click:row="goto"
-            :headers="headers"
-            :items="profileList"
-            :items-per-page="50"
-            hide-default-footer>
+        <a-row class="align-end mb-6 mt-n6">
+          <a-table-filter-field type="text" name="ایمیل" v-model="filterQuery['users.email']"/>
+          <a-table-filter-field type="text" name="نام" v-model="filterQuery.name"/>
+          <a-table-filter-field type="text" name="نام خانوادگی" v-model="filterQuery.last_name"/>
+          <a-table-filter-field type="text" name="موبایل" v-model="filterQuery.cell_phone"/>
+          <a-table-filter-field type="time" name="قبل از" v-model="filterQuery.before"/>
+          <a-table-filter-field type="time" name="بعد از" v-model="filterQuery.after"/>
+
+          <v-btn @click="$refs.table.refresh()"
+                 outlined class="py-5 px-8 mx-2" color="primary">اعمال</v-btn>
+        </a-row>
+        <a-paged-table ref="table"
+                       :headers="headers"
+                       :filter-query="filterQuery"
+                       url="/profiles"
+                       @click:row="goto"
+        >
           <template v-slot:item.created_at="{value}">{{ value|toFarsiJustDate }}</template>
           <template v-slot:item.user_id="{value}">
             <v-btn @click.stop="onMessage(value)">ارسال</v-btn>
           </template>
-        </v-data-table>
-        <v-pagination class="mt-4"
-                      v-model="pagination.current"
-                      :length="pagination.total"
-                      @input="onPageChange"/>
+        </a-paged-table>
       </v-col>
     </v-row>
 
@@ -32,9 +39,16 @@
 </template>
 
 <script>
-import {toIndexedList} from "@/models/utils";
+import ATextField from "../../components/ATextField";
+import APagedTable from "../../components/APagedTable";
+import ARow from "../../components/ARow";
+import ATableFilterField from "../../components/ATableFilterField";
 
 export default {
+  components: {ATableFilterField, ARow, APagedTable, ATextField},
+  computed: {
+    url: () => '/profiles'
+  },
   data() {
     return {
       headers: [
@@ -47,29 +61,20 @@ export default {
         {text: 'زمان ثبت نام', value: 'created_at', align: 'center'},
         {text: 'پیام', value: 'user_id', sortable: false, align: 'center'}
       ],
-      profileList: [],
-      pagination: {
-        current: 1,
-        total: 0
+      filterQuery: {
+        'users.email': '',
+        name: '',
+        last_name: '',
+        cell_phone: '',
+        before: '',
+        after: ''
       },
       message: {user_id: '', title: '', desc: ''},
       d: {sendMessage: false},
       l: {send: false},
     }
   },
-  async mounted() {
-    await this.getUsers()
-  },
   methods: {
-    async onPageChange() {
-      await this.getUsers()
-    },
-    async getUsers() {
-      let listWithMeta = await this.$axios.$get('/profiles?page=' + this.pagination.current)
-      this.pagination.current = listWithMeta.current_page
-      this.pagination.total = listWithMeta.last_page
-      this.profileList = toIndexedList(listWithMeta.data)
-    },
     goto($item) {
       this.$router.push('/Users/' + $item.user_id)
     },
@@ -82,7 +87,7 @@ export default {
       await this.$axios.$post('/messages/send_direct', this.message);
       this.l.send = false
       this.d.sendMessage = false
-    }
+    },
   }
 }
 </script>
