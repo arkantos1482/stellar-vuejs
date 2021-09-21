@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       headers: [
-        {text: 'ردیف', value: 'index', align: 'center'},
+        {text: 'ردیف', value: 'index', align: 'center', sortable: false},
         {text: 'ایمیل', value: 'email', align: 'center'},
         {text: 'نام', value: 'name', align: 'center'},
         {text: 'نام خانوادگی', value: 'last_name', align: 'center'},

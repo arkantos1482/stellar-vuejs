@@ -21,11 +21,11 @@ export default {
   data() {
     return {
       headers: [
-        {text: 'ردیف', value: 'index'},
-        {value: 'email', text: 'ایمیل'},
-        {value: 'name', text: 'نام'},
-        {value: 'last_name', text: 'نام خانوادگی'},
-        {value: 'cell_phone', text: 'موبایل'},
+        {text: 'ردیف', value: 'index', sortable: false, align: 'center'},
+        {value: 'email', text: 'ایمیل', align: 'center'},
+        {value: 'name', text: 'نام', align: 'center'},
+        {value: 'last_name', text: 'نام خانوادگی', align: 'center'},
+        {value: 'cell_phone', text: 'موبایل', align: 'center'},
         // {value: 'action', text: 'اقدامات', sortable: false}
       ],
       filterQuery: [

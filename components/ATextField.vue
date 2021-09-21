@@ -27,7 +27,7 @@
         <!--        </div>-->
       </div>
     </div>
-    <p v-show="shouldValidate" class="red--text text-body-2 mt-2">{{ errorBucket[0] }}</p>
+    <p v-show="shouldValidate" v-if="!noError" class="red--text text-body-2 mt-2">{{ errorBucket[0] }}</p>
   </div>
 </template>
 <script>
@@ -38,7 +38,7 @@ import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 export default {
   name: 'a-text-field',
   extends: VTextField,
-  props: {mask: String, eng: Boolean, separated: Boolean, isCoin: Boolean, coin: String},
+  props: {mask: String, eng: Boolean, separated: Boolean, isCoin: Boolean, coin: String, noError: Boolean},
   data() {
     return {
       myText: this.value

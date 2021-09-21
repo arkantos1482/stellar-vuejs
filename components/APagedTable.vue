@@ -1,11 +1,16 @@
 <template>
   <div>
     <a-row class="align-end mb-6 mt-n6">
-      <a-table-filter-field v-for="item in filterQuery"
-                            :type="item.type" :name="item.name" v-model="item.value"/>
-      <v-btn @click="refresh()"
-             outlined class="py-5 px-8 mx-2" color="primary">اعمال
-      </v-btn>
+      <a-table-filter-field v-for="(item,key) in filterQuery" :key="key"
+                            :type="item.type" :name="item.name"
+                            v-model="item.value" :options="item.options"/>
+    </a-row>
+    <a-row class="justify-center">
+      <v-col cols="2" class="pt-0 pb-8">
+        <v-btn @click="refresh()"
+               outlined block class="py-4 mx-2" color="primary">اعمال
+        </v-btn>
+      </v-col>
     </a-row>
     <v-data-table
         @update:options="setTableOptions"

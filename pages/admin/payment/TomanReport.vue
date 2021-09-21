@@ -53,9 +53,9 @@ export default {
         {type: 'text', key: 'pay_system_status', name: 'وضعیت جیبیت', value: ''},
         {type: 'text', key: 'verify_status', name: 'وضعیت وریفای', value: ''},
         {type: 'text', key: 'stellar_status', name: 'وضعیت استلار', value: ''},
-        {type: 'time', key: 'created_at', name: 'تاریخ ایجاد', value: ''},
-        {type: 'time', key: 'verify_updated_at', name: 'تاریخ وریفای', value: ''},
-        {type: 'time', key: 'stellar_updated_at', name: 'تاریخ استلار', value: ''},
+        // {type: 'time', key: 'created_at', name: 'تاریخ ایجاد', value: ''},
+        // {type: 'time', key: 'verify_updated_at', name: 'تاریخ وریفای', value: ''},
+        // {type: 'time', key: 'stellar_updated_at', name: 'تاریخ استلار', value: ''},
       ]
     }
   },
