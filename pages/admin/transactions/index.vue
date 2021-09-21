@@ -1,21 +1,10 @@
 <template>
   <div>
-
-    <a-row class="align-end mb-6 mt-n6">
-      <a-table-filter-field type="text" name="ایمیل" v-model="filterQuery['users.email']"/>
-      <a-table-filter-field type="text" name="نام" v-model="filterQuery.name"/>
-      <a-table-filter-field type="text" name="نام خانوادگی" v-model="filterQuery.last_name"/>
-      <a-table-filter-field type="text" name="موبایل" v-model="filterQuery.cell_phone"/>
-
-      <v-btn @click="$refs.table.refresh()"
-             outlined class="py-5 px-8 mx-2" color="primary">اعمال
-      </v-btn>
-    </a-row>
-    <a-paged-table ref="table"
-                   :headers="headers"
-                   :filter-query="filterQuery"
-                   url="/profiles"
-                   @click:row="goto">
+    <a-paged-table
+        :headers="headers"
+        :filter-query="filterQuery"
+        url="/profiles"
+        @click:row="goto">
       <template v-slot:item.created_at="{value}">{{ value|toFarsiJustDate }}</template>
     </a-paged-table>
   </div>
@@ -39,12 +28,12 @@ export default {
         {value: 'cell_phone', text: 'موبایل'},
         // {value: 'action', text: 'اقدامات', sortable: false}
       ],
-      filterQuery: {
-        'users.email': '',
-        name: '',
-        last_name: '',
-        cell_phone: '',
-      },
+      filterQuery: [
+        {type: 'text', name: 'ایمیل', key: 'users.email', value: ''},
+        {type: 'text', name: 'نام', key: 'name', value: ''},
+        {type: 'text', name: 'نام خانوادگی', key: 'last_name', value: ''},
+        {type: 'text', name: 'موبایل', key: 'cell_phone', value: ''},
+      ],
     }
   },
 

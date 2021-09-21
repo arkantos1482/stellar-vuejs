@@ -1,23 +1,10 @@
 <template>
   <div>
-
-    <a-row class="align-end mb-6 mt-n6">
-      <a-table-filter-field type="text" name="ایمیل" v-model="filterQuery['users.email']"/>
-      <a-table-filter-field type="text" name="نام" v-model="filterQuery.name"/>
-      <a-table-filter-field type="text" name="نام خانوادگی" v-model="filterQuery.last_name"/>
-      <a-table-filter-field type="text" name="موبایل" v-model="filterQuery.cell_phone"/>
-      <a-table-filter-field type="time" name="قبل از" v-model="filterQuery.before"/>
-      <a-table-filter-field type="time" name="بعد از" v-model="filterQuery.after"/>
-
-      <v-btn @click="$refs.table.refresh()"
-             outlined class="py-5 px-8 mx-2" color="primary">اعمال
-      </v-btn>
-    </a-row>
-    <a-paged-table ref="table"
-                   :headers="headers"
-                   :filter-query="filterQuery"
-                   url="/profiles"
-                   @click:row="goto">
+    <a-paged-table
+        :headers="headers"
+        :filter-query="filterQuery"
+        url="/profiles"
+        @click:row="goto">
       <template v-slot:item.created_at="{value}">{{ value|toFarsiJustDate }}</template>
       <template v-slot:item.user_id="{value}">
         <v-btn @click.stop="onMessage(value)">ارسال</v-btn>
@@ -56,14 +43,14 @@ export default {
         {text: 'زمان ثبت نام', value: 'created_at', align: 'center'},
         {text: 'پیام', value: 'user_id', sortable: false, align: 'center'}
       ],
-      filterQuery: {
-        'users.email': '',
-        name: '',
-        last_name: '',
-        cell_phone: '',
-        before: '',
-        after: ''
-      },
+      filterQuery: [
+        {type: 'text', name: 'ایمیل', key: 'users.email', value: ''},
+        {type: 'text', name: 'نام', key: 'name', value: ''},
+        {type: 'text', name: 'نام خانوادگی', key: 'last_name', value: ''},
+        {type: 'text', name: 'موبایل', key: 'cell_phone', value: ''},
+        {type: 'time', name: 'قبل از', key: 'before', value: ''},
+        {type: 'time', name: 'بعد از', key: 'after', value: ''},
+      ],
       message: {user_id: '', title: '', desc: ''},
       d: {sendMessage: false},
       l: {send: false},

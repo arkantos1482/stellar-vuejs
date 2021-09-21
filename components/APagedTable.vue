@@ -1,5 +1,12 @@
 <template>
   <div>
+    <a-row class="align-end mb-6 mt-n6">
+      <a-table-filter-field v-for="item in filterQuery"
+                            :type="item.type" :name="item.name" v-model="item.value"/>
+      <v-btn @click="refresh()"
+             outlined class="py-5 px-8 mx-2" color="primary">اعمال
+      </v-btn>
+    </a-row>
     <v-data-table
         @update:options="setTableOptions"
         :server-items-length="pagedList.total"
@@ -25,9 +32,12 @@
 
 <script>
 import {toIndexedList} from "@/models/utils";
+import ATableFilterField from "./ATableFilterField";
+import ARow from "./ARow";
 
 export default {
   name: "APagedTable",
+  components: {ARow, ATableFilterField},
   props: ['url', 'filterQuery'],
   data() {
     return {
@@ -67,9 +77,9 @@ export default {
       return sortBy ? ('&sort=' + sign + sortBy) : ''
     },
     makeFilterQuery() {
-      return Object.keys(this.filterQuery)
-          .filter(key => this.filterQuery[key])
-          .reduce((carry, key) => carry + `&filter[${key}]=${this.filterQuery[key]}`, '')
+      return this.filterQuery
+          .filter(item => item.value)
+          .reduce((carry, item) => carry + `&filter[${item.key}]=${item.value}`, '')
     },
   }
 }

@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <v-data-table :headers="headers" :items="list" :items-per-page="200"
-                  hide-default-footer sort-by="created_at" sort-desc>
+    <a-paged-table
+        url="/payments/toman/report"
+        :filter-query="filterQuery"
+        :headers="headers">
       <template v-slot:item.type="{value}">{{ value|toFa }}</template>
       <template v-slot:item.status="{value}">{{ value|toFa }}</template>
       <template v-slot:item.verify_status="{value}">{{ value|toFa }}</template>
@@ -11,13 +13,16 @@
       <template v-slot:item.verify_updated_at="{value}">{{ value|toFarsiDate }}</template>
       <template v-slot:item.stellar_updated_at="{value}">{{ value|toFarsiDate }}</template>
       <template v-slot:item.created_at="{value}">{{ value|toFarsiDate }}</template>
-    </v-data-table>
+    </a-paged-table>
   </div>
 </template>
 
 <script>
+import APagedTable from "../../../components/APagedTable";
+
 export default {
   name: "TomanReport",
+  components: {APagedTable},
   data() {
     return {
       headers: [
@@ -40,17 +45,25 @@ export default {
         {value: 'stellar_updated_at', text: 'تاریخ استلار'},
         // {value: 'updated_at', text: 'تاریخ بروزشده'},
       ],
-      list: []
+      filterQuery: [
+        {type: 'text', key: 'users.email', name: 'ایمیل', value: ''},
+        {type: 'text', key: 'pay_system_id', name: 'شناسه جیبیت', value: ''},
+        {type: 'text', key: 'type', name: 'نوع', value: ''},
+        {type: 'text', key: 'amount', name: 'مقدار', value: ''},
+        {type: 'text', key: 'pay_system_status', name: 'وضعیت جیبیت', value: ''},
+        {type: 'text', key: 'verify_status', name: 'وضعیت وریفای', value: ''},
+        {type: 'text', key: 'stellar_status', name: 'وضعیت استلار', value: ''},
+        {type: 'time', key: 'created_at', name: 'تاریخ ایجاد', value: ''},
+        {type: 'time', key: 'verify_updated_at', name: 'تاریخ وریفای', value: ''},
+        {type: 'time', key: 'stellar_updated_at', name: 'تاریخ استلار', value: ''},
+      ]
     }
   },
-  async mounted() {
-    this.list = await this.$axios.$get('/payments/toman/report')
-  }
 }
 </script>
 
 <style scoped>
-.container >>> td{
+.container >>> td {
   padding-left: 0 !important;
   padding-right: 0 !important;
 }
