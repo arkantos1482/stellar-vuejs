@@ -1,17 +1,24 @@
 <template>
-  <div>
-    <a-row class="align-end mb-6 mt-n6">
+  <v-card width="100%" class="pt-4 pb-6 px-6">
+    <a-row class="align-end mb-6">
+
       <a-table-filter-field v-for="(item,key) in filterQuery" :key="key"
                             :type="item.type" :name="item.name"
                             v-model="item.value" :options="item.options"/>
-    </a-row>
-    <a-row class="justify-center">
-      <v-col cols="2" class="pt-0 pb-8">
+      <v-col cols="2">
         <v-btn @click="refresh()"
-               outlined block class="py-4 mx-2" color="primary">اعمال
+               outlined block class="mx-2" color="primary"
+               style="height: 40px">اعمال
         </v-btn>
       </v-col>
     </a-row>
+    <!--    <a-row class="justify-center">-->
+    <!--      <v-col cols="2" class="pt-0 pb-8">-->
+    <!--        <v-btn @click="refresh()"-->
+    <!--               outlined block class="py-4 mx-2" color="primary">اعمال-->
+    <!--        </v-btn> -->
+    <!--      </v-col>-->
+    <!--    </a-row>-->
     <v-data-table
         @update:options="setTableOptions"
         :server-items-length="pagedList.total"
@@ -19,6 +26,9 @@
         :items-per-page="50"
         v-bind="$attrs"
         v-on="$listeners"
+        :loading="loading"
+        loading-text="در حال دریافت داده ها..."
+        no-data-text="داده ای وجود ندارد."
         hide-default-footer>
 
       <template v-for="(_, slot) of $scopedSlots" v-slot:[slot]="scope">
@@ -26,12 +36,12 @@
       </template>
     </v-data-table>
 
-    <v-pagination class="mt-4"
+    <v-pagination class="mt-8"
                   v-model="pagedList.current_page"
                   :length="pagedList.last_page"
                   total-visible="10"
                   @input="refresh"/>
-  </div>
+  </v-card>
 
 </template>
 
@@ -43,7 +53,7 @@ import ARow from "./ARow";
 export default {
   name: "APagedTable",
   components: {ARow, ATableFilterField},
-  props: ['url', 'filterQuery'],
+  props: ['url', 'filterQuery', 'adapter'],
   data() {
     return {
       pagedList: {
@@ -56,6 +66,7 @@ export default {
         sortBy: [''],
         sortDesc: [false]
       },
+      loading: false
     }
   },
   mounted() {
@@ -63,9 +74,14 @@ export default {
   },
   methods: {
     async refresh() {
+      this.loading = true
       let list = await this.$axios.$get(this.url + '?' + this.makeQueryParams())
-      list['data'] = toIndexedList(list.data)
+      if (this.adapter) {
+        list.data = list.data.map(this.adapter)
+      }
+      list.data = toIndexedList(list.data)
       this.pagedList = list
+      this.loading = false
     },
     async setTableOptions(item) {
       this.tableOptions = item

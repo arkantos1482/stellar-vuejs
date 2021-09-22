@@ -1,99 +1,69 @@
 <template>
   <div class="pa-4">
     <div class="text-h4 mb-6 text-right">تاریخچه سفارشات</div>
-    <v-card width="100%" class="pa-6">
-      <a-table-header :list="['همه','IRT', 'BCH', 'BTC']"
-                      list_name="نوع" from_name="تاریخ از" to_name="تاریخ تا"/>
-      <v-simple-table class="text-center">
-        <template>
-          <thead>
-          <tr>
-            <th class="text-center">نوع</th>
-            <th class="text-center">رمزارزها</th>
-            <th class="text-center">قیمت</th>
-            <th class="text-center">مقدار</th>
-            <th class="text-center">مجموع</th>
-            <th class="text-center">تاریخ</th>
-            <th class="text-center">وضعیت</th>
-          </tr>
-          </thead>
-          <tbody v-if="offers.length">
-          <tr v-for="(item,idx) in offers" :key="idx">
-            <td :class="item|toColor">{{ item|toFarsi }}</td>
-            <td>{{ item|cryptoPair|toFarsiCoinPair }}</td>
-            <td>{{ item|price }}</td>
-            <td>{{ item|amount }}</td>
-            <td>{{ item|total }}</td>
-            <td>{{ item.created_at|toFarsiDate }}</td>
-            <td :class="item|cancelColor">{{ item|cancelText }}</td>
-          </tr>
-          </tbody>
-          <no-data v-else cols="7" title="تاریخچه ای وجود ندارد."/>
-        </template>
-      </v-simple-table>
-    </v-card>
+    <a-paged-table
+        :url="'offers/' + userId"
+        :adapter="adapter"
+        :headers="headers"
+        :filter-query="filterQuery">
+      <template v-slot:item.offer_type="{item}">
+        <p :class="item.offer_type_color">{{ item.offer_type }}</p>
+      </template>
+      <template v-slot:item.cancel_text="{item}">
+        <p :class="item.cancel_color">{{ item.cancel_text }}</p>
+      </template>
+    </a-paged-table>
   </div>
 </template>
 
 <script>
 import pstopper from "@/mixins/pstopper";
-import Decimal from "decimal.js-light";
 import {toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
+import APagedTable from "../../components/APagedTable";
+import {safeDecimal} from "../../models/NumberUtil";
+import {toFarsiDate} from "../../models/utils";
 
 export default {
+  components: {APagedTable},
   mixins: [pstopper],
   name: 'Offers',
-  filters: {
-    toFarsi(val) {
-      return val.type === 'buy' ? 'خرید' : 'فروش'
-    },
-    toColor(val) {
-      return val.type === 'buy' ? 'success--text' : 'error--text'
-    },
-    cryptoPair(item) {
-      return item.type === 'buy'
-          ? item.buying_asset_code + '/' + item.selling_asset_code
-          : item.selling_asset_code + '/' + item.buying_asset_code
-    },
-    price(item) {
-      let price = new Decimal(item.price_r.n).div(item.price_r.d)
-      return toSeparated(price)
-      // return item.type === 'buy'
-      //     ? price + item.buying_asset_code
-      //     : price + item.selling_asset_code
-    },
-    amount(item) {
-      let amount = parseFloat(item.amount)
-      return toSeparated(amount)
-      // return item.type === 'buy'
-      //     ? amount + item.buying_asset_code
-      //     : amount + item.selling_asset_code
-    },
-    total(item) {
+  methods: {
+    adapter(item) {
       let coin = item.type === 'buy' ? item.selling_asset_code : item.buying_asset_code
-      let total = new Decimal(item.amount).times(item.price_r.n).div(item.price_r.d)
-          .todp(getDp(coin))
-      return toSeparated(total)
-      // return item.type === 'buy'
-      //     ? total + item.buying_asset_code
-      //     : total + item.selling_asset_code
-    },
-    cancelText(item) {
-      return parseFloat(item.amount) === 0 ? 'لغو شده' : 'موفقیت آمیز'
-    },
-    cancelColor(item) {
-      return parseFloat(item.amount) === 0 ? 'error--text' : 'success--text'
+      return {
+        offer_type: item.type === 'buy' ? 'خرید' : 'فروش',
+        offer_type_color: item.type === 'buy' ? 'success--text' : 'error--text',
+        pair_asset: item.type === 'buy'
+            ? item.buying_asset_code + '/' + item.selling_asset_code
+            : item.selling_asset_code + '/' + item.buying_asset_code,
+        price: toSeparated(safeDecimal(item.price_r.n).div(item.price_r.d)),
+        amount: toSeparated(parseFloat(item.amount)),
+        total: toSeparated(safeDecimal(item.amount).times(item.price_r.n).div(item.price_r.d)
+            .todp(getDp(coin))),
+        created_at: toFarsiDate(item.created_at),
+        cancel_text: parseFloat(item.amount) === 0 ? 'لغو شده' : 'موفقیت آمیز',
+        cancel_color: parseFloat(item.amount) === 0 ? 'error--text' : 'success--text'
+      }
     }
   },
   data() {
     return {
       userId: this.$route.params.userId,
-      offers: []
+      headers: [
+        {value: 'offer_type', text: 'نوع', align: 'center', sortable: false},
+        {value: 'pair_asset', text: 'رمزارزها', align: 'center', sortable: false},
+        {value: 'price', text: 'قیمت', align: 'center', sortable: false},
+        {value: 'amount', text: 'مقدار', align: 'center', sortable: false},
+        {value: 'total', text: 'مجموع', align: 'center', sortable: false},
+        {value: 'created_at', text: 'تاریخ', align: 'center', sortable: false},
+        {value: 'cancel_text', text: 'وضعیت', align: 'center', sortable: false},
+      ],
+      filterQuery: [
+        {type: 'time', key: 'after', name: 'بعد از', value: ''},
+        {type: 'time', key: 'before', name: 'قبل از', value: ''},
+      ]
     }
-  },
-  async mounted() {
-    this.offers = await this.$axios.$get('/offers/' + this.userId)
   }
 }
 </script>

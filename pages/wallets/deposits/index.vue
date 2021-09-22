@@ -1,42 +1,31 @@
 <template>
   <div class="pa-4">
     <div class="text-h4 mb-6 text-right">{{ title }}</div>
-    <v-card width="100%" height="100%" class="pa-6">
-      <a-table-header :list="['همه','IRT', 'BCH', 'BTC']"
-                      list_name="نوع" from_name="تاریخ واریز از" to_name="تاریخ واریز تا"/>
-      <v-simple-table class="text-center">
-        <thead>
-        <tr>
-          <th class="text-center">رمزارز</th>
-          <th class="text-center">مقدار</th>
-          <th class="text-center">زمان</th>
-          <th class="text-center">وضعیت</th>
-          <th class="text-center">توضیحات</th>
-        </tr>
-        </thead>
-        <tbody v-if="deposits.length">
-        <tr v-for="item in deposits" :key="item.id">
-          <td>{{ item.coin|toFarsiCoin }}</td>
-          <td>{{ item.amount|toFloat|separated }}</td>
-          <td>{{ item.updated_at|toFarsiDate }}</td>
-          <td :class="item.status|toFarsiColor">{{ item.status|toFarsiTitle }}</td>
-          <td>
-            <p v-if="item.coin === 'IRR'">{{ 'کد رهگیری= ' + item.track_code }}</p>
-            <a v-else v-show="item.track_code" :href="item.track_code" target="_blank">لینک پیگیری</a>
-          </td>
-        </tr>
-        </tbody>
-        <no-data v-else cols="5" title="واریزی انجام نشده است."/>
-      </v-simple-table>
-    </v-card>
+    <a-paged-table
+        :url="'/payments/deposits/' + userId"
+        :headers="headers"
+        :filter-query="filterQuery">
+      <template v-slot:item.updated_at="{value}">{{ value|toFarsiDate }}</template>
+      <template v-slot:item.coin="{value}">{{ value|toFarsiCoin }}</template>
+      <template v-slot:item.amount="{value}">{{ value|toFloat|separated }}</template>
+      <template v-slot:item.track_code="{value}">
+        <p v-if="!value"></p>
+        <p v-else-if="!value.startsWith('http')">{{ `کد رهگیری = ${value}` }}</p>
+        <a v-else :href="value" target="_blank">لینک پیگیری</a>
+      </template>
+      <template v-slot:item.status="{value}">
+        <div :class="value|toFarsiColor">{{ value|toFarsiTitle }}</div>
+      </template>
+    </a-paged-table>
   </div>
 </template>
 
 <script>
-import collect from "collect.js";
+import APagedTable from "../../../components/APagedTable";
 
 export default {
   name: "Deposits",
+  components: {APagedTable},
   props: {
     title: {type: String, default: 'لیست واریزها'},
     userId: {type: String, default: 'me'},
@@ -44,23 +33,36 @@ export default {
   },
   filters: {
     toFarsiTitle(val) {
-      return (val === 'success') ? 'موفقیت آمیز' : 'ناموفق'
+      const statusList = {
+        success: 'موفقیت آمیز',
+        SUBMITTED: 'در حال انجام'
+      }
+      return statusList[val] ?? 'ناموفق'
     },
     toFarsiColor(val) {
-      return (val === 'success') ? 'success--text' : 'error--text'
+      const statusList = {
+        success: 'success--text',
+        SUBMITTED: 'yellow--text'
+      }
+      return statusList[val] ?? 'error--text'
     }
   },
   data() {
     return {
-      deposits: [],
+      headers: [
+        {value: 'coin', text: 'نوع ارز', align: 'center'},
+        {value: 'amount', text: 'مبلغ', align: 'center'},
+        {value: 'updated_at', text: 'تاریخ', align: 'center'},
+        {value: 'status', text: 'وضعیت', align: 'center'},
+        {value: 'track_code', text: 'رهگیری', align: 'center'},
+      ],
+      filterQuery: [
+        {type: 'headless', key: 'coin', value: this.type?.toUpperCase()},
+        {type: 'time', key: 'after', name: 'بعد از', value: ''},
+        {type: 'time', key: 'before', name: 'قبل از', value: ''},
+      ]
     }
   },
-  async mounted() {
-    let list1 = (await this.$axios.$get('/payments/deposits/' + this.userId))
-    let list2 = collect(list1)
-    if (this.type) list2 = list2.filter(item => this.type.toUpperCase() === item.coin)
-    this.deposits = list2.all()
-  }
 }
 </script>
 
