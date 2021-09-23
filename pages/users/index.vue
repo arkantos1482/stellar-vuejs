@@ -38,7 +38,7 @@ export default {
         {text: 'ایمیل', value: 'email', align: 'center'},
         {text: 'نام', value: 'name', align: 'center'},
         {text: 'نام خانوادگی', value: 'last_name', align: 'center'},
-        {text: 'سطح دسترسی', value: 'access_level', align: 'center'},
+        {text: 'سطح دسترسی', value: 'access_level', align: 'center', sortable: false},
         {text: 'موبایل', value: 'cell_phone', align: 'center'},
         {text: 'زمان ثبت نام', value: 'created_at', align: 'center'},
         {text: 'پیام', value: 'user_id', sortable: false, align: 'center'}
@@ -48,6 +48,7 @@ export default {
         {type: 'text', name: 'نام', key: 'name', value: ''},
         {type: 'text', name: 'نام خانوادگی', key: 'last_name', value: ''},
         {type: 'text', name: 'موبایل', key: 'cell_phone', value: ''},
+        // {type: 'text', name: 'سطح دسترسی', key: 'access_levels.name', value: ''},
         {type: 'time', name: 'بعد از', key: 'after', value: ''},
         {type: 'time', name: 'قبل از', key: 'before', value: ''},
       ],
