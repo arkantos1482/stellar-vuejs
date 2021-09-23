@@ -31,9 +31,8 @@
       </template>
     </v-data-table>
 
-    <div v-if="hidePaginate">
+    <div v-if="!hidePaginate">
       <v-pagination
-          v-if="false"
           class="mt-8"
           v-model="pagedList.current_page"
           :length="pagedList.last_page"
