@@ -158,6 +158,12 @@ export default {
         this.$bus.$emit('snack', 'آدرس شبکه ترون معتبر نیست.', 'normal')
         return
       }
+
+      if (this.type === 'BTC' && this.destAddress.startsWith('bc1')) {
+        this.$bus.$emit('snack', 'فعلا از انتقال به آدرس فرمت bech32 پشتیبانی نمی شود.', 'normal')
+        return
+      }
+
       this.$refs.form.validate()
       if (this.form) {
         if (this.balance >= parseFloat(this.amount) && this.amount > parseFloat(this.withdrawFee)) {
