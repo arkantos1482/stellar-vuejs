@@ -1,24 +1,19 @@
 <template>
   <v-card width="100%" class="pt-4 pb-6 px-6">
-    <a-row class="align-end mb-6">
+    <div v-show="!hideFilter">
+      <a-row class="align-end mb-6">
 
-      <a-table-filter-field v-for="(item,key) in filterQuery" :key="key"
-                            :type="item.type" :name="item.name"
-                            v-model="item.value" :options="item.options"/>
-      <v-col cols="2">
-        <v-btn @click="refresh()"
-               outlined block class="mx-2" color="primary"
-               style="height: 40px">اعمال
-        </v-btn>
-      </v-col>
-    </a-row>
-    <!--    <a-row class="justify-center">-->
-    <!--      <v-col cols="2" class="pt-0 pb-8">-->
-    <!--        <v-btn @click="refresh()"-->
-    <!--               outlined block class="py-4 mx-2" color="primary">اعمال-->
-    <!--        </v-btn> -->
-    <!--      </v-col>-->
-    <!--    </a-row>-->
+        <a-table-filter-field v-for="(item,key) in filterQuery" :key="key"
+                              :type="item.type" :name="item.name"
+                              v-model="item.value" :options="item.options"/>
+        <v-col cols="2">
+          <v-btn @click="refresh()"
+                 outlined block class="mx-2" color="primary"
+                 style="height: 40px">اعمال
+          </v-btn>
+        </v-col>
+      </a-row>
+    </div>
     <v-data-table
         @update:options="setTableOptions"
         :server-items-length="pagedList.total"
@@ -36,11 +31,15 @@
       </template>
     </v-data-table>
 
-    <v-pagination class="mt-8"
-                  v-model="pagedList.current_page"
-                  :length="pagedList.last_page"
-                  total-visible="10"
-                  @input="refresh"/>
+    <div v-if="hidePaginate">
+      <v-pagination
+          v-if="false"
+          class="mt-8"
+          v-model="pagedList.current_page"
+          :length="pagedList.last_page"
+          total-visible="10"
+          @input="refresh"/>
+    </div>
   </v-card>
 
 </template>
@@ -53,7 +52,7 @@ import ARow from "./ARow";
 export default {
   name: "APagedTable",
   components: {ARow, ATableFilterField},
-  props: ['url', 'filterQuery', 'adapter'],
+  props: ['url', 'filterQuery', 'adapter', 'defaultSortBy', 'defaultSortDesc', 'hidePaginate', 'hideFilter'],
   data() {
     return {
       pagedList: {
@@ -63,8 +62,8 @@ export default {
         total: 0
       },
       tableOptions: {
-        sortBy: [''],
-        sortDesc: [false]
+        sortBy: [this.defaultSortBy],
+        sortDesc: [this.defaultSortDesc]
       },
       loading: false
     }

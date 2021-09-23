@@ -75,7 +75,8 @@
         <v-card width="100%" height="100%" class="pa-6">
           <card-title-with-chevron icon="mdi-clipboard-text" title="معاملات اخیر"/>
           <v-divider class="mt-6"/>
-          <my-trades-table/>
+          <my-trades-table :query="filterQuery" :hide-paginate="true" :hide-filter="true"
+                           class="mt-n6 mx-n10"/>
         </v-card>
       </v-col>
     </a-row>
@@ -89,10 +90,11 @@ import MyTrades from "@/pages/trades/_userId";
 import {safeDecimal} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 import {coinList} from "../models/coinList";
+import MyTradesTable from "../components/MyTradesTable";
 
 export default {
   name: "index",
-  components: {MyTrades, DashboardCardTitle, RowItem},
+  components: {MyTradesTable, MyTrades, DashboardCardTitle, RowItem},
   filters: {
     tomanSuffix: (val) => val + " تومان"
   },
@@ -141,7 +143,10 @@ export default {
       stats: '',
       rialLimits: {},
       cryptoLimits: {},
-      totalBalance: ''
+      totalBalance: '',
+      filterQuery: [
+        {type: 'time', key: 'after', name: 'بعد از', value: this.getDaysAgo(2)}
+      ]
     }
   },
   mounted() {
@@ -204,6 +209,11 @@ export default {
     },
     adjustDp(val, type) {
       return safeDecimal(val).todp(getDp(type))
+    },
+    getDaysAgo(days) {
+      let date = new Date()
+      date.setDate(date.getDate() - days)
+      return date.toLocaleDateString('en-CA')
     }
   }
 }
