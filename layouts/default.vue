@@ -307,6 +307,10 @@ export default {
           to: '/admin/withdraw-fee'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'مدیریت حساب های بانک',
+          to: '/admin/bank-accounts'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: ' سطوح بهره برداری',
           to: '/admin/access'
         }, {
