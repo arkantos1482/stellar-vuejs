@@ -28,9 +28,7 @@
       <v-card class="pa-6 text-center">
         <p class="text-h3">انتقال کریپتو</p>
         <p class="text-h3">{{ payload.coin }}</p>
-        <p>با وارد کردن همزمان شناسه کاربری و آدرس مقصد، شناسه کاربری اعمال می شود.</p>
         <v-text-field v-model="payload.amount" label="مقدار"/>
-        <v-text-field v-model="payload.user_id" label="شناسه کاربر در بیترا"/>
         <v-text-field v-model="payload.dest_address" label="آدرس مقصد"/>
         <v-btn @click="transfer" :loading="l.transfer"
                color="error" class="mt-6">اعمال
@@ -59,7 +57,6 @@ export default {
       payload: {
         coin: '',
         amount: '',
-        user_id: '',
         dest_address: '',
       },
       d: {transfer: false},

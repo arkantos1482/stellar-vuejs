@@ -34,8 +34,9 @@
     <v-dialog width="400" v-model="d.deposit_crypto">
       <v-card class="pa-6 text-center">
         <p class="text-h3">واریز کریپتو</p>
-        <p class="text-h3">{{ payload.asset }}</p>
-        <v-text-field v-model="payload.amount" label="مقدار"/>
+        <p class="text-h3">{{ crypto_payload.asset }}</p>
+        <v-text-field v-model="crypto_payload.amount" label="مقدار"/>
+        <v-text-field v-model="crypto_payload.dest_address" label="آدرس مقصد"/>
         <v-btn @click="depositCrypto" :loading="l.payment"
                color="error" class="mt-6">اعمال
         </v-btn>
@@ -101,6 +102,11 @@ export default {
       user: '',
       action: '',
       privateKey: '',
+      crypto_payload: {
+        dest_address: '',
+        asset: '',
+        amount: ''
+      },
       payload: {
         user_id: this.$route.params.id,
         asset: '',
@@ -131,7 +137,7 @@ export default {
       this.d.withdraw_stellar = true
     },
     depositCryptoDialog(asset) {
-      this.payload.asset = asset.toUpperCase()
+      this.crypto_payload.asset = asset.toUpperCase()
       this.d.deposit_crypto = true
     },
     async depositStellar() {
@@ -152,7 +158,7 @@ export default {
     },
     async depositCrypto() {
       this.l.payment = true
-      await this.$axios.$post('/crypto/transfer-from-bank', this.payload)
+      await this.$axios.$post('/crypto/transfer-from-bank', this.crypto_payload)
       this.l.payment = false
       this.d.deposit_crypto = false
       this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
