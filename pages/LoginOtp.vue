@@ -7,7 +7,6 @@
     <div class="pt-16">
       <p class="mb-4">کد تایید ارسال شده به ایمیل خود را در کادر زیر وارد نمایید.</p>
       <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
-      <p class="mt-6">ثبت کد تایید به منزله پذیرفتن قوانین و مقررات مندرج در سایت میباشد.</p>
     </div>
   </two-sided-panel>
 </template>

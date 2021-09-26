@@ -6,6 +6,7 @@
 
     <v-form @submit.prevent="onSend">
       <div class="text-center my-8">
+        <p class="my-8">ثبت کد تایید به منزله پذیرفتن قوانین و مقررات مندرج در سایت میباشد.</p>
         <PincodeInput
             dir="ltr"
             v-model="code"
