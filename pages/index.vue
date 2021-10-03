@@ -188,12 +188,11 @@ export default {
               hoverOffset: 4
             }]
           }
-          console.log(this.chartData)
         })
 
-    this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
+    this.$axios.$post('/access/limits/remained/me', {resource: 'crypto'})
         .then(res => this.cryptoLimits = res)
-    this.$axios.$post('/access/limits/remained', {resource: 'irr'})
+    this.$axios.$post('/access/limits/remained/me', {resource: 'irr'})
         .then(res => this.rialLimits = res)
 
     this.$axios.$get('/balances/toToman/me')

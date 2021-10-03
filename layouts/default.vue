@@ -54,8 +54,8 @@
                 </v-list-item>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <v-list-item to="/wallets/withdraws">گزارش برداشت</v-list-item>
-                <v-list-item to="/wallets/deposits">گزارش واریز</v-list-item>
+                <v-list-item to="/wallets/me/withdraws">گزارش برداشت</v-list-item>
+                <v-list-item to="/wallets/me/deposits">گزارش واریز</v-list-item>
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-expansion-panels>
@@ -144,7 +144,7 @@
       <v-menu>
         <template v-slot:activator="{on,attrs}">
           <v-btn text v-bind="attrs" v-on="on"
-                 to="/wallets">کیف پول
+                 to="/wallets/me">کیف پول
           </v-btn>
         </template>
       </v-menu>

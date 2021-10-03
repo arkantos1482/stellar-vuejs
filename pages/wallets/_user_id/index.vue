@@ -9,7 +9,7 @@
           <th class="text-center">موجودی</th>
           <th class="text-center">موجودی در دسترس</th>
           <th class="text-center">سفارش در جریان</th>
-          <th class="text-center">ارزش BTC</th>
+          <!--          <th class="text-center">ارزش BTC</th>-->
           <th class="text-center">عملیات</th>
         </tr>
         </thead>
@@ -40,18 +40,19 @@
 
 <script>
 import CryptoAddressTr from "@/components/CryptoAddressTr";
+import balances, {refresh} from '../balanceService'
 
 export default {
   name: "CryptoAddresses",
   components: {CryptoAddressTr},
   computed: {
-    balances() {
-      return this.$store.state.balances.list
+    balances,
+    user_id() {
+      return this.$route.params.user_id
     }
   },
   mounted() {
-    this.$store.dispatch('balances/refresh')
-    this.$store.dispatch('addresses/refresh')
+    refresh(this.$axios, this.user_id)
   }
 }
 </script>

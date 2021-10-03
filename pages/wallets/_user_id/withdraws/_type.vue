@@ -90,20 +90,25 @@
 </template>
 
 <script>
-import Withdraws from "@/pages/wallets/withdraws/index";
+import Withdraws from "@/pages/wallets/_user_id/withdraws/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import pstopper from "@/mixins/pstopper";
 import CryptoUpper from "@/components/wallet/CryptoUpper";
 import {safeDecimal, toSeparated} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
+import balances, {refresh} from "../../balanceService";
 
 export default {
   mixins: [pstopper],
   components: {CryptoUpper, Withdraws, ACard, ATextField},
   computed: {
+    balances,
     balance() {
-      return this.$store.state.balances.list[this.type]?.actual_balance
+      return this.balances[this.type]?.actual_balance
+    },
+    user_id() {
+      return this.$route.params.user_id
     },
     actionTitle() {
       return this.isInternal() ? 'ارسال' : 'برداشت'
@@ -139,10 +144,9 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('balances/refresh')
-    this.$store.dispatch('addresses/refresh')
+    refresh(this.$axios, this.user_id)
     this.getFee()
-    this.$axios.$post('/access/limits/remained', {resource: 'crypto'})
+    this.$axios.$post('/access/limits/remained/' + this.user_id, {resource: 'crypto'})
         .then(res => {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
@@ -178,7 +182,7 @@ export default {
 
       try {
         this.l.withdraw = true
-        await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw`, {
+        await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw/${this.user_id}`, {
           to: this.destAddress,
           amount: this.amount
         })

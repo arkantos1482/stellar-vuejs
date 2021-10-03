@@ -13,7 +13,7 @@
     <td v-else></td>
     <td v-if="balance">{{ adjustDp(balance.selling_liabilities)|toFloat|separated }}</td>
     <td v-else></td>
-    <td></td>
+    <!--    <td></td>-->
     <td>
       <v-btn :disabled="isDepositDisabled" small text color="primary" @click="onDeposit">
         {{ depositLabel }}
@@ -37,6 +37,9 @@ export default {
   name: 'CryptoAddressTr',
   props: ['type', 'address', 'balance', 'namad'],
   computed: {
+    user_id() {
+      return this.$route.params.user_id
+    },
     isRefreshDisabled() {
       const type = this.type.toUpperCase();
       return 'IRR' === type || this.isInternal()
@@ -63,17 +66,17 @@ export default {
   },
   methods: {
     async onDeposit() {
-      await this.$router.push({path: '/wallets/deposits/' + this.type})
+      await this.$router.push({path: `/wallets/${this.user_id}/deposits/${this.type}`})
     },
     async onWithdraw() {
-      await this.$router.push({path: '/wallets/withdraws/' + this.type})
+      await this.$router.push({path: `/wallets/${this.user_id}/withdraws/${this.type}`})
     },
     async onSync() {
       this.l.sync = true
       if (this.type === 'usdt') {
-        await this.$axios.$get(`/crypto/usdt_tron/sync`)
+        await this.$axios.$get(`/crypto/usdt_tron/sync/${this.user_id}`)
       }
-      await this.$axios.$get(`/crypto/${this.type}/sync`)
+      await this.$axios.$get(`/crypto/${this.type}/sync/${this.user_id}`)
       await this.$store.dispatch('balances/refresh')
       this.l.sync = false
     },

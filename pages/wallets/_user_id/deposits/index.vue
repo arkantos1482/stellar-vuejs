@@ -2,7 +2,7 @@
   <div class="pa-4">
     <div class="text-h4 mb-6 text-right">{{ title }}</div>
     <a-paged-table
-        :url="'/payments/withdraws/' + userId"
+        :url="'/payments/deposits/' + user_id"
         :headers="headers"
         :filter-query="filterQuery">
       <template v-slot:item.updated_at="{value}">{{ value|toFarsiDate }}</template>
@@ -21,14 +21,18 @@
 </template>
 
 <script>
-import APagedTable from "../../../components/APagedTable";
+import APagedTable from "@/components/APagedTable";
 
 export default {
-  name: "Withdraws",
+  name: "Deposits",
   components: {APagedTable},
+  computed: {
+    user_id() {
+      return this.$route.params.user_id
+    }
+  },
   props: {
-    title: {type: String, default: 'گزارش برداشت'},
-    userId: {type: String, default: 'me'},
+    title: {type: String, default: 'لیست واریزها'},
     type: String
   },
   filters: {
@@ -50,13 +54,11 @@ export default {
   data() {
     return {
       headers: [
-        {value: 'updated_at', text: 'تاریخ', align: 'center'},
         {value: 'coin', text: 'نوع ارز', align: 'center'},
         {value: 'amount', text: 'مبلغ', align: 'center'},
-        {value: 'destination', text: 'انتقال به', align: 'center'},
-        {value: 'track_code', text: 'رهگیری', align: 'center'},
-        {value: 'crypto_fee', text: 'کارمزد', align: 'center'},
+        {value: 'updated_at', text: 'تاریخ', align: 'center'},
         {value: 'status', text: 'وضعیت', align: 'center'},
+        {value: 'track_code', text: 'رهگیری', align: 'center'},
       ],
       filterQuery: [
         {type: 'headless', key: 'coin', value: this.type?.toUpperCase()},

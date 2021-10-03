@@ -56,22 +56,27 @@
 
 <script>
 import ps from '@/mixins/pstopper'
-import Deposits from "@/pages/wallets/deposits/index";
+import Deposits from "@/pages/wallets/_user_id/deposits/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import CryptoUpper from "@/components/wallet/CryptoUpper";
 import {toSeparated} from "@/models/NumberUtil";
+import balances, {refresh} from '../../balanceService'
 
 export default {
   mixins: [ps],
   components: {CryptoUpper, Deposits, ACard, ATextField},
   computed: {
-    balance() {
-      return this.$store.state.balances.list[this.type]?.actual_balance
-    },
     cardList() {
       return this.$store.getters["auth/cardList"]
-    }
+    },
+    user_id() {
+      return this.$route.params.user_id
+    },
+    balances,
+    balance() {
+      return this.balances[this.type]?.actual_balance
+    },
   },
   data() {
     return {
@@ -88,9 +93,8 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('balances/refresh')
-    this.$store.dispatch('addresses/refresh')
-    this.$axios.$post('/access/limits/remained', {resource: 'irr', action: 'deposit'})
+    refresh(this.$axios, this.user_id)
+    this.$axios.$post('/access/limits/remained/' + this.user_id, {resource: 'irr', action: 'deposit'})
         .then(res => {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
@@ -103,7 +107,10 @@ export default {
       this.$refs.form.validate()
       if (this.v.deposit) {
         this.l.deposit = true
-        this.link = await this.$axios.$post('/irr/deposit', {amount: this.amount, bank_card: this.bank_card})
+        this.link = await this.$axios.$post('/irr/deposit/' + this.user_id, {
+          amount: this.amount,
+          bank_card: this.bank_card
+        })
         window.open(this.link, '_blank')
         this.l.deposit = false
       }

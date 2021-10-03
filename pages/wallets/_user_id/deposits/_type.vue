@@ -44,9 +44,11 @@
 <script>
 import VueQrcode from 'vue-qrcode'
 import ACard from "@/components/ACard";
-import Deposits from "@/pages/wallets/deposits/index";
+import Deposits from "@/pages/wallets/_user_id/deposits/index";
 import pstopper from "@/mixins/pstopper";
 import CryptoUpper from "@/components/wallet/CryptoUpper";
+import balances, {refresh} from '../../balanceService'
+import addresses, {refresh as addrRefresh} from '../../addressService'
 
 export default {
   mixins: [pstopper],
@@ -55,8 +57,13 @@ export default {
     bchFix: (address) => address.replace('bitcoincash:', '')
   },
   computed: {
+    user_id() {
+      return this.$route.params.user_id
+    },
+    addresses,
+    balances,
     balance() {
-      return this.$store.state.balances.list[this.type]?.actual_balance
+      return this.balances[this.type]?.actual_balance
     },
     actionTitle() {
       return this.isInternal() ? 'دریافت' : 'واریز'
@@ -84,15 +91,15 @@ export default {
   methods: {
     async initAddress() {
       this.address = 'not_loaded'
-      await this.$store.dispatch('addresses/refresh')
-      const address = this.$store.state.addresses.list[this.usdtTronFix(this.type)];
+      await addrRefresh(this.$axios, this.user_id)
+      const address = this.addresses[this.usdtTronFix(this.type)];
       this.address = address ? address : 'no_address';
-      await this.$store.dispatch('balances/refresh')
+      await refresh(this.$axios, this.user_id)
     },
     async createCrypto() {
       this.l.create = true
       this.address = await this.$axios.$post('/crypto/' +
-          this.usdtTronFix(this.type).toLowerCase() + '/address/create')
+          this.usdtTronFix(this.type).toLowerCase() + '/address/create/' + this.user_id)
       this.l.create = false
     },
     isInternal() {
