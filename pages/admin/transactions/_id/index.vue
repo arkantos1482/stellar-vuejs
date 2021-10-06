@@ -11,8 +11,8 @@
       <v-btn :to="`/offers/active/${payload.user_id}`">سفارشات فعال</v-btn>
       <v-btn :to="`/offers/${payload.user_id}`">سفارشات</v-btn>
       <v-btn :to="`/trades/${payload.user_id}`">معاملات</v-btn>
-      <v-btn :to="`/wallets/withdraws/all/${payload.user_id}`">برداشت ها</v-btn>
-      <v-btn :to="`/wallets/deposits/all/${payload.user_id}`">واریزها</v-btn>
+      <v-btn :to="`/wallets/${payload.user_id}/withdraws`">برداشت ها</v-btn>
+      <v-btn :to="`/wallets/${payload.user_id}/deposits`">واریزها</v-btn>
     </div>
 
     <v-data-table :headers="headers" :items="list" :items-per-page="50" hide-default-footer>
