@@ -168,6 +168,16 @@ export default {
         return
       }
 
+      if (this.type === 'BNB' && !this.destAddress.startsWith('bnb')) {
+        this.$bus.$emit('snack', 'آدرس شبکه بایننس چین معتبر نیست.', 'normal')
+        return
+      }
+
+      // if (this.type === 'DRC' && this.destAddress.startsWith('bnb')) {
+      //   this.$bus.$emit('snack', 'آدرس باید در شبکه بایننس اسمارت چین باشد (آدرس بایننس چین مجاز نیست).', 'normal')
+      //   return
+      // }
+
       this.$refs.form.validate()
       if (this.form) {
         if (this.balance >= parseFloat(this.amount) && this.amount > parseFloat(this.withdrawFee)) {
