@@ -161,12 +161,20 @@
           <v-list-item to="/trades/me">معاملات</v-list-item>
         </v-list>
       </v-menu>
+
       <!--      PROFILE-->
       <v-menu offset-y>
-        <template v-slot:activator="{on,attrs}">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-account-outline</v-icon>
-          </v-btn>
+        <template v-slot:activator="menu">
+          <v-tooltip bottom>
+            <template v-slot:activator="tooltip">
+              <div v-on="tooltip.on" v-bind="tooltip.attrs">
+                <v-btn icon v-on="menu.on" v-bind="menu.attrs">
+                  <v-icon>mdi-account-outline</v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <span>پروفایل</span>
+          </v-tooltip>
         </template>
         <v-list>
           <v-list-item>
@@ -189,29 +197,30 @@
       </v-menu>
 
       <!--      MESSAGES-->
-      <v-menu nudge-width="128" offset-y>
-        <template v-slot:activator="{on,attrs}">
-          <v-btn icon v-bind="attrs" v-on="on">
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on" to="/messages">
             <v-badge overlap left :content="newMessages.length" :value="newMessages.length">
               <v-icon>mdi-bell-outline</v-icon>
             </v-badge>
           </v-btn>
         </template>
-        <v-list class="pa-4">
-          <div v-for="(item,idx) in newMessages" :key="idx" @click="gotoMessages()">
-            <p class="mt-4 mb-3">{{ item.title }}</p>
-            <p class="mb-4 grey--text text-body-2">{{ item.desc }}</p>
-            <v-divider/>
-          </div>
-        </v-list>
-      </v-menu>
+        <span>اعلان</span>
+      </v-tooltip>
 
       <!--      DOCUMENT CHECK-->
       <v-menu nudge-width="128" offset-y>
-        <template v-slot:activator="{on,attrs}">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-text-box-check-outline</v-icon>
-          </v-btn>
+        <template v-slot:activator="menu">
+          <v-tooltip bottom>
+            <template v-slot:activator="tooltip">
+              <div v-on="tooltip.on" v-bind="tooltip.attrs">
+                <v-btn icon v-on="menu.on" v-bind="menu.attrs">
+                  <v-icon>mdi-text-box-check-outline</v-icon>
+                </v-btn>
+              </div>
+            </template>
+            <span>بررسی اطلاعات</span>
+          </v-tooltip>
         </template>
         <v-list class="pa-4">
           <div v-for="(item,idx) in translateVerify" :key="idx" class="d-flex justify-space-between">
@@ -381,9 +390,6 @@ export default {
       await this.$axios.$post('/logout')
       this.$store.commit('auth/logout')
       await this.$router.push('/login')
-    },
-    gotoMessages() {
-      this.$router.push('/messages')
     },
     showErrorSnack(msg, level) {
       if (level === 'success') {
