@@ -67,7 +67,7 @@
             <two-column-row class="mt-n4">
               <template v-slot:right>
                 <p class="grey--text mb-3 text-body-2">تصویر کارت ملی</p>
-                <vue2-dropzone id="ssn_id"
+                <vue2-dropzone id="ssn_id" ref="drop_ssn"
                                :options="dropzoneOptions.ssn" :useCustomSlot=true>
                   <div>
                     <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
@@ -100,7 +100,7 @@
             <two-column-row class="align-center">
               <template v-slot:right>
                 <!--                <p class="grey&#45;&#45;text mb-3 text-body-2">بارگذاری ویدیو</p>-->
-                <vue2-dropzone id="video_id"
+                <vue2-dropzone id="video_id" ref="drop_video"
                                :options="dropzoneOptions.video" :useCustomSlot=true>
                   <div>
                     <v-icon style="font-size: 64px" color="primary">mdi-file-upload</v-icon>
@@ -450,6 +450,21 @@ export default {
         bank_shaba_2: false,
         bank_account: false
       },
+    }
+  },
+  watch: {
+    verifyState(val) {
+      if (val.ssn) {
+        this.$refs.drop_ssn.disable()
+      } else {
+        this.$refs.drop_ssn.enable()
+      }
+
+      if (val.bank_account) {
+        this.$refs.drop_video.disable()
+      } else {
+        this.$refs.drop_video.enable()
+      }
     }
   },
   async mounted() {
