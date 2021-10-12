@@ -7,7 +7,7 @@
                               :type="item.type" :name="item.name"
                               v-model="item.value" :options="item.options"/>
         <v-col cols="2">
-          <v-btn @click="refresh()"
+          <v-btn @click="refresh"
                  outlined block class="mx-2" color="primary"
                  style="height: 40px">اعمال
           </v-btn>
@@ -68,7 +68,10 @@ export default {
     }
   },
   mounted() {
-
+    window.addEventListener('keypress', this.addEnterListener)
+  },
+  beforeDestroy() {
+    window.removeEventListener('keypress', this.addEnterListener)
   },
   methods: {
     async refresh() {
@@ -100,6 +103,12 @@ export default {
           .filter(item => item.value)
           .reduce((carry, item) => carry + `&filter[${item.key}]=${item.value}`, '')
     },
+    addEnterListener(event) {
+      //ENTER key press
+      if (event.keyCode === 13) {
+        this.refresh()
+      }
+    }
   }
 }
 </script>
