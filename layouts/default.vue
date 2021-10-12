@@ -296,6 +296,10 @@ export default {
           to: '/Users'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'مدیریت تغییرات پروفایل',
+          to: '/admin/profile-states'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'مدیریت مالی کاربران',
           to: '/admin/transactions'
         }, {
