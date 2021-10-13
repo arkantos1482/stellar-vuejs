@@ -90,15 +90,13 @@ export default {
       let amount = safeDecimal(this.amount - this.withdrawFee).todp(getDp(this.type))
       return amount > 0 ? amount : 0
     },
-    shabaList() {
-      return this.$store.getters["auth/shabaList"]
-    }
   },
   data() {
     return {
       type: 'IRR',
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
+      shabaList: [],
       amount: '',
       withdrawFee: '',
       shaba: '',
@@ -118,8 +116,7 @@ export default {
           this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
-
-    this.shaba = this.shabaList[0]
+    this.initShaba()
   },
   methods: {
     async withdrawDialog() {
@@ -156,6 +153,13 @@ export default {
     onMaxClicked() {
       this.amount = safeDecimal(this.balance).todp(getDp(this.type))
     },
+    async initShaba() {
+      this.profile = await this.$axios.$get('/profiles/' + this.user_id)
+      this.shabaList = ['', '_2', '_3', '_4', '_5']
+          .map(i => this.profile['bank_shaba' + i])
+          .filter(i => i)
+      this.shaba = this.shabaList[0]
+    }
   }
 }
 </script>

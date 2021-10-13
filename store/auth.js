@@ -12,6 +12,7 @@ export const mutations = {
     }
 }
 
+//deprecated (replaced with internal functions)
 export const getters = {
     shabaList(state) {
         return ['', '_2', '_3', '_4', '_5']

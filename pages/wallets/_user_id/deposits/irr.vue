@@ -67,9 +67,6 @@ export default {
   mixins: [ps],
   components: {CryptoUpper, Deposits, ACard, ATextField},
   computed: {
-    cardList() {
-      return this.$store.getters["auth/cardList"]
-    },
     user_id() {
       return this.$route.params.user_id
     },
@@ -86,6 +83,7 @@ export default {
         moreThanBillion: value => !!value && parseFloat(value) >= 100 * 1000 || 'حداقل باید بیشتر از ۱۰۰ هزار تومان باشد'
       },
       type: 'IRR',
+      cardList: [],
       amount: '',
       link: '',
       bank_card: '',
@@ -100,7 +98,7 @@ export default {
           this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
         })
 
-    this.bank_card = this.cardList[0]
+    this.initCard()
   },
   methods: {
     async onDeposit() {
@@ -114,6 +112,13 @@ export default {
         window.open(this.link, '_blank')
         this.l.deposit = false
       }
+    },
+    async initCard() {
+      this.profile = await this.$axios.$get('/profiles/' + this.user_id)
+      this.cardList = ['', '_2', '_3', '_4', '_5']
+          .map(i => this.profile['bank_card' + i])
+          .filter(i => i)
+      this.bank_card = this.cardList[0]
     }
   }
 }
