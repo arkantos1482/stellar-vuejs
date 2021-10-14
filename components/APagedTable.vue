@@ -19,6 +19,7 @@
         :server-items-length="pagedList.total"
         :items="pagedList.data"
         :items-per-page="50"
+        :options="tableOptions"
         v-bind="$attrs"
         v-on="$listeners"
         :loading="loading"
