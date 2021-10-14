@@ -51,9 +51,9 @@ export default {
         // {type: 'text', key: 'to_toman', name: 'نرخ(تومان)', value: ''},
         {type: 'text', key: 'crypto_status', name: 'وضعیت کریپتو', value: ''},
         {type: 'text', key: 'stellar_status', name: 'وضعیت استلار', value: ''},
-        // {type: 'time', key: 'created_at', name: 'تاریخ ایجاد', value: ''},
-        // {type: 'time', key: 'crypto_updated_at', name: 'تاریخ کریپتو', value: ''},
-        // {type: 'time', key: 'stellar_updated_at', name: 'تاریخ استلار', value: ''},
+        {type: 'time', key: 'created_at', name: 'تاریخ ایجاد', value: ''},
+        {type: 'time', key: 'crypto_updated_at', name: 'تاریخ کریپتو', value: ''},
+        {type: 'time', key: 'stellar_updated_at', name: 'تاریخ استلار', value: ''},
       ]
     }
   },
