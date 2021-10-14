@@ -3,7 +3,9 @@
     <a-paged-table
         url="/payments/crypto/report"
         :headers="headers"
-        :filter-query="filterQuery">
+        :filter-query="filterQuery"
+        default-sort-by="created_at"
+        :default-sort-desc="true">
       <template v-slot:item.type="{value}">{{ value|toFa }}</template>
       <template v-slot:item.crypto_status="{value}">{{ value|toFa }}</template>
       <template v-slot:item.stellar_status="{value}">{{ value|toFa }}</template>

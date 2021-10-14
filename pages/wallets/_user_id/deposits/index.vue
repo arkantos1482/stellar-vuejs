@@ -4,7 +4,10 @@
     <a-paged-table
         :url="'/payments/deposits/' + user_id"
         :headers="headers"
-        :filter-query="filterQuery">
+        :filter-query="filterQuery"
+        default-sort-by="updated_at"
+        :default-sort-desc="true"
+    >
       <template v-slot:item.updated_at="{value}">{{ value|toFarsiDate }}</template>
       <template v-slot:item.coin="{value}">{{ value|toFarsiCoin }}</template>
       <template v-slot:item.amount="{value}">{{ value|toFloat|separated }}</template>

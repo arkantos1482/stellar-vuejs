@@ -3,7 +3,9 @@
     <a-paged-table
         url="/payments/toman/report"
         :filter-query="filterQuery"
-        :headers="headers">
+        :headers="headers"
+        default-sort-by="created_at"
+        :default-sort-desc="true">
       <template v-slot:item.type="{value}">{{ value|toFa }}</template>
       <template v-slot:item.status="{value}">{{ value|toFa }}</template>
       <template v-slot:item.verify_status="{value}">{{ value|toFa }}</template>

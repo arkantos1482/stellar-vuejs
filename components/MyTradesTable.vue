@@ -6,7 +6,10 @@
         :headers="headers"
         :filter-query="query"
         :hide-paginate="hidePaginate"
-        :hide-filter="hideFilter">
+        :hide-filter="hideFilter"
+        default-sort-by="ledger_closed_at"
+        :default-sort-desc="true"
+    >
       <template v-slot:item.trade_type="{item}">
         <p :class="item.trade_type_color">{{ item.trade_type }}</p>
       </template>
