@@ -411,12 +411,12 @@ export default {
       this.newMessages = await this.$axios.$get('/messages/me/new-messages')
     },
     startRecurrentJob() {
-      this.interval.msg = setInterval(() => {
-        this.loadMessages()
-      }, 30 * 1000)
+      // this.interval.msg = setInterval(() => {
+      //   this.loadMessages()
+      // }, 30 * 1000)
     },
     cleanUp() {
-      if (this.interval.msg) clearInterval(this.interval.msg)
+      // if (this.interval.msg) clearInterval(this.interval.msg)
     },
     onVizChange(e) {
       if (document.hidden) {
