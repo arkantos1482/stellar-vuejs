@@ -16,7 +16,7 @@
             <v-list-item-title>داشبورد</v-list-item-title>
           </v-list-item>
 
-          <v-list-item to="/wallets">
+          <v-list-item to="/wallets/me">
             <v-icon class="ml-2">mdi-wallet-outline</v-icon>
             <v-list-item-title>کیف پول</v-list-item-title>
           </v-list-item>
