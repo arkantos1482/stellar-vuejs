@@ -427,6 +427,7 @@ export default {
     }
   },
   beforeDestroy() {
+    document.removeEventListener('visibilitychange', this.onVizChange)
     this.cleanUp()
   }
 }

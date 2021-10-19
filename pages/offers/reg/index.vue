@@ -499,6 +499,7 @@ export default {
     document.addEventListener('visibilitychange', this.onVizChange, false)
   },
   beforeDestroy() {
+    document.removeEventListener('visibilitychange',this.onVizChange)
     this.cleanUp()
   }
 }
