@@ -61,6 +61,7 @@ export default {
         last_page: 0,
         total: 0
       },
+      raw_data: [],
       tableOptions: {
         sortBy: [this.defaultSortBy],
         sortDesc: [this.defaultSortDesc]
@@ -78,6 +79,7 @@ export default {
     async refresh() {
       this.loading = true
       let list = await this.$axios.$get(this.url + '?' + this.makeQueryParams())
+      this.raw_data = list.data
       if (this.adapter) {
         list.data = list.data.map(this.adapter)
       }

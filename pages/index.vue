@@ -76,6 +76,7 @@
           <card-title-with-chevron icon="mdi-clipboard-text" title="معاملات اخیر"/>
           <v-divider class="mt-6"/>
           <my-trades-table :query="filterQuery" :hide-paginate="true" :hide-filter="true"
+                           :hide-export="true"
                            class="mt-n6 mx-n10"/>
         </v-card>
       </v-col>

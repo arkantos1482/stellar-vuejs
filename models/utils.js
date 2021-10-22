@@ -1,7 +1,7 @@
 import {coinToFarsi} from "~/models/coinList";
 
 export function toIndexedList(list) {
-    return list.map((item, index) => ({...item, index: index + 1}))
+    return list.map((item, index) => ({index: index + 1, ...item}))
 }
 
 export function toFarsiDate(val) {
