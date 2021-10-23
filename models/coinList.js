@@ -1,5 +1,5 @@
 export const coinList = ['BTC', 'ETH', 'USDT', 'USDT_TRON', 'TRX', 'BNB',
-    'DRC', 'LTC', 'BCH', 'DOGE', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
+    'DRC', 'IRR', 'LTC', 'BCH', 'DOGE', 'AMN', 'EBG', 'ART', 'ZRK', 'TLS', 'SHA', 'WIT']
 
 export const coinToFarsi = {
     BTC: 'بیت کوین',
