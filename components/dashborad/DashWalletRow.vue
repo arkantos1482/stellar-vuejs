@@ -14,9 +14,6 @@ import {getDp} from "@/models/cryptoPrecision";
 export default {
   name: 'DashWalletRow',
   props: ['balance'],
-  mounted() {
-    this.$store.dispatch('balances/refresh')
-  },
   methods: {
     adjustDp(val) {
       return safeDecimal(val).todp(getDp(this.balance.symbol))

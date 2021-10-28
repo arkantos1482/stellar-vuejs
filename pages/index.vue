@@ -151,6 +151,8 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('balances/refresh')
+
     this.$axios.$get('/profiles/me')
         .then(res => this.accessLevel = res.access_level)
 
