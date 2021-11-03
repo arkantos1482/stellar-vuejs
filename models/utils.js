@@ -21,3 +21,17 @@ export function toFarsiCoinPair(pair) {
 export function toFarsiCoin(type) {
     return coinToFarsi[type.toUpperCase()]
 }
+
+export async function axiosDownload(axios, link, fileName) {
+    let response = await axios.get(link, {
+        responseType: 'arraybuffer'
+    })
+    let fileURL = window.URL.createObjectURL(new Blob([response.data]));
+    let fileLink = document.createElement('a');
+
+    fileLink.href = fileURL;
+    fileLink.setAttribute('download', fileName);
+    document.body.appendChild(fileLink);
+
+    fileLink.click();
+}

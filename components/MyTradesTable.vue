@@ -17,7 +17,9 @@
     </a-paged-table>
 
     <div v-if="!hideExport" class="text-center mt-6">
-      <v-btn @click="exportCsv" color="primary" outlined>CSV Export</v-btn>
+      <v-btn @click="externalExport" color="primary" outlined :loading="l.export">
+        Excel Export
+      </v-btn>
     </div>
 
   </div>
@@ -27,7 +29,7 @@
 
 import APagedTable from "../components/APagedTable";
 import {safeDecimal, toSeparated} from "../models/NumberUtil";
-import {toFarsiCoin, toFarsiCoinPair, toFarsiDate} from "../models/utils";
+import {axiosDownload, toFarsiCoin, toFarsiCoinPair, toFarsiDate} from "../models/utils";
 import {getMarketDp} from "../models/cryptoPrecision";
 import {exportCSVFile} from "../models/csvUtil";
 import {collect} from "collect.js";
@@ -53,6 +55,7 @@ export default {
         {value: 'fee', text: 'کارمزد', align: 'center', sortable: false},
         {value: 'ledger_closed_at', text: 'تاریخ', align: 'center'},
       ],
+      l: {export: false}
     }
   },
   methods: {
@@ -114,7 +117,7 @@ export default {
           ? item.counter_asset_code
           : item.base_asset_code
     },
-    exportCsv() {
+    internalCsvExport() {
       let items = this.$refs.trades.raw_data.map(this.export_adapter)
       let total = this.export_total(items)
       items.push(total)
@@ -122,6 +125,12 @@ export default {
           collect(this.headers).pluck('text').all(),
           items,
           'trades')
+    },
+    async externalExport() {
+      this.l.export = true
+      let link = `${this.$axios.defaults.baseURL}/trades/${this.userId}/export`
+      await axiosDownload(this.$axios, link, 'trades.xlsx')
+      this.l.export = false
     }
   },
 }

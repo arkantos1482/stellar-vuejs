@@ -72,6 +72,7 @@
 import ps from '@/mixins/pstopper'
 import KycItem from "../../../components/KycItem";
 import ARow from "../../../components/ARow";
+import {axiosDownload} from "../../../models/utils";
 
 export default {
   components: {ARow, KycItem},
@@ -142,17 +143,7 @@ export default {
     },
     async downloadVideo() {
       this.l.downloadVideo = true
-      let response = await this.$axios.get('/profiles/' + this.userId + '/docs/video', {
-        responseType: 'arraybuffer'
-      })
-      let fileURL = window.URL.createObjectURL(new Blob([response.data]));
-      let fileLink = document.createElement('a');
-
-      fileLink.href = fileURL;
-      fileLink.setAttribute('download', 'profile.mp4');
-      document.body.appendChild(fileLink);
-
-      fileLink.click();
+      await axiosDownload(this.$axios, '/profiles/' + this.userId + '/docs/video', 'profile.mp4')
       this.l.downloadVideo = false
     },
 
