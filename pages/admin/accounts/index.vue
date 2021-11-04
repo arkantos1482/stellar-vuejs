@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <v-data-table :headers="headers"
-                  :items-per-page="200"
+                  :items-per-page="-1"
                   :items="list"
                   hide-default-footer
                   @click:row="goto">

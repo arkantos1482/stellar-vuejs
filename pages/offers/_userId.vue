@@ -42,7 +42,7 @@ export default {
         total: toSeparated(safeDecimal(item.amount).times(item.price_r.n).div(item.price_r.d)
             .todp(getDp(coin))),
         created_at: toFarsiDate(item.created_at),
-        cancel_text: parseFloat(item.amount) === 0 ? 'لغو شده' : 'موفقیت آمیز',
+        cancel_text: parseFloat(item.amount) === 0 ? 'لغو شده' : 'ثبت شده',
         cancel_color: parseFloat(item.amount) === 0 ? 'error--text' : 'success--text'
       }
     }
