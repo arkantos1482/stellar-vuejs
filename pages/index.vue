@@ -1,5 +1,13 @@
 <template>
   <div>
+
+    <v-alert v-if="false" color="error" class="text-display-2 px-12" shaped elevation="2">
+      <ul>
+        به اطلاع کاربران گرامی می رساند به علت تغییرات فنی در زیرساخت های سایت،  از ساعت 21 تا اطلاع ثانوی (اعمال تغییرات) امکان واریز تومان میسر نخواهد بود و باقی سرویس ها از جمله برداشت تومان، واریز و برداشت رمزارز و ... در دسترس خواهد بود
+        از صبر و شکیبایی شما سروران عزیز سپاسگزاریم
+      </ul>
+    </v-alert>
+
     <a-row>
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']"/>
       <CryptoMinMaxCard coin="ETH" :stat="stats['eth-rls']"/>
