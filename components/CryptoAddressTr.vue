@@ -41,11 +41,13 @@ export default {
       return this.$route.params.user_id
     },
     isRefreshDisabled() {
-      const type = this.type.toUpperCase();
-      return 'IRR' === type || this.isInternal()
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT',
+        'IRR', 'USDT', 'DRC']
+          .includes(this.type.toUpperCase())
     },
     isDepositDisabled() {
-      return false
+      return ['IRR', 'USDT', 'DRC']
+          .includes(this.type.toUpperCase())
     },
     isWithdrawDisabled() {
       const type = this.type.toUpperCase();
