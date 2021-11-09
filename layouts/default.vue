@@ -338,6 +338,10 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'مدیریت پیام ها',
           to: '/admin/messages/broadcast'
+        }, {
+          icon: 'mdi-chart-bubble',
+          title: 'محدودیت موقت فیچرهای اصلی',
+          to: '/admin/access/feature-constraints'
         },
       ],
       miniVariant: false,
