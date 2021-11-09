@@ -1,5 +1,9 @@
 <template>
   <div>
+    <v-alert v-if="isDRC" color="primary" class="text-display-2 px-12 mx-3" colored-border border="left" elevation="2">
+      دریک توکن،یک توکن مبتنی بر بلاکچین اسمارت چین بایننس است که توسط کمپانی پول عرضه شده است و کارگزاری رمزارزی بیترا
+      نقشی در تعین قیمت و همچنین مسئولیتی در قبال نقدشوندگی آن ندارد.
+    </v-alert>
     <!--    TOP (OFFER-REG + SELL/BUY + CHART-BAR-->
     <a-row class="align-stretch">
       <!--      OFFER-REG-->
@@ -231,6 +235,9 @@ export default {
     },
   },
   computed: {
+    isDRC() {
+      return [this.baseAsset, this.counterAsset].includes('DRC')
+    },
     pairAssetList() {
       const list1 = this.list[this.tabIndex];
       return collect(list1)
@@ -499,7 +506,7 @@ export default {
     document.addEventListener('visibilitychange', this.onVizChange, false)
   },
   beforeDestroy() {
-    document.removeEventListener('visibilitychange',this.onVizChange)
+    document.removeEventListener('visibilitychange', this.onVizChange)
     this.cleanUp()
   }
 }
