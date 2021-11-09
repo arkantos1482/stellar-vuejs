@@ -41,7 +41,7 @@ export default {
       return this.$route.params.user_id
     },
     isRefreshDisabled() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT',]
+      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT', 'IRR']
           .includes(this.type.toUpperCase())
     },
     isDepositDisabled() {
