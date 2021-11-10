@@ -234,6 +234,7 @@
 
     <v-main>
       <v-container fluid class="pa-4">
+        <bitra-banner v-for="i in allPagesBanners" :item="i"/>
         <nuxt/>
       </v-container>
       <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
@@ -253,7 +254,11 @@
 
 <script>
 
+import {banners, refresh as refreshBanners} from "../models/bannerService";
+import BitraBanner from "../components/BitraBanner";
+
 export default {
+  components: {BitraBanner},
   errorCaptured(err, vm, info) {
     //todo resolve by status code (err.response.status)
     this.snackBar.fail.show = true
@@ -340,6 +345,10 @@ export default {
           to: '/admin/messages/broadcast'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'مدیریت بنر ها',
+          to: '/admin/messages/banners'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'محدودیت موقت فیچرهای اصلی',
           to: '/admin/access/feature-constraints'
         },
@@ -360,6 +369,8 @@ export default {
       this.drawer = show
     })
 
+    refreshBanners(this.$axios)
+
     try {
       this.user = await this.$axios.$get('/profiles/me')
       this.$store.commit("auth/profile", this.user)
@@ -375,6 +386,7 @@ export default {
     document.addEventListener('visibilitychange', this.onVizChange, false)
   },
   computed: {
+    allPagesBanners: () => banners('all'),
     isAdmin() {
       return this.user.role === 'admin'
     },

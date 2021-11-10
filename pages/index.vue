@@ -1,18 +1,6 @@
 <template>
   <div>
-
-    <v-alert v-if="true" color="error" class="text-display-2 px-12" shaped elevation="2">
-      <ul>
-        براساس دستور مقام محترم قضایی، معاملات توکن "دریک" به علت تخلفات قانونی ناشر، تا اطلاع ثانوی مسدود می باشد.
-        ((پلیس امنیت اقتصادی))
-      </ul>
-    </v-alert>
-    <v-alert v-if="true" color="error" class="text-display-2 px-12" shaped elevation="2">
-      <ul>
-        به اطلاع کاربران گرامی می رساند به علت تغییرات فنی در زیرساخت های سایت،  تا اطلاع ثانوی (اعمال تغییرات) امکان واریز تومان میسر نخواهد بود و باقی سرویس ها از جمله برداشت تومان، واریز و برداشت رمزارز و ... در دسترس خواهد بود
-        از صبر و شکیبایی شما سروران عزیز سپاسگزاریم
-      </ul>
-    </v-alert>
+    <bitra-banner v-for="i in dashboardBanners" :item="i" />
 
     <a-row>
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']"/>
@@ -106,14 +94,17 @@ import {safeDecimal} from "@/models/NumberUtil";
 import {getDp} from "@/models/cryptoPrecision";
 import {coinList} from "../models/coinList";
 import MyTradesTable from "../components/MyTradesTable";
+import BitraBanner from "../components/BitraBanner";
+import {banners} from "../models/bannerService";
 
 export default {
   name: "index",
-  components: {MyTradesTable, MyTrades, DashboardCardTitle, RowItem},
+  components: {BitraBanner, MyTradesTable, MyTrades, DashboardCardTitle, RowItem},
   filters: {
     tomanSuffix: (val) => val + " تومان"
   },
   computed: {
+    dashboardBanners: () => banners('dashboard'),
     coinList: () => coinList,
     options() {
       return {}
