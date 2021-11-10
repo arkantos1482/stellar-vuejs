@@ -14,24 +14,67 @@
         </tr>
         </thead>
         <tbody>
-        <crypto-address-tr namad="امین" type="amn" :balance="balances.AMN"/>
-        <!--      <crypto-address-tr namad="برگ" type="ebg" :balance="balances.EBG"/>-->
-        <crypto-address-tr namad="آرت کوین" type="art" :balance="balances.ART"/>
-        <!--        <crypto-address-tr namad="زریک" type="zrk" :balance="balances.ZRK"/>-->
-        <crypto-address-tr namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
-        <crypto-address-tr namad="تلاش" type="tls" :balance="balances.TLS"/>
-        <crypto-address-tr namad="وی توکن" type="wit" :balance="balances.WIT"/>
-        <crypto-address-tr namad="تومان" type="irr" :balance="balances.IRR"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="امین" type="amn" :balance="balances.AMN"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="آرت کوین" type="art" :balance="balances.ART"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="تلاش" type="tls" :balance="balances.TLS"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="وی توکن" type="wit" :balance="balances.WIT"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="تومان" type="irr" :balance="balances.IRR"/>
 
-        <crypto-address-tr namad="بیت کوین" type="btc" :balance="balances.BTC"/>
-        <crypto-address-tr namad="بایننس" type="bnb" :balance="balances.BNB"/>
-        <crypto-address-tr namad="دریک توکن" type="drc" :balance="balances.DRC"/>
-        <crypto-address-tr namad="اتریوم" type="eth" :balance="balances.ETH"/>
-        <crypto-address-tr namad="لایت کوین" type="ltc" :balance="balances.LTC"/>
-        <crypto-address-tr namad="تتر" type="usdt" :balance="balances.USDT"/>
-        <crypto-address-tr namad="ترون" type="trx" :balance="balances.TRX"/>
-        <crypto-address-tr namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>
-        <crypto-address-tr namad="دوج کوین" type="doge" :balance="balances.DOGE"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="بیت کوین" type="btc" :balance="balances.BTC"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="بایننس" type="bnb" :balance="balances.BNB"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="دریک توکن" type="drc" :balance="balances.DRC"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="اتریوم" type="eth" :balance="balances.ETH"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="لایت کوین" type="ltc" :balance="balances.LTC"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="تتر" type="usdt" :balance="balances.USDT"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="ترون" type="trx" :balance="balances.TRX"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="بیت کوین کش" type="bch" :balance="balances.BCH"/>
+        <crypto-address-tr
+            :withdraw-disabled="withdrawConstraints"
+            :deposit-disabled="depositConstraints"
+            namad="دوج کوین" type="doge" :balance="balances.DOGE"/>
         </tbody>
       </v-simple-table>
     </v-card>
@@ -39,20 +82,25 @@
 </template>
 
 <script>
-import CryptoAddressTr from "@/components/CryptoAddressTr";
+
 import balances, {refresh} from '../balanceService'
+import {init as initConstraints, withdrawConstraints, depositConstraints} from "../../../models/constraintService"
+import CryptoAddressTr from "../../../components/CryptoAddressTr";
 
 export default {
   name: "CryptoAddresses",
   components: {CryptoAddressTr},
   computed: {
     balances,
+    withdrawConstraints,
+    depositConstraints,
     user_id() {
       return this.$route.params.user_id
     }
   },
   mounted() {
     refresh(this.$axios, this.user_id)
+    initConstraints(this.$axios)
   }
 }
 </script>

@@ -215,6 +215,7 @@ import {safeDecimal} from "@/models/NumberUtil";
 import {getDp, getMarketDp} from "@/models/cryptoPrecision";
 import PairAssetTrades from "@/pages/trades";
 import TVChartContainer from "@/components/TVChartContainer";
+import {init as initConstraints, offerConstraints} from "../../../models/constraintService";
 
 export default {
   components: {TVChartContainer, PairAssetTrades, OrderTextField, ActiveOffers, TradingVue},
@@ -346,16 +347,26 @@ export default {
         }
       }
     },
+    offerConstraints,
+    list() {
+      return [
+        ['BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR', 'DOGE/IRR']
+            .filter(pair => !collect(this.offerConstraints)
+                .contains((v, k) => pair.includes(v))),
+        ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT', 'DOGE/USDT']
+            .filter(pair => !collect(this.offerConstraints)
+                .contains((v, k) => pair.includes(v))),
+        ['ETH/BTC', 'TRX/BTC', 'DOGE/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
+          'TRX/ETH', 'DOGE/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
+          'BNB/BCH', 'TRX/BNB', 'DOGE/BNB']
+            .filter(pair => !collect(this.offerConstraints)
+                .contains((v, k) => pair.includes(v)))
+      ]
+    }
   },
   data() {
     return {
       exchangeAction: 'buy',
-      list: [
-        [ 'BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR', 'DOGE/IRR'],
-        [ 'BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT', 'DOGE/USDT'],
-        [ 'ETH/BTC', 'TRX/BTC', 'DOGE/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
-          'TRX/ETH', 'DOGE/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
-          'BNB/BCH', 'TRX/BNB', 'DOGE/BNB']],
       offers: [],
       tabIndex: 0,
       pairAsset: 'BTC/IRR',
@@ -498,6 +509,8 @@ export default {
       this.windowWidth = window.innerWidth
     }
     this.$bus.$emit('drawer', false)
+
+    initConstraints(this.$axios)
 
     this.refreshBalances()
 

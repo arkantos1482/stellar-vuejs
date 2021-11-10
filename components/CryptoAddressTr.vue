@@ -35,7 +35,7 @@ import {getDp} from "@/models/cryptoPrecision"
 export default {
   mixins: [ps],
   name: 'CryptoAddressTr',
-  props: ['type', 'address', 'balance', 'namad'],
+  props: ['type', 'address', 'balance', 'namad', 'withdrawDisabled', 'depositDisabled'],
   computed: {
     user_id() {
       return this.$route.params.user_id
@@ -45,13 +45,12 @@ export default {
           .includes(this.type.toUpperCase())
     },
     isDepositDisabled() {
-      return ['IRR', 'USDT', 'DRC']
-          .includes(this.type.toUpperCase())
+      return this.depositDisabled
+          ?.includes(this.type.toUpperCase())
     },
     isWithdrawDisabled() {
-      const type = this.type.toUpperCase();
-      return ['ETH'].includes(type)
-      // return false
+      return this.withdrawDisabled
+          ?.includes(this.type.toUpperCase())
     },
     withdrawLabel() {
       return this.isInternal() ? 'ارسال' : 'برداشت'

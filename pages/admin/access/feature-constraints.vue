@@ -50,7 +50,7 @@ export default {
       {text: 'ملاحظات', value: 'desc', sortable: false, align: 'center'},
       {text: 'حذف', value: 'delete', sortable: false, align: 'center'},
     ],
-    typeItems: () => ['order', 'withdraw', 'deposit'],
+    typeItems: () => ['offer', 'withdraw', 'deposit'],
     coinItems: () => coinList
   },
   data() {
