@@ -13,7 +13,23 @@
       <template v-slot:item.crypto_updated_at="{value}">{{ value|toFarsiDate }}</template>
       <template v-slot:item.stellar_updated_at="{value}">{{ value|toFarsiDate }}</template>
       <template v-slot:item.created_at="{value}">{{ value|toFarsiDate }}</template>
+
+      <template v-slot:item.correction="{item}">
+        <v-btn v-if="needCorrection(item)" outlined color="error" small @click="correctDialog(item)">تصحیح</v-btn>
+      </template>
     </a-paged-table>
+
+    <v-dialog width="400" v-model="d.correct">
+      <v-card class="pa-6 text-center">
+        <p class="text-h3">واریز استلار</p>
+        <p class="text-h4">{{ email }}</p>
+        <p class="text-h4 primary--text">{{ asset }}</p>
+        <v-text-field v-model="amount" label="مقدار"/>
+        <v-btn @click="correct" :loading="l.correct"
+               color="error" class="mt-6">اعمال
+        </v-btn>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -24,8 +40,22 @@ import {coinList} from "../../../models/coinList";
 export default {
   name: "CryptoReport",
   components: {APagedTable},
+  filters: {
+    actionToFa(value) {
+      let result = ''
+      if (value === 'deposit') result = 'واریز'
+      else if (value === 'withdraw') result = 'برداشت'
+      return result
+    },
+  },
   data() {
     return {
+      user_id: '',
+      email: '',
+      asset: '',
+      amount: '',
+      l: {correct: false},
+      d: {correct: false},
       headers: [
         {value: 'email', text: 'ایمیل', align: 'center'},
         {value: 'currency', text: 'رمزارز', align: 'center'},
@@ -43,6 +73,7 @@ export default {
         {value: 'crypto_updated_at', text: 'تاریخ کریپتو', align: 'center'},
         {value: 'stellar_updated_at', text: 'تاریخ استلار', align: 'center'},
         // {value: 'updated_at', text: 'تاریخ بروزشده'},
+        {value: 'correction', text: 'تصحیح'}
       ],
       filterQuery: [
         {type: 'text', key: 'users.email', name: 'ایمیل', value: ''},
@@ -59,6 +90,33 @@ export default {
       ]
     }
   },
+  methods: {
+    needCorrection: item => {
+      if (item?.type === 'withdraw') {
+        if (item.stellar_status === 'done' && item.crypto_status !== 'done') {
+          return true
+        }
+      }
+      return false
+    },
+    correctDialog(item) {
+      this.d.correct = true
+
+      this.email = item.email
+      this.user_id = item.user_id
+      this.asset = item.currency.toUpperCase()
+      this.amount = item.amount
+    },
+    async correct() {
+
+      this.l.correct = true
+      await this.$axios.$post('/stellar/deposit',
+          {user_id: this.user_id, asset: this.asset, amount: this.amount})
+      this.l.correct = false
+      this.d.correct = false
+      this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
+    }
+  }
 }
 </script>
 
