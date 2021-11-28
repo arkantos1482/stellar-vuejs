@@ -15,8 +15,8 @@
         <p v-else-if="!value.startsWith('http')">{{ `کد رهگیری = ${value}` }}</p>
         <a v-else :href="value" target="_blank">لینک پیگیری</a>
       </template>
-      <template v-slot:item.status="{value}">
-        <div :class="value|toFarsiColor">{{ value|toFarsiTitle }}</div>
+      <template v-slot:item.status="{item}">
+        <div :class="item|toFarsiColor">{{ item|toFarsiTitle }}</div>
       </template>
     </a-paged-table>
   </div>
@@ -38,19 +38,29 @@ export default {
     type: String
   },
   filters: {
-    toFarsiTitle(val) {
+    toFarsiTitle(item) {
+      let status = item.status
+      if (item.recovery_time) {
+        status = 'recovered'
+      }
       const statusList = {
         success: 'موفقیت آمیز',
-        SUBMITTED: 'در حال انجام'
+        SUBMITTED: 'در حال انجام',
+        recovered: 'برگشت شده به حساب'
       }
-      return statusList[val] ?? 'ناموفق'
+      return statusList[status] ?? 'ناموفق'
     },
-    toFarsiColor(val) {
+    toFarsiColor(item) {
+      let status = item.status
+      if (item.recovery_time) {
+        status = 'recovered'
+      }
       const statusList = {
         success: 'success--text',
-        SUBMITTED: 'yellow--text'
+        SUBMITTED: 'yellow--text',
+        recovered: 'success--text'
       }
-      return statusList[val] ?? 'error--text'
+      return statusList[status] ?? 'error--text'
     }
   },
   data() {

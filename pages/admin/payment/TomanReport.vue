@@ -25,7 +25,8 @@
       <template v-slot:item.created_at="{value}">{{ value|toFarsiDate }}</template>
 
       <template v-slot:item.correction="{item}">
-        <v-btn v-if="needCorrection(item)" outlined color="error" small @click="correctDialog(item)">تصحیح</v-btn>
+        <span v-if="alreadyCorrected(item)" class="success--text">اصلاح شده</span>
+        <v-btn v-else-if="needCorrection(item)" outlined color="error" small @click="correctDialog(item)">تصحیح</v-btn>
       </template>
     </a-paged-table>
 
@@ -35,6 +36,7 @@
         <p class="text-h4">{{ email }}</p>
         <p class="text-h4 primary--text">{{ asset }}</p>
         <v-text-field v-model="amount" label="مقدار"/>
+        <v-text-field v-model="desc" label="توضیحات"/>
         <v-btn @click="correct" :loading="l.correct"
                color="error" class="mt-6">اعمال
         </v-btn>
@@ -118,6 +120,9 @@ export default {
       email: '',
       asset: '',
       amount: '',
+      tx_id: '',
+      tx_type: 'rial',
+      desc: '',
       l: {correct: false},
       d: {correct: false},
       headers: [
@@ -167,6 +172,9 @@ export default {
       }
       return false
     },
+    alreadyCorrected(item) {
+      return Boolean(item?.txable_id)
+    },
     correctDialog(item) {
       this.d.correct = true
 
@@ -174,20 +182,20 @@ export default {
       this.user_id = item.user_id
       this.asset = 'IRR'
       this.amount = item.amount
-
-      if (item.type === 'deposit') {
-        this.urlAction = 'deposit'
-      } else if (item.type === 'withdraw') {
-        this.urlAction = 'withdraw'
-      }
+      this.tx_id = item.id
     },
     async correct() {
 
       this.l.correct = true
-      await this.$axios.$post('/stellar/deposit',
-          {user_id: this.user_id, asset: this.asset, amount: this.amount})
+      await this.$axios.$post('/stellar/tx-recovery',
+          {
+            user_id: this.user_id, asset: this.asset, amount: this.amount,
+            tx_id: this.tx_id, tx_type: this.tx_type, desc: this.desc
+          })
       this.l.correct = false
       this.d.correct = false
+
+      await this.$refs.table.refresh()
       this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
     }
   }

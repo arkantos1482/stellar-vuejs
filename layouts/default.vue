@@ -321,6 +321,10 @@ export default {
           to: '/admin/payment/TomanReport'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'لیست تصحیح تراکنش ها',
+          to: '/admin/tx-corrections'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'کارمزد برداشت ها',
           to: '/admin/withdraw-fee'
         }, {
