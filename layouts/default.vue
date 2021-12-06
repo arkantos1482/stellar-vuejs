@@ -325,6 +325,10 @@ export default {
           to: '/admin/tx-corrections'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'مدیریت معاملات',
+          to: '/admin/trades'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'کارمزد برداشت ها',
           to: '/admin/withdraw-fee'
         }, {
