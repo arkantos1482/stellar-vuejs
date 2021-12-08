@@ -1,17 +1,16 @@
 <template>
   <div>
-    <bitra-banner v-for="i in dashboardBanners" :item="i" />
+    <bitra-banner v-for="i in dashboardBanners" :item="i"/>
 
     <a-row>
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']"/>
       <CryptoMinMaxCard coin="ETH" :stat="stats['eth-rls']"/>
       <CryptoMinMaxCard coin="LTC" :stat="stats['ltc-rls']"/>
       <CryptoMinMaxCard coin="USDT" :stat="stats['usdt-rls']"/>
-      <!--      <CryptoMinMaxCard coin="BCH" :stat="stats['bch-rls']"/>-->
-      <CryptoMinMaxCard coin="AMN" :stat="preMadeStat.AMN"/>
-      <CryptoMinMaxCard coin="ART" :stat="preMadeStat.ART"/>
-      <CryptoMinMaxCard coin="SHA" :stat="preMadeStat.SHA"/>
-      <CryptoMinMaxCard coin="ZRK" :stat="preMadeStat.ZRK"/>
+      <CryptoMinMaxCard coin="BCH" :stat="stats['bch-rls']"/>
+      <CryptoMinMaxCard coin="BNB" :stat="stats['bnb-rls']"/>
+      <CryptoMinMaxCard coin="DOGE" :stat="stats['doge-rls']"/>
+      <CryptoMinMaxCard coin="TRX" :stat="stats['trx-rls']"/>
     </a-row>
 
     <a-row class="align-stretch">
