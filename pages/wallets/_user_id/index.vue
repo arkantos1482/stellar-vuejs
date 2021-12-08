@@ -28,10 +28,10 @@
             :withdraw-disabled="withdrawConstraints"
             :deposit-disabled="depositConstraints"
             namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
-        <crypto-address-tr
-            :withdraw-disabled="withdrawConstraints"
-            :deposit-disabled="depositConstraints"
-            namad="تلاش" type="tls" :balance="balances.TLS"/>
+<!--        <crypto-address-tr-->
+<!--            :withdraw-disabled="withdrawConstraints"-->
+<!--            :deposit-disabled="depositConstraints"-->
+<!--            namad="تلاش" type="tls" :balance="balances.TLS"/>-->
         <crypto-address-tr
             :withdraw-disabled="withdrawConstraints"
             :deposit-disabled="depositConstraints"
