@@ -325,8 +325,8 @@ export default {
           to: '/admin/tx-corrections'
         }, {
           icon: 'mdi-chart-bubble',
-          title: 'مدیریت معاملات',
-          to: '/admin/trades'
+          title: 'گزارشات جامع',
+          to: '/admin/aggregatedReports'
         }, {
           icon: 'mdi-chart-bubble',
           title: 'کارمزد برداشت ها',
