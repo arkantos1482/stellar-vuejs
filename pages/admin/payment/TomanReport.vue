@@ -166,7 +166,8 @@ export default {
           return true
         }
       } else if (item?.type === 'withdraw') {
-        if (item.stellar_status === 'done' && item.pay_system_status === 'GENERATED') {
+        if (item.stellar_status === 'done'
+            && ['GENERATED', 'FAILED'].includes(item.pay_system_status)) {
           return true
         }
       }
