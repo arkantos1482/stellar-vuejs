@@ -43,7 +43,7 @@
                         v-model="buyPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
-                <span>{{ sellBestPrice|toFloat|separated }}</span></p>
+                <span>{{ adjustDp(sellBestPrice, baseAsset)|toFloat|separated }}</span></p>
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
@@ -75,7 +75,7 @@
                         v-model="sellPercent"
                         min="0" thumb-label/>
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
-                <span>{{ buyBestPrice|toFloat|separated }}</span></p>
+                <span>{{ adjustDp(buyBestPrice, counterAsset)|toFloat|separated }}</span></p>
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 class="mt-0" readonly :value="sellTotal" prepend="مجموع"
                                 :append="counterAsset|irtFix"/>
@@ -467,11 +467,15 @@ export default {
     },
     select(action, item) {
       if (action === 'sell') {
-        this.sell.price = this.offersPrice(item)
-        this.sell.amount = this.buyRecordAmount(item)
+        this.sell.price = safeDecimal(this.offersPrice(item))
+            .todp(getMarketDp(this.baseAsset, this.counterAsset))
+        this.sell.amount = safeDecimal(this.buyRecordAmount(item))
+            .todp(getDp(this.baseAsset))
       } else if (action === 'buy') {
-        this.buy.price = this.offersPrice(item)
-        this.buy.amount = parseFloat(item.amount)
+        this.buy.price = safeDecimal(this.offersPrice(item))
+            .todp(getMarketDp(this.baseAsset, this.counterAsset))
+        this.buy.amount = safeDecimal(parseFloat(item.amount))
+            .todp(getDp(this.baseAsset))
       }
     },
     startRecurrentJob() {
