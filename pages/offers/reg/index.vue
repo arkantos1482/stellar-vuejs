@@ -139,7 +139,7 @@
                   </td>
                   <td style="font-size: 1.4rem">{{ adjustDp(item.amount, baseAsset)|toFloat|separated }}</td>
                   <td style="font-size: 1.4rem">
-                    {{ adjustDp(sellRecordTotal(item), baseAsset, counterAsset)|separated }}
+                    {{ adjustMarketDp(sellRecordTotal(item), baseAsset, counterAsset)|separated }}
                   </td>
                 </tr>
                 </tbody>
@@ -163,7 +163,7 @@
                   </td>
                   <td style="font-size: 1.4rem">{{ adjustDp(buyRecordAmount(item), baseAsset)|separated }}</td>
                   <td style="font-size: 1.4rem">
-                    {{ adjustDp(item.amount, baseAsset, counterAsset)|toFloat|separated }}
+                    {{ adjustMarketDp(item.amount, baseAsset, counterAsset)|toFloat|separated }}
                   </td>
                 </tr>
                 </tbody>

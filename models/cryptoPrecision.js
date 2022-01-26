@@ -10,20 +10,20 @@ const currencies = {
 
     IRR: 0,
     USDT: 2,
+    DOGE: 2,
+    TRX: 2,
 
     DEFAULT: 6,
 }
 
 const markets = {
     TRX: {
-        IRR: 2,
         USDT: 6,
         BTC: 7, // expected 8
         ETH: 7, // expected 8
         BNB: 7
     },
     DOGE: {
-        IRR: 2,
         USDT: 6,
         BTC: 7, // expected 8
         ETH: 7, // expected 8
