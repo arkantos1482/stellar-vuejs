@@ -353,6 +353,10 @@ export default {
           to: '/admin/messages/broadcast'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'مدیریت بات ها',
+          to: '/admin/bots'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'مدیریت بنر ها',
           to: '/admin/messages/banners'
         }, {

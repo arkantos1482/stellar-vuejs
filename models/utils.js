@@ -4,6 +4,13 @@ export function toIndexedList(list) {
     return list.map((item, index) => ({index: index + 1, ...item}))
 }
 
+export function emptyArray(list) {
+    for (let i of Object.keys(list)) {
+        list[i] = ''
+    }
+    return list
+}
+
 export function toFarsiDate(val) {
     if (!val) return
     const utcDate = val.endsWith('Z') ? val : val + 'Z'
