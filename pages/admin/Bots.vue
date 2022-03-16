@@ -22,6 +22,7 @@
 
     <v-dialog width="400" v-model="d.bot">
       <v-card class="pa-6 text-center">
+        <v-select outlined label="feed" :items="feedList" v-model="bot.feed"/>
         <v-select outlined label="base_asset" :items="coinList" v-model="bot.base_asset"/>
         <v-select outlined label="counter_asset" :items="coinList" v-model="bot.counter_asset"/>
         <a-text-field label="email" v-model="bot.email"/>
@@ -35,8 +36,8 @@
         <a-text-field label="min_amount" v-model="bot.min_amount"/>
         <a-text-field label="max_amount" v-model="bot.max_amount"/>
         <a-text-field label="amount_precision" v-model="bot.amount_precision"/>
-        <!--        <a-text-field label="usdt_rate" v-model="bot.usdt_rate"/>-->
-        <!--        <a-text-field label="feed" v-model="bot.feed"/>-->
+        <a-text-field label="usdt_rate" v-model="bot.usdt_rate"/>
+
         <v-btn @click="create_edit" :loading="l.send" class="mt-4" color="primary" outlined>ارسال</v-btn>
       </v-card>
     </v-dialog>
@@ -82,8 +83,10 @@ export default {
   },
   computed: {
     coinList: () => coinList,
+    feedList: () => ['nobitex', 'okx'],
     headers: () => [
       {value: 'email', text: 'email', align: 'center'},
+      {value: 'feed', text: 'feed', align: 'center'},
       {value: 'base_asset', text: 'base_asset', align: 'center'},
       {value: 'counter_asset', text: 'counter_asset', align: 'center'},
       {value: 'frequency', text: 'frequency', align: 'center'},
@@ -95,8 +98,7 @@ export default {
       {value: 'buy_deviation', text: 'buy_deviation', align: 'center'},
       {value: 'min_amount', text: 'min_amount', align: 'center'},
       {value: 'max_amount', text: 'max_amount', align: 'center'},
-      // {value: 'usdt_rate', text: 'usdt_rate', align: 'center'},
-      // {value: 'feed', text: 'feed', align: 'center'},
+      {value: 'usdt_rate', text: 'usdt_rate', align: 'center'},
       {value: 'amount_precision', text: 'amount_precision', align: 'center'},
       {value: 'actions', text: 'actions', align: 'center', width: '180'},
     ]
@@ -121,8 +123,6 @@ export default {
     },
     createDialog() {
       this.bot = emptyArray(this.bot)
-      this.bot.feed = 'nobitex'
-      this.bot.usdt_rate = '0.0'
       this.d.bot = true
     },
     async remove(id) {
