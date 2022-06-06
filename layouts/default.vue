@@ -357,6 +357,10 @@ export default {
           to: '/admin/bots'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'لیست اپراتورهای گارد',
+          to: '/admin/operators'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'مدیریت بنر ها',
           to: '/admin/messages/banners'
         }, {

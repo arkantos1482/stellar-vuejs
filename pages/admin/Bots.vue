@@ -10,9 +10,22 @@
         default-sort-by="created_at"
         :default-sort-desc="true">
       <template v-slot:item.created_at="{value}">{{ value|toFarsiDate }}</template>
+      <template v-slot:item.is_active="{item}">
+        <v-checkbox v-model="item.is_active"
+                    @change="activate_deactivate(item.id,$event)">فعال
+        </v-checkbox>
+      </template>
       <template v-slot:item.actions="{item}">
-        <v-btn outlined small color="primary" @click="editDialog(item)">ویرایش</v-btn>
-        <v-btn outlined small color="error" @click="remove(item.id)">حذف</v-btn>
+        <div style="width: 256px">
+          <v-btn outlined small color="primary" @click="editDialog(item)">ویرایش
+          </v-btn>
+          <v-btn outlined small color="warning"
+                 @click="deleteAllOrders(item.id)">تخیله صف
+          </v-btn>
+          <v-btn outlined small color="error"
+                 @click="remove(item.id)">حذف
+          </v-btn>
+        </div>
       </template>
     </a-paged-table>
 
@@ -37,6 +50,8 @@
         <a-text-field label="max_amount" v-model="bot.max_amount"/>
         <a-text-field label="amount_precision" v-model="bot.amount_precision"/>
         <a-text-field label="usdt_rate" v-model="bot.usdt_rate"/>
+        <a-text-field label="sell_guard_deviation" v-model="bot.sell_guard_deviation"/>
+        <a-text-field label="buy_guard_deviation" v-model="bot.buy_guard_deviation"/>
 
         <v-btn @click="create_edit" :loading="l.send" class="mt-4" color="primary" outlined>ارسال</v-btn>
       </v-card>
@@ -70,6 +85,9 @@ export default {
         sell_fee: '',
         buy_fee: '',
         sell_deviation: '',
+        is_active: true,
+        sell_guard_deviation: '',
+        buy_guard_deviation: '',
         buy_deviation: '',
         min_amount: '',
         max_amount: '',
@@ -86,6 +104,7 @@ export default {
     feedList: () => ['nobitex', 'okx'],
     headers: () => [
       {value: 'email', text: 'email', align: 'center'},
+      {value: 'is_active', text: 'فعال', align: 'center'},
       {value: 'feed', text: 'feed', align: 'center'},
       {value: 'base_asset', text: 'base_asset', align: 'center'},
       {value: 'counter_asset', text: 'counter_asset', align: 'center'},
@@ -100,6 +119,8 @@ export default {
       {value: 'max_amount', text: 'max_amount', align: 'center'},
       {value: 'usdt_rate', text: 'usdt_rate', align: 'center'},
       {value: 'amount_precision', text: 'amount_precision', align: 'center'},
+      {value: 'sell_guard_deviation', text: 'sell_guard_deviation', align: 'center'},
+      {value: 'buy_guard_deviation', text: 'buy_guard_deviation', align: 'center'},
       {value: 'actions', text: 'actions', align: 'center', width: '180'},
     ]
   },
@@ -128,7 +149,18 @@ export default {
     async remove(id) {
       await this.$axios.post('/bots/' + id + '/delete')
       await this.$refs.table.refresh()
-    }
+    },
+    async deleteAllOrders(id) {
+      await this.$axios.post('/bots/' + id + '/delete-all-orders')
+    },
+    async activate_deactivate(id, shouldActive) {
+      if (shouldActive) {
+        await this.$axios.post('/bots/' + id + '/activate')
+      } else {
+        await this.$axios.post('/bots/' + id + '/deactivate')
+      }
+      await this.$refs.table.refresh()
+    },
   }
 }
 </script>
