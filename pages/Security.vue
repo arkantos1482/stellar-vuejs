@@ -2,15 +2,16 @@
   <div class="pa-6">
     <p class="text-h4 text-right">امنیت</p>
     <v-card width="100%" class="py-8 px-12">
+
       <a-row class="align-center">
         <v-icon color="grey" large>mdi-google</v-icon>
         <div class="mr-4" style="margin-left: 240px">
           <p class="mb-2">کد دو عاملی</p>
           <p class="mb-0 text-body-2 grey--text">برای برداشت و اصلاحات امنیتی استفاده می شود</p>
         </div>
-        <v-btn :loading="l.toggleGmfa"
+        <v-btn :loading="l.toggleTotp" @click="onTotpToggle"
                small outlined color="primary" class="px-6">
-          {{ btnText }}
+          {{ totpBtnText }}
         </v-btn>
       </a-row>
 
@@ -22,9 +23,9 @@
           <p class="mb-2">احراز هویت از طریق پیامک</p>
           <p class="mb-0 text-body-2 grey--text">برای برداشت و اصلاحات امنیتی استفاده می شود</p>
         </div>
-        <v-btn @click="onToggle" :loading="l.toggle"
+        <v-btn @click="onSmsToggle" :loading="l.toggleSms"
                small outlined color="primary" class="px-6">
-          {{ btnText }}
+          {{ smsBtnText }}
         </v-btn>
       </a-row>
     </v-card>
@@ -43,6 +44,34 @@
       </v-col>
     </a-row>
 
+    <!--    TOTP DIALOG-->
+    <v-dialog v-model="d.totp" width="600">
+      <v-card class="px-12 py-6">
+        <div class="text-center">
+          <p>کیوآرکد زیر را در نرم افزار Google Authenticator یا Authy یا شبیه آن اسکن نمایید.</p>
+          <vue-qrcode :value="totp_url"/>
+          <v-divider class="my-4"/>
+          <p>اگر در اسکن مشکلی دارید، می توانید کد زیر را به صورت دستی وارد کنید.
+            شما می توانید این کد را در جایی امن ذخیره نموده و در صورت گم کردن گوشی همراه خود در گوشی جدید وارد کنید.</p>
+          <p class="mt-4">{{ totp_secret }}</p>
+          <v-divider class="my-4"/>
+          <p>برای فعال سازی، رمز یکبار مصرف را وارد نمایید.</p>
+          <div>
+            <PincodeInput class="dark"
+                          dir="ltr"
+                          v-model="totp_code"
+                          length=6
+            />
+          </div>
+          <v-btn :loading="l.toggleTotp" @click="activateTotp"
+                 color="primary" class="mt-2">فعال سازی
+          </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+
+
+    <!--    CHANGE PASS DIALOG-->
     <v-dialog v-model="d.changePass">
       <a-card divider class="mt-4" title="تغییر رمز عبور">
         <v-row justify="center">
@@ -88,40 +117,37 @@
 </template>
 
 <script>
+
+import VueQrcode from 'vue-qrcode'
 import ACard from "@/components/ACard";
 import pstopper from "@/mixins/pstopper";
 import ATextField from "@/components/ATextField";
 import {error, success} from "@/models/snackBus";
+import PincodeInput from "vue-pincode-input";
 
 export default {
-  components: {ATextField, ACard},
+  components: {ATextField, ACard, VueQrcode, PincodeInput},
   mixins: [pstopper],
   computed: {
-    mfaIsEnabled() {
-      return this.mfa_method === 'sms'
+    getSmsToggled() {
+      return this.mfa_method === 'sms' ? 'none' : 'sms'
     },
-    getInverted() {
-      return this.mfaIsEnabled ? 'none' : 'sms'
-    },
-    btnText() {
-      return this.mfaIsEnabled ? 'غیرفعال سازی' : 'فعال سازی'
-    },
-    // btnColor() {
-    //   return this.mfaIsEnabled ? 'F849601E' : '#02c0761E'
+    // getTotpToggled() {
+    //   return this.mfa_method === 'totp' ? 'none' : 'totp'
     // },
-    // btnClass() {
-    //   return this.mfaIsEnabled ? 'error--text' : 'success--text'
-    // },
-    statusText() {
-      return this.mfaIsEnabled ? 'فعال' : 'غیرفعال'
+    smsBtnText() {
+      return this.mfa_method === 'sms' ? 'غیرفعال سازی' : 'فعال سازی'
     },
-    statusClass() {
-      return this.mfaIsEnabled ? 'success--text' : 'error--text'
-    }
+    totpBtnText() {
+      return this.mfa_method === 'totp' ? 'غیرفعال سازی' : 'فعال سازی'
+    },
   },
   data() {
     return {
       mfa_method: '',
+      totp_url: '',
+      totp_secret: '',
+      totp_code: '',
       dto: {
         old_password: '',
         new_password: '',
@@ -129,8 +155,8 @@ export default {
       repeatNewPass: '',
       showPass: false,
       form: false,
-      l: {toggle: false, changePass: false, toggleGmfa: false},
-      d: {changePass: false},
+      l: {toggleSms: false, changePass: false, toggleTotp: false},
+      d: {changePass: false, totp: false},
       rules: {
         required: value => !!value || 'الزامی است',
         counter: value => value.length >= 6 || 'حداقل ۶ کاراکتر',
@@ -150,13 +176,37 @@ export default {
     this.mfa_method = (await this.$axios.$get('/profiles/me')).mfa_method
   },
   methods: {
-    async onToggle() {
-      this.l.toggle = true
+    async onSmsToggle() {
+      this.l.toggleSms = true
       this.mfa_method = await this.$axios.$post('/profiles/me/mfa', {
-        mfa_method: this.getInverted
+        mfa_method: this.getSmsToggled
       })
-      this.l.toggle = false
+      this.l.toggleSms = false
     },
+    async onTotpToggle() {
+      if (this.mfa_method === 'totp') {
+        this.l.toggleTotp = true
+        this.mfa_method = await this.$axios.$post('/profiles/me/mfa', {
+          mfa_method: 'none'
+        })
+        this.l.toggleTotp = false
+      } else {
+        let totp = await this.$axios.$get('/profiles/me/mfa/totp');
+        this.totp_url = totp.url
+        this.totp_secret = totp.secret
+        this.d.totp = true
+      }
+    },
+    async activateTotp() {
+      this.l.toggleTotp = true
+      this.mfa_method = await this.$axios.$post('/profiles/me/mfa', {
+        mfa_method: 'totp',
+        totp_code: this.totp_code
+      })
+      this.l.toggleTotp = false
+      this.d.totp = false
+    },
+
     async changePass() {
       this.$refs.form.validate()
       if (this.form) {

@@ -5,7 +5,7 @@
              :src="require('../assets/images/Bitra_Logo_Final_Edition-18@3x.png')"/>
     </template>
     <div class="pt-16">
-      <p class="mb-4">کد تایید ارسال شده به ایمیل خود را در کادر زیر وارد نمایید.</p>
+      <p class="mb-4">کد تایید ارسال شده را در کادر زیر وارد نمایید.</p>
       <otp :loading="l.submit" class="mt-8" @send="onSubmit" @otp="token=$event" label="کد تایید"/>
     </div>
   </two-sided-panel>
@@ -34,8 +34,9 @@ export default {
       await this.$axios.$post('/login', {
         email: this.$store.state.credentials.email,
         password: this.$store.state.credentials.password,
-        otp: this.token,
-        captcha_token: this.captcha_token
+        captcha_token: this.captcha_token,
+        mfa: true,
+        otp: this.token
       })
       this.$store.commit('credentials/reset')
       await this.$router.push('/')

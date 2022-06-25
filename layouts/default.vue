@@ -309,6 +309,10 @@ export default {
           to: '/admin/transactions'
         }, {
           icon: 'mdi-chart-bubble',
+          title: 'تعیین کارمزدهای کاربران',
+          to: '/admin/user-trade-fee'
+        }, {
+          icon: 'mdi-chart-bubble',
           title: 'گزارش موجودی ها',
           to: '/admin/accounts'
         }, {
