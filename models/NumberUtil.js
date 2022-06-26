@@ -7,7 +7,7 @@ export const toSeparated = (val) => {
     return parts.join(".");
 }
 
-// export const remSeparated = (val) => val.toString().replaceAll(',', '')
+export const remSeparated = (val) => val.toString().replaceAll(',', '')
 
 export const safeDecimal = (val) => {
     try {
@@ -17,14 +17,14 @@ export const safeDecimal = (val) => {
     }
 }
 
-// export const decimalRegex = (dp) => {
-//     let pattern
-//     if (dp > 0) {
-//         pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
-//     } else {
-//         pattern = '^$|^(\\d+)$'
-//     }
-//
-//     let regex = new RegExp(pattern)
-//     return regex
-// }
+export const decimalRegex = (dp) => {
+    let pattern
+    if (dp > 0) {
+        pattern = '^$|^(\\d+\\.?(\\d{1,' + dp + '})?)$'
+    } else {
+        pattern = '^$|^(\\d+)$'
+    }
+
+    let regex = new RegExp(pattern)
+    return regex
+}
