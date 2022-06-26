@@ -310,7 +310,7 @@ export default {
         }, {
           icon: 'mdi-chart-bubble',
           title: 'تعیین کارمزدهای کاربران',
-          to: '/admin/user-trade-fee'
+          to: '/admin/user-trade-fees'
         }, {
           icon: 'mdi-chart-bubble',
           title: 'گزارش موجودی ها',

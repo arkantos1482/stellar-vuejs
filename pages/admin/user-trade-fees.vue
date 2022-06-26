@@ -24,8 +24,9 @@
 
     <v-dialog width="400" v-model="d.userTradeFee">
       <v-card class="pa-6 text-center">
-        <a-text-field label="cell_phone" v-model="userTradeFee.fee_ratio"/>
-        <a-text-field label="cell_phone" v-model="userTradeFee.description"/>
+        <a-text-field label="شناسه کاربر" v-model="userTradeFee.user_id"/>
+        <a-text-field label="نرخ کارمزد" v-model="userTradeFee.fee_ratio"/>
+        <a-text-field label="توضیحات" v-model="userTradeFee.description"/>
         <v-btn @click="create_edit" :loading="l.send" class="mt-4" color="primary" outlined>ارسال</v-btn>
       </v-card>
     </v-dialog>
@@ -46,6 +47,7 @@ export default {
     return {
       userTradeFee: {
         id: null,
+        user_id: '',
         fee_ratio: '',
         description: ''
       },
@@ -55,6 +57,7 @@ export default {
   },
   computed: {
     headers: () => [
+      {value: 'user_id', text: 'شناسه کاربر', align: 'center'},
       {value: 'fee_ratio', text: 'نرخ کارمزد', align: 'center'},
       {value: 'description', text: 'توضیحات', align: 'center'},
       {value: 'actions', text: 'actions', align: 'center', width: '180'},
