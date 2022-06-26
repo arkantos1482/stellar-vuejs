@@ -58,6 +58,7 @@ export default {
   computed: {
     headers: () => [
       {value: 'user_id', text: 'شناسه کاربر', align: 'center'},
+      {value: 'email', text: 'ایمیل', align: 'center'},
       {value: 'fee_ratio', text: 'نرخ کارمزد', align: 'center'},
       {value: 'description', text: 'توضیحات', align: 'center'},
       {value: 'actions', text: 'actions', align: 'center', width: '180'},
