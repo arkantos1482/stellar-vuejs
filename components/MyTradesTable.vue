@@ -81,7 +81,11 @@ export default {
         total: (safeDecimal(item.base_amount)
             .todp(getMarketDp(item.base_asset_code, item.counter_asset_code))),
         fee_ratio: safeDecimal(item.fee_ratio),
+
+        // come from server instead of calculating in front
+        // fee: safeDecimal(item.trade_fee) + ' ' + toFarsiCoin(this.feeCoin(item)),
         fee: this.fee(item) + ' ' + toFarsiCoin(this.feeCoin(item)),
+
         ledger_closed_at: toFarsiDate(item.ledger_closed_at),
       }
     },
