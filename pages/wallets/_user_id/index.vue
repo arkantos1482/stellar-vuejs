@@ -20,22 +20,22 @@
             :withdraw-disabled="withdrawConstraints"
             :deposit-disabled="depositConstraints"
             namad="امین" type="amn" :balance="balances.AMN"/>
-        <crypto-address-tr
-            :withdraw-disabled="withdrawConstraints"
-            :deposit-disabled="depositConstraints"
-            namad="آرت کوین" type="art" :balance="balances.ART"/>
-        <crypto-address-tr
-            :withdraw-disabled="withdrawConstraints"
-            :deposit-disabled="depositConstraints"
-            namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>
-<!--        <crypto-address-tr-->
-<!--            :withdraw-disabled="withdrawConstraints"-->
-<!--            :deposit-disabled="depositConstraints"-->
-<!--            namad="تلاش" type="tls" :balance="balances.TLS"/>-->
-        <crypto-address-tr
-            :withdraw-disabled="withdrawConstraints"
-            :deposit-disabled="depositConstraints"
-            namad="وی توکن" type="wit" :balance="balances.WIT"/>
+        <!--        <crypto-address-tr-->
+        <!--            :withdraw-disabled="withdrawConstraints"-->
+        <!--            :deposit-disabled="depositConstraints"-->
+        <!--            namad="آرت کوین" type="art" :balance="balances.ART"/>-->
+        <!--        <crypto-address-tr-->
+        <!--            :withdraw-disabled="withdrawConstraints"-->
+        <!--            :deposit-disabled="depositConstraints"-->
+        <!--            namad="شکوفه آلو" type="sha" :balance="balances.SHA"/>-->
+        <!--        <crypto-address-tr-->
+        <!--            :withdraw-disabled="withdrawConstraints"-->
+        <!--            :deposit-disabled="depositConstraints"-->
+        <!--            namad="تلاش" type="tls" :balance="balances.TLS"/>-->
+        <!--        <crypto-address-tr-->
+        <!--            :withdraw-disabled="withdrawConstraints"-->
+        <!--            :deposit-disabled="depositConstraints"-->
+        <!--            namad="وی توکن" type="wit" :balance="balances.WIT"/>-->
         <crypto-address-tr
             :withdraw-disabled="withdrawConstraints"
             :deposit-disabled="depositConstraints"
