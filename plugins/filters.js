@@ -72,7 +72,8 @@ Vue.filter('toFa', (key) => {
         pending: 'درجریان',
         failed: 'ناموفق',
         done: 'موفق',
-        successful: 'موفق'
+        successful: 'موفق',
+        ALREADY_VERIFIED: 'قبلا تایید شده',
     }
     return dic[key.toLowerCase()] || key
 })

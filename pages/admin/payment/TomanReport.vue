@@ -162,7 +162,8 @@ export default {
   methods: {
     needCorrection: item => {
       if (item?.type === 'deposit') {
-        if (item.verify_status === 'Successful' && item.stellar_status !== 'done') {
+        if (['SUCCESSFUL', 'ALREADY_VERIFIED'].includes(item.verify_status)
+            && item.stellar_status !== 'done') {
           return true
         }
       } else if (item?.type === 'withdraw') {
