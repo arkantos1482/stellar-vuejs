@@ -6,17 +6,17 @@
         <v-card class="py-12 flex-grow-1" height="100%">
 
           <div v-if="type === 'USDT'" class="text-center mb-8">
-            <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
-              <v-btn value="TRON">ترون</v-btn>
-              <v-btn value="ETHER">اتریوم</v-btn>
+            <v-btn-toggle mandatory dense color="primary" v-model="usdtNetwork">
+              <v-btn value="trx">ترون</v-btn>
+              <v-btn value="eth">اتریوم</v-btn>
             </v-btn-toggle>
           </div>
 
           <div v-show="address !== 'not_loaded'">
-            <crypto-upper class="mx-16" :balance="balance" :type="type"/>
+            <crypto-upper class="mx-16" :balance="balance" :type="type" />
 
             <div v-if="address !== 'no_address'" class="mt-12 text-center">
-              <vue-qrcode :value="address|bchFix"/>
+              <vue-qrcode :value="address|bchFix" />
               <v-row class="my-4" justify="center" align="center">
                 <v-btn icon @click="copy(fixBchMethod(address))">
                   <v-icon small color="primary">mdi-clipboard-text-multiple-outline</v-icon>
@@ -37,7 +37,7 @@
       </v-col>
 
       <v-col cols="8" class="pa-0">
-        <deposits :type="type" :title="listTitle"/>
+        <deposits :type="type" :title="listTitle" />
       </v-col>
     </a-row>
 
@@ -70,48 +70,49 @@
 </template>
 
 <script>
-import VueQrcode from 'vue-qrcode'
-import ACard from "@/components/ACard";
-import Deposits from "@/pages/wallets/_user_id/deposits/index";
-import pstopper from "@/mixins/pstopper";
-import CryptoUpper from "@/components/wallet/CryptoUpper";
-import balances, {refresh} from '../../balanceService'
-import addresses, {refresh as addrRefresh} from '../../addressService'
+import VueQrcode from "vue-qrcode"
+import ACard from "@/components/ACard"
+import Deposits from "@/pages/wallets/_user_id/deposits/index"
+import pstopper from "@/mixins/pstopper"
+import CryptoUpper from "@/components/wallet/CryptoUpper"
+import balances from "../../balanceService"
 
 export default {
   mixins: [pstopper],
-  components: {CryptoUpper, Deposits, VueQrcode, ACard},
+  components: { CryptoUpper, Deposits, VueQrcode, ACard },
   filters: {
-    bchFix: (address) => address.replace('bitcoincash:', '')
+    bchFix: (address) => address.replace("bitcoincash:", "")
   },
   computed: {
+    network() {
+      return this.type === "USDT" ? this.usdtNetwork : this.type
+    },
     user_id() {
       return this.$route.params.user_id
     },
-    addresses,
     balances,
     balance() {
       return this.balances[this.type]?.actual_balance
     },
     actionTitle() {
-      return this.isInternal() ? 'دریافت' : 'واریز'
+      return this.isInternal() ? "دریافت" : "واریز"
     },
     listTitle() {
-      return this.isInternal() ? 'لیست دریافت ها' : 'لیست واریزها'
+      return this.isInternal() ? "لیست دریافت ها" : "لیست واریزها"
     }
   },
   watch: {
-    usdtSelector(val) {
+    usdtNetwork(val) {
       this.initAddress()
     }
   },
   data() {
     return {
-      usdtSelector: 'TRON',
+      usdtNetwork: "trx",
       type: this.$route.params.type.toUpperCase(),
-      address: 'not_loaded',
-      l: {create: false},
-      d: {create: false}
+      address: "not_loaded",
+      l: { create: false },
+      d: { create: false }
     }
   },
   mounted() {
@@ -119,33 +120,34 @@ export default {
   },
   methods: {
     async initAddress() {
-      this.address = 'not_loaded'
-      await addrRefresh(this.$axios, this.user_id)
-      const address = this.addresses[this.usdtTronFix(this.type)];
-      this.address = address ? address : 'no_address';
-      await refresh(this.$axios, this.user_id)
+      this.address = "not_loaded"
+      const res = await this.$axios.$get("/crypto/address/" + this.user_id, {
+        params: {
+          crypto: this.type,
+          network: this.network
+        }
+      })
+      this.address = res.address ? res.address : "no_address"
     },
     async createCrypto() {
       this.d.create = false
       this.l.create = true
-      this.address = await this.$axios.$post('/crypto/' +
-          this.usdtTronFix(this.type).toLowerCase() + '/address/create/' + this.user_id)
+      const res = await this.$axios.$post("/crypto/address/create/" + this.user_id,
+        { crypto: this.type, network: this.network })
+      this.address = res.address
       this.l.create = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type.toUpperCase())
+      return ["AMN", "EBG", "SHA", "ART", "ZRK", "TLS", "WIT"].includes(this.type.toUpperCase())
     },
-    usdtTronFix(type) {
-      return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'TRX' : type
-    },
-    fixBchMethod: (address) => address.replace('bitcoincash:', ''),
+    fixBchMethod: (address) => address.replace("bitcoincash:", ""),
     copy(value) {
-      let tempInput = document.createElement("input");
-      tempInput.value = value;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand("copy");
-      document.body.removeChild(tempInput);
+      let tempInput = document.createElement("input")
+      tempInput.value = value
+      document.body.appendChild(tempInput)
+      tempInput.select()
+      document.execCommand("copy")
+      document.body.removeChild(tempInput)
     }
   }
 }

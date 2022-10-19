@@ -31,13 +31,13 @@
         <v-card class="px-16 py-12 flex-grow-1" width="100%">
 
           <div v-if="type === 'USDT'" class="text-center mb-8">
-            <v-btn-toggle mandatory dense color="primary" v-model="usdtSelector">
-              <v-btn value="TRON">TRC20</v-btn>
-              <v-btn value="ETHER">ERC20</v-btn>
+            <v-btn-toggle mandatory dense color="primary" v-model="usdtNetwork">
+              <v-btn value="trx">TRC20</v-btn>
+              <v-btn value="eth">ERC20</v-btn>
             </v-btn-toggle>
           </div>
 
-          <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked"/>
+          <crypto-upper :balance="balance" :type="type" @balanceClick="onBalanceClicked" />
           <p class="text-display-2 ma-0">
             باقی مانده برداشت روزانه:<span class="font-weight-medium">&nbsp{{ daily_rem_usage }}</span>
           </p>
@@ -50,11 +50,11 @@
               <v-btn class="mb-n14" text color="primary" @click="onMaxClicked">Max</v-btn>
             </div>
             <a-text-field separated :rules="[rules.required]"
-                          is-coin :coin="type" v-model="amount" label="مقدار"/>
+                          is-coin :coin="type" v-model="amount" label="مقدار" />
             <p class="mt-1 grey--text"> کارمزد تراکنش <span class="white--text">{{ withdrawFee }}</span> می باشد.</p>
             <p class="mt-n4 grey--text"> مقدار خالص برداشت <span class="white--text">{{ actualAmount }}</span> می باشد.
             </p>
-            <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد"/>
+            <a-text-field :rules="[rules.required]" v-model="destAddress" label="آدرس کیف پول مقصد" />
             <p class="ma-0 text-display-2 error--text">وارد کردن آدرس اشتباه منجر به از دست رفتن منابع مالی شما خواهد
               شد.</p>
             <v-btn type="submit" :loading="l.withdraw"
@@ -68,7 +68,7 @@
 
 
       <v-col cols="8" class="pa-0">
-        <withdraws :type="type" :title="listTitle"/>
+        <withdraws :type="type" :title="listTitle" />
       </v-col>
     </a-row>
 
@@ -76,7 +76,7 @@
       <v-card class="px-12 py-6 text-center">
         <p class="primary--text text-h4">اطمینان دارید؟</p>
         <p>با انجام این تراکنش مقدار</p>
-        <p class="primary--text">{{ actualAmount + ' ' + type }}</p>
+        <p class="primary--text">{{ actualAmount + " " + type }}</p>
         <p>به شماره مقصد:</p>
         <p class="primary--text">{{ destAddress }}</p>
         <p>جا به جا خواهد شد. آیا از انجام این تراکنش اطمینان دارید؟</p>
@@ -90,19 +90,23 @@
 </template>
 
 <script>
-import Withdraws from "@/pages/wallets/_user_id/withdraws/index";
-import ACard from "@/components/ACard";
-import ATextField from "@/components/ATextField";
-import pstopper from "@/mixins/pstopper";
-import CryptoUpper from "@/components/wallet/CryptoUpper";
-import {safeDecimal, toSeparated} from "@/models/NumberUtil";
-import {getDp} from "@/models/cryptoPrecision";
-import balances, {refresh} from "../../balanceService";
+import Withdraws from "@/pages/wallets/_user_id/withdraws/index"
+import ACard from "@/components/ACard"
+import ATextField from "@/components/ATextField"
+import pstopper from "@/mixins/pstopper"
+import CryptoUpper from "@/components/wallet/CryptoUpper"
+import { safeDecimal, toSeparated } from "@/models/NumberUtil"
+import { getDp } from "@/models/cryptoPrecision"
+import balances, { refresh } from "../../balanceService"
+import Decimal from "decimal.js-light"
 
 export default {
   mixins: [pstopper],
-  components: {CryptoUpper, Withdraws, ACard, ATextField},
+  components: { CryptoUpper, Withdraws, ACard, ATextField },
   computed: {
+    network() {
+      return this.type === "USDT" ? this.usdtNetwork : this.type
+    },
     balances,
     balance() {
       return this.balances[this.type]?.actual_balance
@@ -111,70 +115,72 @@ export default {
       return this.$route.params.user_id
     },
     actionTitle() {
-      return this.isInternal() ? 'ارسال' : 'برداشت'
+      return this.isInternal() ? "ارسال" : "برداشت"
     },
     listTitle() {
-      return this.isInternal() ? 'لیست ارسال ها' : 'لیست برداشت ها'
+      return this.isInternal() ? "لیست ارسال ها" : "لیست برداشت ها"
     },
     actualAmount() {
-      let amount = safeDecimal(this.amount - this.withdrawFee).todp(getDp(this.type))
+      let a = safeDecimal(this.amount)
+      let b = safeDecimal(this.withdrawFee)
+      let amount = a.minus(b).todp(getDp(this.type))
       return amount > 0 ? amount : 0
     }
   },
   watch: {
-    usdtSelector(val) {
+    usdtNetwork(val) {
       this.getFee()
     }
   },
   data() {
     return {
       type: this.$route.params.type.toUpperCase(),
-      usdtSelector: 'TRON',
+      usdtNetwork: "trx",
       daily_rem_usage: 0,
       monthly_rem_usage: 0,
-      destAddress: '',
-      amount: '',
-      withdrawFee: '',
+      destAddress: "",
+      amount: "",
+      withdrawFee: "",
       form: false,
-      l: {withdraw: false},
-      d: {withdraw: false},
+      l: { withdraw: false },
+      d: { withdraw: false },
       rules: {
-        required: value => !!value || 'الزامی است',
-      },
+        required: value => !!value || "الزامی است"
+      }
     }
   },
   mounted() {
     refresh(this.$axios, this.user_id)
     this.getFee()
-    this.$axios.$post('/access/limits/remained/' + this.user_id, {resource: 'crypto'})
-        .then(res => {
-          this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + 'تومان' : 'نامحدود'
-          this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + 'تومان' : 'نامحدود'
-        })
+    this.$axios.$post("/access/limits/remained/" + this.user_id, { resource: "crypto" })
+      .then(res => {
+        this.daily_rem_usage = (res.daily_rem_usage !== -1) ? toSeparated(res.daily_rem_usage) + "تومان" : "نامحدود"
+        this.monthly_rem_usage = (res.monthly_rem_usage !== -1) ? toSeparated(res.monthly_rem_usage) + "تومان" : "نامحدود"
+      })
   },
   methods: {
     getFee() {
-      this.$axios.$get('/crypto/fees/' + this.usdtTronFix(this.type).toLowerCase())
-          .then(res => this.withdrawFee = res);
+      this.$axios.$get("/crypto/fees/", {
+        params: {
+          currency: this.type,
+          network: this.network
+        }
+      })
+        .then(res => this.withdrawFee = res)
     },
     showWithdrawDialog() {
-      if (this.type === 'USDT' && this.usdtSelector === 'TRON' && !this.destAddress.startsWith('T')) {
-        this.$bus.$emit('snack', 'آدرس شبکه ترون معتبر نیست.', 'normal')
+      if (this.type === "USDT" && this.network === "trx" && !this.destAddress.startsWith("T")) {
+        this.$bus.$emit("snack", "آدرس شبکه ترون معتبر نیست.", "normal")
         return
       }
 
-      if (this.type === 'BTC' && this.destAddress.startsWith('bc1')) {
-        this.$bus.$emit('snack', 'فعلا از انتقال به آدرس فرمت bech32 پشتیبانی نمی شود.', 'normal')
+      if (this.type === "BTC" && this.destAddress.startsWith("bc1")) {
+        this.$bus.$emit("snack", "فعلا از انتقال به آدرس فرمت bech32 پشتیبانی نمی شود.", "normal")
         return
       }
 
-      if (this.type === 'BNB' && !this.destAddress.startsWith('bnb')) {
-        this.$bus.$emit('snack', 'آدرس شبکه بایننس چین معتبر نیست.', 'normal')
-        return
-      }
-
-      // if (this.type === 'DRC' && this.destAddress.startsWith('bnb')) {
-      //   this.$bus.$emit('snack', 'آدرس باید در شبکه بایننس اسمارت چین باشد (آدرس بایننس چین مجاز نیست).', 'normal')
+      // if (this.type === "BNB" && !this.destAddress.startsWith("bnb")) {
+      //   this.$bus.$emit("snack", "آدرس شبکه بایننس چین معتبر نیست.", "normal")
       //   return
       // }
 
@@ -183,7 +189,7 @@ export default {
         if (this.balance >= parseFloat(this.amount) && this.amount > parseFloat(this.withdrawFee)) {
           this.d.withdraw = true
         } else {
-          this.$bus.$emit('snack', 'موجودی کافی نیست.', 'normal')
+          this.$bus.$emit("snack", "موجودی کافی نیست.", "normal")
         }
       }
     },
@@ -192,15 +198,17 @@ export default {
 
       try {
         this.l.withdraw = true
-        await this.$axios.$post(`/crypto/${this.usdtTronFix(this.type).toLowerCase()}/withdraw/${this.user_id}`, {
+        await this.$axios.$post(`/crypto/withdraw/${this.user_id}`, {
           to: this.destAddress,
-          amount: this.amount
+          amount: this.amount,
+          currency: this.type,
+          network: this.network
         })
 
         this.$router.back()
-        this.$bus.$emit('snack', 'برداشت با موفقیت انجام شد.', 'success')
+        this.$bus.$emit("snack", "برداشت با موفقیت انجام شد.", "success")
       } catch (e) {
-        this.$bus.$emit('snack', e.response.data.error.msg, 'error')
+        this.$bus.$emit("snack", e.response.data.error.msg, "error")
       } finally {
         this.l.withdraw = false
       }
@@ -212,10 +220,7 @@ export default {
       this.amount = safeDecimal(this.balance).todp(getDp(this.type))
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type)
-    },
-    usdtTronFix(type) {
-      return (type === 'USDT' && this.usdtSelector === 'TRON') ? 'USDT_TRON' : type
+      return ["AMN", "EBG", "SHA", "ART", "ZRK", "TLS", "WIT"].includes(this.type)
     }
   }
 }

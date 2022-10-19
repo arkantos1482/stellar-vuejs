@@ -3,7 +3,7 @@
     <td>
       <div class="d-flex align-center">
         <v-img class="ml-2" max-width="36" max-height="36"
-               :src="type|toCoinIcon"/>
+               :src="type|toCoinIcon" />
         {{ namad }}&nbsp({{ type.toUpperCase()|irtFix }})
       </div>
     </td>
@@ -28,60 +28,58 @@
   </tr>
 </template>
 <script>
-import ps from '@/mixins/pstopper'
-import {safeDecimal} from "@/models/NumberUtil"
-import {getDp} from "@/models/cryptoPrecision"
+import ps from "@/mixins/pstopper"
+import { safeDecimal } from "@/models/NumberUtil"
+import { getDp } from "@/models/cryptoPrecision"
+import { refresh } from "../pages/wallets/balanceService"
 
 export default {
   mixins: [ps],
-  name: 'CryptoAddressTr',
-  props: ['type', 'address', 'balance', 'namad', 'withdrawDisabled', 'depositDisabled'],
+  name: "CryptoAddressTr",
+  props: ["type", "address", "balance", "namad", "withdrawDisabled", "depositDisabled"],
   computed: {
     user_id() {
       return this.$route.params.user_id
     },
     isRefreshDisabled() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT', 'IRR']
-          .includes(this.type.toUpperCase())
+      return ["AMN", "EBG", "SHA", "ART", "ZRK", "TLS", "WIT", "IRR"]
+        .includes(this.type.toUpperCase())
     },
     isDepositDisabled() {
       return this.depositDisabled
-          ?.includes(this.type.toUpperCase())
+        ?.includes(this.type.toUpperCase())
     },
     isWithdrawDisabled() {
       return this.withdrawDisabled
-          ?.includes(this.type.toUpperCase())
+        ?.includes(this.type.toUpperCase())
     },
     withdrawLabel() {
-      return this.isInternal() ? 'ارسال' : 'برداشت'
+      return this.isInternal() ? "ارسال" : "برداشت"
     },
     depositLabel() {
-      return this.isInternal() ? 'دریافت' : 'واریز'
+      return this.isInternal() ? "دریافت" : "واریز"
     }
   },
   data() {
     return {
-      l: {create: false, sync: false}
+      l: { create: false, sync: false }
     }
   },
   methods: {
     async onDeposit() {
-      await this.$router.push({path: `/wallets/${this.user_id}/deposits/${this.type}`})
+      await this.$router.push({ path: `/wallets/${this.user_id}/deposits/${this.type}` })
     },
     async onWithdraw() {
-      await this.$router.push({path: `/wallets/${this.user_id}/withdraws/${this.type}`})
+      await this.$router.push({ path: `/wallets/${this.user_id}/withdraws/${this.type}` })
     },
     async onSync() {
       this.l.sync = true
-      if (this.type === 'usdt') {
-        await this.$axios.$get(`/crypto/usdt_tron/sync/${this.user_id}`)
-      }
-      await this.$axios.$get(`/crypto/${this.type}/sync/${this.user_id}`)
-      await this.$store.dispatch('balances/refresh')
+      await this.$axios.$post(`/crypto/sync/${this.user_id}`, { crypto: this.type })
+      await refresh(this.$axios, this.user_id)
       this.l.sync = false
     },
     isInternal() {
-      return ['AMN', 'EBG', 'SHA', 'ART', 'ZRK', 'TLS', 'WIT'].includes(this.type.toUpperCase())
+      return ["AMN", "EBG", "SHA", "ART", "ZRK", "TLS", "WIT"].includes(this.type.toUpperCase())
     },
     adjustDp(val) {
       return safeDecimal(val).todp(getDp(this.type))

@@ -15,10 +15,10 @@
       <v-btn :to="`/wallets/${payload.user_id}/deposits`">واریزها</v-btn>
     </div>
 
-    <v-data-table :headers="headers" :items="list" :items-per-page="50" hide-default-footer>
+    <v-data-table :headers="headers" :items="asList" :items-per-page="50" hide-default-footer>
       <template v-slot:item.stellar_correct="{item}">
-        <v-btn x-small color="success" @click="depositStellarDialog(item.type)">واریز</v-btn>
-        <v-btn x-small color="error" @click="withdrawStellarDialog(item.type)">برداشت</v-btn>
+        <v-btn x-small color="success" @click="depositStellarDialog(item.symbol)">واریز</v-btn>
+        <v-btn x-small color="error" @click="withdrawStellarDialog(item.symbol)">برداشت</v-btn>
       </template>
     </v-data-table>
 
@@ -26,7 +26,7 @@
       <v-card class="pa-6 text-center">
         <p class="text-h3">برداشت استلار</p>
         <p class="text-h3">{{ payload.asset }}</p>
-        <v-text-field v-model="payload.amount" label="مقدار"/>
+        <v-text-field v-model="payload.amount" label="مقدار" />
         <v-btn @click="withdrawStellar" :loading="l.payment"
                color="error" class="mt-6">اعمال
         </v-btn>
@@ -37,7 +37,7 @@
       <v-card class="pa-6 text-center">
         <p class="text-h3">واریز استلار</p>
         <p class="text-h3">{{ payload.asset }}</p>
-        <v-text-field v-model="payload.amount" label="مقدار"/>
+        <v-text-field v-model="payload.amount" label="مقدار" />
         <v-btn @click="depositStellar" :loading="l.payment"
                color="error" class="mt-6">اعمال
         </v-btn>
@@ -49,6 +49,7 @@
 <script>
 import pstopper from "@/mixins/pstopper"
 import collect from "collect.js"
+import { asList, refresh } from "../../../wallets/balanceService"
 
 export default {
   name: "AccountDetail",
@@ -56,40 +57,36 @@ export default {
   computed: {
     user_id() {
       return this.$route.params.id
-    }
+    },
+    asList
   },
   data() {
     return {
       headers: [
-        {value: 'type', text: 'نوع', align: 'center'},
-        {value: 'balance', text: 'موجودی استلاری', align: 'center'},
-        {value: 'stellar_correct', text: 'تصحیح استلار', sortable: false, align: 'center'},
+        { value: "symbol", text: "نوع", align: "center" },
+        { value: "balance", text: "موجودی استلاری", align: "center" },
+        { value: "stellar_correct", text: "تصحیح استلار", sortable: false, align: "center" }
       ],
       list: [],
       d: {
         deposit_stellar: false, withdraw_stellar: false,
         reveal: false
       },
-      l: {payment: false},
-      user: '',
-      action: '',
+      l: { payment: false },
+      user: "",
+      action: "",
       payload: {
         user_id: this.$route.params.id,
-        asset: '',
-        amount: ''
+        asset: "",
+        amount: ""
       }
     }
   },
   async mounted() {
-    await this.getBalances()
-    this.user = await this.$axios.$get('/profiles/' + this.payload.user_id);
+    await refresh(this.$axios, this.user_id)
+    this.user = await this.$axios.$get("/profiles/" + this.payload.user_id)
   },
   methods: {
-    async getBalances() {
-      let list = await this.$axios.$get(`/profiles/${this.payload.user_id}/addresses`)
-      this.stellar = collect(list).filter(item => item.type === 'MAIN').first()
-      this.list = collect(list).reject((item => item.type === 'MAIN')).all()
-    },
     depositStellarDialog(asset) {
       this.payload.asset = asset.toUpperCase()
       this.d.deposit_stellar = true
@@ -100,21 +97,21 @@ export default {
     },
     async depositStellar() {
       this.l.payment = true
-      await this.$axios.$post('/stellar/deposit', this.payload)
+      await this.$axios.$post("/stellar/deposit", this.payload)
       this.l.payment = false
       this.d.deposit_stellar = false
-      this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
-      await this.getBalances()
+      this.$bus.$emit("snack", "با موفقیت انجام شد.", "success")
+      await refresh(this.$axios, this.user_id)
     },
     async withdrawStellar() {
       this.l.payment = true
-      await this.$axios.$post('/stellar/withdraw', this.payload)
+      await this.$axios.$post("/stellar/withdraw", this.payload)
       this.l.payment = false
       this.d.withdraw_stellar = false
-      this.$bus.$emit('snack', 'با موفقیت انجام شد.', 'success')
-      await this.getBalances()
-    },
-  },
+      this.$bus.$emit("snack", "با موفقیت انجام شد.", "success")
+      await refresh(this.$axios, this.user_id)
+    }
+  }
 }
 </script>
 

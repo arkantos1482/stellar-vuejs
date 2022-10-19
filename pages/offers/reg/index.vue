@@ -7,15 +7,15 @@
     <!--    TOP (OFFER-REG + SELL/BUY + CHART-BAR-->
     <a-row class="align-stretch">
       <!--      OFFER-REG-->
-      <v-col cols=3>
-        <v-card class="pa-6" width=100% height="100%">
-          <card-title-with-chevron simple title="ثبت سفارش" icon="mdi-basket" class="mb-6"/>
+      <v-col cols="3">
+        <v-card class="pa-6" width="100%" height="100%">
+          <card-title-with-chevron simple title="ثبت سفارش" icon="mdi-basket" class="mb-6" />
           <v-btn-toggle mandatory v-model="exchangeAction" rounded dense
                         :color="exchangeAction === 'buy' ? 'success':'error'">
             <v-btn rounded value="buy" class="px-12" @click="resetValid">خرید</v-btn>
             <v-btn rounded value="sell" class="px-12" @click="resetValid">فروش</v-btn>
           </v-btn-toggle>
-          <v-divider class="my-4"/>
+          <v-divider class="my-4" />
           <!--          <v-tabs class="mb-6">-->
           <!--            <v-tab>سفارش سریع</v-tab>-->
           <!--            <v-tab>limit</v-tab>-->
@@ -35,19 +35,19 @@
             <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_form_ref">
               <order-text-field :base="baseAsset"
                                 class="mt-n4" :rules="[rules.required,rules.buyWalletExist]"
-                                v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
+                                v-model="buy.amount" prepend="مقدار" :append="baseAsset|irtFix" />
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 v-model="buy.price" prepend="قیمت" :append="counterAsset|irtFix"
-                                :rules="[rules.required]"/>
+                                :rules="[rules.required]" />
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="buyPercent"
-                        min="0" thumb-label/>
+                        min="0" thumb-label />
               <p class="pointer px-2 mb-3 mt-n3" @click="buy.price=sellBestPrice">پایین ترین پیشنهاد فروش:
                 <span>{{ adjustDp(sellBestPrice, baseAsset)|toFloat|separated }}</span></p>
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 :rules="[rules.buySufficient]"
                                 class="mt-0" readonly :value="buyTotal" prepend="مجموع"
-                                :append="counterAsset|irtFix"/>
+                                :append="counterAsset|irtFix" />
               <v-btn depressed small class="white--text py-4 mt-n3" block color="success"
                      type="submit" :loading="l.buy">خرید
               </v-btn>
@@ -67,18 +67,18 @@
             <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 :rules="[rules.sellWalletExist,rules.required]"
-                                v-model="sell.price" prepend="قیمت" :append="counterAsset|irtFix" class="mt-n4"/>
+                                v-model="sell.price" prepend="قیمت" :append="counterAsset|irtFix" class="mt-n4" />
               <order-text-field :base="baseAsset"
                                 :rules="[rules.sellSufficient,rules.required]"
-                                v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix"/>
+                                v-model="sell.amount" prepend="مقدار" :append="baseAsset|irtFix" />
               <v-slider class="mt-n4" color="primary" track-color="primary darken-4"
                         v-model="sellPercent"
-                        min="0" thumb-label/>
+                        min="0" thumb-label />
               <p class="pointer px-2 mb-3 mt-n3" @click="sell.price=buyBestPrice">بالاترین پیشنهاد خرید:
                 <span>{{ adjustDp(buyBestPrice, counterAsset)|toFloat|separated }}</span></p>
               <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
                                 class="mt-0" readonly :value="sellTotal" prepend="مجموع"
-                                :append="counterAsset|irtFix"/>
+                                :append="counterAsset|irtFix" />
               <v-btn depressed small class="white--text py-4 mt-n3" block color="error"
                      type="submit" :loading="l.sell">فروش
               </v-btn>
@@ -101,11 +101,11 @@
                 <v-btn text value="2">رمزارز به رمزارز</v-btn>
               </v-btn-toggle>
 
-              <v-divider vertical inset class="py-4"/>
+              <v-divider vertical inset class="py-4" />
               <div style="width: 144px">
                 <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
                           item-value="value"
-                          dense filled solo flat/>
+                          dense filled solo flat />
               </div>
             </a-row>
           </v-card>
@@ -120,7 +120,7 @@
               <a-row class="align-center">
                 <v-icon color="primary">mdi-chart-bar</v-icon>
                 <p class="primary--text mb-0 mx-2">لیست قیمت ها</p>
-                <v-spacer/>
+                <v-spacer />
               </a-row>
               <!--    SELL-->
               <v-simple-table dense fixed-header class="mt-4">
@@ -174,7 +174,7 @@
           <!--    CHART-BAR-->
           <v-col cols="8">
             <!--            <v-card class="mx-4 pa-2" ref="card">-->
-            <t-v-chart-container :symbol="pairAsset|irtFix"/>
+            <t-v-chart-container :symbol="pairAsset|irtFix" />
             <!--            </v-card>-->
           </v-col>
         </a-row>
@@ -183,22 +183,22 @@
 
     <!--    BOTTOM-->
     <a-row class="align-stretch">
-      <v-col cols=3>
+      <v-col cols="3">
         <v-card class="pa-6" height="100%">
-          <card-title-with-chevron simple icon="mdi-clipboard-text-play" title="دارایی ها"/>
+          <card-title-with-chevron simple icon="mdi-clipboard-text-play" title="دارایی ها" />
           <v-btn small outlined color="primary">واریز</v-btn>
           <v-btn small outlined color="primary">برداشت</v-btn>
         </v-card>
       </v-col>
 
       <v-col cols="3">
-        <pair-asset-trades :base="baseAsset" :counter="counterAsset"/>
+        <pair-asset-trades :base="baseAsset" :counter="counterAsset" />
       </v-col>
 
       <v-col cols="6">
         <v-card width="100%" height="100%" class="pa-6">
-          <card-title-with-chevron simple icon="mdi-clipboard-text-play" title="سفارشات در جریان"/>
-          <my-active-offers-table/>
+          <card-title-with-chevron simple icon="mdi-clipboard-text-play" title="سفارشات در جریان" />
+          <my-active-offers-table />
         </v-card>
       </v-col>
     </a-row>
@@ -206,26 +206,27 @@
 </template>
 
 <script>
-import collect from "collect.js";
-import ActiveOffers from "@/pages/offers/active/_userId";
-import {TradingVue, DataCube} from 'trading-vue-js'
-import {mapActions} from "vuex";
-import OrderTextField from "@/components/OrderTextField";
-import {safeDecimal} from "@/models/NumberUtil";
-import {getDp, getMarketDp} from "@/models/cryptoPrecision";
-import PairAssetTrades from "@/pages/trades";
-import TVChartContainer from "@/components/TVChartContainer";
-import {init as initConstraints, offerConstraints} from "../../../models/constraintService";
+import collect from "collect.js"
+import ActiveOffers from "@/pages/offers/active/_userId"
+import { TradingVue, DataCube } from "trading-vue-js"
+import { mapActions } from "vuex"
+import OrderTextField from "@/components/OrderTextField"
+import { safeDecimal } from "@/models/NumberUtil"
+import { getDp, getMarketDp } from "@/models/cryptoPrecision"
+import PairAssetTrades from "@/pages/trades"
+import TVChartContainer from "@/components/TVChartContainer"
+import { init as initConstraints, offerConstraints } from "../../../models/constraintService"
+import balances, { refresh as refreshBalance } from "../../wallets/balanceService"
 
 export default {
-  components: {TVChartContainer, PairAssetTrades, OrderTextField, ActiveOffers, TradingVue},
+  components: { TVChartContainer, PairAssetTrades, OrderTextField, ActiveOffers, TradingVue },
   errorCaptured(err, vm, info) {
     this.l.buy = false
     this.l.sell = false
   },
   watch: {
     pairAsset(val) {
-      let array = val.split('/')
+      let array = val.split("/")
       this.baseAsset = array[0]
       this.counterAsset = array[1]
       this.clear()
@@ -233,25 +234,23 @@ export default {
     },
     tabIndex(val) {
       this.pairAsset = this.list[val][0]
-    },
+    }
   },
   computed: {
     isDRC() {
       return false
-      return [this.baseAsset, this.counterAsset].includes('DRC')
+      return [this.baseAsset, this.counterAsset].includes("DRC")
     },
     pairAssetList() {
-      const list1 = this.list[this.tabIndex];
+      const list1 = this.list[this.tabIndex]
       return collect(list1)
-          .map(item => ({
-            text: this.$options.filters.irtFix(item),
-            // text: item,
-            value: item
-          })).all()
+        .map(item => ({
+          text: this.$options.filters.irtFix(item),
+          // text: item,
+          value: item
+        })).all()
     },
-    balances() {
-      return this.$store.state.balances.list
-    },
+    balances,
     baseBalance() {
       return `موجودی (${this.baseAsset}) : ${parseFloat(this.balances[this.baseAsset].actual_balance)}`
     },
@@ -260,37 +259,37 @@ export default {
     },
     priceLabel() {
       // return 'قیمت (' + this.$options.filters.irtFix(this.counterAsset) + ')'
-      return 'قیمت'
+      return "قیمت"
     },
     unitNumberLabel() {
       // return 'مقدار (' + this.$options.filters.irtFix(this.baseAsset) + ')'
-      return 'مقدار'
+      return "مقدار"
     },
     amountLabel() {
       // return 'مجموع (' + this.$options.filters.irtFix(this.counterAsset) + ')'
-      return 'مجموع'
+      return "مجموع"
     },
     tradingVueLabel() {
       return this.$options.filters.irtFix(this.baseAsset)
-          + '/' + this.$options.filters.irtFix(this.counterAsset)
+        + "/" + this.$options.filters.irtFix(this.counterAsset)
     },
     buyOffers() {
       return collect(this.offers.bids)
-          .map(item => ({
-            price: parseFloat(item.price),
-            price_r: item.price_r,
-            amount: parseFloat(item.amount)
-          }))
-          .sortByDesc('price')
+        .map(item => ({
+          price: parseFloat(item.price),
+          price_r: item.price_r,
+          amount: parseFloat(item.amount)
+        }))
+        .sortByDesc("price")
     },
     sellOffers() {
       return collect(this.offers.asks)
-          .map(item => ({
-            price: parseFloat(item.price),
-            price_r: item.price_r,
-            amount: parseFloat(item.amount)
-          }))
-          .sortByDesc('price')
+        .map(item => ({
+          price: parseFloat(item.price),
+          price_r: item.price_r,
+          amount: parseFloat(item.amount)
+        }))
+        .sortByDesc("price")
     },
     buyBestPrice() {
       if (this.buyOffers.isNotEmpty())
@@ -302,11 +301,11 @@ export default {
     },
     sellTotal() {
       return safeDecimal(this.sell.amount).times(safeDecimal(this.sell.price))
-          .todp(getMarketDp(this.baseAsset, this.counterAsset))
+        .todp(getMarketDp(this.baseAsset, this.counterAsset))
     },
     buyTotal() {
       return safeDecimal(this.buy.amount).times(safeDecimal(this.buy.price))
-          .todp(getMarketDp(this.baseAsset, this.counterAsset))
+        .todp(getMarketDp(this.baseAsset, this.counterAsset))
     },
     buyPercent: {
       get() {
@@ -322,8 +321,8 @@ export default {
       set(val) {
         try {
           this.buy.amount = safeDecimal(this.balances[this.counterAsset].actual_balance)
-              .times(val).div(100).div(this.buy.price)
-              .todp(getDp(this.baseAsset))
+            .times(val).div(100).div(this.buy.price)
+            .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
@@ -342,7 +341,7 @@ export default {
       set(val) {
         try {
           this.sell.amount = safeDecimal(this.balances[this.baseAsset].actual_balance).times(val).div(100)
-              .todp(getDp(this.baseAsset))
+            .todp(getDp(this.baseAsset))
         } catch (e) {
         }
       }
@@ -350,64 +349,63 @@ export default {
     offerConstraints,
     list() {
       return [
-        ['BTC/IRR', 'ETH/IRR', 'BNB/IRR', 'BCH/IRR', 'LTC/IRR', 'USDT/IRR', 'TRX/IRR', 'DOGE/IRR']
-            .filter(pair => !collect(this.offerConstraints)
-                .contains((v, k) => pair.includes(v))),
-        ['BTC/USDT', 'ETH/USDT', 'BNB/USDT', 'BCH/USDT', 'LTC/USDT', 'TRX/USDT', 'DOGE/USDT']
-            .filter(pair => !collect(this.offerConstraints)
-                .contains((v, k) => pair.includes(v))),
-        ['ETH/BTC', 'TRX/BTC', 'DOGE/BTC', 'BCH/BTC', 'LTC/BTC', 'BNB/BTC',
-          'TRX/ETH', 'DOGE/ETH', 'BCH/ETH', 'LTC/ETH', 'BNB/ETH',
-          'BNB/BCH', 'TRX/BNB', 'DOGE/BNB']
-            .filter(pair => !collect(this.offerConstraints)
-                .contains((v, k) => pair.includes(v)))
+        ["BTC/IRR", "ETH/IRR", "BNB/IRR", "BCH/IRR", "LTC/IRR", "USDT/IRR", "TRX/IRR", "DOGE/IRR"]
+          .filter(pair => !collect(this.offerConstraints)
+            .contains((v, k) => pair.includes(v))),
+        ["BTC/USDT", "ETH/USDT", "BNB/USDT", "BCH/USDT", "LTC/USDT", "TRX/USDT", "DOGE/USDT"]
+          .filter(pair => !collect(this.offerConstraints)
+            .contains((v, k) => pair.includes(v))),
+        ["ETH/BTC", "TRX/BTC", "DOGE/BTC", "BCH/BTC", "LTC/BTC", "BNB/BTC",
+          "TRX/ETH", "DOGE/ETH", "BCH/ETH", "LTC/ETH", "BNB/ETH",
+          "BNB/BCH", "TRX/BNB", "DOGE/BNB"]
+          .filter(pair => !collect(this.offerConstraints)
+            .contains((v, k) => pair.includes(v)))
       ]
     }
   },
   data() {
     return {
-      exchangeAction: 'buy',
+      exchangeAction: "buy",
       offers: [],
       tabIndex: 0,
-      pairAsset: 'BTC/IRR',
-      baseAsset: 'BTC',
-      counterAsset: 'IRR',
-      interval: {offers: null, trades: null},
+      pairAsset: "BTC/IRR",
+      baseAsset: "BTC",
+      counterAsset: "IRR",
+      interval: { offers: null, trades: null },
       windowWidth: window.innerWidth,
-      l: {sell: false, buy: false},
+      l: { sell: false, buy: false },
       sell: {
-        amount: '',
-        price: ''
+        amount: "",
+        price: ""
       },
       buy: {
-        amount: '',
-        price: ''
+        amount: "",
+        price: ""
       },
       sellForm: false,
       buyForm: false,
       rules: {
-        required: value => !!value || 'الزامی است',
-        buySufficient: value => this.balances[this.counterAsset]?.actual_balance?.gte(safeDecimal(this.buyTotal)) || 'اعتبار ناکافی',
-        buyWalletExist: value => !!this.balances[this.baseAsset]?.actual_balance || 'کیف پول ساخته نشده است',
-        sellSufficient: value => this.balances[this.baseAsset]?.actual_balance?.gte(safeDecimal(this.sell.amount)) || 'اعتبار ناکافی',
-        sellWalletExist: value => !!this.balances[this.counterAsset]?.actual_balance || 'کیف پول ساخته نشده است',
-      },
+        required: value => !!value || "الزامی است",
+        buySufficient: value => this.balances[this.counterAsset]?.actual_balance?.gte(safeDecimal(this.buyTotal)) || "اعتبار ناکافی",
+        buyWalletExist: value => !!this.balances[this.baseAsset]?.actual_balance || "کیف پول ساخته نشده است",
+        sellSufficient: value => this.balances[this.baseAsset]?.actual_balance?.gte(safeDecimal(this.sell.amount)) || "اعتبار ناکافی",
+        sellWalletExist: value => !!this.balances[this.counterAsset]?.actual_balance || "کیف پول ساخته نشده است"
+      }
     }
   },
   methods: {
-    ...mapActions("offers", {refreshActiveOffers: 'refresh'}),
-    ...mapActions("balances", {refreshBalances: 'refresh'}),
+    ...mapActions("offers", { refreshActiveOffers: "refresh" }),
     clear() {
-      this.buy.amount = ''
-      this.buy.price = ''
-      this.sell.amount = ''
-      this.sell.price = ''
+      this.buy.amount = ""
+      this.buy.price = ""
+      this.sell.amount = ""
+      this.sell.price = ""
     },
     async doSell() {
       this.$refs.sell_form_ref.validate()
       if (!this.sellForm) return
       this.l.sell = true
-      await this.$axios.$post('/offers/sell', {
+      await this.$axios.$post("/offers/sell", {
         sell: this.baseAsset,
         buy: this.counterAsset,
         amount: this.sell.amount,
@@ -415,7 +413,7 @@ export default {
       })
       this.l.sell = false
       this.clear()
-      await this.refreshBalances()
+      await refreshBalance(this.$axios, "me")
       await this.refreshOffers()
       await new Promise(r => setTimeout(r, 2000))
       await this.refreshActiveOffers()
@@ -429,7 +427,7 @@ export default {
       this.$refs.buy_form_ref.validate()
       if (!this.buyForm) return
       this.l.buy = true
-      await this.$axios.$post('/offers/buy', {
+      await this.$axios.$post("/offers/buy", {
         buy: this.baseAsset,
         sell: this.counterAsset,
         amount: this.buy.amount,
@@ -437,7 +435,7 @@ export default {
       })
       this.l.buy = false
       this.clear()
-      await this.refreshBalances()
+      await refreshBalance(this.$axios, "me")
       await this.refreshOffers()
       await new Promise(r => setTimeout(r, 2000))
       await this.refreshActiveOffers()
@@ -448,7 +446,7 @@ export default {
 
     },
     async refreshOffers() {
-      this.offers = (await this.$axios.$get('/offers-book', {
+      this.offers = (await this.$axios.$get("/offers-book", {
         params: {
           sell: this.baseAsset,
           buy: this.counterAsset
@@ -457,7 +455,7 @@ export default {
     },
     sellRecordTotal(item) {
       return safeDecimal(item.amount).times(this.offersPrice(item))
-          .todp(getDp(this.counterAsset))
+        .todp(getDp(this.counterAsset))
     },
     buyRecordAmount(item) {
       return safeDecimal(item.amount).div(this.offersPrice(item))
@@ -466,22 +464,22 @@ export default {
       return safeDecimal(item.price_r.n).div(item.price_r.d)
     },
     select(action, item) {
-      if (action === 'sell') {
+      if (action === "sell") {
         this.sell.price = safeDecimal(this.offersPrice(item))
-            .todp(getMarketDp(this.baseAsset, this.counterAsset))
+          .todp(getMarketDp(this.baseAsset, this.counterAsset))
         this.sell.amount = safeDecimal(this.buyRecordAmount(item))
-            .todp(getDp(this.baseAsset))
-      } else if (action === 'buy') {
+          .todp(getDp(this.baseAsset))
+      } else if (action === "buy") {
         this.buy.price = safeDecimal(this.offersPrice(item))
-            .todp(getMarketDp(this.baseAsset, this.counterAsset))
+          .todp(getMarketDp(this.baseAsset, this.counterAsset))
         this.buy.amount = safeDecimal(parseFloat(item.amount))
-            .todp(getDp(this.baseAsset))
+          .todp(getDp(this.baseAsset))
       }
     },
     startRecurrentJob() {
       this.interval.offers = setInterval(() => {
         this.refreshOffers()
-      }, 20 * 1000);
+      }, 20 * 1000)
       // this.interval.offers = setInterval(() => {
       //   this.refreshOffers()
       // }, 5 * 60 * 1000);
@@ -512,19 +510,19 @@ export default {
     window.onresize = () => {
       this.windowWidth = window.innerWidth
     }
-    this.$bus.$emit('drawer', false)
+    this.$bus.$emit("drawer", false)
 
     initConstraints(this.$axios)
 
-    this.refreshBalances()
+    refreshBalance(this.$axios, "me")
 
     this.refreshOffers()
     this.startRecurrentJob()
 
-    document.addEventListener('visibilitychange', this.onVizChange, false)
+    document.addEventListener("visibilitychange", this.onVizChange, false)
   },
   beforeDestroy() {
-    document.removeEventListener('visibilitychange', this.onVizChange)
+    document.removeEventListener("visibilitychange", this.onVizChange)
     this.cleanUp()
   }
 }
