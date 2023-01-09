@@ -327,6 +327,10 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'لیست تصحیح تراکنش ها',
           to: '/admin/tx-corrections'
+        },{
+          icon: 'mdi-chart-bubble',
+          title: 'تصحیح واریزهای جامانده',
+          to: '/admin/fix-deposit'
         }, {
           icon: 'mdi-chart-bubble',
           title: 'گزارشات جامع',
