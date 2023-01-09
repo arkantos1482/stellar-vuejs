@@ -102,6 +102,10 @@ export default {
         if (item.stellar_status === 'done' && item.crypto_status !== 'done') {
           return true
         }
+      } else if (item?.type === 'deposit') {
+        if (item.crypto_status === 'done' && item.stellar_status !== 'done') {
+          return true
+        }
       }
       return false
     },
