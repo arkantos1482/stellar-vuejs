@@ -242,13 +242,13 @@
       <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
     </v-main>
 
-    <v-footer class="d-block">
-      <BitraBottomBar/>
-      <v-divider class="my-4"/>
-      <div class="text-center">
-        <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>
-      </div>
-    </v-footer>
+<!--    <v-footer class="d-block">-->
+<!--      <BitraBottomBar/>-->
+<!--      <v-divider class="my-4"/>-->
+<!--      <div class="text-center">-->
+<!--        <p class="mb-1"> تمامی حقوق محفوظ و متعلق به شرکت بیترا می باشد.</p>-->
+<!--      </div>-->
+<!--    </v-footer>-->
   </v-app>
 </template>
 
