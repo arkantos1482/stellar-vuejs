@@ -1,41 +1,27 @@
-import Vue from "vue";
-import collect from "collect.js";
-import Decimal from "decimal.js-light";
+import Vue from "vue"
+import collect from "collect.js"
+import Decimal from "decimal.js-light"
 
-const state = Vue.observable({ list: [], list2: [] });
+const state = Vue.observable({ list: [] })
 
-export default () => state.list;
+export default () => state.list
 
-export const asList = () => state.list2;
+export const asList = () => state.list.toArray()
 
 export async function refresh(axios, user_id) {
-  let balances = (await axios.$get(`/profiles/${user_id}/balances`)).balances;
-  state.list2 = collect(balances)
-    .reject((i) => i.asset_type === "native")
-    .map((item) => {
-      return {
-        symbol: item.asset_code,
-        balance: new Decimal(item.balance),
-        selling_liabilities: new Decimal(item.selling_liabilities),
-        actual_balance: new Decimal(item.balance).minus(
-          item.selling_liabilities
-        ),
-      };
-    }).toArray();
+  let balances = await axios.$get(`/profiles/${user_id}/balances`)
 
   state.list =
-    collect(balances)
-      .map((item) => {
+    collect(balances.data)
+      .map(item => {
         return {
-          [item.asset_code]: {
-            symbol: item.asset_code,
-            balance: new Decimal(item.balance),
-            selling_liabilities: new Decimal(item.selling_liabilities),
-            actual_balance: new Decimal(item.balance).minus(
-              item.selling_liabilities
-            ),
-          },
-        };
+          [item.asset]: {
+            symbol: item.asset,
+            total_balance: new Decimal(item.balance),
+            locked_balance: new Decimal(item.locked_balance),
+            actual_balance: new Decimal(item.balance).minus(item.locked_balance)
+          }
+        }
       })
-      .reduce((_acc, item) => ({ ..._acc, ...item })) ?? [];
+      .reduce((_acc, item) => ({ ..._acc, ...item })) ?? []
 }
