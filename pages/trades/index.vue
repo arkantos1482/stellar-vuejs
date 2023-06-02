@@ -1,47 +1,45 @@
 <template>
   <v-card width="100%" height="100%" class="text-center pa-6">
-    <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات"/>
+    <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات" />
     <v-simple-table>
       <thead>
-      <tr>
-        <th class="text-center">تاریخ</th>
-        <th class="text-center">قیمت</th>
-        <th class="text-center">مقدار</th>
-        <th class="text-center">مجموع</th>
-      </tr>
+        <tr>
+          <th class="text-center">قیمت</th>
+          <th class="text-center">مقدار</th>
+          <th class="text-center">مجموع</th>
+          <th class="text-center">تاریخ</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="item in trades" :key="item.id" :class="item|toColor">
-        <td>{{ item.ledger_closed_at|toFarsiDate }}</td>
-        <td>{{ item|price }}</td>
-        <td>{{ item|amount }}</td>
-        <td>{{ total(item) }}</td>
-      </tr>
+        <tr v-for="item in trades" :key="item.id" :class="item | toColor">
+          <td>{{ item | price }}</td>
+          <td>{{ item | amount }}</td>
+          <td>{{ total(item) }}</td>
+          <td>{{ item.created_at | toFarsiDate }}</td>
+        </tr>
       </tbody>
     </v-simple-table>
   </v-card>
 </template>
 
 <script>
-
-import Decimal from "decimal.js-light";
-import {safeDecimal, toSeparated} from "@/models/NumberUtil";
-import {getDp, getMarketDp} from "@/models/cryptoPrecision";
-import collect from "collect.js";
+import { safeDecimal, toSeparated } from "@/models/NumberUtil"
+import { getMarketDp } from "@/models/cryptoPrecision"
+import CardTitleWithChevron from "~/components/CardTitleWithChevron.vue"
 
 export default {
-  name: 'PairAssetTrades',
-  props: ['base', 'counter'],
+  name: "PairAssetTrades",
+  components: { CardTitleWithChevron },
+  props: ["base", "counter"],
   filters: {
     toColor(item) {
-      return item.base_is_seller ? 'error--text' : 'success--text'
+      return item.maker_side === "sell" ? "error--text" : "success--text"
     },
     price(item) {
-      let price = item.price_d/item.price_n;
-      return toSeparated(safeDecimal(price))
+      return toSeparated(safeDecimal(item.price))
     },
     amount(item) {
-      return toSeparated(safeDecimal(item.counter_amount))
+      return toSeparated(safeDecimal(item.amount))
     }
   },
   watch: {
@@ -62,19 +60,17 @@ export default {
   },
   methods: {
     async refresh() {
-      this.trades = await this.$axios.$get('/trades-pair-asset', {
-        params: {base: this.base, counter: this.counter}
+      let trades = await this.$axios.$get("/trades-pair-asset", {
+        params: { base: this.base, counter: this.counter }
       })
+      this.trades = trades.data
     },
     total(item) {
-      let price = item.price_d/item.price_n;
-      let result = safeDecimal(price * item.counter_amount)
+      let result = safeDecimal(item.price * item.amount)
       return toSeparated(result.todp(getMarketDp(this.base, this.counter)))
-    },
-  },
+    }
+  }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

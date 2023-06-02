@@ -478,7 +478,7 @@ export default {
       return collect(this.offers.bids)
         .map(item => ({
           price: parseFloat(item.price),
-          amount: parseFloat(item.amount)
+          amount: parseFloat(item.unmatched_amount)
         }))
         .sortByDesc("price")
     },
@@ -486,7 +486,7 @@ export default {
       return collect(this.offers.asks)
         .map(item => ({
           price: parseFloat(item.price),
-          amount: parseFloat(item.amount)
+          amount: parseFloat(item.unmatched_amount)
         }))
         .sortByDesc("price")
     },
@@ -648,7 +648,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("offers", { refreshActiveOffers: "refresh" }),
+    // ...mapActions("offers", { refreshActiveOffers: "refresh" }),
     clear() {
       this.buy.amount = ""
       this.buy.price = ""
@@ -671,12 +671,7 @@ export default {
       this.clear()
       await refreshBalance(this.$axios, "me")
       await this.refreshOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
+      await this.$store.dispatch("offers/refresh", "me")
     },
     async doBuy() {
       this.$refs.buy_form_ref.validate()
@@ -694,12 +689,8 @@ export default {
       this.clear()
       await refreshBalance(this.$axios, "me")
       await this.refreshOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
-      await new Promise(r => setTimeout(r, 2000))
-      await this.refreshActiveOffers()
+      await this.$store.dispatch("offers/refresh", "me")
+      // await this.refreshActiveOffers()
     },
     async refreshOffers() {
       this.offers = (

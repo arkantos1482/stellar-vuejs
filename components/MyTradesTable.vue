@@ -1,145 +1,115 @@
 <template>
   <div class="pa-4">
     <a-paged-table
-        ref="trades"
-        :url="'/trades/' + userId"
-        :adapter="adapter"
-        :headers="headers"
-        :filter-query="query"
-        :hide-paginate="hidePaginate"
-        :hide-filter="hideFilter"
-        default-sort-by="ledger_closed_at"
-        :default-sort-desc="true"
+      ref="trades"
+      :url="'/trades/' + userId"
+      :adapter="adapter"
+      :headers="headers"
+      :filter-query="query"
+      :hide-paginate="hidePaginate"
+      :hide-filter="hideFilter"
+      default-sort-by="created_at"
+      :default-sort-desc="true"
     >
-      <template v-slot:item.trade_type="{item}">
+      <template v-slot:item.trade_type="{ item }">
         <p :class="tradeTypeColor(item.trade_type)">{{ item.trade_type }}</p>
       </template>
     </a-paged-table>
 
     <div v-if="!hideExport" class="text-center mt-6">
-      <v-btn @click="externalExport" color="primary" outlined :loading="l.export">
+      <v-btn
+        @click="externalExport"
+        color="primary"
+        outlined
+        :loading="l.export"
+      >
         Excel Export
       </v-btn>
     </div>
-
   </div>
 </template>
 
 <script>
-
-import APagedTable from "../components/APagedTable";
-import {safeDecimal, toSeparated} from "../models/NumberUtil";
-import {axiosDownload, toFarsiCoin, toFarsiCoinPair, toFarsiDate} from "../models/utils";
-import {getMarketDp} from "../models/cryptoPrecision";
-import {exportCSVFile} from "../models/csvUtil";
-import {collect} from "collect.js";
+import APagedTable from "../components/APagedTable"
+import { safeDecimal, toSeparated } from "~/models/NumberUtil"
+import { axiosDownload, toFarsiCoinPair, toFarsiDate } from "~/models/utils"
+import { getMarketDp } from "~/models/cryptoPrecision"
 
 export default {
   name: "myTradesTable",
-  components: {APagedTable},
-  props: ['query', 'hidePaginate', 'hideFilter', 'hideExport'],
+  components: { APagedTable },
+  props: ["query", "hidePaginate", "hideFilter", "hideExport"],
   computed: {
     userId() {
-      return this.$route.params.userId || 'me'
+      return this.$route.params.userId || "me"
     }
   },
   data() {
     return {
       headers: [
-        {value: 'trade_type', text: 'نوع', align: 'center', sortable: false},
-        {value: 'pair_asset', text: 'رمزارزها', align: 'center', sortable: false},
-        {value: 'price', text: 'قیمت', align: 'center', sortable: false},
-        {value: 'amount', text: 'مقدار', align: 'center', sortable: false},
-        {value: 'total', text: 'مجموع', align: 'center', sortable: false},
-        {value: 'fee_ratio', text: 'ضریب کارمزد', align: 'center', sortable: false},
-        {value: 'fee', text: 'کارمزد', align: 'center', sortable: false},
-        {value: 'ledger_closed_at', text: 'تاریخ', align: 'center'},
+        { value: "trade_type", text: "نوع", align: "center", sortable: false },
+        {
+          value: "pair_asset",
+          text: "رمزارزها",
+          align: "center",
+          sortable: false
+        },
+        { value: "price", text: "قیمت", align: "center", sortable: false },
+        { value: "amount", text: "مقدار", align: "center", sortable: false },
+        { value: "total", text: "مجموع", align: "center", sortable: false },
+        // {
+        //   value: "fee_ratio",
+        //   text: "ضریب کارمزد",
+        //   align: "center",
+        //   sortable: false
+        // },
+        // { value: "fee", text: "کارمزد", align: "center", sortable: false },
+        { value: "created_at", text: "تاریخ", align: "center" }
       ],
-      l: {export: false}
+      l: { export: false }
     }
   },
   methods: {
     adapter(item) {
       return {
-        trade_type: item.op_type === 'buy' ? 'خرید' : 'فروش',
-        pair_asset: toFarsiCoinPair(item.counter_asset_code + '/' + item.base_asset_code),
-        price: toSeparated(safeDecimal(item.price_d).div(item.price_n)),
-        amount: toSeparated(parseFloat(item.counter_amount)),
-        total: toSeparated(safeDecimal(item.base_amount)
-            .todp(getMarketDp(item.base_asset_code, item.counter_asset_code))),
-        fee_ratio: safeDecimal(item.fee_ratio),
-        fee: this.fee(item) + ' ' + toFarsiCoin(this.feeCoin(item)),
-        ledger_closed_at: toFarsiDate(item.ledger_closed_at),
+        trade_type: item.maker_side === "buy" ? "خرید" : "فروش",
+        pair_asset: toFarsiCoinPair(item.base_asset + "/" + item.quote_asset),
+        price: toSeparated(safeDecimal(item.price)),
+        amount: toSeparated(parseFloat(item.amount)),
+        total: toSeparated(
+          safeDecimal(item.amount)
+            .mul(safeDecimal(item.price))
+            .todp(getMarketDp(item.base_asset, item.quote_asset))
+        ),
+        // fee_ratio: safeDecimal(item.fee_ratio),
+        // fee: this.fee(item) + " " + toFarsiCoin(this.feeCoin(item)),
+        created_at: toFarsiDate(item.created_at)
       }
     },
-    export_adapter(item) {
-      return {
-        trade_type: item.op_type === 'buy' ? 'خرید' : 'فروش',
-        pair_asset: toFarsiCoinPair(item.counter_asset_code + '/' + item.base_asset_code),
-        price: (safeDecimal(item.price_d).div(item.price_n)),
-        amount: (parseFloat(item.counter_amount)),
-        total: (safeDecimal(item.base_amount)
-            .todp(getMarketDp(item.base_asset_code, item.counter_asset_code))),
-        fee_ratio: safeDecimal(item.fee_ratio),
-
-        // come from server instead of calculating in front
-        // fee: safeDecimal(item.trade_fee) + ' ' + toFarsiCoin(this.feeCoin(item)),
-        fee: this.fee(item) + ' ' + toFarsiCoin(this.feeCoin(item)),
-
-        ledger_closed_at: toFarsiDate(item.ledger_closed_at),
-      }
-    },
-    export_total(list) {
-      return {
-        trade_type: ' ',
-        pair_asset: ' ',
-        price: ' ',
-        amount: list.reduce((c, i) => c.plus(i.amount), safeDecimal(0)),
-        total: list.reduce((c, i) => c.plus(i.total), safeDecimal(0)),
-        fee_ratio: ' ',
-        fee: ' ',
-        ledger_closed_at: ' ',
-      }
-    },
-    tradeTypeColor: (type) => type === 'خرید' ? 'success--text' : 'error--text',
-    fee(item) {
-      // if ((item.op_type !== 'buy' && item.base_asset_code === 'IRR')
-      //     || (item.op_type === 'buy' && item.counter_asset_code === 'IRR')) {
-      //   return 0
-      // }
-      return item.op_type === 'buy'
-          ? toSeparated(this.adjustDp(safeDecimal(item.counter_amount).times(safeDecimal(item.fee_ratio)),
-              item.base_asset_code, item.counter_asset_code))
-          : toSeparated(this.adjustDp(safeDecimal(item.base_amount).times(safeDecimal(item.fee_ratio)),
-              item.counter_asset_code, item.base_asset_code))
-    },
+    // export_total(list) {
+    //   return {
+    //     trade_type: " ",
+    //     pair_asset: " ",
+    //     price: " ",
+    //     amount: list.reduce((c, i) => c.plus(i.amount), safeDecimal(0)),
+    //     total: list.reduce((c, i) => c.plus(i.total), safeDecimal(0)),
+    //     fee_ratio: " ",
+    //     fee: " ",
+    //     ledger_closed_at: " "
+    //   }
+    // },
+    tradeTypeColor: type => (type === "خرید" ? "success--text" : "error--text"),
     adjustDp(val, base, ctr) {
       return safeDecimal(val).todp(getMarketDp(base, ctr))
-    },
-    feeCoin(item) {
-      return item.op_type === 'buy'
-          ? item.counter_asset_code
-          : item.base_asset_code
-    },
-    internalCsvExport() {
-      let items = this.$refs.trades.raw_data.map(this.export_adapter)
-      let total = this.export_total(items)
-      items.push(total)
-      exportCSVFile(
-          collect(this.headers).pluck('text').all(),
-          items,
-          'trades')
     },
     async externalExport() {
       this.l.export = true
       let link = `${this.$axios.defaults.baseURL}/trades/${this.userId}/export`
-      await axiosDownload(this.$axios, link, 'trades.xlsx')
+      await axiosDownload(this.$axios, link, "trades.xlsx")
       this.l.export = false
     }
-  },
+  }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

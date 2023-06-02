@@ -14,7 +14,7 @@ export const actions = {
   async delete(context, payload) {
     await this.$axios.$post(`/orders/${payload.id}/cancel`)
     let offers = context.state.activeOffers.filter(
-      item => parseInt(item.offer_id) !== parseInt(payload.id)
+      item => parseInt(item.id) !== parseInt(payload.id)
     )
     context.commit("activeOffers", offers)
   }
