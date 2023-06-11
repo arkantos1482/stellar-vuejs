@@ -9,7 +9,7 @@ RUN echo $BASE_URL
 
 ENV BASE_URL=$BASE_URL
 
-RUN echo env
+RUN env
 RUN npm run build
 
 # production stage
