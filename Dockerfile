@@ -5,7 +5,11 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 ARG BASE_URL
+RUN echo $BASE_URL
+
 ENV BASE_URL=$BASE_URL
+
+RUN echo env
 RUN npm run build
 
 # production stage
