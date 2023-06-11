@@ -13,7 +13,7 @@ RUN env
 RUN npm run build
 
 # production stage
-FROM nginx:stable-alpine as production-stage
+FROM nginx:stable-alpine
 COPY ./nginx.conf /etc/nginx/nginx.conf
 
 ## Remove default nginx index page
