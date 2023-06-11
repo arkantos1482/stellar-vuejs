@@ -4,6 +4,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ARG BASE_URL
+ENV BASE_URL=$BASE_URL
 RUN npm run build
 
 # production stage
