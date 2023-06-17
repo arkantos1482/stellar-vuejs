@@ -59,7 +59,7 @@ import ps from '@/mixins/pstopper'
 import Deposits from "@/pages/wallets/_user_id/deposits/index";
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
-import CryptoUpper from "@/components/wallet/CryptoUpper";
+import CryptoUpper from "@/components/CryptoUpper";
 import {toSeparated} from "@/models/NumberUtil";
 import balances, {refresh} from '../../balanceService'
 

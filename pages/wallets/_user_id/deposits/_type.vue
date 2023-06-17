@@ -74,7 +74,7 @@ import VueQrcode from "vue-qrcode"
 import ACard from "@/components/ACard"
 import Deposits from "@/pages/wallets/_user_id/deposits/index"
 import pstopper from "@/mixins/pstopper"
-import CryptoUpper from "@/components/wallet/CryptoUpper"
+import CryptoUpper from "@/components/CryptoUpper"
 import balances from "../../balanceService"
 
 export default {

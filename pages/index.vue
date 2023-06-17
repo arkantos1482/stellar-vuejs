@@ -189,7 +189,7 @@ export default {
   data() {
     return {
       toTomanList: [],
-      chartData: "",
+      chartData: null,
       accessLevel: "",
       stats: "",
       rialLimits: {},

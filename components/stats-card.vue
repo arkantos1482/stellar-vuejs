@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import ARow from "../ARow";
+import ARow from "./ARow.vue";
 
 export default {
   name: "stats-card",

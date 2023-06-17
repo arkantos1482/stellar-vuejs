@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import {safeDecimal} from "@/models/NumberUtil";
-import {getDp} from "@/models/cryptoPrecision";
+import {safeDecimal} from "~/models/NumberUtil";
+import {getDp} from "~/models/cryptoPrecision";
 
 export default {
   name: 'DashWalletRow',

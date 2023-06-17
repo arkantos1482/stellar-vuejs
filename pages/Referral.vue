@@ -166,7 +166,7 @@
 import ACard from "@/components/ACard";
 import ATextField from "@/components/ATextField";
 import pstopper from "@/mixins/pstopper";
-import StatsCard from "../components/referral/stats-card";
+import StatsCard from "@/components/stats-card";
 import {collect} from "collect.js";
 
 export default {
