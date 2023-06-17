@@ -1,7 +1,7 @@
 <template>
   <div class="pa-4">
     <p class="text-h4 mb-6 text-right">کیف پول شما</p>
-    <bitra-banner v-for="i in walletsBanners" :item="i" />
+    <bitra-banner v-for="(i, key) in walletsBanners" :item="i" :key="key" />
 
     <v-card width="100%" height="100%" class="px-8 py-4">
       <v-simple-table>
@@ -90,7 +90,7 @@ import balances, { refresh } from "../balanceService"
 import {
   init as initConstraints,
   withdrawConstraints,
-  depositConstraints
+  depositConstraints,
 } from "~/models/constraintService"
 import CryptoAddressTr from "~/components/CryptoAddressTr"
 import { banners } from "~/models/bannerService"
@@ -106,11 +106,11 @@ export default {
     walletsBanners: () => banners("wallets"),
     user_id() {
       return this.$route.params.user_id
-    }
+    },
   },
   mounted() {
     refresh(this.$axios, this.user_id)
     initConstraints(this.$axios)
-  }
+  },
 }
 </script>

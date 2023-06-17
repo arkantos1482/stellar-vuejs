@@ -275,7 +275,11 @@
 
     <v-main>
       <v-container fluid class="pa-4">
-        <bitra-banner v-for="i in allPagesBanners" :item="i" />
+        <bitra-banner
+          v-for="(i, key) in allPagesBanners"
+          :item="i"
+          :key="key"
+        />
         <nuxt />
       </v-container>
       <v-snackbar v-model="snackBar.normal.show">{{
@@ -325,7 +329,7 @@ export default {
     },
     farsiBoolClass(value) {
       return value ? "success--text" : "error--text"
-    }
+    },
   },
   data() {
     return {
@@ -335,7 +339,7 @@ export default {
       snackBar: {
         normal: { show: false, msg: "" },
         success: { show: false, msg: "" },
-        fail: { show: false, msg: "" }
+        fail: { show: false, msg: "" },
       },
       clipped: false,
       drawer: false,
@@ -344,109 +348,109 @@ export default {
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت پروفایل کاربران",
-          to: "/Users"
+          to: "/Users",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت تغییرات پروفایل",
-          to: "/admin/profile-states"
+          to: "/admin/profile-states",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت مالی کاربران",
-          to: "/admin/transactions"
+          to: "/admin/transactions",
         },
         {
           icon: "mdi-chart-bubble",
           title: "تعیین کارمزدهای کاربران",
-          to: "/admin/user-trade-fees"
+          to: "/admin/user-trade-fees",
         },
         {
           icon: "mdi-chart-bubble",
           title: "گزارش موجودی ها",
-          to: "/admin/accounts"
+          to: "/admin/accounts",
         },
         {
           icon: "mdi-chart-bubble",
           title: "پرداخت های رمزارزی",
-          to: "/admin/payment/CryptoReport"
+          to: "/admin/payment/CryptoReport",
         },
         {
           icon: "mdi-chart-bubble",
           title: "پرداخت های تومانی",
-          to: "/admin/payment/TomanReport"
+          to: "/admin/payment/TomanReport",
         },
         {
           icon: "mdi-chart-bubble",
           title: "لیست تصحیح تراکنش ها",
-          to: "/admin/tx-corrections"
+          to: "/admin/tx-corrections",
         },
         {
           icon: "mdi-chart-bubble",
           title: "تصحیح واریزهای جامانده",
-          to: "/admin/fix-deposit"
+          to: "/admin/fix-deposit",
         },
         {
           icon: "mdi-chart-bubble",
           title: "گزارشات جامع",
-          to: "/admin/aggregatedReports"
+          to: "/admin/aggregatedReports",
         },
         {
           icon: "mdi-chart-bubble",
           title: "کارمزد برداشت ها",
-          to: "/admin/withdraw-fee"
+          to: "/admin/withdraw-fee",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت حساب های بانک",
-          to: "/admin/bank-accounts"
+          to: "/admin/bank-accounts",
         },
         {
           icon: "mdi-chart-bubble",
           title: " سطوح بهره برداری",
-          to: "/admin/access"
+          to: "/admin/access",
         },
         {
           icon: "mdi-chart-bubble",
           title: " مینیمم برداشت ها",
-          to: "/admin/access/min-withdraws"
+          to: "/admin/access/min-withdraws",
         },
         {
           icon: "mdi-chart-bubble",
           title: " مینیمم معاملات",
-          to: "/admin/access/min-trades"
+          to: "/admin/access/min-trades",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت پیام ها",
-          to: "/admin/messages/broadcast"
+          to: "/admin/messages/broadcast",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت بات ها",
-          to: "/admin/bots"
+          to: "/admin/bots",
         },
         {
           icon: "mdi-chart-bubble",
           title: "لیست اپراتورهای گارد",
-          to: "/admin/operators"
+          to: "/admin/operators",
         },
         {
           icon: "mdi-chart-bubble",
           title: "مدیریت بنر ها",
-          to: "/admin/messages/banners"
+          to: "/admin/messages/banners",
         },
         {
           icon: "mdi-chart-bubble",
           title: "محدودیت موقت فیچرهای اصلی",
-          to: "/admin/access/feature-constraints"
-        }
+          to: "/admin/access/feature-constraints",
+        },
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       newMessages: [],
-      interval: { msg: null }
+      interval: { msg: null },
     }
   },
   async mounted() {
@@ -454,7 +458,7 @@ export default {
       this.showErrorSnack(msg, level)
     })
 
-    this.$bus.$on("drawer", show => {
+    this.$bus.$on("drawer", (show) => {
       this.drawer = show
     })
 
@@ -486,11 +490,11 @@ export default {
       return this.user.access_level
     },
     translateVerify() {
-      return Object.keys(this.userVerify).map(key => ({
+      return Object.keys(this.userVerify).map((key) => ({
         name: this.$options.filters.verifyToFarsi(key),
-        value: this.userVerify[key]
+        value: this.userVerify[key],
       }))
-    }
+    },
   },
   methods: {
     async logout() {
@@ -527,11 +531,11 @@ export default {
       } else {
         this.startRecurrentJob()
       }
-    }
+    },
   },
   beforeDestroy() {
     document.removeEventListener("visibilitychange", this.onVizChange)
     this.cleanUp()
-  }
+  },
 }
 </script>

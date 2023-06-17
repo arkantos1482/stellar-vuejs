@@ -6,40 +6,48 @@
 
     <v-form @submit.prevent="onSend">
       <div class="text-center my-8">
-        <p class="my-8">ثبت کد تایید به منزله پذیرفتن قوانین و مقررات مندرج در سایت میباشد.</p>
+        <p class="my-8">
+          ثبت کد تایید به منزله پذیرفتن قوانین و مقررات مندرج در سایت میباشد.
+        </p>
         <PincodeInput
-            dir="ltr"
-            v-model="code"
-            @input="$emit('otp',$event)"
-            length=6
+          dir="ltr"
+          v-model="code"
+          @input="$emit('otp', $event)"
+          :length="6"
         />
       </div>
-      <p class="text-center mt-12 secondary--text text-body-2"> {{ counterToString }}</p>
-      <div v-show="codeFailure" class="mt-8  text-center">
+      <p class="text-center mt-12 secondary--text text-body-2">
+        {{ counterToString }}
+      </p>
+      <div v-show="codeFailure" class="mt-8 text-center">
         <a @click="onResend">ارسال مجدد کد تایید</a>
       </div>
-      <v-btn type="submit" :loading="loading"
-             block color="primary" class="mt-16">تایید
+      <v-btn
+        type="submit"
+        :loading="loading"
+        block
+        color="primary"
+        class="mt-16"
+        >تایید
       </v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
-
-import ATextField from "@/components/ATextField";
-import PincodeInput from 'vue-pincode-input'
+import ATextField from "@/components/ATextField"
+import PincodeInput from "vue-pincode-input"
 
 export default {
-  name: 'otp',
-  components: {ATextField, PincodeInput},
-  props: ['label', 'loading'],
+  name: "otp",
+  components: { ATextField, PincodeInput },
+  props: ["label", "loading"],
   data() {
     return {
-      code: '',
+      code: "",
       counter: 150,
       codeFailure: false,
-      counterToString: ''
+      counterToString: "",
     }
   },
   mounted() {
@@ -52,25 +60,24 @@ export default {
       const interval = setInterval(() => {
         if (this.counter > 0) {
           this.counter--
-          let remainder = this.counter % 60;
-          let remainToString = (remainder < 10) ? ('0' + remainder) : remainder
-          this.counterToString = Math.floor(this.counter / 60) + ':' + remainToString
+          let remainder = this.counter % 60
+          let remainToString = remainder < 10 ? "0" + remainder : remainder
+          this.counterToString =
+            Math.floor(this.counter / 60) + ":" + remainToString
         } else {
           this.codeFailure = true
           clearInterval(interval)
         }
-      }, 1000);
+      }, 1000)
     },
     onSend() {
-      this.$emit('send')
+      this.$emit("send")
     },
     onResend() {
       this.setTimer()
-    }
-  }
+    },
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

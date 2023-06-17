@@ -1,6 +1,6 @@
 <template>
   <div>
-    <bitra-banner v-for="i in dashboardBanners" :item="i" />
+    <bitra-banner v-for="(i, key) in dashboardBanners" :key="key" :item="i" />
 
     <a-row>
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']" />
@@ -58,8 +58,8 @@
             <v-icon>mdi-star</v-icon>
             <p class="mb-0 mx-4">{{ accessLevel }}</p>
             <v-btn color="primary" outlined small class="px-4" to="/users/me"
-              >ارتقا</v-btn
-            >
+              >ارتقا
+            </v-btn>
           </a-row>
         </v-card>
       </v-col>
@@ -145,10 +145,10 @@ export default {
     MyTradesTable,
     MyTrades,
     DashboardCardTitle,
-    RowItem
+    RowItem,
   },
   filters: {
-    tomanSuffix: val => val + " تومان"
+    tomanSuffix: (val) => val + " تومان",
   },
   computed: {
     dashboardBanners: () => banners("dashboard"),
@@ -163,28 +163,28 @@ export default {
           dayLow: "1080000",
           dayHigh: "1440000",
           dayLatest: "",
-          dayChange: ""
+          dayChange: "",
         },
         ART: {
           dayLow: "826000",
           dayHigh: "1101100",
           dayLatest: "",
-          dayChange: ""
+          dayChange: "",
         },
         SHA: {
           dayLow: "3360000",
           dayHigh: "4480000",
           dayLatest: "",
-          dayChange: ""
+          dayChange: "",
         },
         ZRK: {
           dayLow: "1350000",
           dayHigh: "2500000",
           dayLatest: "",
-          dayChange: ""
-        }
+          dayChange: "",
+        },
       }
-    }
+    },
   },
   data() {
     return {
@@ -200,9 +200,9 @@ export default {
           type: "time",
           key: "after",
           name: "بعد از",
-          value: this.getDaysAgo(2)
-        }
-      ]
+          value: this.getDaysAgo(2),
+        },
+      ],
     }
   },
   mounted() {
@@ -210,18 +210,18 @@ export default {
 
     this.$axios
       .$get("/profiles/me")
-      .then(res => (this.accessLevel = res.access_level))
+      .then((res) => (this.accessLevel = res.access_level))
 
-    this.$axios.$get("/to-toman-list").then(res => {
+    this.$axios.$get("/to-toman-list").then((res) => {
       let toTomanList = res
       let balances = this.balances
       let array = JSON.parse(JSON.stringify(balances))
       let nonZeroKeys = Object.keys(array)?.filter(
-        key =>
+        (key) =>
           this.adjustDp(balances[key].balance, key) > 0 && key != "undefined"
       )
-      let labels = nonZeroKeys.map(key => key.replace("IRR", "IRT"))
-      let values = nonZeroKeys?.map(key =>
+      let labels = nonZeroKeys.map((key) => key.replace("IRR", "IRT"))
+      let values = nonZeroKeys?.map((key) =>
         this.adjustDp(balances[key].balance * toTomanList[key], "IRR")
       )
 
@@ -247,30 +247,30 @@ export default {
               "rgb(161,1,205)",
               "rgb(111,102,81)",
               "rgb(194,213,83)",
-              "rgb(175,136,40)"
+              "rgb(175,136,40)",
             ],
-            hoverOffset: 4
-          }
-        ]
+            hoverOffset: 4,
+          },
+        ],
       }
     })
 
     this.$axios
       .$post("/access/limits/remained/me", { resource: "crypto" })
-      .then(res => (this.cryptoLimits = res))
+      .then((res) => (this.cryptoLimits = res))
     this.$axios
       .$post("/access/limits/remained/me", { resource: "irr" })
-      .then(res => (this.rialLimits = res))
+      .then((res) => (this.rialLimits = res))
 
     this.$axios
       .$get("/balances/toToman/me")
-      .then(res => (this.totalBalance = res))
+      .then((res) => (this.totalBalance = res))
 
     this.$axios
       .$get(
         "https://api.nobitex.ir/market/stats?srcCurrency=btc,eth,ltc,usdt,bch,bnb,eos,xlm,etc,trx,pmn,doge&dstCurrency=rls,usdt"
       )
-      .then(res => (this.stats = res.stats))
+      .then((res) => (this.stats = res.stats))
   },
   methods: {
     azMaker(first, second) {
@@ -284,7 +284,7 @@ export default {
       let date = new Date()
       date.setDate(date.getDate() - days)
       return date.toLocaleDateString("en-CA")
-    }
-  }
+    },
+  },
 }
 </script>
