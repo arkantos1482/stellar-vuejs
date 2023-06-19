@@ -1,7 +1,7 @@
 <template>
-  <div class="fullscreen d-flex justify-center align-center">
-    <v-card width="85vw" height="85vh" light>
-      <a-row class="align-stretch" style="height: 100%">
+  <div class="fullscreen d-flex justify-center my-8">
+    <v-card width="85vw" light>
+      <a-row style="height: 100%">
         <v-col cols="6" class="theback d-flex align-center justify-center">
           <v-img
             max-width="280px"
