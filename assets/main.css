@@ -24,6 +24,16 @@
     url("//db.onlinewebfonts.com/t/3967f8bfcdf02e2b966e2f252738ddca.svg#IRANSans") format("svg");
 }
 
+/* Hide scrollbar */
+*::-webkit-scrollbar {
+    width: 0.4em;
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}
+
 .eng.ef1.ef2 {
     font-family: sans-serif !important;
 }
@@ -54,12 +64,12 @@ a {
 
 /*selector collapse font color*/
 .v-select__selection {
-    color: #ffbb00 !important;
+    color: #35004a !important;
 }
 
 /*!*selector collapse icon color*!*/
 .v-select .v-icon.mdi.mdi-menu-down {
-    color: #ffbb00 !important;
+    color: #35004a !important;
 }
 
 .v-list-item__title {
@@ -89,7 +99,7 @@ a {
     justify-content: center;
     align-items: center;
     color: white !important;
-    background-color: #00061a !important;;
+    /*background-color: #00061a !important;;*/
     /*transition: .2s linear;*/
 }
 
@@ -125,20 +135,20 @@ a {
 }
 
 .vpd-body {
-    background: #00061a;
+    /*background: #00061a;*/
 }
 
 div.vpd-header {
-    color: black;
+    /*color: black;*/
 }
 
 .vpd-actions button:hover {
     background-color: transparent !important;
-    border: 1px solid #ffbb00 !important;
+    border: 1px solid #35004a !important;
 }
 
 .v-text-field fieldset {
-    border: 1px solid #a7a9cf66 !important;
+    /*border: 1px solid #a7a9cf66 !important;*/
 }
 
 .pointer {

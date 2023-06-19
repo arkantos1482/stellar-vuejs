@@ -29,7 +29,7 @@
         :disabled="isDepositDisabled"
         small
         text
-        color="primary"
+        color="accent"
         @click="onDeposit"
       >
         {{ depositLabel }}
@@ -38,7 +38,7 @@
         :disabled="isWithdrawDisabled"
         small
         text
-        color="primary"
+        color="accent"
         class="mx-8"
         @click="onWithdraw"
       >
@@ -50,7 +50,7 @@
         @click="onSync"
         :loading="l.sync"
       >
-        <v-icon color="primary">mdi-refresh</v-icon>
+        <v-icon color="accent">mdi-refresh</v-icon>
       </v-btn>
     </td>
   </tr>
@@ -85,28 +85,28 @@ export default {
     },
     depositLabel() {
       return this.isInternal() ? "دریافت" : "واریز"
-    }
+    },
   },
   data() {
     return {
-      l: { create: false, sync: false }
+      l: { create: false, sync: false },
     }
   },
   methods: {
     async onDeposit() {
       await this.$router.push({
-        path: `/wallets/${this.user_id}/deposits/${this.type}`
+        path: `/wallets/${this.user_id}/deposits/${this.type}`,
       })
     },
     async onWithdraw() {
       await this.$router.push({
-        path: `/wallets/${this.user_id}/withdraws/${this.type}`
+        path: `/wallets/${this.user_id}/withdraws/${this.type}`,
       })
     },
     async onSync() {
       this.l.sync = true
       await this.$axios.$post(`/crypto/sync/${this.user_id}`, {
-        crypto: this.type
+        crypto: this.type,
       })
       await refresh(this.$axios, this.user_id)
       this.l.sync = false
@@ -118,7 +118,7 @@ export default {
     },
     adjustDp(val) {
       return safeDecimal(val).todp(getDp(this.type))
-    }
-  }
+    },
+  },
 }
 </script>

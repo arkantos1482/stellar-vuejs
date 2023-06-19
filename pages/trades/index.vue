@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" height="100%" class="text-center pa-6">
+  <div class="text-center pa-6">
     <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات" />
     <v-simple-table>
       <thead>
@@ -19,7 +19,7 @@
         </tr>
       </tbody>
     </v-simple-table>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
     },
     amount(item) {
       return toSeparated(safeDecimal(item.amount))
-    }
+    },
   },
   watch: {
     base() {
@@ -48,11 +48,11 @@ export default {
     },
     counter() {
       this.refresh()
-    }
+    },
   },
   data() {
     return {
-      trades: []
+      trades: [],
     }
   },
   mounted() {
@@ -61,15 +61,15 @@ export default {
   methods: {
     async refresh() {
       let trades = await this.$axios.$get("/trades-pair-asset", {
-        params: { base: this.base, counter: this.counter }
+        params: { base: this.base, counter: this.counter },
       })
       this.trades = trades.data
     },
     total(item) {
       let result = safeDecimal(item.price * item.amount)
       return toSeparated(result.todp(getMarketDp(this.base, this.counter)))
-    }
-  }
+    },
+  },
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <div class="text-h4">{{ title }}</div>
+    <div class="text-h4 primary--text">{{ title }}</div>
     <slot></slot>
   </div>
 </template>
@@ -8,10 +8,8 @@
 <script>
 export default {
   name: "LoginRegCard",
-  props: ['title']
+  props: ["title"],
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

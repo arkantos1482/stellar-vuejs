@@ -1,189 +1,68 @@
 <template>
   <v-app class="text-right">
-    <v-navigation-drawer v-model="drawer" fixed right app>
-      <v-list v-if="isAdmin">
-        <v-list-item
-          v-for="(item, index) in admin_drawer_items"
-          :key="index"
-          :to="item.to"
-        >
-          <v-icon>{{ item.icon }}</v-icon>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
+    <v-app-bar fixed app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="red" />
+      <router-link to="/">
+        <v-img
+          class="mr-n4"
+          max-width="128"
+          max-height="48"
+          contain
+          :src="require('../assets/images/bitak-vertical.png')"
+        />
+      </router-link>
 
-      <v-list v-else nav dense flat>
-        <v-list-item-group color="primary">
-          <v-list-item to="/">
-            <v-icon class="ml-2">mdi-monitor-dashboard</v-icon>
-            <v-list-item-title>داشبورد</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item to="/wallets/me">
-            <v-icon class="ml-2">mdi-wallet-outline</v-icon>
-            <v-list-item-title>کیف پول</v-list-item-title>
-          </v-list-item>
-
-          <v-expansion-panels>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                <v-list-item>
-                  <v-icon class="ml-2"
-                    >mdi-card-account-details-star-outline</v-icon
-                  >
-                  <v-list-item-title>سفارشات</v-list-item-title>
-                </v-list-item>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
-                <v-list-item to="/offers/active/me"
-                  >سفارشات در جریان</v-list-item
-                >
-                <v-list-item to="/offers/me">تاریخچه سفارشات</v-list-item>
-                <v-list-item to="/trades/me">معاملات</v-list-item>
-
-                <!--                <v-list-item to="/wallets/withdraws">-->
-                <!--                  <v-list-item-title>گزارش برداشت</v-list-item-title>-->
-                <!--                </v-list-item>-->
-                <!--                <v-list-item to="/wallets/deposits">-->
-                <!--                  <v-list-item-title>گزارش واریز</v-list-item-title>-->
-                <!--                </v-list-item>-->
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-
-          <v-expansion-panels>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                <v-list-item>
-                  <v-icon class="ml-2"
-                    >mdi-badge-account-horizontal-outline</v-icon
-                  >
-                  <v-list-item-title>حسابداری مالی</v-list-item-title>
-                </v-list-item>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-list-item to="/wallets/me/withdraws"
-                  >گزارش برداشت</v-list-item
-                >
-                <v-list-item to="/wallets/me/deposits">گزارش واریز</v-list-item>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-
-          <v-expansion-panels>
-            <v-expansion-panel>
-              <v-expansion-panel-header>
-                <v-list-item>
-                  <v-icon class="ml-2">mdi-inbox-full</v-icon>
-                  <v-list-item-title>پیام ها</v-list-item-title>
-                </v-list-item>
-              </v-expansion-panel-header>
-              <v-expansion-panel-content>
-                <v-list-item to="/messages">همه پیام ها</v-list-item>
-                <v-list-item to="/messages/news">اخبار و رویدادها</v-list-item>
-                <v-list-item to="/messages/events">فعالیت ها</v-list-item>
-                <v-list-item to="/messages/settings"
-                  >مدیریت اعلان ها</v-list-item
-                >
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
-
-          <v-list-item to="/users/me">
-            <v-icon class="ml-2">mdi-card-account-details-outline</v-icon>
-            <v-list-item-title>پروفایل</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item to="/Security">
-            <v-icon class="ml-2">mdi-security</v-icon>
-            <v-list-item-title>امنیت</v-list-item-title>
-          </v-list-item>
-
-          <!--          <v-list-item to="/coming-soon">-->
-          <!--            <v-icon class="ml-2">mdi-account-cash</v-icon>-->
-          <!--            <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>-->
-          <!--          </v-list-item>-->
-
-          <v-list-item to="/Referral">
-            <v-icon class="ml-2">mdi-account-plus</v-icon>
-            <v-list-item-title>دعوت از دوستان</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item @click="logout">
-            <v-icon class="ml-2">mdi-logout</v-icon>
-            <v-list-item-title>خروج</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item
-            v-if="this.user.email === 'bitrabtc@gmail.com'"
-            to="/offers/reg/bulk"
-          >
-            <v-icon class="ml-2">mdi-account-plus</v-icon>
-            <v-list-item-title>ثبت دسته ای سفارش</v-list-item-title>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </v-navigation-drawer>
-
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-img
-        max-width="128"
-        max-height="48"
-        :src="require('../assets/images/Bitra_Logo_Final_Edition-18@2x.png')"
-      />
-      <div v-show="!isAdmin">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn text v-bind="attrs" v-on="on" to="/offers/reg">بازار </v-btn>
-          </template>
-        </v-menu>
-        <v-btn text target="_blank" href="https://bitra.market/tokenAmin">
-          سرمایه گذاری</v-btn
-        >
-        <v-btn text target="_blank" href="https://bitra.market/investorsClub"
-          >جامعه توکن داران</v-btn
-        >
-        <v-btn text target="_blank" href="https://bitra.market/news"
-          >اخبار</v-btn
-        >
-        <v-menu offset-y>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn v-bind="attrs" v-on="on" text>پشتیبانی</v-btn>
-          </template>
-          <v-list>
-            <v-list-item target="_blank" href="https://bitra.market/terms/"
-              >قوانین</v-list-item
-            >
-            <v-list-item target="_blank" href="https://bitra.market/faq/"
-              >سوالات متداول</v-list-item
-            >
-            <v-list-item
-              target="_blank"
-              href="https://bitra.market/registerGuide/"
-              >راهنمای ثبت نام</v-list-item
-            >
-          </v-list>
-        </v-menu>
-        <v-btn text target="_blank" href="https://bitra.market/about"
-          >درباره ما</v-btn
-        >
-        <v-btn text target="_blank" href="https://bitra.market/contact"
-          >تماس با ما</v-btn
-        >
-      </div>
+      <!--      <div v-show="!isAdmin">-->
+      <!--        <v-menu>-->
+      <!--          <template v-slot:activator="{ on, attrs }">-->
+      <!--            <v-btn text v-bind="attrs" v-on="on" to="/offers/reg">بازار </v-btn>-->
+      <!--          </template>-->
+      <!--        </v-menu>-->
+      <!--        <v-btn text target="_blank" href="https://bitra.market/tokenAmin">-->
+      <!--          سرمایه گذاری</v-btn-->
+      <!--        >-->
+      <!--        <v-btn text target="_blank" href="https://bitra.market/investorsClub"-->
+      <!--          >جامعه توکن داران</v-btn-->
+      <!--        >-->
+      <!--        <v-btn text target="_blank" href="https://bitra.market/news"-->
+      <!--          >اخبار</v-btn-->
+      <!--        >-->
+      <!--        <v-menu offset-y>-->
+      <!--          <template v-slot:activator="{ on, attrs }">-->
+      <!--            <v-btn v-bind="attrs" v-on="on" text>پشتیبانی</v-btn>-->
+      <!--          </template>-->
+      <!--          <v-list>-->
+      <!--            <v-list-item target="_blank" href="https://bitra.market/terms/"-->
+      <!--              >قوانین</v-list-item-->
+      <!--            >-->
+      <!--            <v-list-item target="_blank" href="https://bitra.market/faq/"-->
+      <!--              >سوالات متداول</v-list-item-->
+      <!--            >-->
+      <!--            <v-list-item-->
+      <!--              target="_blank"-->
+      <!--              href="https://bitra.market/registerGuide/"-->
+      <!--              >راهنمای ثبت نام</v-list-item-->
+      <!--            >-->
+      <!--          </v-list>-->
+      <!--        </v-menu>-->
+      <!--        <v-btn text target="_blank" href="https://bitra.market/about"-->
+      <!--          >درباره ما</v-btn-->
+      <!--        >-->
+      <!--        <v-btn text target="_blank" href="https://bitra.market/contact"-->
+      <!--          >تماس با ما</v-btn-->
+      <!--        >-->
+      <!--      </div>-->
       <v-spacer />
       <!--      WALLETS-->
       <v-menu>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text v-bind="attrs" v-on="on" to="/wallets/me">کیف پول </v-btn>
+          <v-btn text v-bind="attrs" v-on="on" to="/wallets/me">کیف پول</v-btn>
         </template>
       </v-menu>
       <!--      OFFERS-->
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-btn text v-bind="attrs" v-on="on">سفارشات </v-btn>
+          <v-btn text v-bind="attrs" v-on="on">سفارشات</v-btn>
         </template>
         <v-list>
           <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
@@ -273,8 +152,134 @@
       </v-menu>
     </v-app-bar>
 
+    <v-navigation-drawer v-model="drawer" absolute right temporary>
+      <v-list v-if="isAdmin">
+        <v-list-item
+          v-for="(item, index) in admin_drawer_items"
+          :key="index"
+          :to="item.to"
+        >
+          <v-icon>{{ item.icon }}</v-icon>
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+      <v-list v-else nav dense flat>
+        <v-list-item-group color="primary">
+          <v-list-item to="/">
+            <v-icon class="ml-2">mdi-monitor-dashboard</v-icon>
+            <v-list-item-title>داشبورد</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/wallets/me">
+            <v-icon class="ml-2">mdi-wallet-outline</v-icon>
+            <v-list-item-title>کیف پول</v-list-item-title>
+          </v-list-item>
+
+          <v-expansion-panels flat>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon class="ml-2"
+                    >mdi-card-account-details-star-outline
+                  </v-icon>
+                  <v-list-item-title>سفارشات</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
+                <v-list-item to="/offers/active/me"
+                  >سفارشات در جریان
+                </v-list-item>
+                <v-list-item to="/offers/me">تاریخچه سفارشات</v-list-item>
+                <v-list-item to="/trades/me">معاملات</v-list-item>
+
+                <!--                <v-list-item to="/wallets/withdraws">-->
+                <!--                  <v-list-item-title>گزارش برداشت</v-list-item-title>-->
+                <!--                </v-list-item>-->
+                <!--                <v-list-item to="/wallets/deposits">-->
+                <!--                  <v-list-item-title>گزارش واریز</v-list-item-title>-->
+                <!--                </v-list-item>-->
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+          <v-expansion-panels flat>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon class="ml-2"
+                    >mdi-badge-account-horizontal-outline
+                  </v-icon>
+                  <v-list-item-title>حسابداری مالی</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/wallets/me/withdraws"
+                  >گزارش برداشت
+                </v-list-item>
+                <v-list-item to="/wallets/me/deposits">گزارش واریز</v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+          <v-expansion-panels flat>
+            <v-expansion-panel>
+              <v-expansion-panel-header>
+                <v-list-item>
+                  <v-icon class="ml-2">mdi-inbox-full</v-icon>
+                  <v-list-item-title>پیام ها</v-list-item-title>
+                </v-list-item>
+              </v-expansion-panel-header>
+              <v-expansion-panel-content>
+                <v-list-item to="/messages">همه پیام ها</v-list-item>
+                <v-list-item to="/messages/news">اخبار و رویدادها</v-list-item>
+                <v-list-item to="/messages/events">فعالیت ها</v-list-item>
+                <v-list-item to="/messages/settings"
+                  >مدیریت اعلان ها
+                </v-list-item>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
+
+          <v-list-item to="/users/me">
+            <v-icon class="ml-2">mdi-card-account-details-outline</v-icon>
+            <v-list-item-title>پروفایل</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item to="/Security">
+            <v-icon class="ml-2">mdi-security</v-icon>
+            <v-list-item-title>امنیت</v-list-item-title>
+          </v-list-item>
+
+          <!--          <v-list-item to="/coming-soon">-->
+          <!--            <v-icon class="ml-2">mdi-account-cash</v-icon>-->
+          <!--            <v-list-item-title>جوایز و تخفیف ها</v-list-item-title>-->
+          <!--          </v-list-item>-->
+
+          <v-list-item to="/Referral">
+            <v-icon class="ml-2">mdi-account-plus</v-icon>
+            <v-list-item-title>دعوت از دوستان</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item @click="logout">
+            <v-icon class="ml-2">mdi-logout</v-icon>
+            <v-list-item-title>خروج</v-list-item-title>
+          </v-list-item>
+
+          <v-list-item
+            v-if="this.user.email === 'bitrabtc@gmail.com'"
+            to="/offers/reg/bulk"
+          >
+            <v-icon class="ml-2">mdi-account-plus</v-icon>
+            <v-list-item-title>ثبت دسته ای سفارش</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
+
     <v-main>
-      <v-container fluid class="pa-4">
+      <v-container fluid class="py-4 px-0">
         <bitra-banner
           v-for="(i, key) in allPagesBanners"
           :item="i"
@@ -282,15 +287,15 @@
         />
         <nuxt />
       </v-container>
-      <v-snackbar v-model="snackBar.normal.show">{{
-        snackBar.normal.msg
-      }}</v-snackbar>
-      <v-snackbar color="green" v-model="snackBar.success.show">{{
-        snackBar.success.msg
-      }}</v-snackbar>
-      <v-snackbar color="red" v-model="snackBar.fail.show">{{
-        snackBar.fail.msg
-      }}</v-snackbar>
+      <v-snackbar v-model="snackBar.normal.show"
+        >{{ snackBar.normal.msg }}
+      </v-snackbar>
+      <v-snackbar color="green" v-model="snackBar.success.show"
+        >{{ snackBar.success.msg }}
+      </v-snackbar>
+      <v-snackbar color="red" v-model="snackBar.fail.show"
+        >{{ snackBar.fail.msg }}
+      </v-snackbar>
     </v-main>
 
     <!--    <v-footer class="d-block">-->

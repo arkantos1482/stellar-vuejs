@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4">
+  <div>
     <a-paged-table
       ref="trades"
       :url="'/trades/' + userId"
@@ -42,7 +42,7 @@ export default {
   computed: {
     userId() {
       return this.$route.params.userId || "me"
-    }
+    },
   },
   data() {
     return {
@@ -52,7 +52,7 @@ export default {
           value: "pair_asset",
           text: "رمزارزها",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         { value: "price", text: "قیمت", align: "center", sortable: false },
         { value: "amount", text: "مقدار", align: "center", sortable: false },
@@ -64,9 +64,9 @@ export default {
         //   sortable: false
         // },
         // { value: "fee", text: "کارمزد", align: "center", sortable: false },
-        { value: "created_at", text: "تاریخ", align: "center" }
+        { value: "created_at", text: "تاریخ", align: "center" },
       ],
-      l: { export: false }
+      l: { export: false },
     }
   },
   methods: {
@@ -83,7 +83,7 @@ export default {
         ),
         // fee_ratio: safeDecimal(item.fee_ratio),
         // fee: this.fee(item) + " " + toFarsiCoin(this.feeCoin(item)),
-        created_at: toFarsiDate(item.created_at)
+        created_at: toFarsiDate(item.created_at),
       }
     },
     // export_total(list) {
@@ -98,7 +98,8 @@ export default {
     //     ledger_closed_at: " "
     //   }
     // },
-    tradeTypeColor: type => (type === "خرید" ? "success--text" : "error--text"),
+    tradeTypeColor: (type) =>
+      type === "خرید" ? "success--text" : "error--text",
     adjustDp(val, base, ctr) {
       return safeDecimal(val).todp(getMarketDp(base, ctr))
     },
@@ -107,8 +108,8 @@ export default {
       let link = `${this.$axios.defaults.baseURL}/trades/${this.userId}/export`
       await axiosDownload(this.$axios, link, "trades.xlsx")
       this.l.export = false
-    }
-  }
+    },
+  },
 }
 </script>
 

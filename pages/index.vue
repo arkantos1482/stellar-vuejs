@@ -2,7 +2,7 @@
   <div>
     <bitra-banner v-for="(i, key) in dashboardBanners" :key="key" :item="i" />
 
-    <a-row>
+    <a-row style="background: white">
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']" />
       <CryptoMinMaxCard coin="ETH" :stat="stats['eth-rls']" />
       <CryptoMinMaxCard coin="LTC" :stat="stats['ltc-rls']" />
@@ -13,15 +13,15 @@
       <CryptoMinMaxCard coin="TRX" :stat="stats['trx-rls']" />
     </a-row>
 
-    <a-row class="align-stretch">
+    <a-row class="align-stretch mt-6" style="background: white">
       <!--      ACCOUNT-->
       <v-col cols="6">
-        <v-card width="100%" height="100%" class="pa-6">
+        <div class="pa-6">
           <card-title-with-chevron
             icon="mdi-account"
             title="وضعیت حساب کاربری"
           />
-          <v-divider class="my-6" />
+          <v-divider class="ma-4" />
           <RowItem
             title="برداشت روزانه تومان"
             :value="azMaker(rialLimits.daily_usage, rialLimits.daily_max_usage)"
@@ -52,7 +52,7 @@
             title="ارزش معاملات سی روز"
             :value="adjustDp(cryptoLimits.trade_volume_past_month, 'IRR')"
           />
-          <v-divider class="my-6" />
+          <v-divider class="ma-4" />
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
@@ -61,14 +61,14 @@
               >ارتقا
             </v-btn>
           </a-row>
-        </v-card>
+        </div>
       </v-col>
 
       <!--      WALLET-->
       <v-col cols="6">
-        <v-card width="100%" height="100%" class="pa-6">
+        <div class="pa-6">
           <card-title-with-chevron icon="mdi-wallet" title="کیف پول های شما" />
-          <v-divider class="my-6" />
+          <v-divider class="ma-4" />
 
           <v-row>
             <v-col cols="6">
@@ -83,7 +83,7 @@
               <wallet-doughnut :chartData="chartData" :options="options" />
             </v-col>
           </v-row>
-          <v-divider class="my-6" />
+          <v-divider class="ma-4" />
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
           <RowItem
             title="ارزش تخمینی به تومان"
@@ -91,28 +91,29 @@
           />
           <!--          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>-->
           <!--          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>-->
-        </v-card>
+        </div>
       </v-col>
     </a-row>
 
-    <a-row class="align-stretch">
+    <a-row class="align-stretch mt-6" style="background: white">
       <v-col cols="6">
-        <v-card width="100%" height="100%" class="pa-6">
+        <div class="pa-6">
           <card-title-with-chevron
             icon="mdi-clipboard-text-play"
             title="سفارشات در جریان"
           />
-          <v-divider class="mt-6" />
+          <!--          <v-divider class="ma-4" />-->
           <my-active-offers-table />
-        </v-card>
+        </div>
       </v-col>
       <v-col cols="6">
-        <v-card width="100%" height="100%" class="pa-6">
+        <div class="pa-6">
           <card-title-with-chevron
+            class="mb-6"
             icon="mdi-clipboard-text"
             title="معاملات اخیر"
           />
-          <v-divider class="mt-6" />
+          <!--          <v-divider class="ma-4" />-->
           <my-trades-table
             :query="filterQuery"
             :hide-paginate="true"
@@ -120,7 +121,7 @@
             :hide-export="true"
             class="mt-n6 mx-n10"
           />
-        </v-card>
+        </div>
       </v-col>
     </a-row>
   </div>
@@ -189,7 +190,7 @@ export default {
   data() {
     return {
       toTomanList: [],
-      chartData: null,
+      chartData: {},
       accessLevel: "",
       stats: "",
       rialLimits: {},
@@ -218,12 +219,18 @@ export default {
       let array = JSON.parse(JSON.stringify(balances))
       let nonZeroKeys = Object.keys(array)?.filter(
         (key) =>
-          this.adjustDp(balances[key].balance, key) > 0 && key != "undefined"
+          this.adjustDp(balances[key].total_balance, key) > 0 &&
+          key != "undefined"
       )
       let labels = nonZeroKeys.map((key) => key.replace("IRR", "IRT"))
       let values = nonZeroKeys?.map((key) =>
-        this.adjustDp(balances[key].balance * toTomanList[key], "IRR")
+        this.adjustDp(
+          balances[key].total_balance * toTomanList[key.toLowerCase()],
+          "IRR"
+        )
       )
+      // total sum js array
+      this.totalBalance = values.reduce((acc, val) => acc + val, 0)
 
       this.chartData = {
         // labels: [
@@ -262,9 +269,9 @@ export default {
       .$post("/access/limits/remained/me", { resource: "irr" })
       .then((res) => (this.rialLimits = res))
 
-    this.$axios
-      .$get("/balances/toToman/me")
-      .then((res) => (this.totalBalance = res))
+    // this.$axios
+    //   .$get("/balances/toToman/me")
+    //   .then((res) => (this.totalBalance = res))
 
     this.$axios
       .$get(

@@ -1,6 +1,5 @@
 <template>
-  <div class="pa-4">
-    <div class="text-h4 mb-6 text-right">تاریخچه سفارشات</div>
+  <titled-page title="تاریخچه سفارشات">
     <a-paged-table
       :url="'offers/' + userId"
       :adapter="adapter"
@@ -14,7 +13,7 @@
         <p :class="item.cancel_color">{{ item.cancel_text }}</p>
       </template>
     </a-paged-table>
-  </div>
+  </titled-page>
 </template>
 
 <script>
@@ -24,9 +23,10 @@ import { getDp } from "@/models/cryptoPrecision"
 import APagedTable from "~/components/APagedTable"
 import { safeDecimal } from "~/models/NumberUtil"
 import { toFarsiDate } from "~/models/utils"
+import TitledPage from "~/components/TitledPage.vue"
 
 export default {
-  components: { APagedTable },
+  components: { TitledPage, APagedTable },
   mixins: [pstopper],
   name: "Offers",
   methods: {
@@ -39,15 +39,13 @@ export default {
         price: toSeparated(safeDecimal(item.price)),
         amount: toSeparated(safeDecimal(item.amount)),
         total: toSeparated(
-          safeDecimal(item.amount)
-            .times(item.price)
-            .todp(getDp(coin))
+          safeDecimal(item.amount).times(item.price).todp(getDp(coin))
         ),
         created_at: toFarsiDate(item.created_at),
         cancel_text: item.cancelled ? "لغو شده" : "ثبت شده",
-        cancel_color: item.cancelled ? "error--text" : "success--text"
+        cancel_color: item.cancelled ? "error--text" : "success--text",
       }
-    }
+    },
   },
   data() {
     return {
@@ -58,7 +56,7 @@ export default {
           value: "pair_asset",
           text: "رمزارزها",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         { value: "price", text: "قیمت", align: "center", sortable: false },
         { value: "amount", text: "مقدار", align: "center", sortable: false },
@@ -67,21 +65,21 @@ export default {
           value: "created_at",
           text: "تاریخ",
           align: "center",
-          sortable: false
+          sortable: false,
         },
         {
           value: "cancel_text",
           text: "وضعیت",
           align: "center",
-          sortable: false
-        }
+          sortable: false,
+        },
       ],
       filterQuery: [
         { type: "time", key: "after", name: "بعد از", value: "" },
-        { type: "time", key: "before", name: "قبل از", value: "" }
-      ]
+        { type: "time", key: "before", name: "قبل از", value: "" },
+      ],
     }
-  }
+  },
 }
 </script>
 

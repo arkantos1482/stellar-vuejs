@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%" class="pt-4 pb-6 px-6">
+  <div class="pb-6">
     <div v-show="!hideFilter">
       <a-row class="align-end mb-6">
         <a-table-filter-field
@@ -50,7 +50,7 @@
         @input="refresh"
       />
     </div>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -68,7 +68,7 @@ export default {
     "defaultSortBy",
     "defaultSortDesc",
     "hidePaginate",
-    "hideFilter"
+    "hideFilter",
   ],
   data() {
     return {
@@ -76,14 +76,14 @@ export default {
         data: [],
         current_page: 1,
         last_page: 0,
-        total: 0
+        total: 0,
       },
       raw_data: [],
       tableOptions: {
         sortBy: [this.defaultSortBy],
-        sortDesc: [this.defaultSortDesc]
+        sortDesc: [this.defaultSortDesc],
       },
-      loading: false
+      loading: false,
     }
   },
   mounted() {
@@ -123,7 +123,7 @@ export default {
     },
     makeFilterQuery() {
       return this.filterQuery
-        .filter(item => item.value)
+        .filter((item) => item.value)
         .reduce(
           (carry, item) => carry + `&filter[${item.key}]=${item.value}`,
           ""
@@ -134,8 +134,8 @@ export default {
       if (event.keyCode === 13) {
         this.refresh()
       }
-    }
-  }
+    },
+  },
 }
 </script>
 

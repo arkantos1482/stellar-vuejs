@@ -1,7 +1,6 @@
 <template>
-  <div class="pa-6">
-    <p class="text-h4 text-right">امنیت</p>
-    <v-card width="100%" class="py-8 px-12">
+  <titled-page title="امنیت">
+    <div class="py-8 px-12">
       <a-row class="align-center">
         <v-icon color="grey" large>mdi-google</v-icon>
         <div class="mr-4" style="margin-left: 240px">
@@ -43,7 +42,7 @@
           {{ smsBtnText }}
         </v-btn>
       </a-row>
-    </v-card>
+    </div>
 
     <a-row class="pt-3">
       <v-col cols="6" class="pr-0">
@@ -165,7 +164,7 @@
         </v-row>
       </a-card>
     </v-dialog>
-  </div>
+  </titled-page>
 </template>
 
 <script>
@@ -175,9 +174,10 @@ import pstopper from "@/mixins/pstopper"
 import ATextField from "@/components/ATextField"
 import { error, success } from "@/models/snackBus"
 import PincodeInput from "vue-pincode-input"
+import TitledPage from "~/components/TitledPage.vue"
 
 export default {
-  components: { ATextField, ACard, VueQrcode, PincodeInput },
+  components: { TitledPage, ATextField, ACard, VueQrcode, PincodeInput },
   mixins: [pstopper],
   computed: {
     getSmsToggled() {

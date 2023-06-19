@@ -1,6 +1,6 @@
 <template>
   <v-col v-if="stat" cols="3">
-    <v-card class="pa-4">
+    <div class="pa-4">
       <a-row class="justify-space-between align-center">
         <v-img max-width="36" max-height="36" :src="coin | toCoinIcon" />
         <div
@@ -13,7 +13,7 @@
         </div>
         <span>{{ stat.latest | toToman | toFloat | separated }}</span>
       </a-row>
-      <v-divider class="my-2" />
+      <v-divider class="ma-2" />
       <a-row>
         <span class="grey--text">حداقل</span>
         <v-spacer />
@@ -26,7 +26,7 @@
         <span>{{ stat.dayHigh | toToman | toFloat | separated }}</span>
         <span class="grey--text mr-2">تومان</span>
       </a-row>
-    </v-card>
+    </div>
   </v-col>
 </template>
 <script>

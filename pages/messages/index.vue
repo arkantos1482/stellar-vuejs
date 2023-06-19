@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <messages title="پیام ها"/>
-  </div>
+  <messages title="پیام ها" />
 </template>

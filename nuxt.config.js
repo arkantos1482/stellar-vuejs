@@ -1,131 +1,135 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from "vuetify/es5/util/colors"
+import text from "./text.js"
 
 export default {
-    // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-    ssr: false,
+  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
+  ssr: false,
 
-    // Global page headers (https://go.nuxtjs.dev/config-head)
-    head: {
-        titleTemplate: '%s',
-        title: 'Bitra',
-        meta: [
-            {charset: 'utf-8'},
-            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-            {hid: 'description', name: 'description', content: ''}
-        ],
-        link: [
-            {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
-        ]
-    },
-
-    server: {
-        port: process.env.PORT, // default: 3000
-        host: '0.0.0.0' // default: localhost
-    },
-
-    // Global CSS (https://go.nuxtjs.dev/config-css)
-    css: [
-        '~/assets/main.css'
+  // Global page headers (https://go.nuxtjs.dev/config-head)
+  head: {
+    titleTemplate: "%s",
+    title: text.company,
+    meta: [
+      { charset: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { hid: "description", name: "description", content: "" },
     ],
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+  },
 
-    // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-    plugins: ['~/plugins/filters.js', '~/plugins/components.js'
-        , '~/plugins/axiosAuth.js', '~/plugins/recaptcha.js', '~/plugins/eventbus.js',
-        '~/plugins/cookies.js', '~/plugins/persianDatePicker.js', '~/plugins/mask.js',
-        '~/plugins/etc.js'
-    ],
+  server: {
+    port: process.env.PORT, // default: 3000
+    host: "0.0.0.0", // default: localhost
+  },
 
-    // Auto import components (https://go.nuxtjs.dev/config-components)
-    components: true,
+  // Global CSS (https://go.nuxtjs.dev/config-css)
+  css: ["~/assets/main.css"],
 
-    // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-    buildModules: [
-        // https://go.nuxtjs.dev/typescript
-        '@nuxt/typescript-build',
-        // https://go.nuxtjs.dev/vuetify
-        '@nuxtjs/vuetify'
-    ],
+  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
+  plugins: [
+    "~/plugins/filters.js",
+    "~/plugins/components.js",
+    "~/plugins/axiosAuth.js",
+    "~/plugins/recaptcha.js",
+    "~/plugins/eventbus.js",
+    "~/plugins/cookies.js",
+    "~/plugins/persianDatePicker.js",
+    "~/plugins/mask.js",
+    "~/plugins/etc.js",
+  ],
 
-    // Modules (https://go.nuxtjs.dev/config-modules)
-    modules: [
-        // https://go.nuxtjs.dev/axios
-        '@nuxtjs/axios',
-        // https://go.nuxtjs.dev/pwa
-        '@nuxtjs/pwa',
-    ],
+  // Auto import components (https://go.nuxtjs.dev/config-components)
+  components: true,
 
-    router: {
-        // base: '/app/',
-        middleware: ['auth']
+  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
+  buildModules: [
+    // https://go.nuxtjs.dev/typescript
+    "@nuxt/typescript-build",
+    // https://go.nuxtjs.dev/vuetify
+    "@nuxtjs/vuetify",
+  ],
+
+  // Modules (https://go.nuxtjs.dev/config-modules)
+  modules: [
+    // https://go.nuxtjs.dev/axios
+    "@nuxtjs/axios",
+    // https://go.nuxtjs.dev/pwa
+    "@nuxtjs/pwa",
+  ],
+
+  router: {
+    // base: '/app/',
+    middleware: ["auth"],
+  },
+
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL,
+  },
+  privateRuntimeConfig: {
+    apiSecret: process.env.API_SECRET,
+  },
+  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
+  axios: {
+    baseURL: process.env.BASE_URL,
+    credentials: true,
+    progress: false,
+  },
+
+  // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
+  vuetify: {
+    treeShake: true,
+    defaultAssets: {
+      font: {
+        family: "IranSans",
+      },
     },
-
-    publicRuntimeConfig: {
-        baseURL: process.env.BASE_URL
-    },
-    privateRuntimeConfig: {
-        apiSecret: process.env.API_SECRET
-    },
-    // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-    axios: {
-        baseURL: process.env.BASE_URL,
-        credentials: true,
-        progress: false
-    },
-
-    // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
-    vuetify: {
-        treeShake: true,
-        defaultAssets: {
-            font: {
-                family: 'IranSans'
-            }
+    customVariables: ["~/assets/variables.scss"],
+    rtl: true,
+    theme: {
+      dark: false,
+      options: { customProperties: true },
+      themes: {
+        dark: {
+          primary: "#ffbb00",
+          secondary: "#0074ff",
+          anchor: "#0074ff",
+          accent: colors.red,
+          theback: "#141633",
+          bluegrey: "#a7a9cf",
+          text: "#FFFFFFcc",
+          warning: colors.amber.base,
+          error: "#F84960",
+          success: "#02c076",
         },
-        customVariables: ['~/assets/variables.scss'],
-        rtl: true,
-        theme: {
-            dark: false,
-            options: {customProperties: true},
-            themes: {
-                dark: {
-                    primary: '#ffbb00',
-                    secondary: '#0074ff',
-                    anchor: '#0074ff',
-                    accent: colors.red,
-                    theback: '#141633',
-                    bluegrey: '#a7a9cf',
-                    text: '#FFFFFFcc',
-                    warning: colors.amber.base,
-                    error: '#F84960',
-                    success: '#02c076',
-                },
-                light: {
-                    primary: '#0074ff',
-                    secondary: '#001254',
-                    anchor: '#0074ff',
-                    accent: colors.grey.darken3,
-                    theback: '#FAFAFA',
-                    bluegrey: '#a7a9cf',
-                    text: '#000000cc',
-                    warning: colors.amber.base,
-                    // error: colors.deepOrange.accent4,
-                    // success: colors.green.accent3,
-                    error: '#F84960',
-                    // errorBack: '#F849601E',
-                    success: '#02c076',
-                    // successBack: '#02c0761E'
-                }
-            }
-        }
+        light: {
+          primary: colors.red,
+          // secondary: "#A228B2",
+          secondary: "#821a8f",
+          anchor: "#35004a",
+          accent: "#821a8f",
+          theback: "#35004a",
+          bluegrey: "#E0E0E0",
+          text: "#000000cc",
+          warning: colors.amber.base,
+          // error: colors.deepOrange.accent4,
+          // success: colors.green.accent3,
+          error: "#F84960",
+          // errorBack: '#F849601E',
+          success: "#02c076",
+          // successBack: '#02c0761E'
+        },
+      },
     },
+  },
 
-    // generate: {
-    //     dir: 'dist/app'
-    // },
+  // generate: {
+  //     dir: 'dist/app'
+  // },
 
-    // Build Configuration (https://go.nuxtjs.dev/config-build)
-    build: {
-        extend(config, ctx) {
-            config.devtool = ctx.isClient ? 'eval-source-map' : 'inline-source-map'
-        }
-    }
+  // Build Configuration (https://go.nuxtjs.dev/config-build)
+  build: {
+    extend(config, ctx) {
+      config.devtool = ctx.isClient ? "eval-source-map" : "inline-source-map"
+    },
+  },
 }

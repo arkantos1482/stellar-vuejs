@@ -1,9 +1,8 @@
 <template>
-  <div class="pa-4">
-    <p class="text-h4 mb-6 text-right">کیف پول شما</p>
-    <bitra-banner v-for="(i, key) in walletsBanners" :item="i" :key="key" />
+  <titled-page title="کیف پول شما">
+    <div>
+      <bitra-banner v-for="(i, key) in walletsBanners" :item="i" :key="key" />
 
-    <v-card width="100%" height="100%" class="px-8 py-4">
       <v-simple-table>
         <thead>
           <tr>
@@ -81,8 +80,8 @@
           />
         </tbody>
       </v-simple-table>
-    </v-card>
-  </div>
+    </div>
+  </titled-page>
 </template>
 
 <script>
@@ -95,10 +94,11 @@ import {
 import CryptoAddressTr from "~/components/CryptoAddressTr"
 import { banners } from "~/models/bannerService"
 import BitraBanner from "~/components/BitraBanner"
+import TitledPage from "~/components/TitledPage.vue"
 
 export default {
   name: "CryptoAddresses",
-  components: { BitraBanner, CryptoAddressTr },
+  components: { TitledPage, BitraBanner, CryptoAddressTr },
   computed: {
     balances,
     withdrawConstraints,
