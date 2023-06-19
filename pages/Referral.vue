@@ -8,7 +8,7 @@
           سود بیشتری برای یکدیگر کسب کنید.
         </p>
         <p class="bluegrey--text my-12">
-          با هر معامله ای که دوستان شما در بیترا انجام دهند
+          با هر معامله ای که دوستان شما در {{ fa.company }} انجام دهند
           <span>{{ defaultCode.myPercent }}٪ کارمزد</span>
           به شما تعلق می گیرد
         </p>
@@ -180,9 +180,9 @@
 
     <a-card v-if="false" class="mt-4" divider title="کد دعوت کننده شما">
       <p class="text-h5 grey--text text--darken-1">
-        چنانچه از طریق یکی از کاربران بیترا با ما آشنا شده اید. با وارد کد این
-        کار به عتوان معرف خود، درصدی از کارمزد معاملات شما بدون هزینه اضافه برای
-        شما، به معرف شما تخصیص داده میشود.
+        چنانچه از طریق یکی از کاربران {{ fa.company }} با ما آشنا شده اید. با
+        وارد کد این کار به عتوان معرف خود، درصدی از کارمزد معاملات شما بدون
+        هزینه اضافه برای شما، به معرف شما تخصیص داده میشود.
       </p>
       <div class="d-flex justify-center mt-4">
         <a-text-field
@@ -214,11 +214,15 @@ import ATextField from "@/components/ATextField"
 import pstopper from "@/mixins/pstopper"
 import StatsCard from "@/components/stats-card"
 import { collect } from "collect.js"
+import { fa } from "~/text.js"
 
 export default {
   components: { StatsCard, ATextField, ACard },
   mixins: [pstopper],
   computed: {
+    fa() {
+      return fa
+    },
     defaultGuestPercent() {
       return 20 - this.defaultCode.myPercent
     },

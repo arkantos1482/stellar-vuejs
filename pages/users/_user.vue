@@ -469,6 +469,7 @@ import Otp from "@/components/Otp"
 import plist from "@/models/provinceList"
 import collect from "collect.js"
 import TwoColumnRow from "../../components/TwoColumnRow"
+import text from "~/text.js"
 
 export default {
   mixins: [pstopper],
@@ -682,7 +683,7 @@ export default {
       )
     },
     onGuide() {
-      window.open("https://bitra.market/registerGuide/", "_blank")
+      window.open(text.register_guide_url, "_blank")
     },
     async addShaba() {
       this.l.addShaba = true

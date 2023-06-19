@@ -1,11 +1,6 @@
 <template>
-  <two-sided-panel title="ثبت نام در بیترا">
+  <two-sided-panel :title="title">
     <div>
-      <!--      <v-tabs>-->
-      <!--        <v-tab>حقیقی</v-tab>-->
-      <!--        <v-tab>حقوقی</v-tab>-->
-      <!--      </v-tabs>-->
-      <!--      <v-divider/>-->
       <v-form dir="ltr" @submit.prevent="register" v-model="form" ref="form">
         <a-text-field
           eng
@@ -46,7 +41,9 @@
           <v-checkbox v-model="terms" :rules="[rules.required]">
             <template v-slot:label>
               <a class="text-body-2" @click="gotoTerms">قوانین و شرایط</a>
-              <span class="text-body-2">&nbsp;بیترا را می پذیرم.</span>
+              <span class="text-body-2"
+                >&nbsp;{{ fa.company }} را می پذیرم.</span
+              >
             </template>
           </v-checkbox>
         </div>
@@ -71,12 +68,19 @@ import captcha from "@/mixins/captcha"
 import pstopper from "@/mixins/pstopper"
 import ATextField from "@/components/ATextField"
 import LoginRegCard from "@/components/LoginRegCard"
+import text, { fa } from "~/text.js"
 
 export default {
   components: { ATextField, LoginRegCard },
   mixins: [captcha, pstopper],
   layout: "noToolbar",
   computed: {
+    fa() {
+      return fa
+    },
+    title() {
+      return "ثبت نام در " + fa.company
+    },
     hasReferral() {
       return !!this.$route.query.referral_code
     },
@@ -140,7 +144,7 @@ export default {
       }
     },
     gotoTerms() {
-      window.open("https://bitra.market/terms/", "_blank")
+      window.open(text.terms_url, "_blank")
     },
   },
 }

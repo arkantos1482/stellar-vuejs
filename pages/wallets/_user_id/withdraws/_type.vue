@@ -32,8 +32,8 @@
         <li>
           کاربران گرامی توجه فرمایید تنها به آدرس مقصد شبکه بایننس چین عملیات را
           برداشت را انجام دهید . توجه فرمایید در حال حاضر امکان برداشت به مقصد
-          شبکه اسمارت چین وجود ندارد و در صورت عدم توجه بیترا مسئولیتی در قبال
-          این موضوع ندارد.
+          شبکه اسمارت چین وجود ندارد و در صورت عدم توجه
+          {{ fa.company }} مسئولیتی در قبال این موضوع ندارد.
         </li>
       </ul>
     </v-alert>
@@ -155,11 +155,15 @@ import { safeDecimal, toSeparated } from "@/models/NumberUtil"
 import { getDp } from "@/models/cryptoPrecision"
 import balances, { refresh } from "../../balanceService"
 import Decimal from "decimal.js-light"
+import { fa } from "~/text.js"
 
 export default {
   mixins: [pstopper],
   components: { CryptoUpper, Withdraws, ACard, ATextField },
   computed: {
+    fa() {
+      return fa
+    },
     network() {
       return this.type === "USDT" ? this.usdtNetwork : this.type
     },
