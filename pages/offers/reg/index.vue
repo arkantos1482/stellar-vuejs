@@ -1,29 +1,18 @@
 <template>
   <div>
-    <v-alert
-      v-if="isDRC"
-      color="primary"
-      class="text-display-2 px-12 mx-3"
-      colored-border
-      border="left"
-      elevation="2"
-    >
-      دریک توکن،یک توکن مبتنی بر بلاکچین اسمارت چین بایننس است که توسط کمپانی
-      پول عرضه شده است و کارگزاری رمزارزی بیترا نقشی در تعین قیمت و همچنین
-      مسئولیتی در قبال نقدشوندگی آن ندارد.
-    </v-alert>
     <!--    TOP (OFFER-REG + SELL/BUY + CHART-BAR-->
-    <a-row class="align-stretch">
+    <a-row class="align-stretch pt-4 px-8" style="background: white">
       <!--      OFFER-REG-->
       <v-col cols="3">
-        <v-card class="pa-6" width="100%" height="100%">
+        <div class="px-6 py-2">
           <card-title-with-chevron
-            simple
+            :simple="true"
             title="ثبت سفارش"
             icon="mdi-basket"
             class="mb-6"
           />
           <v-btn-toggle
+            class="my-2"
             mandatory
             v-model="exchangeAction"
             rounded
@@ -37,13 +26,7 @@
               >فروش
             </v-btn>
           </v-btn-toggle>
-          <v-divider class="my-4" />
-          <!--          <v-tabs class="mb-6">-->
-          <!--            <v-tab>سفارش سریع</v-tab>-->
-          <!--            <v-tab>limit</v-tab>-->
-          <!--            <v-tab>Stop-Limit</v-tab>-->
-          <!--            <v-tab>OCO</v-tab>-->
-          <!--          </v-tabs>-->
+          <!--          <v-divider class="my-4" />-->
           <div v-if="exchangeAction === 'buy'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>-->
@@ -207,152 +190,167 @@
             </v-form>
           </div>
           <!--          </div>-->
-        </v-card>
+        </div>
       </v-col>
 
       <!--      SELL/BUY + CHART-BAR-->
       <v-col cols="9" class="pa-0">
         <!--        TITLE-->
-        <v-col>
-          <v-card width="100%">
-            <a-row class="justify-start align-center">
-              <v-btn-toggle
-                v-model="tabIndex"
-                mandatory
-                color="primary"
-                dense
-                borderless
-                tile
-                class="pa-4"
-              >
-                <v-btn text value="0">تومان</v-btn>
-                <v-btn text value="1">تتر</v-btn>
-                <v-btn text value="2">رمزارز به رمزارز</v-btn>
-              </v-btn-toggle>
 
-              <v-divider vertical inset class="py-4" />
-              <div style="width: 144px">
-                <v-select
-                  class="d-block compact"
-                  v-model="pairAsset"
-                  :items="pairAssetList"
-                  item-text="text"
-                  item-value="value"
-                  dense
-                  filled
-                  solo
-                  flat
-                />
-              </div>
-            </a-row>
-          </v-card>
-        </v-col>
+        <a-row class="justify-start align-center">
+          <v-btn-toggle
+            v-model="tabIndex"
+            mandatory
+            color="primary"
+            dense
+            borderless
+            tile
+            class="pa-4"
+          >
+            <v-btn text value="0">تومان</v-btn>
+            <v-btn text value="1">تتر</v-btn>
+            <v-btn text value="2">رمزارز به رمزارز</v-btn>
+          </v-btn-toggle>
+
+          <v-divider vertical inset class="py-4" />
+          <div style="width: 144px">
+            <v-select
+              class="d-block compact"
+              v-model="pairAsset"
+              :items="pairAssetList"
+              item-text="text"
+              item-value="value"
+              dense
+              filled
+              solo
+              flat
+            />
+          </div>
+        </a-row>
 
         <!--        BODY (SELL/BUY + CHART-BAR)-->
         <a-row class="align-stretch">
           <!--   SELL/BUY-->
           <v-col cols="4">
-            <v-card class="pa-6" height="100%" width="100%">
-              <a-row class="align-center">
-                <v-icon color="primary">mdi-chart-bar</v-icon>
-                <p class="primary--text mb-0 mx-2">لیست قیمت ها</p>
-                <v-spacer />
-              </a-row>
-              <!--    SELL-->
-              <v-simple-table dense fixed-header class="mt-4">
-                <thead>
-                  <tr>
-                    <th
-                      class="small-font text-body-2"
-                      style="font-family: serif"
-                    >
-                      {{ priceLabel }}
-                    </th>
-                    <th class="small-font text-body-2">
-                      {{ unitNumberLabel }}
-                    </th>
-                    <th class="small-font text-body-2">{{ amountLabel }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, index) in sellOffers"
-                    :key="index"
-                    class="pointer text-body-1"
-                    @click="select('buy', item)"
-                  >
-                    <td class="error--text" style="font-size: 1.4rem">
-                      {{
-                        adjustMarketDp(
-                          offersPrice(item),
-                          baseAsset,
-                          counterAsset
-                        ) | separated
-                      }}
-                    </td>
-                    <td style="font-size: 1.4rem">
-                      {{
-                        adjustDp(item.amount, baseAsset) | toFloat | separated
-                      }}
-                    </td>
-                    <td style="font-size: 1.4rem">
-                      {{
-                        adjustMarketDp(
-                          recordTotal(item),
-                          baseAsset,
-                          counterAsset
-                        ) | separated
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
+            <v-tabs v-model="tab2Name" fixed-tabs>
+              <v-tab key="order">
+                <p class="primary--text mb-0 mx-2">سفارشات بازار</p>
+              </v-tab>
+              <v-tab key="trade">
+                <p class="primary--text mb-0 mx-2">آخرین معاملات</p>
+              </v-tab>
+            </v-tabs>
+            <v-tabs-items v-model="tab2Name">
+              <v-tab-item key="order">
+                <v-card class="pa-6" height="100%" width="100%">
+                  <!--    SELL-->
+                  <v-simple-table dense fixed-header class="mt-4">
+                    <thead>
+                      <tr>
+                        <th
+                          class="small-font text-body-2"
+                          style="font-family: serif"
+                        >
+                          {{ priceLabel }}
+                        </th>
+                        <th class="small-font text-body-2">
+                          {{ unitNumberLabel }}
+                        </th>
+                        <th class="small-font text-body-2">
+                          {{ amountLabel }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in sellOffers"
+                        :key="index"
+                        class="pointer text-body-1"
+                        @click="select('buy', item)"
+                      >
+                        <td class="error--text" style="font-size: 1.4rem">
+                          {{
+                            adjustMarketDp(
+                              offersPrice(item),
+                              baseAsset,
+                              counterAsset
+                            ) | separated
+                          }}
+                        </td>
+                        <td style="font-size: 1.4rem">
+                          {{
+                            adjustDp(item.amount, baseAsset)
+                              | toFloat
+                              | separated
+                          }}
+                        </td>
+                        <td style="font-size: 1.4rem">
+                          {{
+                            adjustMarketDp(
+                              recordTotal(item),
+                              baseAsset,
+                              counterAsset
+                            ) | separated
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </v-simple-table>
 
-              <!--    BUY-->
-              <v-simple-table dense fixed-header class="mt-4">
-                <thead>
-                  <tr>
-                    <th class="small-font text-body-2">{{ priceLabel }}</th>
-                    <th class="small-font text-body-2">
-                      {{ unitNumberLabel }}
-                    </th>
-                    <th class="small-font text-body-2">{{ amountLabel }}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="(item, index) in buyOffers"
-                    :key="index"
-                    class="pointer text-body-1"
-                    @click="select('sell', item)"
-                  >
-                    <td class="success--text" style="font-size: 1.4rem">
-                      {{
-                        adjustMarketDp(
-                          offersPrice(item),
-                          baseAsset,
-                          counterAsset
-                        ) | separated
-                      }}
-                    </td>
-                    <td style="font-size: 1.4rem">
-                      {{
-                        adjustDp(item.amount, baseAsset) | toFloat | separated
-                      }}
-                    </td>
-                    <td style="font-size: 1.4rem">
-                      {{
-                        adjustMarketDp(
-                          recordTotal(item),
-                          baseAsset,
-                          counterAsset
-                        ) | separated
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
-              </v-simple-table>
-            </v-card>
+                  <!--    BUY-->
+                  <v-simple-table dense fixed-header class="mt-4">
+                    <thead>
+                      <tr>
+                        <th class="small-font text-body-2">{{ priceLabel }}</th>
+                        <th class="small-font text-body-2">
+                          {{ unitNumberLabel }}
+                        </th>
+                        <th class="small-font text-body-2">
+                          {{ amountLabel }}
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="(item, index) in buyOffers"
+                        :key="index"
+                        class="pointer text-body-1"
+                        @click="select('sell', item)"
+                      >
+                        <td class="success--text" style="font-size: 1.4rem">
+                          {{
+                            adjustMarketDp(
+                              offersPrice(item),
+                              baseAsset,
+                              counterAsset
+                            ) | separated
+                          }}
+                        </td>
+                        <td style="font-size: 1.4rem">
+                          {{
+                            adjustDp(item.amount, baseAsset)
+                              | toFloat
+                              | separated
+                          }}
+                        </td>
+                        <td style="font-size: 1.4rem">
+                          {{
+                            adjustMarketDp(
+                              recordTotal(item),
+                              baseAsset,
+                              counterAsset
+                            ) | separated
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </v-simple-table>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item key="trade">
+                <pair-asset-trades :base="baseAsset" :counter="counterAsset" />
+              </v-tab-item>
+            </v-tabs-items>
           </v-col>
 
           <!--    CHART-BAR-->
@@ -366,32 +364,35 @@
     </a-row>
 
     <!--    BOTTOM-->
-    <a-row class="align-stretch">
-      <v-col cols="3">
-        <v-card class="pa-6" height="100%">
-          <card-title-with-chevron
-            simple
-            icon="mdi-clipboard-text-play"
-            title="دارایی ها"
-          />
-          <v-btn small outlined color="primary">واریز</v-btn>
-          <v-btn small outlined color="primary">برداشت</v-btn>
-        </v-card>
-      </v-col>
-
-      <v-col cols="3">
-        <pair-asset-trades :base="baseAsset" :counter="counterAsset" />
-      </v-col>
-
+    <a-row class="align-stretch mt-6 px-8" style="background: white">
       <v-col cols="6">
-        <v-card width="100%" height="100%" class="pa-6">
+        <div class="pa-6">
           <card-title-with-chevron
-            simple
+            :simple="true"
             icon="mdi-clipboard-text-play"
             title="سفارشات در جریان"
           />
+          <!--          <v-divider class="ma-4" />-->
           <my-active-offers-table />
-        </v-card>
+        </div>
+      </v-col>
+      <v-col cols="6">
+        <div class="pa-6">
+          <card-title-with-chevron
+            :simple="true"
+            class="mb-6"
+            icon="mdi-clipboard-text"
+            title="معاملات اخیر"
+          />
+          <!--          <v-divider class="ma-4" />-->
+          <my-trades-table
+            :query="filterQuery"
+            :hide-paginate="true"
+            :hide-filter="true"
+            :hide-export="true"
+            class="mt-n6 mx-n10"
+          />
+        </div>
       </v-col>
     </a-row>
   </div>
@@ -409,19 +410,23 @@ import PairAssetTrades from "@/pages/trades"
 import TVChartContainer from "@/components/TVChartContainer"
 import {
   init as initConstraints,
-  offerConstraints
+  offerConstraints,
 } from "../../../models/constraintService"
 import balances, {
-  refresh as refreshBalance
+  refresh as refreshBalance,
 } from "../../wallets/balanceService"
+import CardTitleWithChevron from "~/components/CardTitleWithChevron.vue"
+import MyTradesTable from "~/components/MyTradesTable.vue"
 
 export default {
   components: {
+    MyTradesTable,
+    CardTitleWithChevron,
     TVChartContainer,
     PairAssetTrades,
     OrderTextField,
     ActiveOffers,
-    TradingVue
+    TradingVue,
   },
   errorCaptured(err, vm, info) {
     this.l.buy = false
@@ -437,7 +442,7 @@ export default {
     },
     tabIndex(val) {
       this.pairAsset = this.list[val][0]
-    }
+    },
   },
   computed: {
     isDRC() {
@@ -447,10 +452,10 @@ export default {
     pairAssetList() {
       const list1 = this.list[this.tabIndex]
       return collect(list1)
-        .map(item => ({
+        .map((item) => ({
           text: this.$options.filters.irtFix(item),
           // text: item,
-          value: item
+          value: item,
         }))
         .all()
     },
@@ -476,17 +481,17 @@ export default {
     },
     buyOffers() {
       return collect(this.offers.bids)
-        .map(item => ({
+        .map((item) => ({
           price: parseFloat(item.price),
-          amount: parseFloat(item.unmatched_amount)
+          amount: parseFloat(item.unmatched_amount),
         }))
         .sortByDesc("price")
     },
     sellOffers() {
       return collect(this.offers.asks)
-        .map(item => ({
+        .map((item) => ({
           price: parseFloat(item.price),
-          amount: parseFloat(item.unmatched_amount)
+          amount: parseFloat(item.unmatched_amount),
         }))
         .sortByDesc("price")
     },
@@ -531,7 +536,7 @@ export default {
             .div(this.buy.price)
             .todp(getDp(this.baseAsset))
         } catch (e) {}
-      }
+      },
     },
     sellPercent: {
       get() {
@@ -555,7 +560,7 @@ export default {
             .div(100)
             .todp(getDp(this.baseAsset))
         } catch (e) {}
-      }
+      },
     },
     offerConstraints,
     list() {
@@ -568,9 +573,9 @@ export default {
           "LTC/IRT",
           "USDT/IRT",
           "TRX/IRT",
-          "DOGE/IRT"
+          "DOGE/IRT",
         ].filter(
-          pair =>
+          (pair) =>
             !collect(this.offerConstraints).contains((v, k) => pair.includes(v))
         ),
         [
@@ -580,9 +585,9 @@ export default {
           "BCH/USDT",
           "LTC/USDT",
           "TRX/USDT",
-          "DOGE/USDT"
+          "DOGE/USDT",
         ].filter(
-          pair =>
+          (pair) =>
             !collect(this.offerConstraints).contains((v, k) => pair.includes(v))
         ),
         [
@@ -599,19 +604,20 @@ export default {
           "BNB/ETH",
           "BNB/BCH",
           "TRX/BNB",
-          "DOGE/BNB"
+          "DOGE/BNB",
         ].filter(
-          pair =>
+          (pair) =>
             !collect(this.offerConstraints).contains((v, k) => pair.includes(v))
-        )
+        ),
       ]
-    }
+    },
   },
   data() {
     return {
       exchangeAction: "buy",
       offers: [],
       tabIndex: 0,
+      tab2Name: "order",
       pairAsset: "BTC/IRT",
       baseAsset: "BTC",
       counterAsset: "IRT",
@@ -620,34 +626,47 @@ export default {
       l: { sell: false, buy: false },
       sell: {
         amount: "",
-        price: ""
+        price: "",
       },
       buy: {
         amount: "",
-        price: ""
+        price: "",
       },
       sellForm: false,
       buyForm: false,
       rules: {
-        required: value => !!value || "الزامی است",
-        buySufficient: value =>
+        required: (value) => !!value || "الزامی است",
+        buySufficient: (value) =>
           this.balances[this.counterAsset]?.actual_balance?.gte(
             safeDecimal(this.buyTotal)
           ) || "اعتبار ناکافی",
-        buyWalletExist: value =>
+        buyWalletExist: (value) =>
           !!this.balances[this.baseAsset]?.actual_balance ||
           "کیف پول ساخته نشده است",
-        sellSufficient: value =>
+        sellSufficient: (value) =>
           this.balances[this.baseAsset]?.actual_balance?.gte(
             safeDecimal(this.sell.amount)
           ) || "اعتبار ناکافی",
-        sellWalletExist: value =>
+        sellWalletExist: (value) =>
           !!this.balances[this.counterAsset]?.actual_balance ||
-          "کیف پول ساخته نشده است"
-      }
+          "کیف پول ساخته نشده است",
+      },
+      filterQuery: [
+        {
+          type: "time",
+          key: "after",
+          name: "بعد از",
+          value: this.getDaysAgo(2),
+        },
+      ],
     }
   },
   methods: {
+    getDaysAgo(days) {
+      let date = new Date()
+      date.setDate(date.getDate() - days)
+      return date.toLocaleDateString("en-CA")
+    },
     // ...mapActions("offers", { refreshActiveOffers: "refresh" }),
     clear() {
       this.buy.amount = ""
@@ -665,7 +684,7 @@ export default {
         base_asset: this.baseAsset,
         quote_asset: this.counterAsset,
         amount: this.sell.amount,
-        price: this.sell.price
+        price: this.sell.price,
       })
       this.l.sell = false
       this.clear()
@@ -683,7 +702,7 @@ export default {
         base_asset: this.baseAsset,
         quote_asset: this.counterAsset,
         amount: this.buy.amount,
-        price: this.buy.price
+        price: this.buy.price,
       })
       this.l.buy = false
       this.clear()
@@ -697,8 +716,8 @@ export default {
         await this.$axios.$get("/offers-book", {
           params: {
             base_asset: this.baseAsset,
-            quote_asset: this.counterAsset
-          }
+            quote_asset: this.counterAsset,
+          },
         })
       ).data
     },
@@ -758,7 +777,7 @@ export default {
     },
     adjustMarketDp(val, base, ctr) {
       return safeDecimal(val).todp(getMarketDp(base, ctr))
-    }
+    },
   },
   mounted() {
     window.onresize = () => {
@@ -778,7 +797,7 @@ export default {
   beforeDestroy() {
     document.removeEventListener("visibilitychange", this.onVizChange)
     this.cleanUp()
-  }
+  },
 }
 </script>
 <style>

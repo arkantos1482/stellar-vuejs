@@ -2,7 +2,7 @@
   <v-app class="text-right">
     <v-app-bar fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="red" />
-      <router-link to="/">
+      <a @click="drawer = !drawer">
         <v-img
           class="mr-n4"
           max-width="128"
@@ -10,7 +10,7 @@
           contain
           :src="require('../assets/images/bitak-vertical.png')"
         />
-      </router-link>
+      </a>
 
       <!--      <div v-show="!isAdmin">-->
       <!--        <v-menu>-->
@@ -53,6 +53,11 @@
       <!--        >-->
       <!--      </div>-->
       <v-spacer />
+      <v-menu>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text v-bind="attrs" v-on="on" to="/offers/reg">بازار</v-btn>
+        </template>
+      </v-menu>
       <!--      WALLETS-->
       <v-menu>
         <template v-slot:activator="{ on, attrs }">
@@ -65,7 +70,6 @@
           <v-btn text v-bind="attrs" v-on="on">سفارشات</v-btn>
         </template>
         <v-list>
-          <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
           <v-list-item to="/offers/active/me">سفارشات در جریان</v-list-item>
           <v-list-item to="/offers/me">تاریخچه سفارشات</v-list-item>
           <v-list-item to="/trades/me">معاملات</v-list-item>
@@ -176,6 +180,11 @@
             <v-list-item-title>کیف پول</v-list-item-title>
           </v-list-item>
 
+          <v-list-item to="/offers/reg">
+            <v-icon class="ml-2">mdi-basket</v-icon>
+            <v-list-item-title>بازار</v-list-item-title>
+          </v-list-item>
+
           <v-expansion-panels flat>
             <v-expansion-panel>
               <v-expansion-panel-header>
@@ -187,7 +196,6 @@
                 </v-list-item>
               </v-expansion-panel-header>
               <v-expansion-panel-content>
-                <v-list-item to="/offers/reg">ثبت سفارش</v-list-item>
                 <v-list-item to="/offers/active/me"
                   >سفارشات در جریان
                 </v-list-item>

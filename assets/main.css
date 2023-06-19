@@ -64,12 +64,12 @@ a {
 
 /*selector collapse font color*/
 .v-select__selection {
-    color: #35004a !important;
+    color: #ff0000 !important;
 }
 
 /*!*selector collapse icon color*!*/
 .v-select .v-icon.mdi.mdi-menu-down {
-    color: #35004a !important;
+    color: #ff0000 !important;
 }
 
 .v-list-item__title {

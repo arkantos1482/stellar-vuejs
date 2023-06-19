@@ -1,6 +1,6 @@
 <template>
   <titled-page title="کیف پول شما">
-    <div>
+    <div class="px-16">
       <bitra-banner v-for="(i, key) in walletsBanners" :item="i" :key="key" />
 
       <v-simple-table>

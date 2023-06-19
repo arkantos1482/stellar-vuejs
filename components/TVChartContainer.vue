@@ -1,53 +1,52 @@
 <template>
-  <div class="TVChartContainer" :id="containerId"/>
+  <div class="TVChartContainer" :id="containerId" />
 </template>
 
 <script>
-
-import {widget} from 'static/libs/charting_library';
-import {UDFCompatibleDatafeed} from 'static/libs/datafeeds/udf/lib/udf-compatible-datafeed'
-import datafeed from "../models/datafeed";
+import { widget } from "static/libs/charting_library"
+import { UDFCompatibleDatafeed } from "static/libs/datafeeds/udf/lib/udf-compatible-datafeed"
+import datafeed from "../models/datafeed"
 
 export default {
-  name: 'TVChartContainer',
+  name: "TVChartContainer",
   props: {
     symbol: {
-      default: 'DRC/IRT',
+      default: "BTC/IRT",
       type: String,
     },
     interval: {
-      default: '60',
+      default: "60",
       type: String,
     },
     containerId: {
-      default: 'tv_chart_container',
+      default: "tv_chart_container",
       type: String,
     },
     isReady: {
       default: false,
-      type: Boolean
-    }
+      type: Boolean,
+    },
   },
   watch: {
     symbol(val) {
       if (this.isReady) {
         this.tvWidget.setSymbol(val, this.interval, null)
       }
-    }
+    },
   },
   tvWidget: null,
   mounted() {
     const tvWidget = new widget({
-      locale: 'fa',
+      locale: "fa",
       // debug: true,
       symbol: this.symbol,
       // BEWARE: no trailing slash is expected in feed URL
       datafeed: datafeed(this.$axios),
       interval: this.interval,
       container_id: this.containerId,
-      library_path: '/libs/charting_library/',
+      library_path: "/libs/charting_library/",
       // preset:"mobile",
-      theme: 'Dark',
+      theme: "Light",
       timezone: "Asia/Tehran",
       // disabled_features: ['use_localstorage_for_settings'],
       // enabled_features: ['study_templates'],
@@ -58,8 +57,8 @@ export default {
       fullscreen: false,
       autosize: true,
       // studies_overrides: 'this.studiesOverrides',
-    });
-    this.tvWidget = tvWidget;
+    })
+    this.tvWidget = tvWidget
 
     tvWidget.onChartReady(() => {
       this.isReady = true
@@ -81,15 +80,15 @@ export default {
         //
         // button.innerHTML = 'Check API';
         //  ----------------------------------------------------------------
-      });
-    });
+      })
+    })
   },
   destroyed() {
     if (this.tvWidget !== null) {
-      this.tvWidget.remove();
-      this.tvWidget = null;
+      this.tvWidget.remove()
+      this.tvWidget = null
     }
-  }
+  },
 }
 </script>
 

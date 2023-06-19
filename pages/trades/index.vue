@@ -1,12 +1,11 @@
 <template>
   <div class="text-center pa-6">
-    <card-title-with-chevron simple icon="mdi-clipboard-text" title="معاملات" />
     <v-simple-table>
       <thead>
         <tr>
           <th class="text-center">قیمت</th>
           <th class="text-center">مقدار</th>
-          <th class="text-center">مجموع</th>
+          <!--          <th class="text-center">مجموع</th>-->
           <th class="text-center">تاریخ</th>
         </tr>
       </thead>
@@ -14,7 +13,7 @@
         <tr v-for="item in trades" :key="item.id" :class="item | toColor">
           <td>{{ item | price }}</td>
           <td>{{ item | amount }}</td>
-          <td>{{ total(item) }}</td>
+          <!--          <td>{{ total(item) }}</td>-->
           <td>{{ item.created_at | toFarsiDate }}</td>
         </tr>
       </tbody>
