@@ -128,6 +128,15 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
+    analyze: false,
+    parallel: true,
+    cache: true,
+    hardSource: false,
+    splitChunks: {
+      layouts: false,
+      pages: false,
+      components: false,
+    },
     extend(config, ctx) {
       config.devtool = ctx.isClient ? "eval-source-map" : "inline-source-map"
     },

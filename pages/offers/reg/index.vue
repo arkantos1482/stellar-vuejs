@@ -356,7 +356,7 @@
           <!--    CHART-BAR-->
           <v-col cols="8">
             <!--            <v-card class="mx-4 pa-2" ref="card">-->
-            <t-v-chart-container :symbol="pairAsset | irtFix" />
+            <t-v-chart-container :symbol="pairAssetWithoutSlash | irtFix" />
             <!--            </v-card>-->
           </v-col>
         </a-row>
@@ -610,6 +610,9 @@ export default {
             !collect(this.offerConstraints).contains((v, k) => pair.includes(v))
         ),
       ]
+    },
+    pairAssetWithoutSlash() {
+      return this.pairAsset.replace("/", "")
     },
   },
   data() {

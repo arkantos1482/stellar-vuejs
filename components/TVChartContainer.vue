@@ -5,13 +5,13 @@
 <script>
 import { widget } from "static/libs/charting_library"
 import { UDFCompatibleDatafeed } from "static/libs/datafeeds/udf/lib/udf-compatible-datafeed"
-import datafeed from "../models/datafeed"
+// import datafeed from "../models/datafeed"
 
 export default {
   name: "TVChartContainer",
   props: {
     symbol: {
-      default: "BTC/IRT",
+      default: "BTCIRT",
       type: String,
     },
     interval: {
@@ -41,7 +41,11 @@ export default {
       // debug: true,
       symbol: this.symbol,
       // BEWARE: no trailing slash is expected in feed URL
-      datafeed: datafeed(this.$axios),
+      // datafeed: datafeed(this.$axios),
+      datafeed: new UDFCompatibleDatafeed(
+        "https://chart.nobitex.ir" + "/market/udf",
+        60 * 1000
+      ),
       interval: this.interval,
       container_id: this.containerId,
       library_path: "/libs/charting_library/",
