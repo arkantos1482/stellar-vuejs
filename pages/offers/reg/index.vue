@@ -1,110 +1,50 @@
 <template>
   <div>
     <!--    TOP (OFFER-REG + SELL/BUY + CHART-BAR-->
-    <a-row class="align-stretch pt-4 px-8" style="background: white">
+    <a-row class="align-stretch pt-4 px-8">
       <!--      OFFER-REG-->
       <v-col cols="3">
         <div class="px-6 py-2">
-          <card-title-with-chevron
-            :simple="true"
-            title="ثبت سفارش"
-            icon="mdi-basket"
-            class="mb-6"
-          />
-          <v-btn-toggle
-            class="my-2"
-            mandatory
-            v-model="exchangeAction"
-            rounded
-            dense
-            :color="exchangeAction === 'buy' ? 'success' : 'error'"
-          >
-            <v-btn rounded value="buy" class="px-12" @click="resetValid"
-              >خرید
+          <card-title-with-chevron :simple="true" title="ثبت سفارش" icon="mdi-basket" class="mb-6" />
+          <v-btn-toggle class="my-2" mandatory v-model="exchangeAction" rounded dense
+            :color="exchangeAction === 'buy' ? 'success' : 'error'">
+            <v-btn rounded value="buy" class="px-12" @click="resetValid">خرید
             </v-btn>
-            <v-btn rounded value="sell" class="px-12" @click="resetValid"
-              >فروش
+            <v-btn rounded value="sell" class="px-12" @click="resetValid">فروش
             </v-btn>
           </v-btn-toggle>
           <!--          <v-divider class="my-4" />-->
           <div v-if="exchangeAction === 'buy'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>خرید </span>{{ baseAsset | toFarsiCoin }}</p>-->
-              <p
-                v-if="balances[counterAsset]"
-                @click="buyPercent = 100"
-                class="pointer mb-0 grey--text"
-              >
+              <p v-if="balances[counterAsset]" @click="buyPercent = 100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
                 {{
                   adjustDp(balances[counterAsset].actual_balance, counterAsset)
-                    | toFloat
-                    | separated
+                  | toFloat
+                  | separated
                 }}
                 <span>{{ counterAsset | irtFix }}</span>
               </p>
             </div>
 
-            <v-form
-              v-model="buyForm"
-              @submit.prevent="doBuy"
-              class="mt-3"
-              ref="buy_form_ref"
-            >
-              <order-text-field
-                :base="baseAsset"
-                class="mt-n4"
-                :rules="[rules.required, rules.buyWalletExist]"
-                v-model="buy.amount"
-                prepend="مقدار"
-                :append="baseAsset | irtFix"
-              />
-              <order-text-field
-                marketdp
-                :base="baseAsset"
-                :ctr="counterAsset"
-                v-model="buy.price"
-                prepend="قیمت"
-                :append="counterAsset | irtFix"
-                :rules="[rules.required]"
-              />
-              <v-slider
-                class="mt-n4"
-                color="primary"
-                track-color="primary darken-4"
-                v-model="buyPercent"
-                min="0"
-                thumb-label
-              />
-              <p
-                class="pointer px-2 mb-3 mt-n3"
-                @click="buy.price = sellBestPrice"
-              >
+            <v-form v-model="buyForm" @submit.prevent="doBuy" class="mt-3" ref="buy_form_ref">
+              <order-text-field :base="baseAsset" class="mt-n4" :rules="[rules.required, rules.buyWalletExist]"
+                v-model="buy.amount" prepend="مقدار" :append="baseAsset | irtFix" />
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset" v-model="buy.price" prepend="قیمت"
+                :append="counterAsset | irtFix" :rules="[rules.required]" />
+              <v-slider class="mt-n4" color="primary" track-color="primary darken-4" v-model="buyPercent" min="0"
+                thumb-label />
+              <p class="pointer px-2 mb-3 mt-n3" @click="buy.price = sellBestPrice">
                 پایین ترین پیشنهاد فروش:
                 <span>{{
                   adjustDp(sellBestPrice, baseAsset) | toFloat | separated
                 }}</span>
               </p>
-              <order-text-field
-                marketdp
-                :base="baseAsset"
-                :ctr="counterAsset"
-                :rules="[rules.buySufficient]"
-                class="mt-0"
-                readonly
-                :value="buyTotal"
-                prepend="مجموع"
-                :append="counterAsset | irtFix"
-              />
-              <v-btn
-                depressed
-                small
-                class="white--text py-4 mt-n3"
-                block
-                color="success"
-                type="submit"
-                :loading="l.buy"
-                >خرید
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset" :rules="[rules.buySufficient]" class="mt-0"
+                readonly :value="buyTotal" prepend="مجموع" :append="counterAsset | irtFix" />
+              <v-btn depressed small class="white--text py-4 mt-n3" block color="success" type="submit"
+                :loading="l.buy">خرید
               </v-btn>
             </v-form>
           </div>
@@ -112,80 +52,35 @@
           <div v-else-if="exchangeAction === 'sell'">
             <div class="d-flex justify-space-between pb-6">
               <!--              <p class="ma-0"><span>فروش </span>{{ baseAsset | toFarsiCoin }}</p>-->
-              <p
-                v-if="balances[baseAsset]"
-                @click="sellPercent = 100"
-                class="pointer mb-0 grey--text"
-              >
+              <p v-if="balances[baseAsset]" @click="sellPercent = 100" class="pointer mb-0 grey--text">
                 <v-icon color="grey">mdi-wallet</v-icon>
                 {{
                   adjustDp(balances[baseAsset].actual_balance, baseAsset)
-                    | toFloat
-                    | separated
+                  | toFloat
+                  | separated
                 }}
                 <span>{{ baseAsset | irtFix }}</span>
               </p>
             </div>
 
-            <v-form
-              v-model="sellForm"
-              @submit.prevent="doSell"
-              class="mt-3"
-              ref="sell_form_ref"
-            >
-              <order-text-field
-                marketdp
-                :base="baseAsset"
-                :ctr="counterAsset"
-                :rules="[rules.sellWalletExist, rules.required]"
-                v-model="sell.price"
-                prepend="قیمت"
-                :append="counterAsset | irtFix"
-                class="mt-n4"
-              />
-              <order-text-field
-                :base="baseAsset"
-                :rules="[rules.sellSufficient, rules.required]"
-                v-model="sell.amount"
-                prepend="مقدار"
-                :append="baseAsset | irtFix"
-              />
-              <v-slider
-                class="mt-n4"
-                color="primary"
-                track-color="primary darken-4"
-                v-model="sellPercent"
-                min="0"
-                thumb-label
-              />
-              <p
-                class="pointer px-2 mb-3 mt-n3"
-                @click="sell.price = buyBestPrice"
-              >
+            <v-form v-model="sellForm" @submit.prevent="doSell" class="mt-3" ref="sell_form_ref">
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset"
+                :rules="[rules.sellWalletExist, rules.required]" v-model="sell.price" prepend="قیمت"
+                :append="counterAsset | irtFix" class="mt-n4" />
+              <order-text-field :base="baseAsset" :rules="[rules.sellSufficient, rules.required]" v-model="sell.amount"
+                prepend="مقدار" :append="baseAsset | irtFix" />
+              <v-slider class="mt-n4" color="primary" track-color="primary darken-4" v-model="sellPercent" min="0"
+                thumb-label />
+              <p class="pointer px-2 mb-3 mt-n3" @click="sell.price = buyBestPrice">
                 بالاترین پیشنهاد خرید:
                 <span>{{
                   adjustDp(buyBestPrice, counterAsset) | toFloat | separated
                 }}</span>
               </p>
-              <order-text-field
-                marketdp
-                :base="baseAsset"
-                :ctr="counterAsset"
-                class="mt-0"
-                readonly
-                :value="sellTotal"
-                prepend="مجموع"
-                :append="counterAsset | irtFix"
-              />
-              <v-btn
-                depressed
-                small
-                class="white--text py-4 mt-n3"
-                block
-                color="error"
-                type="submit"
-                :loading="l.sell"
-                >فروش
+              <order-text-field marketdp :base="baseAsset" :ctr="counterAsset" class="mt-0" readonly :value="sellTotal"
+                prepend="مجموع" :append="counterAsset | irtFix" />
+              <v-btn depressed small class="white--text py-4 mt-n3" block color="error" type="submit"
+                :loading="l.sell">فروش
               </v-btn>
             </v-form>
           </div>
@@ -198,15 +93,7 @@
         <!--        TITLE-->
 
         <a-row class="justify-start align-center">
-          <v-btn-toggle
-            v-model="tabIndex"
-            mandatory
-            color="primary"
-            dense
-            borderless
-            tile
-            class="pa-4"
-          >
+          <v-btn-toggle v-model="tabIndex" mandatory color="primary" dense borderless tile class="pa-4">
             <v-btn text value="0">تومان</v-btn>
             <v-btn text value="1">تتر</v-btn>
             <v-btn text value="2">رمزارز به رمزارز</v-btn>
@@ -214,17 +101,8 @@
 
           <v-divider vertical inset class="py-4" />
           <div style="width: 144px">
-            <v-select
-              class="d-block compact"
-              v-model="pairAsset"
-              :items="pairAssetList"
-              item-text="text"
-              item-value="value"
-              dense
-              filled
-              solo
-              flat
-            />
+            <v-select class="d-block compact" v-model="pairAsset" :items="pairAssetList" item-text="text"
+              item-value="value" dense filled solo flat />
           </div>
         </a-row>
 
@@ -247,10 +125,7 @@
                   <v-simple-table dense fixed-header class="mt-4">
                     <thead>
                       <tr>
-                        <th
-                          class="small-font text-body-2"
-                          style="font-family: serif"
-                        >
+                        <th class="small-font text-body-2" style="font-family: serif">
                           {{ priceLabel }}
                         </th>
                         <th class="small-font text-body-2">
@@ -262,12 +137,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in sellOffers"
-                        :key="index"
-                        class="pointer text-body-1"
-                        @click="select('buy', item)"
-                      >
+                      <tr v-for="(item, index) in sellOffers" :key="index" class="pointer text-body-1"
+                        @click="select('buy', item)">
                         <td class="error--text" style="font-size: 1.4rem">
                           {{
                             adjustMarketDp(
@@ -280,8 +151,8 @@
                         <td style="font-size: 1.4rem">
                           {{
                             adjustDp(item.amount, baseAsset)
-                              | toFloat
-                              | separated
+                            | toFloat
+                            | separated
                           }}
                         </td>
                         <td style="font-size: 1.4rem">
@@ -311,12 +182,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="(item, index) in buyOffers"
-                        :key="index"
-                        class="pointer text-body-1"
-                        @click="select('sell', item)"
-                      >
+                      <tr v-for="(item, index) in buyOffers" :key="index" class="pointer text-body-1"
+                        @click="select('sell', item)">
                         <td class="success--text" style="font-size: 1.4rem">
                           {{
                             adjustMarketDp(
@@ -329,8 +196,8 @@
                         <td style="font-size: 1.4rem">
                           {{
                             adjustDp(item.amount, baseAsset)
-                              | toFloat
-                              | separated
+                            | toFloat
+                            | separated
                           }}
                         </td>
                         <td style="font-size: 1.4rem">
@@ -364,34 +231,20 @@
     </a-row>
 
     <!--    BOTTOM-->
-    <a-row class="align-stretch mt-6 px-8" style="background: white">
+    <a-row class="align-stretch mt-6 px-8">
       <v-col cols="6">
         <div class="pa-6">
-          <card-title-with-chevron
-            :simple="true"
-            icon="mdi-clipboard-text-play"
-            title="سفارشات در جریان"
-          />
+          <card-title-with-chevron :simple="true" icon="mdi-clipboard-text-play" title="سفارشات در جریان" />
           <!--          <v-divider class="ma-4" />-->
           <my-active-offers-table />
         </div>
       </v-col>
       <v-col cols="6">
         <div class="pa-6">
-          <card-title-with-chevron
-            :simple="true"
-            class="mb-6"
-            icon="mdi-clipboard-text"
-            title="معاملات اخیر"
-          />
+          <card-title-with-chevron :simple="true" class="mb-6" icon="mdi-clipboard-text" title="معاملات اخیر" />
           <!--          <v-divider class="ma-4" />-->
-          <my-trades-table
-            :query="filterQuery"
-            :hide-paginate="true"
-            :hide-filter="true"
-            :hide-export="true"
-            class="mt-n6 mx-n10"
-          />
+          <my-trades-table :query="filterQuery" :hide-paginate="true" :hide-filter="true" :hide-export="true"
+            class="mt-n6 mx-n10" />
         </div>
       </v-col>
     </a-row>
@@ -535,7 +388,7 @@ export default {
             .div(100)
             .div(this.buy.price)
             .todp(getDp(this.baseAsset))
-        } catch (e) {}
+        } catch (e) { }
       },
     },
     sellPercent: {
@@ -559,7 +412,7 @@ export default {
             .times(val)
             .div(100)
             .todp(getDp(this.baseAsset))
-        } catch (e) {}
+        } catch (e) { }
       },
     },
     offerConstraints,

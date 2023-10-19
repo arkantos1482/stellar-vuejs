@@ -2,12 +2,7 @@
   <tr>
     <td>
       <div class="d-flex align-center">
-        <v-img
-          class="ml-2"
-          max-width="36"
-          max-height="36"
-          :src="type | toCoinIcon"
-        />
+        <v-img class="ml-2" max-width="36" max-height="36" :src="type | toCoinIcon" />
         {{ namad }}&nbsp({{ type.toUpperCase() | irtFix }})
       </div>
     </td>
@@ -25,32 +20,14 @@
     <td v-else></td>
     <!--    <td></td>-->
     <td>
-      <v-btn
-        :disabled="isDepositDisabled"
-        small
-        text
-        color="accent"
-        @click="onDeposit"
-      >
+      <v-btn :disabled="isDepositDisabled" small text color="primary" @click="onDeposit">
         {{ depositLabel }}
       </v-btn>
-      <v-btn
-        :disabled="isWithdrawDisabled"
-        small
-        text
-        color="accent"
-        class="mx-8"
-        @click="onWithdraw"
-      >
+      <v-btn :disabled="isWithdrawDisabled" small text color="primary" class="mx-8" @click="onWithdraw">
         {{ withdrawLabel }}
       </v-btn>
-      <v-btn
-        :disabled="isRefreshDisabled"
-        icon
-        @click="onSync"
-        :loading="l.sync"
-      >
-        <v-icon color="accent">mdi-refresh</v-icon>
+      <v-btn :disabled="isRefreshDisabled" icon @click="onSync" :loading="l.sync">
+        <v-icon color="primary">mdi-refresh</v-icon>
       </v-btn>
     </td>
   </tr>

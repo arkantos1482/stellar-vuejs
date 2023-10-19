@@ -2,7 +2,7 @@
   <div>
     <bitra-banner v-for="(i, key) in dashboardBanners" :key="key" :item="i" />
 
-    <a-row style="background: white">
+    <a-row>
       <CryptoMinMaxCard coin="BTC" :stat="stats['btc-rls']" />
       <CryptoMinMaxCard coin="ETH" :stat="stats['eth-rls']" />
       <CryptoMinMaxCard coin="LTC" :stat="stats['ltc-rls']" />
@@ -13,7 +13,7 @@
       <CryptoMinMaxCard coin="TRX" :stat="stats['trx-rls']" />
     </a-row>
 
-    <a-row class="align-stretch mt-6" style="background: white">
+    <a-row class="align-stretch mt-6">
       <!--      ACCOUNT-->
       <v-col cols="6">
         <div class="pa-6">
@@ -66,7 +66,7 @@
       </v-col>
     </a-row>
 
-    <a-row class="align-stretch mt-6" style="background: white">
+    <a-row class="align-stretch mt-6">
       <v-col cols="6">
         <div class="pa-6">
           <card-title-with-chevron icon="mdi-clipboard-text-play" title="سفارشات در جریان" />

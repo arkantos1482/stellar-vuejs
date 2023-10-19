@@ -64,12 +64,12 @@ a {
 
 /*selector collapse font color*/
 .v-select__selection {
-    color: #ff0000 !important;
+    color: #ffbb00 !important;
 }
 
 /*!*selector collapse icon color*!*/
 .v-select .v-icon.mdi.mdi-menu-down {
-    color: #ff0000 !important;
+    color: #ffbb00 !important;
 }
 
 .v-list-item__title {
@@ -99,7 +99,7 @@ a {
     justify-content: center;
     align-items: center;
     color: white !important;
-    /*background-color: #00061a !important;;*/
+    background-color: #00061a !important;;
     /*transition: .2s linear;*/
 }
 
@@ -135,20 +135,20 @@ a {
 }
 
 .vpd-body {
-    /*background: #00061a;*/
+    background: #00061a;
 }
 
 div.vpd-header {
-    /*color: black;*/
+    color: black;
 }
 
 .vpd-actions button:hover {
     background-color: transparent !important;
-    border: 1px solid #35004a !important;
+    border: 1px solid #ffbb00 !important;
 }
 
 .v-text-field fieldset {
-    /*border: 1px solid #a7a9cf66 !important;*/
+    border: 1px solid #a7a9cf66 !important;
 }
 
 .pointer {

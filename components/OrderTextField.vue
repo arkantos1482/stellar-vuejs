@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div
-      class="rounded d-flex align-center"
-      style="padding: 6px 12px; background-color: #f6f6f6"
-    >
+    <div class="rounded d-flex align-center" style="padding: 6px 12px; background-color: #000a2d">
       <span class="grey--text">{{ prepend }}</span>
-      <input
-        dir="ltr"
-        :disabled="readonly"
-        class="px-2 order-text-field"
-        :value="myText"
-        @input="emit"
-      />
+      <input dir="ltr" :disabled="readonly" class="px-2 order-text-field" :value="myText" @input="emit" />
       <span class="grey--text">{{ append }}</span>
     </div>
     <p class="red--text text-body-2 mt-1">
@@ -73,6 +64,6 @@ export default {
 .order-text-field {
   outline: none;
   width: 100%;
-  //color: white;
+  color: white;
 }
 </style>

@@ -4,7 +4,7 @@
     <div v-else>
       <v-app class="text-right">
         <v-app-bar fixed app>
-          <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="red" />
+          <v-app-bar-nav-icon @click.stop="drawer = !drawer" color="primary" />
           <a @click="drawer = !drawer">
             <v-img class="mr-n4" max-width="128" max-height="48" contain
               :src="require('../assets/images/bitak-vertical.png')" />

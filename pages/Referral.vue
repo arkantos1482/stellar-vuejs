@@ -29,8 +29,7 @@
             <a-row class="align-center">
               <p class="text-h4 primary--text mb-0">{{ defaultCode.code }}</p>
               <v-btn icon @click="copy(defaultCode.code)">
-                <v-icon small color="primary"
-                  >mdi-clipboard-text-multiple-outline
+                <v-icon small color="primary">mdi-clipboard-text-multiple-outline
                 </v-icon>
               </v-btn>
             </a-row>
@@ -40,8 +39,7 @@
                 {{ defaultCode.link }}
               </p>
               <v-btn icon @click="copy(defaultCode.link)">
-                <v-icon small color="primary"
-                  >mdi-clipboard-text-multiple-outline
+                <v-icon small color="primary">mdi-clipboard-text-multiple-outline
                 </v-icon>
               </v-btn>
             </a-row>
@@ -66,30 +64,15 @@
 
     <p class="text-center text-h6 mb-8 mt-16">آمار کلی دعوت از دوستان</p>
 
-    <v-row style="background: white" class="px-12">
+    <v-row class="px-12">
       <v-col cols="4">
-        <stats-card
-          title="سود دریافتی از دعوت دوستان"
-          icon="mdi-finance"
-          icon-color="green"
-          :body="totalProfit"
-        />
+        <stats-card title="سود دریافتی از دعوت دوستان" icon="mdi-finance" icon-color="green" :body="totalProfit" />
       </v-col>
       <v-col cols="4">
-        <stats-card
-          title="تعداد کل دوستان"
-          icon="mdi-account-multiple"
-          icon-color="pink"
-          :body="totalMembers"
-        />
+        <stats-card title="تعداد کل دوستان" icon="mdi-account-multiple" icon-color="pink" :body="totalMembers" />
       </v-col>
       <v-col cols="4">
-        <stats-card
-          title="تعداد معاملات دوستان"
-          icon="mdi-clipboard-list"
-          icon-color="yellow"
-          :body="totalTrades"
-        />
+        <stats-card title="تعداد معاملات دوستان" icon="mdi-clipboard-list" icon-color="yellow" :body="totalTrades" />
       </v-col>
       <!--      <v-col cols="3">-->
       <!--        <stats-card title="رتبه شما" icon="mdi-star" icon-color="blue" :body="stats.rank"/>-->
@@ -104,12 +87,7 @@
         ایجاد لینک دعوت
       </v-btn>
     </div>
-    <v-data-table
-      class="px-12"
-      :headers="codes.headers"
-      :items="codes.items"
-      hide-default-footer
-    >
+    <v-data-table class="px-12" :headers="codes.headers" :items="codes.items" hide-default-footer>
       <template v-slot:item.guest_count="{ item }">
         {{ item.guests.length }}
       </template>
@@ -129,12 +107,7 @@
     </v-data-table>
 
     <p class="text-center text-h6 mt-16">لیست دوستان</p>
-    <v-data-table
-      :headers="members.headers"
-      :items="members.items"
-      hide-default-footer
-      class="mb-12 px-12"
-    >
+    <v-data-table :headers="members.headers" :items="members.items" hide-default-footer class="mb-12 px-12">
       <template v-slot:item.user_created_at="{ value }">
         {{ value | toFarsiDate }}
       </template>
@@ -167,12 +140,7 @@
         <a-text-field class="mt-6" v-model="codeDesc" label="متن" />
         <!--        <v-checkbox class="mt-6" v-model="defaultToken" label="انتخاب به عنوان کد دعوت پیش فرض"/>-->
         <div class="text-left">
-          <v-btn
-            @click="createCode"
-            :loading="l.create"
-            depressed
-            color="primary"
-            >ایجاد لینک دعوت
+          <v-btn @click="createCode" :loading="l.create" depressed color="primary">ایجاد لینک دعوت
           </v-btn>
         </div>
       </v-card>
@@ -185,22 +153,9 @@
         هزینه اضافه برای شما، به معرف شما تخصیص داده میشود.
       </p>
       <div class="d-flex justify-center mt-4">
-        <a-text-field
-          class="flex-grow-0 mx-2"
-          filled
-          label="کد معرف"
-          v-model="myHostCode"
-        >
-          <v-btn
-            @click="submitTheHostCode"
-            :loading="l.hostCode"
-            outlined
-            tile
-            depressed
-            small
-            class="inside-btn primary--text px-12"
-            color="primary lighten-4"
-            >تایید
+        <a-text-field class="flex-grow-0 mx-2" filled label="کد معرف" v-model="myHostCode">
+          <v-btn @click="submitTheHostCode" :loading="l.hostCode" outlined tile depressed small
+            class="inside-btn primary--text px-12" color="primary lighten-4">تایید
           </v-btn>
         </a-text-field>
       </div>

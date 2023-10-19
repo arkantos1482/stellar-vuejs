@@ -50,7 +50,7 @@ export default {
       container_id: this.containerId,
       library_path: "/libs/charting_library/",
       // preset:"mobile",
-      theme: "Light",
+      theme: "Dark",
       timezone: "Asia/Tehran",
       // disabled_features: ['use_localstorage_for_settings'],
       // enabled_features: ['study_templates'],
