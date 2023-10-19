@@ -17,48 +17,26 @@
       <!--      ACCOUNT-->
       <v-col cols="6">
         <div class="pa-6">
-          <card-title-with-chevron
-            icon="mdi-account"
-            title="وضعیت حساب کاربری"
-          />
+          <card-title-with-chevron icon="mdi-account" title="وضعیت حساب کاربری" />
           <v-divider class="ma-4" />
-          <RowItem
-            title="برداشت روزانه تومان"
-            :value="azMaker(rialLimits.daily_usage, rialLimits.daily_max_usage)"
-          />
-          <RowItem
-            title="برداشت روزانه رمزارز"
-            :value="
-              azMaker(cryptoLimits.daily_usage, cryptoLimits.daily_max_usage)
-            "
-          />
-          <RowItem
-            title="برداشت ماهانه تومان"
-            :value="
-              azMaker(rialLimits.monthly_usage, rialLimits.monthly_max_usage)
-            "
-          />
-          <RowItem
-            title="برداشت ماهانه رمزارز"
-            :value="
-              azMaker(
-                cryptoLimits.monthly_usage,
-                cryptoLimits.monthly_max_usage
-              )
-            "
-          />
+          <RowItem title="برداشت روزانه تومان" :value="azMaker(rialLimits.daily_usage, rialLimits.daily_max_usage)" />
+          <RowItem title="برداشت روزانه رمزارز" :value="azMaker(cryptoLimits.daily_usage, cryptoLimits.daily_max_usage)
+            " />
+          <RowItem title="برداشت ماهانه تومان" :value="azMaker(rialLimits.monthly_usage, rialLimits.monthly_max_usage)
+            " />
+          <RowItem title="برداشت ماهانه رمزارز" :value="azMaker(
+            cryptoLimits.monthly_usage,
+            cryptoLimits.monthly_max_usage
+          )
+            " />
           <RowItem title="کارمزد" :value="cryptoLimits.fee_ratio" />
-          <RowItem
-            title="ارزش معاملات سی روز"
-            :value="adjustDp(cryptoLimits.trade_volume_past_month, 'IRR')"
-          />
+          <RowItem title="ارزش معاملات سی روز" :value="adjustDp(cryptoLimits.trade_volume_past_month, 'IRR')" />
           <v-divider class="ma-4" />
           <p class="primary--text">سطح کاربری:</p>
           <a-row class="justify-center align-center">
             <v-icon>mdi-star</v-icon>
             <p class="mb-0 mx-4">{{ accessLevel }}</p>
-            <v-btn color="primary" outlined small class="px-4" to="/users/me"
-              >ارتقا
+            <v-btn color="primary" outlined small class="px-4" to="/users/me">ارتقا
             </v-btn>
           </a-row>
         </div>
@@ -72,11 +50,7 @@
 
           <v-row>
             <v-col cols="6">
-              <dash-wallet-row
-                v-for="(item, index) in coinList"
-                :balance="balances[item]"
-                :key="index"
-              />
+              <dash-wallet-row v-for="(item, index) in coinList" :balance="balances[item]" :key="index" />
             </v-col>
 
             <v-col cols="6">
@@ -85,10 +59,7 @@
           </v-row>
           <v-divider class="ma-4" />
           <p class="primary--text">ارزش تخمینی دارایی ها:</p>
-          <RowItem
-            title="ارزش تخمینی به تومان"
-            :value="adjustDp(totalBalance, 'IRR') | tomanSuffix"
-          />
+          <RowItem title="ارزش تخمینی به تومان" :value="adjustDp(totalBalance, 'IRR') | tomanSuffix" />
           <!--          <RowItem title="پیشنهادهای خرید" :value="totalBalance|tomanSuffix"/>-->
           <!--          <RowItem title="پیشنهادهای فروش" :value="totalBalance|tomanSuffix"/>-->
         </div>
@@ -98,29 +69,17 @@
     <a-row class="align-stretch mt-6" style="background: white">
       <v-col cols="6">
         <div class="pa-6">
-          <card-title-with-chevron
-            icon="mdi-clipboard-text-play"
-            title="سفارشات در جریان"
-          />
+          <card-title-with-chevron icon="mdi-clipboard-text-play" title="سفارشات در جریان" />
           <!--          <v-divider class="ma-4" />-->
           <my-active-offers-table />
         </div>
       </v-col>
       <v-col cols="6">
         <div class="pa-6">
-          <card-title-with-chevron
-            class="mb-6"
-            icon="mdi-clipboard-text"
-            title="معاملات اخیر"
-          />
+          <card-title-with-chevron class="mb-6" icon="mdi-clipboard-text" title="معاملات اخیر" />
           <!--          <v-divider class="ma-4" />-->
-          <my-trades-table
-            :query="filterQuery"
-            :hide-paginate="true"
-            :hide-filter="true"
-            :hide-export="true"
-            class="mt-n6 mx-n10"
-          />
+          <my-trades-table :query="filterQuery" :hide-paginate="true" :hide-filter="true" :hide-export="true"
+            class="mt-n6 mx-n10" />
         </div>
       </v-col>
     </a-row>
@@ -230,7 +189,7 @@ export default {
         )
       )
       // total sum js array
-      this.totalBalance = values.reduce((acc, val) => acc + val, 0)
+      this.totalBalance = values.reduce((acc, val) => acc + val.toNumber(), 0)
 
       this.chartData = {
         // labels: [
