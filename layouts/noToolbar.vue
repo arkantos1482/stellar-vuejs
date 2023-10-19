@@ -5,17 +5,21 @@
   <!--  margin-right: auto;-->
   <!--  width: 50%;" :src="require('../assets/images/underconstructionF.jpg')"/>-->
   <!--  </div>-->
-
-  <v-app>
-    <v-main class="grey lighten-5">
-      <v-container fluid class="pa-0">
-        <nuxt/>
-      </v-container>
-      <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
-      <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
-      <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
-    </v-main>
-  </v-app>
+  <div>
+    <div v-if="isMobile"><unsupported-mobile /></div>
+    <div v-else>
+      <v-app>
+        <v-main class="grey lighten-5">
+          <v-container fluid class="pa-0">
+            <nuxt />
+          </v-container>
+          <v-snackbar v-model="snackBar.normal.show">{{ snackBar.normal.msg }}</v-snackbar>
+          <v-snackbar color="green" v-model="snackBar.success.show">{{ snackBar.success.msg }}</v-snackbar>
+          <v-snackbar color="red" v-model="snackBar.fail.show">{{ snackBar.fail.msg }}</v-snackbar>
+        </v-main>
+      </v-app>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,12 +31,17 @@ export default {
     this.snackBar.fail.msg = err.response.data.error.msg
     return false
   },
+  computed: {
+    isMobile: function () {
+      return this.$vuetify.breakpoint.width < 750
+    }
+  },
   data() {
     return {
       snackBar: {
-        normal: {show: false, msg: ''},
-        success: {show: false, msg: ''},
-        fail: {show: false, msg: ''}
+        normal: { show: false, msg: '' },
+        success: { show: false, msg: '' },
+        fail: { show: false, msg: '' }
       },
     }
   },
@@ -54,10 +63,8 @@ export default {
         this.snackBar.normal.msg = msg
       }
     },
-  }
+  },
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
