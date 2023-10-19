@@ -1,9 +1,30 @@
-import Vue from "vue"
 import collect from "collect.js"
 import Decimal from "decimal.js-light"
 
-const state = Vue.observable({ list: [] })
-
+// const state = Vue.observable({ list: [] })
+const state = {
+  list: [{
+    BTC: {
+      symbol: "BTC",
+      total_balance: new Decimal(1),
+      locked_balance: new Decimal(0.2),
+      actual_balance: new Decimal(1).minus(0.2)
+    },
+    TRX: {
+      symbol: "TRX",
+      total_balance: new Decimal(100000),
+      locked_balance: new Decimal(200),
+      actual_balance: new Decimal(100000).minus(2)
+    },
+    LTC: {
+      symbol: "LTC",
+      total_balance: new Decimal(100),
+      locked_balance: new Decimal(2),
+      actual_balance: new Decimal(100).minus(2)
+    }
+  }
+  ]
+}
 export default () => state.list
 
 export const asList = () => state.list.toArray()

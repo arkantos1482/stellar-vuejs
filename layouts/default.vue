@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="isMobile" style=" height: 200px; background: green;">hello hi</div>
+    <div v-if="isMobile"><unsupported-mobile /></div>
     <div v-else>
       <v-app class="text-right">
         <v-app-bar fixed app>
@@ -458,10 +458,8 @@ export default {
     document.addEventListener("visibilitychange", this.onVizChange, false)
   },
   computed: {
-    computed: {
-      isMobile: function () {
-        return this.$vuetify.breakpoint.width < 750
-      }
+    isMobile: function () {
+      return this.$vuetify.breakpoint.width < 750
     },
     allPagesBanners: () => banners("all"),
     isAdmin() {
